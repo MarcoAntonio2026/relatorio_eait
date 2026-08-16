@@ -12,4 +12,4 @@ output:
   postcards::jolla
 ---
 
-Descrição ...
+Página dedicada à apresentação dos relatórios, códigos e análises de dados desenvolvidos por Marco Antônio e Matheus na disciplina de Estatística Aplicada à Inovação Tecnológica (PPGTIC / UFSJ - 2026).
