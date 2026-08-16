@@ -1,7 +1,7 @@
 ---
 # Só mude aqui!!!!
 author: "Marco Antônio e Matheus"
-title: "Relatório de Aula Prática 01"
+title: "Relatório 01 - Introdução ao R"
 bibliography: referencias.bib
 # A partir daqui nao faca alteracoes!!!!!
 link-citations: true
