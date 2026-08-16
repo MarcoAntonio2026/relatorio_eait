@@ -28,7 +28,7 @@ execute:
 
 ## 📌 Introdução
 
-Descreva o contexto da prática e sua importância.
+Descrever sobre nossos aprendizados acumulados ao longo da primeira semana de aula da disciplina e contato com o RStudio.
 
 > Exemplo: análise da variabilidade em experimentos físicos utilizando uma catapulta.
 
