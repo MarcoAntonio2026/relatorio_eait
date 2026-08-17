@@ -1,6 +1,6 @@
 ---
 title: "Relatórios da Disciplina Estatística Aplicada a Inovações tecnológicas (UFSJ)"
-author: "[Marco Antônio e Matheus](https://bendeivide.github.io) | [DEFIM/UFSJ](https://ufsj.edu.br)"
+author: "[Marco Antônio e Matheus](https://github.com/MarcoMatheus26) | [DEFIM/UFSJ](https://ufsj.edu.br)"
 date: "`r format(Sys.time(), '%d %B, %Y, %Hh:%Mmin:%Sseg')`"
 toc-title: "Sumário"
 output:
