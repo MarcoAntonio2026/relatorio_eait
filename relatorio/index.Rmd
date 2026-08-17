@@ -1,24 +1,23 @@
 ---
 title: "Relatórios da Disciplina Estatística Aplicada a Inovações tecnológicas (UFSJ)"
-author: "[Marco Antônio e Matheus](https://github.com/MarcoMatheus26) | [DEFIM/UFSJ](https://ufsj.edu.br)"
+author: '[Marco Antônio e Matheus](https://github.com/MarcoAntonio2026) | [DEFIM/UFSJ](https://ufsj.edu.br)'
 date: "`r format(Sys.time(), '%d %B, %Y, %Hh:%Mmin:%Sseg')`"
-toc-title: "Sumário"
 output:
-  bookdown::html_document2: 
+  html_document:
+    toc: true
+    df_print: paged
+  bookdown::html_document2:
     anchor_sections: true
-#   css: style.css
     theme: readable
-# “default”, “bootstrap”, “cerulean”, “cosmo”, “darkly”, “flatly”, “journal”, “lumen”, “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, “yeti”
     highlight: zenburn
-# "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", and "haddock"
-    toc: yes
-    number_sections: yes
+    toc: true
+    number_sections: true
     includes:
       in_header: logo.html
   pdf_document:
-    
-    toc: yes
-    number_sections: yes
+    toc: true
+    number_sections: true
+toc-title: Sumário
 ---
 
 ```{r setup, include=FALSE}
