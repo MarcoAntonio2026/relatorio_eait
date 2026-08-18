@@ -4,8 +4,10 @@ image: "logo.png"
 links:
   - label: GitHub
     url: "https://github.com/MarcoAntonio2026"
-  - label: Email
+  - label: Email Marco
     url: "mailto:eaitmm26@gmail.com"
+  - label: Email Matheus
+    url: "mailto:matheusvillela2026@gmail.com"
   - label: Relatórios
     url: "./relatorio/index.html"
 output:
