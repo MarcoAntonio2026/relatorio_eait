@@ -261,7 +261,7 @@ O *R* contorna limitações de desempenho e interface integrando-se a outras lin
 
 --------------------------------------------------------------------------------------
 
-### Conclusão e Preparação para o "R Intermediário"
+### Conclusão 
 
 A consolidação das bases de sintaxe, semântica e do caminho de busca confere autonomia teórica para que o estudante analise pacotes de forma robusta e compreenda o fluxo de dados na memória virtual.
 
