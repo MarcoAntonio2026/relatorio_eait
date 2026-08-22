@@ -1,7 +1,7 @@
 ---
 # Só mude aqui!!!!
 author: "Marco Antônio e Matheus"
-title: "Relatório 01 - Introdução ao R"
+title: "Relatório 01 - Aula prática 01"
 bibliography: referencias.bib
 # A partir daqui nao faca alteracoes!!!!!
 link-citations: true
@@ -25,31 +25,39 @@ execute:
   message: false
 ---
 
-
 ## 📌 Introdução
 
-Descrever sobre nossos aprendizados acumulados ao longo da primeira semana de aula da disciplina e contato com o RStudio.
+A análise de dados e a aplicação de métodos estatísticos são ferramentas fundamentais para a tomada de decisão e controle de qualidade, especialmente na Engenharia Civil. Na tecnologia das construções, a avaliação da resistência à compressão do concreto ($f_{ck}$) por meio do ensaio de amostras cilíndricas é um procedimento crucial para garantir a segurança e o desempenho das estruturas. Neste contexto, o domínio de linguagens de programação voltadas para a análise de dados, como o R, permite otimizar o processamento e a interpretação das medições obtidas em laboratório. O presente relatório tem como objetivo principal integrar os conceitos de programação e estatística, dividindo-se em três etapas centrais de desenvolvimento.
 
-> Exemplo: análise da variabilidade em experimentos físicos utilizando uma catapulta.
+Inicialmente, é apresentada uma introdução à linguagem de programação R, fundamentada no conteúdo das 26 aulas do curso "R Básico 2024". Esta seção aborda os princípios de sintaxe e semântica da linguagem, estabelecendo a base computacional necessária para a manipulação dos dados de engenharia.
 
+Em seguida, o documento traz uma revisão teórica abrangente sobre Estatística Descritiva, pautada nos quatro primeiros capítulos do livro *EPAEC*. Para complementar a base literária e enriquecer a caracterização do comportamento das amostras, a revisão incorpora também pesquisas adicionais detalhando as medidas de forma, especificamente a assimetria e a curtose.
 
-
-## 🎯 Objetivos
+Por fim, a teoria é aplicada na prática por meio da análise de um banco de dados de Engenharia Civil contendo os resultados dos ensaios de resistência à compressão de amostras de concreto. Com o auxílio do pacote `leem` no ambiente R, realiza-se a descrição estatística completa desses dados. Esta etapa engloba a organização, tabulação e apresentação gráfica dos resultados, além do cômputo das medidas de posição, dispersão, assimetria e curtose. O relatório culmina em uma discussão crítica dos resultados encontrados, evidenciando não apenas a facilidade computacional proporcionada pelo pacote `leem`, mas também demonstrando ciência sobre o embasamento matemático e os procedimentos envolvidos no cômputo de cada medida obtida.
 
 ### Objetivo geral
 
-Descrever o objetivo principal da prática.
+Integrar os conhecimentos computacionais da linguagem R e os fundamentos teóricos de estatística descritiva para realizar a análise e discussão de um banco de dados sobre amostras de concreto voltado à definição da resistência à compressão, utilizando o pacote `leem` para a tabulação, visualização gráfica e cômputo das medidas de posição, dispersão, assimetria e curtose.
 
 ### Objetivos específicos
 
-- Coletar dados experimentais  
-- Aplicar estatística descritiva  
-- Construir gráficos  
-- Interpretar resultados  
+- **Apresentar os fundamentos da linguagem R:** Sintetizar os conceitos de sintaxe e semântica ministrados nas 26 aulas do curso *R Básico 2024*.
 
----
+<!-- -->
 
-## 📚  Fundamentação Teórica
+- **Revisar a teoria da estatística descritiva:** Compilar os tópicos dos 4 primeiros capítulos do livro *EPAEC*, incorporando os conceitos adicionais de assimetria e curtose.
+
+- **Organizar e tabular os dados de resistência:** Estruturar a base de dados das amostras de concreto utilizando o pacote `leem` no ambiente R.
+
+- **Gerar representações gráficas:** Construir gráficos descritivos adequados para a visualização da distribuição da resistência do concreto.
+
+- **Calcular medidas descritivas e de forma:** Obter as métricas de posição, dispersão, assimetria e curtose para a caracterização das amostras.
+
+- **Discutir os resultados analíticos:** Avaliar o comportamento da resistência do concreto demonstrando a compreensão do cálculo e processo matemático subjacente às funções do pacote `leem`.
+
+------------------------------------------------------------------------
+
+## 📚 Fundamentação Teórica
 
 Apresente os conceitos principais:
 
@@ -58,23 +66,21 @@ Apresente os conceitos principais:
 - Desvio padrão
 - Amostragem
 
-$$
-\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
-$$
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
 
----
+------------------------------------------------------------------------
 
 ## ⚙️ Metodologia
 
-::: {.callout-note}
+::: callout-note
 Descreva como o experimento foi realizado.
 :::
 
-- Materiais utilizados  
-- Procedimento  
-- Número de repetições  
+- Materiais utilizados\
+- Procedimento\
+- Número de repetições
 
----
+------------------------------------------------------------------------
 
 ## 🔍 Resultados e Discussão
 
@@ -101,7 +107,7 @@ Depois de inserido as informaçõe no arquivo **referencias.bib**, use:
 - Segundo @Rbasico2022
 - Tudo é um objeto em R [@Rbasico2022]
 
-### 📊  Análise de Dados
+### 📊 Análise de Dados
 
 ```{r}
 distancia <- c(10.2, 9.8, 10.5, 10.1, 9.9, 10.3)
