@@ -186,7 +186,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">22/08/2026, 18:29</p>
+      <p class="date">22/08/2026, 18:31</p>
     </div>
   </div>
   
@@ -573,7 +573,7 @@ Dica
 <li><p><strong>Moda de Czuber (para dados agrupados em classes):</strong> <span id="eq-nome"><span class="math display">\[Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c \tag{18}\]</span></span></p>
 <p><em>Onde:</em> <span id="eq-nome"><span class="math display">\[\Delta_1 = f_{mo} - f_{ant} \tag{19}\]</span></span></p>
 <p>e</p>
-<p><span class="math display">\[\Delta_2 = f_{mo} - f_{post}\]</span> {#eq-nome}.</p></li>
+<p><span id="eq-nome"><span class="math display">\[\Delta_2 = f_{mo} - f_{post} \tag{20}\]</span></span> .</p></li>
 </ul>
 <hr>
 </section>
@@ -584,31 +584,31 @@ Dica
 <section id="amplitude-total-a_t" class="level4" data-number="4.2.4.1">
 <h4 data-number="4.2.4.1" class="anchored" data-anchor-id="amplitude-total-a_t"><span class="header-section-number">4.2.4.1</span> Amplitude Total (<span class="math inline">\(A_t\)</span>)</h4>
 <p>Diferença entre o maior e o menor valor observado:</p>
-<p><span id="eq-nome"><span class="math display">\[A_t = X_{\text{máx}} - X_{\text{mín}} \tag{20}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[A_t = X_{\text{máx}} - X_{\text{mín}} \tag{21}\]</span></span></p>
 </section>
 <section id="variância-s2-ou-sigma2" class="level4" data-number="4.2.4.2">
 <h4 data-number="4.2.4.2" class="anchored" data-anchor-id="variância-s2-ou-sigma2"><span class="header-section-number">4.2.4.2</span> Variância (<span class="math inline">\(S^2\)</span> ou <span class="math inline">\(\sigma^2\)</span>)</h4>
 <p>Média dos desvios quadráticos das observações em relação à média.</p>
 <ul>
-<li><p><strong>Variância Populacional (</strong><span class="math inline">\(\sigma^2\)</span>): <span id="eq-nome"><span class="math display">\[\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N} \tag{21}\]</span></span></p></li>
-<li><p><strong>Variância Amostral (</strong><span class="math inline">\(S^2\)</span>): Utiliza o denominador <span class="math inline">\(n-1\)</span> (graus de liberdade) para corrigir o viés estatístico do estimador: <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1} \tag{22}\]</span></span></p></li>
-<li><p><strong>Fórmula Prática Computacional (Amostral):</strong> <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1} \tag{23}\]</span></span></p></li>
+<li><p><strong>Variância Populacional (</strong><span class="math inline">\(\sigma^2\)</span>): <span id="eq-nome"><span class="math display">\[\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N} \tag{22}\]</span></span></p></li>
+<li><p><strong>Variância Amostral (</strong><span class="math inline">\(S^2\)</span>): Utiliza o denominador <span class="math inline">\(n-1\)</span> (graus de liberdade) para corrigir o viés estatístico do estimador: <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1} \tag{23}\]</span></span></p></li>
+<li><p><strong>Fórmula Prática Computacional (Amostral):</strong> <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1} \tag{24}\]</span></span></p></li>
 </ul>
 </section>
 <section id="desvio-padrão-s-ou-sigma" class="level4" data-number="4.2.4.3">
 <h4 data-number="4.2.4.3" class="anchored" data-anchor-id="desvio-padrão-s-ou-sigma"><span class="header-section-number">4.2.4.3</span> Desvio Padrão (<span class="math inline">\(S\)</span> ou <span class="math inline">\(\sigma\)</span>)</h4>
 <p>Raiz quadrada positiva da variância, retornando a variabilidade para a mesma unidade original da variável:</p>
-<p><span id="eq-nome"><span class="math display">\[S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2} \tag{24}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2} \tag{25}\]</span></span></p>
 </section>
 <section id="coeficiente-de-variação-cv" class="level4" data-number="4.2.4.4">
 <h4 data-number="4.2.4.4" class="anchored" data-anchor-id="coeficiente-de-variação-cv"><span class="header-section-number">4.2.4.4</span> Coeficiente de Variação (<span class="math inline">\(CV\)</span>)</h4>
 <p>Medida adimensional de dispersão relativa expressa em percentual, permitindo a comparação de variabilidade entre grupos com escalas ou médias distintas:</p>
-<p><span id="eq-nome"><span class="math display">\[CV = \left( \frac{S}{\bar{X}} \right) \times 100\% \tag{25}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[CV = \left( \frac{S}{\bar{X}} \right) \times 100\% \tag{26}\]</span></span></p>
 </section>
 <section id="erro-padrão-da-média-s_barx-ou-sigma_barx" class="level4" data-number="4.2.4.5">
 <h4 data-number="4.2.4.5" class="anchored" data-anchor-id="erro-padrão-da-média-s_barx-ou-sigma_barx"><span class="header-section-number">4.2.4.5</span> Erro Padrão da Média (<span class="math inline">\(S_{\bar{X}}\)</span> ou <span class="math inline">\(\sigma_{\bar{X}}\)</span>)</h4>
 <p>Mede a precisão e a variabilidade das possíveis médias amostrais em relação à média populacional:</p>
-<p><span id="eq-nome"><span class="math display">\[S_{\bar{X}} = \frac{S}{\sqrt{n}} \tag{26}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[S_{\bar{X}} = \frac{S}{\sqrt{n}} \tag{27}\]</span></span></p>
 <hr>
 </section>
 </section>
@@ -628,9 +628,9 @@ Nota
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><strong>Simétrica:</strong> Ocorre quando a média, a mediana e a moda coincidem. Os dois lados da distribuição são espelhados. <span id="eq-nome"><span class="math display">\[\bar{X} = Md = Mo \implies A_s = 0 \tag{27}\]</span></span></p></li>
-<li><p><strong>Assimétrica Positiva (à Direita):</strong> Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média. <span id="eq-nome"><span class="math display">\[Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0 \tag{28}\]</span></span></p></li>
-<li><p><strong>Assimétrica Negativa (à Esquerda):</strong> Apresenta cauda mais longa à esquerda, indicando concentração de dados nos valores acima da média. <span id="eq-nome"><span class="math display">\[\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0 \tag{29}\]</span></span></p></li>
+<li><p><strong>Simétrica:</strong> Ocorre quando a média, a mediana e a moda coincidem. Os dois lados da distribuição são espelhados. <span id="eq-nome"><span class="math display">\[\bar{X} = Md = Mo \implies A_s = 0 \tag{28}\]</span></span></p></li>
+<li><p><strong>Assimétrica Positiva (à Direita):</strong> Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média. <span id="eq-nome"><span class="math display">\[Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0 \tag{29}\]</span></span></p></li>
+<li><p><strong>Assimétrica Negativa (à Esquerda):</strong> Apresenta cauda mais longa à esquerda, indicando concentração de dados nos valores acima da média. <span id="eq-nome"><span class="math display">\[\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0 \tag{30}\]</span></span></p></li>
 </ul>
 </div>
 </div>
@@ -638,9 +638,9 @@ Nota
 <section id="fórmulas-de-cálculo" class="level4" data-number="4.2.5.2">
 <h4 data-number="4.2.5.2" class="anchored" data-anchor-id="fórmulas-de-cálculo"><span class="header-section-number">4.2.5.2</span> Fórmulas de Cálculo</h4>
 <ul>
-<li><p><strong>Primeiro Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{\bar{X} - Mo}{S} \tag{30}\]</span></span></p></li>
-<li><p><strong>Segundo Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{3(\bar{X} - Md)}{S} \tag{31}\]</span></span></p></li>
-<li><p><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_1\)</span>): Baseado no terceiro momento central <span class="math inline">\(m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3\)</span>: <span id="eq-nome"><span class="math display">\[g_1 = \frac{m_3}{S^3} \tag{32}\]</span></span></p>
+<li><p><strong>Primeiro Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{\bar{X} - Mo}{S} \tag{31}\]</span></span></p></li>
+<li><p><strong>Segundo Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{3(\bar{X} - Md)}{S} \tag{32}\]</span></span></p></li>
+<li><p><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_1\)</span>): Baseado no terceiro momento central <span class="math inline">\(m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3\)</span>: <span id="eq-nome"><span class="math display">\[g_1 = \frac{m_3}{S^3} \tag{33}\]</span></span></p>
 <p><em>(O intervalo</em> <span class="math inline">\([-1, +1]\)</span> costuma ser considerado como indicador de uma distribuição aproximadamente simétrica).</p></li>
 </ul>
 <hr>
@@ -660,7 +660,7 @@ Nota
 <section id="fórmulas-de-cálculo-1" class="level4" data-number="4.2.6.2">
 <h4 data-number="4.2.6.2" class="anchored" data-anchor-id="fórmulas-de-cálculo-1"><span class="header-section-number">4.2.6.2</span> Fórmulas de Cálculo</h4>
 <ul>
-<li><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_2\)</span>): Baseado no quarto momento central <span class="math inline">\(m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[g_2 = \frac{m_4}{S^4} - 3 \tag{33}\]</span></span></li>
+<li><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_2\)</span>): Baseado no quarto momento central <span class="math inline">\(m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[g_2 = \frac{m_4}{S^4} - 3 \tag{34}\]</span></span></li>
 </ul>
 </section>
 </section>
@@ -1603,7 +1603,7 @@ Nota
 <span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a>  e</span>
 <span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>  $$\Delta_2 = f_{mo} - f_{post}$$ {#eq-nome}.</span>
+<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>  $$\Delta_2 = f_{mo} - f_{post}$$ {#eq-nome} .</span>
 <span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a></span>

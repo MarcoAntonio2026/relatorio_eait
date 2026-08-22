@@ -476,7 +476,7 @@ Valor de ocorrência mais frequente no conjunto de dados.
   
   e
   
-  $$\Delta_2 = f_{mo} - f_{post}$$ {#eq-nome}.
+  $$\Delta_2 = f_{mo} - f_{post}$$ {#eq-nome} .
 
 ------------------------------------------------------------------------
 
