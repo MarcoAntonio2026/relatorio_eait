@@ -424,7 +424,7 @@ Representa o ponto de equilíbrio dos dados. É única e aplicável a
 variáveis quantitativas, porém altamente sensível a valores extremos
 (*outliers*).
 
-- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ {#eq-nome}
+- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ 
 
 - **Dados Agrupados com Frequências:**
   $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n}$$ {#eq-nome}
@@ -445,10 +445,10 @@ valores discrepantes.
   1.  Ordene os dados em Rol.
   
   2.  Se $n$ for **ímpar**, a posição é $P = \frac{n + 1}{2}$ {#eq-nome}:
-      $$Md = X_{(P)}$$
+      $$Md = X_{(P)}$$ {#eq-nome}
       
   3.  Se $n$ for **par**, calcula-se a média dos dois elementos
-      centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$
+      centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$ {#eq-nome}
       
 - **Dados Agrupados em Classes (Interpolação Linear):**
   $$Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c$$

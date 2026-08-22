@@ -186,7 +186,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">22/08/2026, 18:19</p>
+      <p class="date">22/08/2026, 18:23</p>
     </div>
   </div>
   
@@ -541,9 +541,9 @@ Dica
 <h4 data-number="4.2.3.1" class="anchored" data-anchor-id="média-aritmética-barx-para-amostra-mu-para-população"><span class="header-section-number">4.2.3.1</span> Média Aritmética (<span class="math inline">\(\bar{X}\)</span> para amostra, <span class="math inline">\(\mu\)</span> para população)</h4>
 <p>Representa o ponto de equilíbrio dos dados. É única e aplicável a variáveis quantitativas, porém altamente sensível a valores extremos (<em>outliers</em>).</p>
 <ul>
-<li><p><strong>Dados Não Agrupados:</strong> <span id="eq-nome"><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n} \tag{12}\]</span></span></p></li>
-<li><p><strong>Dados Agrupados com Frequências:</strong> <span id="eq-nome"><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n} \tag{13}\]</span></span></p></li>
-<li><p><strong>Dados Agrupados em Classes:</strong> <span id="eq-nome"><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot \tilde{X}_i}{n} \tag{14}\]</span></span></p></li>
+<li><p><strong>Dados Não Agrupados:</strong> <span class="math display">\[\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}\]</span></p></li>
+<li><p><strong>Dados Agrupados com Frequências:</strong> <span id="eq-nome"><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n} \tag{12}\]</span></span></p></li>
+<li><p><strong>Dados Agrupados em Classes:</strong> <span id="eq-nome"><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot \tilde{X}_i}{n} \tag{13}\]</span></span></p></li>
 <li><p><strong>Média Aparada:</strong> Descarta simetricamente uma porcentagem dos menores e maiores valores para amenizar o impacto de <em>outliers</em>.</p></li>
 </ul>
 </section>
@@ -554,8 +554,8 @@ Dica
 <li><strong>Dados Não Agrupados:</strong>
 <ol type="1">
 <li><p>Ordene os dados em Rol.</p></li>
-<li><p>Se <span class="math inline">\(n\)</span> for <strong>ímpar</strong>, a posição é <span class="math inline">\(P = \frac{n + 1}{2}\)</span> {#eq-nome}: <span class="math display">\[Md = X_{(P)}\]</span></p></li>
-<li><p>Se <span class="math inline">\(n\)</span> for <strong>par</strong>, calcula-se a média dos dois elementos centrais: <span class="math display">\[Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}\]</span></p></li>
+<li><p>Se <span class="math inline">\(n\)</span> for <strong>ímpar</strong>, a posição é <span class="math inline">\(P = \frac{n + 1}{2}\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[Md = X_{(P)} \tag{14}\]</span></span></p></li>
+<li><p>Se <span class="math inline">\(n\)</span> for <strong>par</strong>, calcula-se a média dos dois elementos centrais: <span id="eq-nome"><span class="math display">\[Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2} \tag{15}\]</span></span></p></li>
 </ol></li>
 <li><strong>Dados Agrupados em Classes (Interpolação Linear):</strong> <span class="math display">\[Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c\]</span> <em>Onde:</em> <span class="math inline">\(L_i\)</span> é o limite inferior da classe mediana, <span class="math inline">\(F_{ac\_ant}\)</span> é a frequência acumulada anterior, <span class="math inline">\(f_{md}\)</span> é a frequência absoluta da classe mediana e <span class="math inline">\(c\)</span> é a amplitude da classe.</li>
 </ul>
@@ -569,8 +569,8 @@ Dica
 <li><strong>Amodal:</strong> Sem repetição de dados.</li>
 <li><strong>Unimodal / Bimodal / Multimodal:</strong> Apresenta 1, 2 ou mais modas.</li>
 </ul></li>
-<li><p><strong>Relação Empírica de Pearson:</strong> <span id="eq-nome"><span class="math display">\[Mo = 3 \cdot Md - 2 \cdot \bar{X} \tag{15}\]</span></span></p></li>
-<li><p><strong>Moda de Czuber (para dados agrupados em classes):</strong> <span id="eq-nome"><span class="math display">\[Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c \tag{16}\]</span></span></p>
+<li><p><strong>Relação Empírica de Pearson:</strong> <span id="eq-nome"><span class="math display">\[Mo = 3 \cdot Md - 2 \cdot \bar{X} \tag{16}\]</span></span></p></li>
+<li><p><strong>Moda de Czuber (para dados agrupados em classes):</strong> <span id="eq-nome"><span class="math display">\[Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c \tag{17}\]</span></span></p>
 <p><em>Onde:</em> <span class="math inline">\(\Delta_1 = f_{mo} - f_{ant}\)</span> {#eq-nome} e <span class="math inline">\(\Delta_2 = f_{mo} - f_{post}\)</span> {#eq-nome}.</p></li>
 </ul>
 <hr>
@@ -582,31 +582,31 @@ Dica
 <section id="amplitude-total-a_t" class="level4" data-number="4.2.4.1">
 <h4 data-number="4.2.4.1" class="anchored" data-anchor-id="amplitude-total-a_t"><span class="header-section-number">4.2.4.1</span> Amplitude Total (<span class="math inline">\(A_t\)</span>)</h4>
 <p>Diferença entre o maior e o menor valor observado:</p>
-<p><span id="eq-nome"><span class="math display">\[A_t = X_{\text{máx}} - X_{\text{mín}} \tag{17}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[A_t = X_{\text{máx}} - X_{\text{mín}} \tag{18}\]</span></span></p>
 </section>
 <section id="variância-s2-ou-sigma2" class="level4" data-number="4.2.4.2">
 <h4 data-number="4.2.4.2" class="anchored" data-anchor-id="variância-s2-ou-sigma2"><span class="header-section-number">4.2.4.2</span> Variância (<span class="math inline">\(S^2\)</span> ou <span class="math inline">\(\sigma^2\)</span>)</h4>
 <p>Média dos desvios quadráticos das observações em relação à média.</p>
 <ul>
-<li><p><strong>Variância Populacional (</strong><span class="math inline">\(\sigma^2\)</span>): <span id="eq-nome"><span class="math display">\[\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N} \tag{18}\]</span></span></p></li>
-<li><p><strong>Variância Amostral (</strong><span class="math inline">\(S^2\)</span>): Utiliza o denominador <span class="math inline">\(n-1\)</span> (graus de liberdade) para corrigir o viés estatístico do estimador: <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1} \tag{19}\]</span></span></p></li>
-<li><p><strong>Fórmula Prática Computacional (Amostral):</strong> <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1} \tag{20}\]</span></span></p></li>
+<li><p><strong>Variância Populacional (</strong><span class="math inline">\(\sigma^2\)</span>): <span id="eq-nome"><span class="math display">\[\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N} \tag{19}\]</span></span></p></li>
+<li><p><strong>Variância Amostral (</strong><span class="math inline">\(S^2\)</span>): Utiliza o denominador <span class="math inline">\(n-1\)</span> (graus de liberdade) para corrigir o viés estatístico do estimador: <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1} \tag{20}\]</span></span></p></li>
+<li><p><strong>Fórmula Prática Computacional (Amostral):</strong> <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1} \tag{21}\]</span></span></p></li>
 </ul>
 </section>
 <section id="desvio-padrão-s-ou-sigma" class="level4" data-number="4.2.4.3">
 <h4 data-number="4.2.4.3" class="anchored" data-anchor-id="desvio-padrão-s-ou-sigma"><span class="header-section-number">4.2.4.3</span> Desvio Padrão (<span class="math inline">\(S\)</span> ou <span class="math inline">\(\sigma\)</span>)</h4>
 <p>Raiz quadrada positiva da variância, retornando a variabilidade para a mesma unidade original da variável:</p>
-<p><span id="eq-nome"><span class="math display">\[S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2} \tag{21}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2} \tag{22}\]</span></span></p>
 </section>
 <section id="coeficiente-de-variação-cv" class="level4" data-number="4.2.4.4">
 <h4 data-number="4.2.4.4" class="anchored" data-anchor-id="coeficiente-de-variação-cv"><span class="header-section-number">4.2.4.4</span> Coeficiente de Variação (<span class="math inline">\(CV\)</span>)</h4>
 <p>Medida adimensional de dispersão relativa expressa em percentual, permitindo a comparação de variabilidade entre grupos com escalas ou médias distintas:</p>
-<p><span id="eq-nome"><span class="math display">\[CV = \left( \frac{S}{\bar{X}} \right) \times 100\% \tag{22}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[CV = \left( \frac{S}{\bar{X}} \right) \times 100\% \tag{23}\]</span></span></p>
 </section>
 <section id="erro-padrão-da-média-s_barx-ou-sigma_barx" class="level4" data-number="4.2.4.5">
 <h4 data-number="4.2.4.5" class="anchored" data-anchor-id="erro-padrão-da-média-s_barx-ou-sigma_barx"><span class="header-section-number">4.2.4.5</span> Erro Padrão da Média (<span class="math inline">\(S_{\bar{X}}\)</span> ou <span class="math inline">\(\sigma_{\bar{X}}\)</span>)</h4>
 <p>Mede a precisão e a variabilidade das possíveis médias amostrais em relação à média populacional:</p>
-<p><span id="eq-nome"><span class="math display">\[S_{\bar{X}} = \frac{S}{\sqrt{n}} \tag{23}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[S_{\bar{X}} = \frac{S}{\sqrt{n}} \tag{24}\]</span></span></p>
 <hr>
 </section>
 </section>
@@ -626,9 +626,9 @@ Nota
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><strong>Simétrica:</strong> Ocorre quando a média, a mediana e a moda coincidem. Os dois lados da distribuição são espelhados. <span id="eq-nome"><span class="math display">\[\bar{X} = Md = Mo \implies A_s = 0 \tag{24}\]</span></span></p></li>
-<li><p><strong>Assimétrica Positiva (à Direita):</strong> Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média. <span id="eq-nome"><span class="math display">\[Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0 \tag{25}\]</span></span></p></li>
-<li><p><strong>Assimétrica Negativa (à Esquerda):</strong> Apresenta cauda mais longa à esquerda, indicando concentração de dados nos valores acima da média. <span id="eq-nome"><span class="math display">\[\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0 \tag{26}\]</span></span></p></li>
+<li><p><strong>Simétrica:</strong> Ocorre quando a média, a mediana e a moda coincidem. Os dois lados da distribuição são espelhados. <span id="eq-nome"><span class="math display">\[\bar{X} = Md = Mo \implies A_s = 0 \tag{25}\]</span></span></p></li>
+<li><p><strong>Assimétrica Positiva (à Direita):</strong> Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média. <span id="eq-nome"><span class="math display">\[Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0 \tag{26}\]</span></span></p></li>
+<li><p><strong>Assimétrica Negativa (à Esquerda):</strong> Apresenta cauda mais longa à esquerda, indicando concentração de dados nos valores acima da média. <span id="eq-nome"><span class="math display">\[\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0 \tag{27}\]</span></span></p></li>
 </ul>
 </div>
 </div>
@@ -636,9 +636,9 @@ Nota
 <section id="fórmulas-de-cálculo" class="level4" data-number="4.2.5.2">
 <h4 data-number="4.2.5.2" class="anchored" data-anchor-id="fórmulas-de-cálculo"><span class="header-section-number">4.2.5.2</span> Fórmulas de Cálculo</h4>
 <ul>
-<li><p><strong>Primeiro Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{\bar{X} - Mo}{S} \tag{27}\]</span></span></p></li>
-<li><p><strong>Segundo Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{3(\bar{X} - Md)}{S} \tag{28}\]</span></span></p></li>
-<li><p><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_1\)</span>): Baseado no terceiro momento central <span class="math inline">\(m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3\)</span>: <span id="eq-nome"><span class="math display">\[g_1 = \frac{m_3}{S^3} \tag{29}\]</span></span></p>
+<li><p><strong>Primeiro Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{\bar{X} - Mo}{S} \tag{28}\]</span></span></p></li>
+<li><p><strong>Segundo Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{3(\bar{X} - Md)}{S} \tag{29}\]</span></span></p></li>
+<li><p><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_1\)</span>): Baseado no terceiro momento central <span class="math inline">\(m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3\)</span>: <span id="eq-nome"><span class="math display">\[g_1 = \frac{m_3}{S^3} \tag{30}\]</span></span></p>
 <p><em>(O intervalo</em> <span class="math inline">\([-1, +1]\)</span> costuma ser considerado como indicador de uma distribuição aproximadamente simétrica).</p></li>
 </ul>
 <hr>
@@ -658,7 +658,7 @@ Nota
 <section id="fórmulas-de-cálculo-1" class="level4" data-number="4.2.6.2">
 <h4 data-number="4.2.6.2" class="anchored" data-anchor-id="fórmulas-de-cálculo-1"><span class="header-section-number">4.2.6.2</span> Fórmulas de Cálculo</h4>
 <ul>
-<li><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_2\)</span>): Baseado no quarto momento central <span class="math inline">\(m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[g_2 = \frac{m_4}{S^4} - 3 \tag{30}\]</span></span></li>
+<li><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_2\)</span>): Baseado no quarto momento central <span class="math inline">\(m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[g_2 = \frac{m_4}{S^4} - 3 \tag{31}\]</span></span></li>
 </ul>
 </section>
 </section>
@@ -1549,7 +1549,7 @@ Nota
 <span id="cb1-424"><a href="#cb1-424" aria-hidden="true" tabindex="-1"></a>variáveis quantitativas, porém altamente sensível a valores extremos</span>
 <span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a>(*outliers*).</span>
 <span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ {#eq-nome}</span>
+<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ </span>
 <span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dados Agrupados com Frequências:**</span>
 <span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a>  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n}$$ {#eq-nome}</span>
@@ -1570,10 +1570,10 @@ Nota
 <span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a><span class="ss">  1.  </span>Ordene os dados em Rol.</span>
 <span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a><span class="ss">  2.  </span>Se $n$ for **ímpar**, a posição é $P = \frac{n + 1}{2}$ {#eq-nome}:</span>
-<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a>      $$Md = X_{(P)}$$</span>
+<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a>      $$Md = X_{(P)}$$ {#eq-nome}</span>
 <span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a>      </span>
 <span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a><span class="ss">  3.  </span>Se $n$ for **par**, calcula-se a média dos dois elementos</span>
-<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a>      centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$</span>
+<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a>      centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$ {#eq-nome}</span>
 <span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a>      </span>
 <span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dados Agrupados em Classes (Interpolação Linear):**</span>
 <span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a>  $$Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c$$</span>
