@@ -25,14 +25,11 @@ execute:
   message: false
 ---
 
-
 ## 📌 Introdução
 
 Descreva o contexto da prática e sua importância.
 
 > Exemplo: análise da variabilidade em experimentos físicos utilizando uma catapulta.
-
-
 
 ## 🎯 Objetivos
 
@@ -42,14 +39,14 @@ Descrever o objetivo principal da prática.
 
 ### Objetivos específicos
 
-- Coletar dados experimentais  
-- Aplicar estatística descritiva  
-- Construir gráficos  
-- Interpretar resultados  
+- Coletar dados experimentais\
+- Aplicar estatística descritiva\
+- Construir gráficos\
+- Interpretar resultados
 
----
+------------------------------------------------------------------------
 
-## 📚  Fundamentação Teórica
+## 📚 Fundamentação Teórica
 
 Apresente os conceitos principais:
 
@@ -58,23 +55,21 @@ Apresente os conceitos principais:
 - Desvio padrão
 - Amostragem
 
-$$
-\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
-$$
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
 
----
+------------------------------------------------------------------------
 
 ## ⚙️ Metodologia
 
-::: {.callout-note}
+::: callout-note
 Descreva como o experimento foi realizado.
 :::
 
-- Materiais utilizados  
-- Procedimento  
-- Número de repetições  
+- Materiais utilizados\
+- Procedimento\
+- Número de repetições
 
----
+------------------------------------------------------------------------
 
 ## 🔍 Resultados e Discussão
 
@@ -101,7 +96,7 @@ Depois de inserido as informaçõe no arquivo **referencias.bib**, use:
 - Segundo @Rbasico2022
 - Tudo é um objeto em R [@Rbasico2022]
 
-### 📊  Análise de Dados
+### 📊 Análise de Dados
 
 ```{r}
 distancia <- c(10.2, 9.8, 10.5, 10.1, 9.9, 10.3)
