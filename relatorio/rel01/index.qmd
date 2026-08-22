@@ -35,15 +35,13 @@ Em seguida, o documento traz uma revisão teórica abrangente sobre Estatística
 
 Por fim, a teoria é aplicada na prática por meio da análise de um banco de dados de Engenharia Civil contendo os resultados dos ensaios de resistência à compressão de amostras de concreto. Com o auxílio do pacote `leem` no ambiente R, realiza-se a descrição estatística completa desses dados. Esta etapa engloba a organização, tabulação e apresentação gráfica dos resultados, além do cômputo das medidas de posição, dispersão, assimetria e curtose. O relatório culmina em uma discussão crítica dos resultados encontrados, evidenciando não apenas a facilidade computacional proporcionada pelo pacote `leem`, mas também demonstrando ciência sobre o embasamento matemático e os procedimentos envolvidos no cômputo de cada medida obtida.
 
-### Objetivo geral
+## 🎯 Objetivo geral
 
 Integrar os conhecimentos computacionais da linguagem R e os fundamentos teóricos de estatística descritiva para realizar a análise e discussão de um banco de dados sobre amostras de concreto voltado à definição da resistência à compressão, utilizando o pacote `leem` para a tabulação, visualização gráfica e cômputo das medidas de posição, dispersão, assimetria e curtose.
 
 ### Objetivos específicos
 
 - **Apresentar os fundamentos da linguagem R:** Sintetizar os conceitos de sintaxe e semântica ministrados nas 26 aulas do curso *R Básico 2024*.
-
-<!-- -->
 
 - **Revisar a teoria da estatística descritiva:** Compilar os tópicos dos 4 primeiros capítulos do livro *EPAEC*, incorporando os conceitos adicionais de assimetria e curtose.
 
@@ -55,20 +53,248 @@ Integrar os conhecimentos computacionais da linguagem R e os fundamentos teóric
 
 - **Discutir os resultados analíticos:** Avaliar o comportamento da resistência do concreto demonstrando a compreensão do cálculo e processo matemático subjacente às funções do pacote `leem`.
 
+## 💻 Introdução ao R
+
+### Filosofia, Histórico e Diretrizes Teóricas
+
+A linguagem R é um ambiente de software livre e de código aberto focado em computação estatística e representação gráfica. O projeto foi iniciado em 1991 por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia, motivado pela necessidade de uma alternativa de código aberto para laboratórios de ensino de estatística.
+
+A base sintática da linguagem deriva diretamente da linguagem S (desenvolvida por John Chambers no Bell Labs), enquanto sua semântica baseia-se na linguagem Scheme . A partir de 1997, a manutenção e evolução do núcleo do sistema passaram a ser geridas pelo R Core Team (composto por pesquisadores voluntários como Brian Ripley e Paul Murrell), acompanhado do surgimento da rede oficial de repositórios CRAN (Comprehensive R Archive Network).
+
+Diferente de sistemas proprietários fechados que funcionam como "caixas-pretas", o caráter de código aberto do R viabiliza que qualquer usuário inspecione o código de baixo nível de suas funções (closures) digitando o nome do objeto diretamente no console.
+
+No fluxo de trabalho moderno, o interpretador nativo da linguagem é integrado à IDE RStudio, cuja interface organiza-se em quatro quadrantes padronizados: Script (persistencia de rotinas), Console (processamento imediato), Environment/History (memória ativa e log de comandos) e Plots/Packages/Files/Help (visualização de saídas e manuais de ajuda autossuficientes).
+
 ------------------------------------------------------------------------
 
-## 📚 Fundamentação Teórica
+### Os Três Princípios de John Chambers
 
-Apresente os conceitos principais:
+A arquitetura de software e a engenharia do R são determinadas por três princípios estruturais definidos por John Chambers:
 
-- Média
-- Variância
-- Desvio padrão
-- Amostragem
+- **O Princípio do Objeto:** "Tudo o que existe em R é um objeto";
 
-$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+- **O Princípio da Função:** "Tudo o que acontece em R é uma chamada de função";
+
+- **O Princípio da Interface:** "As interfaces para outros programas são parte do R".
 
 ------------------------------------------------------------------------
+
+### Aspectos Sintáticos Básicos e Comandos Elementares
+
+A *Sintaxe* determina a forma de escrita legítima do código, ao passo que a *Semântica* determina o comportamento e a interpretação desse código pelo sistema.
+
+- **Comentários:** Qualquer linha ou trecho iniciado pelo caractere cerquilha *(#)* é interpretado como comentário e ignorado pelo interpretador;
+
+- **Nomes Sintáticos:** Variáveis e objetos válidos em R devem consistir estritamente de letras, dígitos, pontos e caracteres de sublinha (\_). Eles não podem ser iniciados por dígitos, caracteres de sublinha ou pontos seguidos de números. O R é estritamente sensível a maiúsculas e minúsculas (case-sensitive) e reserva palavras-chave do sistema (TRUE, FALSE, if, for, function, etc.) que não podem ser associadas a objetos. Nomes não sintáticos podem ser convertidos em sintáticos utilizando a função make.names().;
+
+- **Atribuição vs. Igualdade:** O *R* diferencia comandos de declaração (expressões que geram saídas na tela) de comandos de atribuição. A vinculação estável de nomes a objetos na memória deve utilizar prioritariamente a seta à esquerda \<-. O uso do sinal de igual = deve ser reservado estritamente para a definição e declaração de argumentos internos em chamadas de funções;
+
+- **Supressão de Exibição:** O uso da função Invisible() permite ocultar a saída impressa no console ao suprimir a chamada interna automática da função print;
+
+- **Persistência da Sessão:** Ao encerrar o *R*, a gravação do espaço de trabalho gera os arquivos ocultos .RData (armazena os objetos criados no Global Environment) e .Rhistory (armazena os comandos executados);
+
+------------------------------------------------------------------------
+
+### Tipagem Física e Estruturas de Dados Nativas
+
+Internamente, o *R* gerencia os dados por meio de 24 tipos físicos de objetos nativos codificados em *C*, modificáveis apenas pelos mantenedores do sistema. Cada objeto carrega dois atributos intrínsecos imutáveis: comprimento (length) e modo (mode). A tipagem real do baixo nível (em *C*) é acessada com a função typeof(), enquanto a tipagem baseada em S é verificada com mode().
+
+#### Vetores Atômicos e Regras de Coerção
+
+Os **vetores atômicos** são estruturas unidimensionais homogêneas. Subdividem-se fisicamente em:
+
+- **Lógico (logical):** valores *TRUE* e *FALSE*;
+
+- **Inteiro (integer):** especificado explicitamente com o sufixo *L* (ex: 1L, que ocupa menor capacidade de memória);
+
+- **Real (double / numeric):** representações de precisão dupla;
+
+- **Caractere (character):** cadeias de textos delimitadas por aspas.
+
+Se elementos de naturezas distintas são inseridos no mesmo vetor por concatenação com a função c(), ocorre uma coerção implícita automática, respeitando a precedência: character \> numeric \> logical.
+
+O operador de sequência (:) é otimizado fisicamente para armazenar apenas o primeiro e o último valor na memória, consumindo recursos mínimos se comparado à concatenação de grandes sequências via c().
+
+#### Valores Especiais
+
+A linguagem R reserva comportamentos semânticos específicos para dados excepcionais:
+
+- **NA (Not Available):** Representa a ausência de informação física (um dado omitido no mundo real). É um valor lógico sob a tipagem C que se adapta dinamicamente à classe do vetor onde está inserido. O NA preserva espaço de memória e afeta o comprimento (length()) do vetoR;
+
+- **NaN (Not a Number):** Indica indeterminações matemáticas (como 0/0). Sob o ponto de vista físico, é tratado como um tipo real de dupla precisão (double);
+
+- **NULL:** Representa a ausência de objeto (uma estrutura vazia). É o único tipo que não possui modo ou comprimento intrínseco, sendo ignorado na concatenação;
+
+- **Inf / -Inf:** Representam valores que tendem ao infinito positivo ou negativo na reta real.
+
+#### A Regra de Reciclagem
+
+Em operações aritméticas elementares envolvendo vetores atômicos de comprimentos desiguais, o *R* estende de forma recursiva os elementos do vetor menor até que este alcance o mesmo comprimento do vetor maior, executando a conta e emitindo um aviso de incompatibilidade (*warning*) se os tamanhos não forem múltiplos.
+
+#### Atributos como Metadados: Matrizes e Arrays
+
+As estruturas bidimensionais (*matrizes*) e multidimensionais (*arrays*) não existem como objetos físicos nativos na linguagem R; representam vetores atômicos comuns aos quais é adicionado o atributo de dimensão dim (metadado armazenado em formato de lista).
+
+- **Matriz:** Atributo dim de comprimento 2 \[linha, coluna\]. O preenchimento padrão com matrix() ocorre por colunas (byrow = FALSE), podendo ser alterado para linha por linha (byrow = TRUE);
+
+- **Array:** Atributo dim de comprimento igual ou superior a 3 \[linha, coluna, matriz\];
+
+- **Indexação:** Realizada por coordenadas separadas por vírgula dentro de colchetes simples: \[linha, coluna\] para matrizes e \[linha, coluna, matriz\] para arrays. Ocultar um parâmetro extrai a dimensão inteira correspondente (ex: x\[, 1\] para extrair a primeira coluna);
+
+#### Listas
+
+As listas constituem vetores complexos, heterogêneos e recursivos. Podem agrupar objetos de quaisquer naturezas (matrizes, funções, data frames e outras listas) . Fisicamente, operam como ponteiros em linguagem C apontando para diferentes endereços de memória. A indexação ocorre por colchetes duplos \[\[\]\] em elementos não nominados ou pelo operador de cifrão *\$* em posições que receberam nomes.
+
+#### Quadros de Dados (Data Frames)
+
+O quadro de dados (data frame) é um objeto pertencente à classe S3 "data.frame", estruturado sob a forma física de uma lista. Impõe a restrição de que todas as suas colunas (variáveis) possuam estritamente o mesmo comprimento (número de observações).
+
+- **Criação e Propriedades:** A partir da versão R 4.0, o argumento padrão *stringsAsFactors* da função data.frame() foi alterado para *FALSE*, evitando a coerção automática de strings em fatores;
+
+- **Metadados:** Diferente das listas comuns, o data frame exige a presença simultânea dos atributos class ("data.frame"), names (nomes das colunas) e row.names (identificação física das linhas);
+
+- **Caminho de Busca:** As funções *attach(dados)* e *detach(dados)* anexam ou removem temporariamente os vetores das colunas diretamente no caminho de busca do R, viabilizando a chamada das variáveis diretamente pelo nome sintático, sem exigir o prefixo acompanhado do \*$* (dados$x).
+
+------------------------------------------------------------------------
+
+### Importação, Exportação e Publicação Dinâmica
+
+A importação e a exportação de bases de dados fundamentam-se no Princípio da Interface. Para garantir a leitura correta de planilhas de dados externos pelo R, as planilhas devem ser salvas sem anotações paralelas, em arquivos de texto sob codificação estável (ASCII), com variáveis dispostas em colunas homogêneas e nomes sintáticos (evitando o caractere ponto ., associado a métodos S3; recomenda-se sublinhado \_).
+
+- **Importação:** O mecanismo básico nativo é controlado pela função de baixo nível scan(), que lê elementos de forma sequencial e manual. A função read.table() (e seu derivado mais seguro para bases complexas, o read.csv()) carrega os dados externos no formato de data fram;
+
+- **Exportação:** Arquivos de texto estruturado são gravados com write.table(). A exportação para planilhas do Excel usa writexl::write_xlsx(), a qual, se receber como argumento uma lista de múltiplos data frames, gera abas (sheets) apartadas automaticamente no arquivo resultante. Para tabelas no formato LaTeX, utiliza-se a função xtable() do pacote homônimo.
+
+- **Publicação e Relatórios:** O princípio se estende à compilação de relatórios automatizados por meio de linguagens de marcação. O *R* Markdown (knitr) e o sistema Quarto realizam a costura (weave/knit) de códigos em *R* integrados a marcações traduzindo-os para formatos de saída como HTML, PDF, DOCX e apresentações sob o framework JavaScript revealjs. Painéis interativos e dashboards dinâmicos em tempo real são viabilizados por meio da integração com o pacote Shiny.
+
+------------------------------------------------------------------------
+
+### O Paradigma das Funções na Linguagem R
+
+Na tipagem *C*, verificável com a função typeof(), as funções dividem-se em três modalidades estruturais:
+
+- **Closure:** Funções escritas de forma legível por usuários utilizando a palavra reservada function;
+
+- **Special:** Funções primitivas internas que não avaliam seus argumentos imediatamente (como os colchetes de indexação \[\] ou chaves {});
+
+- **Built-in:** Funções primitivas internas de baixo nível.
+
+#### Propriedades das Closures
+
+Uma função de usuário possui três componentes essenciais:
+
+- **Formals:** A lista de parâmetros e argumentos formais de entrada. Alguns já possuem valores padrões declarados (como decreasing = *FALSE* na ordenação via sort());
+
+- **Body (Corpo):** O cérebro do algoritmo, delimitado por chaves {} (dispensáveis apenas em corpos de comando compostos por uma única linha);
+
+- **Environment:** O ambiente envolvente no qual a função foi gerada (geralmente o Ambiente Global).
+
+A função *return()* não é obrigatória no término do corpo; o R retorna de forma sequencial a última linha que foi avaliada no algoritmo. No entanto, se a última linha consistir de uma atribuição (ex: res \<- x + 1), nada será exibido no console por padrão, uma vez que atribuições não disparam a impressão de tela de forma nativa.
+
+#### Chamadas de Função e Operador Pipe
+
+O *R* permite executar funções sob três formas de fluxo, sendo:
+
+- **Alinhada:** Funções encadeadas sequencialmente de dentro para fora;
+
+- **Intermediária:** O código é fragmentado e cada etapa parcial é salva sob um nome de objeto temporário;
+
+- **Pipe Nativo (\|\>):** Operador binário que direciona o resultado produzido à sua esquerda diretamente como o primeiro argumento da função declarada à sua direita, resultando em códigos lineares limpos e legíveis.
+
+#### Ambientes de Execução, Escopo Léxico e "Novo Começo"
+
+- **Ambiente de Execução:** É um ambiente temporário gerado de forma blindada no instante em que a função é chamada na memória. Ele retém de forma isolada as associações locais de variáveis da execução. Assim que o processamento da função termina de enviar a resposta, esse ambiente temporário é inteiramente destruído pelo sistema;
+
+- **Princípio do Novo Começo:** O *R* inicia toda nova chamada de função a partir de um ambiente de execução inteiramente limpo e zerado, não memorizando os estados das ligações de chamadas passadas;
+
+- **Escopo Léxico:** Caso um determinado objeto invocado no corpo de uma função não seja localizado em seu ambiente de execução temporário, o interpretador buscará o nome subindo hierarquicamente para o ambiente envolvente (onde a função foi fisicamente gerada, ex: Global Environment) antes de retornar um erro.
+
+------------------------------------------------------------------------
+
+### Estruturas de Controle e Otimização de Loops
+
+A lentidão do R em loops geralmente não é culpa da linguagem, mas da falta de pré-alocação de memória e do excesso de cópias de objetos. A melhor solução é evitar loops usando vetorização ou a família apply.
+
+As estruturas nativas de controle de fluxo dividem-se em:
+
+- **if e else:** Estrutura condicional clássica de tamanho unitário (não vetorizada). Escrever explicitamente == TRUE na condição lógica do parêntese é sintaticamente redundante, pois o if já assume a verificação de verdade como seu padrão;
+
+- **ifelse (Vetorizado):** Realiza comparações lógicas elemento a elemento entre vetores. Caso possuam comprimentos diferentes, ativa a regra de reciclagem recursiva dos elementos do vetor menor;
+
+- **switch:** Alternativa limpa que mapeia o fluxo a caminhos específicos sem necessidade de múltiplos blocos if/else encadeados na memóri;
+
+- **repeat:** Repetição contínua de blocos sem critério de parada explícito na declaração. Exige o uso obrigatório de um contador e do comando break interno para interromper o ciclo na memória ativa e evitar loops infinitos. Também suporta o comando next para saltar passadas específicas e continuar a repetição;
+
+- **repeat:** Repetição contínua de blocos sem critério de parada explícito na declaração. Exige o uso obrigatório de um contador e do comando break interno para interromper o ciclo na memória ativa e evitar loops infinitos. Também suporta o comando next para saltar passadas específicas e continuar a repetição;
+
+- **while:** Loop com critério de parada explícito indicado em parênteses na sua declaração. Continua rodando enquanto a condição lógica se mantiver verdadeira. Exige atualização manual de contadores locais no corpo;
+
+- **for:** Estrutura de iteração sofisticada em que o contador, os passos e o critério de parada automática já vêm integrados em sua própria declaração de condição de loop (utilizando o operador de pertinência in), dispensando o programador de atualizar contadores manualmente a cada ciclo.
+
+-------------------------------------------------------------------------------------
+
+### Gestão de Memória, Ambientes e o Caminho de Busca (Search Path)
+
+Os ambientes (environments) constituem estruturas de dados de tipo físico environment encarregadas de armazenar as ligações diretas existentes entre nomes e objetos.
+
+Diferenciam-se das listas por quatro aspectos fundamentais:
+
+- **Chaves exclusivas:** Não admitem nomes duplicados dentro do mesmo ambiente;
+
+- **Ausência de ordenação:** Elementos não possuem posições fixas, inviabilizando qualquer tipo de indexação numérica posicional (como [] ou [], que geram erro). O acesso deve ocorrer estritamente por nomes de chaves utilizando o cifrão $ ou colchetes duplos [[]];
+
+- **Herança hierárquica:** Todos os ambientes na memória (com exceção estrita do ambiente vazio) apontam para um ambiente pai imediato. Se um nome não é encontrado localmente, a varredura prossegue subindo na árvore hierárquica;
+
+- **Ausência de cópia em modificações:** Os ambientes não sofrem duplicação física na memória do sistema quando sofrem alteração local.
+
+------------------------------------------------------------------------------------
+
+### Interfaces com Outras Linguagens e Inovações Tecnológicas
+
+O *R* contorna limitações de desempenho e interface integrando-se a outras linguagens:
+
+- **Python (reticulate):** Compila e executa scripts Python via source_python();
+
+- **C++ (Rcpp):** Processa algoritmos de alta performance direto na memória do R com sourceCpp();
+
+- **Tcl/Tk (tcltk):** Pacote nativo para criar janelas e menus interativos locais.
+
+--------------------------------------------------------------------------------------
+
+### Conclusão e Preparação para o "R Intermediário"
+
+A consolidação das bases de sintaxe, semântica e do caminho de busca confere autonomia teórica para que o estudante analise pacotes de forma robusta e compreenda o fluxo de dados na memória virtual.
+
+--------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|                                                   |
+|:--------------------------------------------------|
+| \## {{< fa laptop >}} Introdução ao R             |
+| \## 📚 Fundamentação Teórica                      |
+| Apresente os conceitos principais:                |
+| \- Média - Variância - Desvio padrão - Amostragem |
+| $$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$       |
 
 ## ⚙️ Metodologia
 
