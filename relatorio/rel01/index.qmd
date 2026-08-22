@@ -1,6 +1,6 @@
 ---
 # Só mude aqui!!!!
-author: "Marco Antônio e Matheus"
+author: "Marco Antônio e Matheus Villela"
 title: "Relatório 01 - Aula prática 01"
 bibliography: referencias.bib
 # A partir daqui nao faca alteracoes!!!!!
@@ -25,7 +25,7 @@ execute:
   message: false
 ---
 
-## 📌 Introdução
+# 📌 Introdução
 
 A análise de dados e a aplicação de métodos estatísticos são ferramentas fundamentais para a tomada de decisão e controle de qualidade, especialmente na Engenharia Civil. Na tecnologia das construções, a avaliação da resistência à compressão do concreto ($f_{ck}$) por meio do ensaio de amostras cilíndricas é um procedimento crucial para garantir a segurança e o desempenho das estruturas. Neste contexto, o domínio de linguagens de programação voltadas para a análise de dados, como o R, permite otimizar o processamento e a interpretação das medições obtidas em laboratório. O presente relatório tem como objetivo principal integrar os conceitos de programação e estatística, dividindo-se em três etapas centrais de desenvolvimento.
 
@@ -35,11 +35,11 @@ Em seguida, o documento traz uma revisão teórica abrangente sobre Estatística
 
 Por fim, a teoria é aplicada na prática por meio da análise de um banco de dados de Engenharia Civil contendo os resultados dos ensaios de resistência à compressão de amostras de concreto. Com o auxílio do pacote `leem` no ambiente R, realiza-se a descrição estatística completa desses dados. Esta etapa engloba a organização, tabulação e apresentação gráfica dos resultados, além do cômputo das medidas de posição, dispersão, assimetria e curtose. O relatório culmina em uma discussão crítica dos resultados encontrados, evidenciando não apenas a facilidade computacional proporcionada pelo pacote `leem`, mas também demonstrando ciência sobre o embasamento matemático e os procedimentos envolvidos no cômputo de cada medida obtida.
 
-## 🎯 Objetivo geral
+# 🎯 Objetivo geral
 
 Integrar os conhecimentos computacionais da linguagem R e os fundamentos teóricos de estatística descritiva para realizar a análise e discussão de um banco de dados sobre amostras de concreto voltado à definição da resistência à compressão, utilizando o pacote `leem` para a tabulação, visualização gráfica e cômputo das medidas de posição, dispersão, assimetria e curtose.
 
-### Objetivos específicos
+## Objetivos específicos
 
 - **Apresentar os fundamentos da linguagem R:** Sintetizar os conceitos de sintaxe e semântica ministrados nas 26 aulas do curso *R Básico 2024*.
 
@@ -53,7 +53,25 @@ Integrar os conhecimentos computacionais da linguagem R e os fundamentos teóric
 
 - **Discutir os resultados analíticos:** Avaliar o comportamento da resistência do concreto demonstrando a compreensão do cálculo e processo matemático subjacente às funções do pacote `leem`.
 
-## 💻 Introdução ao R
+
+
+# ⚙️ Metodologia
+
+
+A metodologia está estruturada em três etapas principais:
+
+**1. Capacitação em R –** Introdução à sintaxe e semântica da linguagem, com ênfase nos conteúdos abordados no curso R Básico 2024, composto por 26 aulas.
+
+**2. Revisão Teórica –** Sistematização dos conceitos fundamentais de estatística descritiva, baseada nos quatro primeiros capítulos do livro EPAEC, complementada pelo estudo de medidas de assimetria e curtose.
+
+**3. Aplicação Prática – **Análise de um conjunto de dados obtidos em ensaios de resistência à compressão axial simples de amostras de concreto e no teste de slump (que mede a consistência do concreto). Esse trabalho foi feito com o pacote leem no R e envolveu a organização e limpeza dos dados, a criação de gráficos, o cálculo de medidas como média, desvio-padrão, assimetria e curtose, além de uma interpretação dos resultados para avaliar se as informações obtidas são pertinentes do ponto de vista técnico.
+
+
+
+
+# 🔍 Resultados e Discussão
+
+## Introdução ao R
 
 ### Filosofia, Histórico e Diretrizes Teóricas
 
@@ -225,8 +243,6 @@ As estruturas nativas de controle de fluxo dividem-se em:
 
 - **repeat:** Repetição contínua de blocos sem critério de parada explícito na declaração. Exige o uso obrigatório de um contador e do comando break interno para interromper o ciclo na memória ativa e evitar loops infinitos. Também suporta o comando next para saltar passadas específicas e continuar a repetição;
 
-- **repeat:** Repetição contínua de blocos sem critério de parada explícito na declaração. Exige o uso obrigatório de um contador e do comando break interno para interromper o ciclo na memória ativa e evitar loops infinitos. Também suporta o comando next para saltar passadas específicas e continuar a repetição;
-
 - **while:** Loop com critério de parada explícito indicado em parênteses na sua declaração. Continua rodando enquanto a condição lógica se mantiver verdadeira. Exige atualização manual de contadores locais no corpo;
 
 - **for:** Estrutura de iteração sofisticada em que o contador, os passos e o critério de parada automática já vêm integrados em sua própria declaração de condição de loop (utilizando o operador de pertinência in), dispensando o programador de atualizar contadores manualmente a cada ciclo.
@@ -267,92 +283,290 @@ A consolidação das bases de sintaxe, semântica e do caminho de busca confere 
 
 --------------------------------------------------------------------------------------
 
+## Revisão sobre a estatística descritiva
 
+### Capítulo 1 - Definições Gerais da Estatística e técnicas de somatórios
 
+A **Estatística** é a ciência responsável por fornecer métodos para
+coletar, organizar, descrever, analisar e interpretar dados, servindo de
+base analítica para a tomada de decisões. Divide-se em três grandes
+ramos:
 
+1.  **Estatística Descritiva (Dedutiva):** Conjunto de técnicas voltadas
+    para a coleta, descrição, organização, tabulação e sintetização dos
+    dados.
+2.  **Probabilidade:** Teoria matemática dedicada a modelar e estudar a
+    incerteza de fenômenos aleatórios.
+3.  **Estatística Inferencial (Indutiva):** Conjunto de técnicas que
+    permitem extrapolar conclusões obtidas de uma amostra para toda a
+    população correspondente.
 
+#### Método Científico / Estatístico
 
+A pesquisa estatística segue uma sequência estruturada:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-|                                                   |
-|:--------------------------------------------------|
-| \## {{< fa laptop >}} Introdução ao R             |
-| \## 📚 Fundamentação Teórica                      |
-| Apresente os conceitos principais:                |
-| \- Média - Variância - Desvio padrão - Amostragem |
-| $$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$       |
-
-## ⚙️ Metodologia
-
-::: callout-note
-Descreva como o experimento foi realizado.
+::: {.callout-note appearance="simple"}
+**Fluxo do Método:** Identificação do Problema
+$\rightarrow$\$\\rightarrow\$ Formulação de Hipóteses $\rightarrow$
+Revisão de Literatura $\rightarrow$ Plano Amostral $\rightarrow$ Coleta
+e Tratamento de Dados $\rightarrow$ Apresentação $\rightarrow$ Análise
+Estatística $\rightarrow$ Conclusão
 :::
 
-- Materiais utilizados\
-- Procedimento\
-- Número de repetições
+#### Conceitos Fundamentais
+
+- **População (**$N$): Conjunto de todos os elementos (finito ou
+  infinito) que compartilham ao menos uma característica comum de
+  interesse.
+- **Amostra (**$n$): Subconjunto finito e representativo extraído de uma
+  população.
+- **Variável:** Característica de interesse observada nos elementos.
+  - **Qualitativa:** Atributos não numéricos.
+    - *Nominal:* Sem ordenação natural (ex: sexo, cor dos olhos).
+    - *Ordinal:* Existe uma hierarquia/ordem (ex: nível de escolaridade,
+      classe social).
+  - **Quantitativa:** Valores numéricos.
+    - *Discreta:* Resulta de contagens; assume valores inteiros (ex:
+      número de filhos).
+    - *Contínua:* Resulta de medições; assume valores reais em um
+      intervalo (ex: altura, peso).
+
+#### Somatórios ($\sum$)
+
+O símbolo $\sum$ é utilizado para condensar somas extensas:
+
+$$\sum_{i=1}^{n} X_i = X_1 + X_2 + \dots + X_n$$
+
+**Propriedades Algébricas:**
+
+1.  **Soma de uma constante:** $$\sum_{i=1}^{n} c = n \cdot c$$
+
+2.  **Multiplicação por constante:**
+    $$\sum_{i=1}^{n} c \cdot X_i = c \sum_{i=1}^{n} X_i$$
+
+3.  **Distributiva da soma e subtração:**
+    $$\sum_{i=1}^{n} (X_i \pm Y_i) = \sum_{i=1}^{n} X_i \pm \sum_{i=1}^{n} Y_i$$
+
+4.  **Soma dos desvios em relação à média (Propriedade Fundamental):**
+    $$\sum_{i=1}^{n} (X_i - \bar{X}) = 0$$
 
 ------------------------------------------------------------------------
 
-## 🔍 Resultados e Discussão
+### Capítulo 2 - Coleta, Organização e Apresentação dos Dados
 
-Apresente e interprete os resultados obtidos a partir dos dados coletados.
+#### Organização de Dados
 
-- Descreva os principais resultados numéricos (média, variabilidade, etc.).
-- Comente o comportamento dos dados observados nos gráficos.
-- Indique se há presença de valores discrepantes (outliers).
-- Avalie se os dados apresentam simetria ou tendência.
+- **Dados Brutos:** Coleção de dados em seu estado original, sem
+  ordenação.
+- **Rol:** Arranjo dos dados brutos em ordem crescente ou decrescente.
 
-Em seguida, discuta os resultados à luz dos conceitos teóricos:
+#### Representação Tabular de Frequências
 
-- Os resultados estão de acordo com o esperado?
-- Há grande variabilidade? O que isso significa no contexto do experimento?
-- Quais fatores podem ter influenciado os resultados?
-- Existem possíveis fontes de erro experimental?
+- **Frequência Absoluta (**$f_i$): Número de ocorrências de cada
+  valor/categoria $i$.
+- **Frequência Relativa (**$f_{ri}$): Proporção em relação ao total de
+  observações: $$f_{ri} = \frac{f_i}{n}$$
+- **Frequência Percentual (**$f_{\%i}$): $$f_{\%i} = f_{ri} \times 100$$
+- **Frequência Acumulada Abaixo de (**$f_{ac\downarrow}$): Soma
+  acumulada das frequências da menor categoria até a classe atual.
+- **Frequência Acumulada Acima de (**$f_{ac\uparrow}$): Soma acumulada
+  das frequências da maior categoria até a classe atual.
 
-Procure não apenas descrever, mas **interpretar os dados**.
+#### Distribuição em Intervalos de Classe
 
-### 💬 Exemplo de como citar uma referência bibliográfica
+Recomendado para agrupamento de variáveis quantitativas contínuas:
 
-Depois de inserido as informaçõe no arquivo **referencias.bib**, use:
+- **Amplitude Total (**$A_t$): $$A_t = X_{\text{máx}} - X_{\text{mín}}$$
 
-- Segundo @Rbasico2022
-- Tudo é um objeto em R [@Rbasico2022]
+- **Número de Classes (**$k$): Determinado por regra prática ou pela
+  **Regra de Sturges**: $$k \approx 1 + 3{,}322 \cdot \log_{10}(n)$$
 
-### 📊 Análise de Dados
+- **Amplitude do Intervalo de Classe (**$c$):
+  $$c \approx \frac{A_t}{k}$$
 
-```{r}
-distancia <- c(10.2, 9.8, 10.5, 10.1, 9.9, 10.3)
-distancia
-```
+- **Ponto Médio da Classe (**$\tilde{X}_i$): Representante de todas as
+  observações contidas na classe $i$:
+  $$\tilde{X}_i = \frac{L_{inf} + L_{sup}}{2}$$
 
-## 🧠 Considerações finais
+#### Representação Gráfica
 
-Apresente uma síntese dos principais pontos observados no experimento.
+| Tipo de Variável                    | Gráficos Indicados                  |
+|:-----------------------------------|:-----------------------------------|
+| **Qualitativa / Discreta**          | Barras, Colunas, Setores (Pizza)    |
+| **Quantitativa Contínua (Classes)** | Histograma, Polígono de Frequências |
+| **Frequências Acumuladas**          | Ogiva Crescente / Decrescente       |
 
-- Retome o objetivo da prática e indique se ele foi alcançado.
-- Destaque os principais aprendizados obtidos.
-- Comente brevemente sobre a qualidade dos dados coletados.
-- Sugira possíveis melhorias no procedimento experimental.
+::: callout-tip
+**Interseção das Ogivas:** O ponto em que a ogiva acumulada crescente se
+cruza com a ogiva acumulada decrescente fornece graficamente o valor
+exato da **Mediana (**$Md$).
+:::
 
-Evite repetir apenas os resultados; foque nas **conclusões e reflexões** sobre a prática realizada.
+------------------------------------------------------------------------
 
-## Aprenda Quarto
+### Capítulo 3 - Medidas de Posição (Tendência Central)
 
-Acesse [Quarto](https://quarto.org/).
+Sintetizam o conjunto de dados em um valor central de referência.
+
+#### Média Aritmética ($\bar{X}$ para amostra, $\mu$ para população)
+
+Representa o ponto de equilíbrio dos dados. É única e aplicável a
+variáveis quantitativas, porém altamente sensível a valores extremos
+(*outliers*).
+
+- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$
+
+- **Dados Agrupados com Frequências:**
+  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n}$$
+
+- **Dados Agrupados em Classes:**
+  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot \tilde{X}_i}{n}$$
+
+- **Média Aparada:** Descarta simetricamente uma porcentagem dos menores
+  e maiores valores para amenizar o impacto de *outliers*.
+
+#### Mediana ($Md$ ou $\mu_d$)
+
+Valor ordenado central que divide a distribuição em duas partes iguais
+($50\%$ abaixo e $50\%$ acima). Trata-se de uma medida **robusta** a
+valores discrepantes.
+
+- **Dados Não Agrupados:**
+  1.  Ordene os dados em Rol.
+  2.  Se $n$ for **ímpar**, a posição é $P = \frac{n + 1}{2}$:
+      $$Md = X_{(P)}$$
+  3.  Se $n$ for **par**, calcula-se a média dos dois elementos
+      centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$
+- **Dados Agrupados em Classes (Interpolação Linear):**
+  $$Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c$$
+  *Onde:* $L_i$ é o limite inferior da classe mediana, $F_{ac\_ant}$ é a
+  frequência acumulada anterior, $f_{md}$ é a frequência absoluta da
+  classe mediana e $c$ é a amplitude da classe.
+
+#### Moda ($Mo$ ou $\mu_o$)
+
+Valor de ocorrência mais frequente no conjunto de dados.
+
+- **Classificação:**
+
+  - **Amodal:** Sem repetição de dados.
+  - **Unimodal / Bimodal / Multimodal:** Apresenta 1, 2 ou mais modas.
+
+- **Relação Empírica de Pearson:** $$Mo = 3 \cdot Md - 2 \cdot \bar{X}$$
+
+- **Moda de Czuber (para dados agrupados em classes):**
+  $$Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c$$
+  *Onde:* $\Delta_1 = f_{mo} - f_{ant}$ e
+  $\Delta_2 = f_{mo} - f_{post}$.
+
+------------------------------------------------------------------------
+
+### Capítulo 4 - Medidas de Dispersão (Variabilidade)
+
+Caracterizam a variação e o afastamento das observações em relação à
+média aritmética.
+
+#### Amplitude Total ($A_t$)
+
+Diferença entre o maior e o menor valor observado:
+
+$$A_t = X_{\text{máx}} - X_{\text{mín}}$$
+
+#### Variância ($S^2$ ou $\sigma^2$)
+
+Média dos desvios quadráticos das observações em relação à média.
+
+- **Variância Populacional (**$\sigma^2$):
+  $$\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N}$$
+
+- **Variância Amostral (**$S^2$): Utiliza o denominador $n-1$ (graus de
+  liberdade) para corrigir o viés estatístico do estimador:
+  $$S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1}$$
+
+- **Fórmula Prática Computacional (Amostral):**
+  $$S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1}$$
+
+#### Desvio Padrão ($S$ ou $\sigma$)
+
+Raiz quadrada positiva da variância, retornando a variabilidade para a
+mesma unidade original da variável:
+
+$$S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2}$$
+
+#### Coeficiente de Variação ($CV$)
+
+Medida adimensional de dispersão relativa expressa em percentual,
+permitindo a comparação de variabilidade entre grupos com escalas ou
+médias distintas:
+
+$$CV = \left( \frac{S}{\bar{X}} \right) \times 100\%$$
+
+#### Erro Padrão da Média ($S_{\bar{X}}$ ou $\sigma_{\bar{X}}$)
+
+Mede a precisão e a variabilidade das possíveis médias amostrais em
+relação à média populacional:
+
+$$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$
+
+------------------------------------------------------------------------
+
+### Capítulo 5 - Assimetria (Skewness)
+
+A Assimetria descreve o desvio de simetria de uma curva de distribuição
+de frequências em relação ao seu centro (média).
+
+#### Classificação da Assimetria
+
+::: callout-note
+- **Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. Os
+  dois lados da distribuição são espelhados.
+  $$\bar{X} = Md = Mo \implies A_s = 0$$
+- **Assimétrica Positiva (à Direita):** Apresenta cauda mais longa à
+  direita, indicando concentração de dados nos valores abaixo da média.
+  $$Mo < Md < \bar{X} \implies A_s > 0$$
+- **Assimétrica Negativa (à Esquerda):** Apresenta cauda mais longa à
+  esquerda, indicando concentração de dados nos valores acima da média.
+  $$\bar{X} < Md < Mo \implies A_s < 0$$
+:::
+
+#### Fórmulas de Cálculo
+
+- **Primeiro Coeficiente de Pearson:** $$A_S = \frac{\bar{X} - Mo}{S}$$
+
+- **Segundo Coeficiente de Pearson:**
+  $$A_S = \frac{3(\bar{X} - Md)}{S}$$
+
+- **Coeficiente de Fisher (**$g_1$): Baseado no terceiro momento central
+  $m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3$: $$g_1 = \frac{m_3}{S^3}$$
+  *(O intervalo* $[-1, +1]$ costuma ser considerado como indicador de
+  uma distribuição aproximadamente simétrica).
+
+------------------------------------------------------------------------
+
+### Capítulo 6 - Curtose (Kurtosis)
+
+A Curtose mede o grau de achatamento ou afunilamento (pico) da curva de
+distribuição de frequências em comparação com a Curva Normal padrão de
+referência.
+
+#### Classificação da Curtose
+
+- **Mesocúrtica:** Apresenta o mesmo grau de achatamento da distribuição
+  normal padrão ($g_2 = 0$ ou $K = 3$).
+- **Leptocúrtica:** Curva mais estreita e pontiaguda que a normal
+  ($g_2 > 0$ ou $K > 3$), indicando alta concentração de dados ao redor
+  do centro.
+- **Platicúrtica:** Curva mais achatada e espalhada que a normal
+  ($g_2 < 0$ ou $K < 3$), indicando dados mais distribuídos de forma
+  homogênea.
+
+#### Fórmulas de Cálculo
+
+- **Coeficiente de Fisher (**$g_2$): Baseado no quarto momento central
+  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$:
+  $$g_2 = \frac{m_4}{S^4} - 3$$
+
+
+
 
 ## 📖 Referências
