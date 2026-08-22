@@ -472,9 +472,11 @@ Valor de ocorrência mais frequente no conjunto de dados.
   $$Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c$$ {#eq-nome}
   
   *Onde:* 
-  $\Delta_1 = f_{mo} - f_{ant}$ {#eq-nome}
+  $$\Delta_1 = f_{mo} - f_{ant}$$ {#eq-nome}
+  
   e
-  $\Delta_2 = f_{mo} - f_{post}$ {#eq-nome}.
+  
+  $$\Delta_2 = f_{mo} - f_{post}$$ {#eq-nome}.
 
 ------------------------------------------------------------------------
 

@@ -186,7 +186,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">22/08/2026, 18:25</p>
+      <p class="date">22/08/2026, 18:29</p>
     </div>
   </div>
   
@@ -571,7 +571,9 @@ Dica
 </ul></li>
 <li><p><strong>Relação Empírica de Pearson:</strong> <span id="eq-nome"><span class="math display">\[Mo = 3 \cdot Md - 2 \cdot \bar{X} \tag{17}\]</span></span></p></li>
 <li><p><strong>Moda de Czuber (para dados agrupados em classes):</strong> <span id="eq-nome"><span class="math display">\[Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c \tag{18}\]</span></span></p>
-<p><em>Onde:</em> <span class="math inline">\(\Delta_1 = f_{mo} - f_{ant}\)</span> {#eq-nome} e <span class="math inline">\(\Delta_2 = f_{mo} - f_{post}\)</span> {#eq-nome}.</p></li>
+<p><em>Onde:</em> <span id="eq-nome"><span class="math display">\[\Delta_1 = f_{mo} - f_{ant} \tag{19}\]</span></span></p>
+<p>e</p>
+<p><span class="math display">\[\Delta_2 = f_{mo} - f_{post}\]</span> {#eq-nome}.</p></li>
 </ul>
 <hr>
 </section>
@@ -582,31 +584,31 @@ Dica
 <section id="amplitude-total-a_t" class="level4" data-number="4.2.4.1">
 <h4 data-number="4.2.4.1" class="anchored" data-anchor-id="amplitude-total-a_t"><span class="header-section-number">4.2.4.1</span> Amplitude Total (<span class="math inline">\(A_t\)</span>)</h4>
 <p>Diferença entre o maior e o menor valor observado:</p>
-<p><span id="eq-nome"><span class="math display">\[A_t = X_{\text{máx}} - X_{\text{mín}} \tag{19}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[A_t = X_{\text{máx}} - X_{\text{mín}} \tag{20}\]</span></span></p>
 </section>
 <section id="variância-s2-ou-sigma2" class="level4" data-number="4.2.4.2">
 <h4 data-number="4.2.4.2" class="anchored" data-anchor-id="variância-s2-ou-sigma2"><span class="header-section-number">4.2.4.2</span> Variância (<span class="math inline">\(S^2\)</span> ou <span class="math inline">\(\sigma^2\)</span>)</h4>
 <p>Média dos desvios quadráticos das observações em relação à média.</p>
 <ul>
-<li><p><strong>Variância Populacional (</strong><span class="math inline">\(\sigma^2\)</span>): <span id="eq-nome"><span class="math display">\[\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N} \tag{20}\]</span></span></p></li>
-<li><p><strong>Variância Amostral (</strong><span class="math inline">\(S^2\)</span>): Utiliza o denominador <span class="math inline">\(n-1\)</span> (graus de liberdade) para corrigir o viés estatístico do estimador: <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1} \tag{21}\]</span></span></p></li>
-<li><p><strong>Fórmula Prática Computacional (Amostral):</strong> <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1} \tag{22}\]</span></span></p></li>
+<li><p><strong>Variância Populacional (</strong><span class="math inline">\(\sigma^2\)</span>): <span id="eq-nome"><span class="math display">\[\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N} \tag{21}\]</span></span></p></li>
+<li><p><strong>Variância Amostral (</strong><span class="math inline">\(S^2\)</span>): Utiliza o denominador <span class="math inline">\(n-1\)</span> (graus de liberdade) para corrigir o viés estatístico do estimador: <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1} \tag{22}\]</span></span></p></li>
+<li><p><strong>Fórmula Prática Computacional (Amostral):</strong> <span id="eq-nome"><span class="math display">\[S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1} \tag{23}\]</span></span></p></li>
 </ul>
 </section>
 <section id="desvio-padrão-s-ou-sigma" class="level4" data-number="4.2.4.3">
 <h4 data-number="4.2.4.3" class="anchored" data-anchor-id="desvio-padrão-s-ou-sigma"><span class="header-section-number">4.2.4.3</span> Desvio Padrão (<span class="math inline">\(S\)</span> ou <span class="math inline">\(\sigma\)</span>)</h4>
 <p>Raiz quadrada positiva da variância, retornando a variabilidade para a mesma unidade original da variável:</p>
-<p><span id="eq-nome"><span class="math display">\[S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2} \tag{23}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2} \tag{24}\]</span></span></p>
 </section>
 <section id="coeficiente-de-variação-cv" class="level4" data-number="4.2.4.4">
 <h4 data-number="4.2.4.4" class="anchored" data-anchor-id="coeficiente-de-variação-cv"><span class="header-section-number">4.2.4.4</span> Coeficiente de Variação (<span class="math inline">\(CV\)</span>)</h4>
 <p>Medida adimensional de dispersão relativa expressa em percentual, permitindo a comparação de variabilidade entre grupos com escalas ou médias distintas:</p>
-<p><span id="eq-nome"><span class="math display">\[CV = \left( \frac{S}{\bar{X}} \right) \times 100\% \tag{24}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[CV = \left( \frac{S}{\bar{X}} \right) \times 100\% \tag{25}\]</span></span></p>
 </section>
 <section id="erro-padrão-da-média-s_barx-ou-sigma_barx" class="level4" data-number="4.2.4.5">
 <h4 data-number="4.2.4.5" class="anchored" data-anchor-id="erro-padrão-da-média-s_barx-ou-sigma_barx"><span class="header-section-number">4.2.4.5</span> Erro Padrão da Média (<span class="math inline">\(S_{\bar{X}}\)</span> ou <span class="math inline">\(\sigma_{\bar{X}}\)</span>)</h4>
 <p>Mede a precisão e a variabilidade das possíveis médias amostrais em relação à média populacional:</p>
-<p><span id="eq-nome"><span class="math display">\[S_{\bar{X}} = \frac{S}{\sqrt{n}} \tag{25}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[S_{\bar{X}} = \frac{S}{\sqrt{n}} \tag{26}\]</span></span></p>
 <hr>
 </section>
 </section>
@@ -626,9 +628,9 @@ Nota
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><strong>Simétrica:</strong> Ocorre quando a média, a mediana e a moda coincidem. Os dois lados da distribuição são espelhados. <span id="eq-nome"><span class="math display">\[\bar{X} = Md = Mo \implies A_s = 0 \tag{26}\]</span></span></p></li>
-<li><p><strong>Assimétrica Positiva (à Direita):</strong> Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média. <span id="eq-nome"><span class="math display">\[Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0 \tag{27}\]</span></span></p></li>
-<li><p><strong>Assimétrica Negativa (à Esquerda):</strong> Apresenta cauda mais longa à esquerda, indicando concentração de dados nos valores acima da média. <span id="eq-nome"><span class="math display">\[\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0 \tag{28}\]</span></span></p></li>
+<li><p><strong>Simétrica:</strong> Ocorre quando a média, a mediana e a moda coincidem. Os dois lados da distribuição são espelhados. <span id="eq-nome"><span class="math display">\[\bar{X} = Md = Mo \implies A_s = 0 \tag{27}\]</span></span></p></li>
+<li><p><strong>Assimétrica Positiva (à Direita):</strong> Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média. <span id="eq-nome"><span class="math display">\[Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0 \tag{28}\]</span></span></p></li>
+<li><p><strong>Assimétrica Negativa (à Esquerda):</strong> Apresenta cauda mais longa à esquerda, indicando concentração de dados nos valores acima da média. <span id="eq-nome"><span class="math display">\[\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0 \tag{29}\]</span></span></p></li>
 </ul>
 </div>
 </div>
@@ -636,9 +638,9 @@ Nota
 <section id="fórmulas-de-cálculo" class="level4" data-number="4.2.5.2">
 <h4 data-number="4.2.5.2" class="anchored" data-anchor-id="fórmulas-de-cálculo"><span class="header-section-number">4.2.5.2</span> Fórmulas de Cálculo</h4>
 <ul>
-<li><p><strong>Primeiro Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{\bar{X} - Mo}{S} \tag{29}\]</span></span></p></li>
-<li><p><strong>Segundo Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{3(\bar{X} - Md)}{S} \tag{30}\]</span></span></p></li>
-<li><p><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_1\)</span>): Baseado no terceiro momento central <span class="math inline">\(m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3\)</span>: <span id="eq-nome"><span class="math display">\[g_1 = \frac{m_3}{S^3} \tag{31}\]</span></span></p>
+<li><p><strong>Primeiro Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{\bar{X} - Mo}{S} \tag{30}\]</span></span></p></li>
+<li><p><strong>Segundo Coeficiente de Pearson:</strong> <span id="eq-nome"><span class="math display">\[A_S = \frac{3(\bar{X} - Md)}{S} \tag{31}\]</span></span></p></li>
+<li><p><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_1\)</span>): Baseado no terceiro momento central <span class="math inline">\(m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3\)</span>: <span id="eq-nome"><span class="math display">\[g_1 = \frac{m_3}{S^3} \tag{32}\]</span></span></p>
 <p><em>(O intervalo</em> <span class="math inline">\([-1, +1]\)</span> costuma ser considerado como indicador de uma distribuição aproximadamente simétrica).</p></li>
 </ul>
 <hr>
@@ -658,7 +660,7 @@ Nota
 <section id="fórmulas-de-cálculo-1" class="level4" data-number="4.2.6.2">
 <h4 data-number="4.2.6.2" class="anchored" data-anchor-id="fórmulas-de-cálculo-1"><span class="header-section-number">4.2.6.2</span> Fórmulas de Cálculo</h4>
 <ul>
-<li><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_2\)</span>): Baseado no quarto momento central <span class="math inline">\(m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[g_2 = \frac{m_4}{S^4} - 3 \tag{32}\]</span></span></li>
+<li><strong>Coeficiente de Fisher (</strong><span class="math inline">\(g_2\)</span>): Baseado no quarto momento central <span class="math inline">\(m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4\)</span> {#eq-nome}: <span id="eq-nome"><span class="math display">\[g_2 = \frac{m_4}{S^4} - 3 \tag{33}\]</span></span></li>
 </ul>
 </section>
 </section>
@@ -1597,127 +1599,129 @@ Nota
 <span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a>  $$Mo = L_i + \left<span class="co">[</span><span class="ot"> \frac{\Delta_1}{\Delta_1 + \Delta_2} \right</span><span class="co">]</span> \cdot c$$ {#eq-nome}</span>
 <span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a>  *Onde:* </span>
-<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a>  $\Delta_1 = f_{mo} - f_{ant}$ {#eq-nome}</span>
-<span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a>  e</span>
-<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a>  $\Delta_2 = f_{mo} - f_{post}$ {#eq-nome}.</span>
-<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a>  $$\Delta_1 = f_{mo} - f_{ant}$$ {#eq-nome}</span>
+<span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a>  e</span>
+<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>  $$\Delta_2 = f_{mo} - f_{post}$$ {#eq-nome}.</span>
 <span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capítulo 4 - Medidas de Dispersão (Variabilidade)</span></span>
+<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a>Caracterizam a variação e o afastamento das observações em relação à</span>
-<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a>média aritmética.</span>
-<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Amplitude Total ($A_t$)</span></span>
+<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capítulo 4 - Medidas de Dispersão (Variabilidade)</span></span>
+<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a>Caracterizam a variação e o afastamento das observações em relação à</span>
+<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a>média aritmética.</span>
 <span id="cb1-487"><a href="#cb1-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a>Diferença entre o maior e o menor valor observado:</span>
+<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Amplitude Total ($A_t$)</span></span>
 <span id="cb1-489"><a href="#cb1-489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a>$$A_t = X_{\text{máx}} - X_{\text{mín}}$$ {#eq-nome}</span>
+<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a>Diferença entre o maior e o menor valor observado:</span>
 <span id="cb1-491"><a href="#cb1-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Variância ($S^2$ ou $\sigma^2$)</span></span>
+<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a>$$A_t = X_{\text{máx}} - X_{\text{mín}}$$ {#eq-nome}</span>
 <span id="cb1-493"><a href="#cb1-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-494"><a href="#cb1-494" aria-hidden="true" tabindex="-1"></a>Média dos desvios quadráticos das observações em relação à média.</span>
+<span id="cb1-494"><a href="#cb1-494" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Variância ($S^2$ ou $\sigma^2$)</span></span>
 <span id="cb1-495"><a href="#cb1-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variância Populacional (**$\sigma^2$):</span>
-<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a>  $$\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N}$$ {#eq-nome}</span>
-<span id="cb1-498"><a href="#cb1-498" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-499"><a href="#cb1-499" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variância Amostral (**$S^2$): Utiliza o denominador $n-1$ (graus de</span>
-<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a>  liberdade) para corrigir o viés estatístico do estimador:</span>
-<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a>  $$S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1}$$ {#eq-nome}</span>
-<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fórmula Prática Computacional (Amostral):**</span>
-<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a>  $$S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1}$$ {#eq-nome}</span>
-<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Desvio Padrão ($S$ ou $\sigma$)</span></span>
+<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a>Média dos desvios quadráticos das observações em relação à média.</span>
+<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-498"><a href="#cb1-498" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variância Populacional (**$\sigma^2$):</span>
+<span id="cb1-499"><a href="#cb1-499" aria-hidden="true" tabindex="-1"></a>  $$\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N}$$ {#eq-nome}</span>
+<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variância Amostral (**$S^2$): Utiliza o denominador $n-1$ (graus de</span>
+<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a>  liberdade) para corrigir o viés estatístico do estimador:</span>
+<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a>  $$S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1}$$ {#eq-nome}</span>
+<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fórmula Prática Computacional (Amostral):**</span>
+<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a>  $$S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1}$$ {#eq-nome}</span>
 <span id="cb1-507"><a href="#cb1-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a>Raiz quadrada positiva da variância, retornando a variabilidade para a</span>
-<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a>mesma unidade original da variável:</span>
-<span id="cb1-510"><a href="#cb1-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-511"><a href="#cb1-511" aria-hidden="true" tabindex="-1"></a>$$S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2}$$ {#eq-nome}</span>
+<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Desvio Padrão ($S$ ou $\sigma$)</span></span>
+<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-510"><a href="#cb1-510" aria-hidden="true" tabindex="-1"></a>Raiz quadrada positiva da variância, retornando a variabilidade para a</span>
+<span id="cb1-511"><a href="#cb1-511" aria-hidden="true" tabindex="-1"></a>mesma unidade original da variável:</span>
 <span id="cb1-512"><a href="#cb1-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-513"><a href="#cb1-513" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Coeficiente de Variação ($CV$)</span></span>
+<span id="cb1-513"><a href="#cb1-513" aria-hidden="true" tabindex="-1"></a>$$S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2}$$ {#eq-nome}</span>
 <span id="cb1-514"><a href="#cb1-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-515"><a href="#cb1-515" aria-hidden="true" tabindex="-1"></a>Medida adimensional de dispersão relativa expressa em percentual,</span>
-<span id="cb1-516"><a href="#cb1-516" aria-hidden="true" tabindex="-1"></a>permitindo a comparação de variabilidade entre grupos com escalas ou</span>
-<span id="cb1-517"><a href="#cb1-517" aria-hidden="true" tabindex="-1"></a>médias distintas:</span>
-<span id="cb1-518"><a href="#cb1-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-519"><a href="#cb1-519" aria-hidden="true" tabindex="-1"></a>$$CV = \left( \frac{S}{\bar{X}} \right) \times 100\%$$ {#eq-nome}</span>
+<span id="cb1-515"><a href="#cb1-515" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Coeficiente de Variação ($CV$)</span></span>
+<span id="cb1-516"><a href="#cb1-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-517"><a href="#cb1-517" aria-hidden="true" tabindex="-1"></a>Medida adimensional de dispersão relativa expressa em percentual,</span>
+<span id="cb1-518"><a href="#cb1-518" aria-hidden="true" tabindex="-1"></a>permitindo a comparação de variabilidade entre grupos com escalas ou</span>
+<span id="cb1-519"><a href="#cb1-519" aria-hidden="true" tabindex="-1"></a>médias distintas:</span>
 <span id="cb1-520"><a href="#cb1-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-521"><a href="#cb1-521" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Erro Padrão da Média ($S_{\bar{X}}$ ou $\sigma_{\bar{X}}$)</span></span>
+<span id="cb1-521"><a href="#cb1-521" aria-hidden="true" tabindex="-1"></a>$$CV = \left( \frac{S}{\bar{X}} \right) \times 100\%$$ {#eq-nome}</span>
 <span id="cb1-522"><a href="#cb1-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-523"><a href="#cb1-523" aria-hidden="true" tabindex="-1"></a>Mede a precisão e a variabilidade das possíveis médias amostrais em</span>
-<span id="cb1-524"><a href="#cb1-524" aria-hidden="true" tabindex="-1"></a>relação à média populacional:</span>
-<span id="cb1-525"><a href="#cb1-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-526"><a href="#cb1-526" aria-hidden="true" tabindex="-1"></a>$$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$ {#eq-nome}</span>
+<span id="cb1-523"><a href="#cb1-523" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Erro Padrão da Média ($S_{\bar{X}}$ ou $\sigma_{\bar{X}}$)</span></span>
+<span id="cb1-524"><a href="#cb1-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-525"><a href="#cb1-525" aria-hidden="true" tabindex="-1"></a>Mede a precisão e a variabilidade das possíveis médias amostrais em</span>
+<span id="cb1-526"><a href="#cb1-526" aria-hidden="true" tabindex="-1"></a>relação à média populacional:</span>
 <span id="cb1-527"><a href="#cb1-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-528"><a href="#cb1-528" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-528"><a href="#cb1-528" aria-hidden="true" tabindex="-1"></a>$$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$ {#eq-nome}</span>
 <span id="cb1-529"><a href="#cb1-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-530"><a href="#cb1-530" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capítulo 5 - Assimetria (Skewness)</span></span>
+<span id="cb1-530"><a href="#cb1-530" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb1-531"><a href="#cb1-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-532"><a href="#cb1-532" aria-hidden="true" tabindex="-1"></a>A Assimetria descreve o desvio de simetria de uma curva de distribuição</span>
-<span id="cb1-533"><a href="#cb1-533" aria-hidden="true" tabindex="-1"></a>de frequências em relação ao seu centro (média).</span>
-<span id="cb1-534"><a href="#cb1-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-535"><a href="#cb1-535" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Classificação da Assimetria</span></span>
+<span id="cb1-532"><a href="#cb1-532" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capítulo 5 - Assimetria (Skewness)</span></span>
+<span id="cb1-533"><a href="#cb1-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-534"><a href="#cb1-534" aria-hidden="true" tabindex="-1"></a>A Assimetria descreve o desvio de simetria de uma curva de distribuição</span>
+<span id="cb1-535"><a href="#cb1-535" aria-hidden="true" tabindex="-1"></a>de frequências em relação ao seu centro (média).</span>
 <span id="cb1-536"><a href="#cb1-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-537"><a href="#cb1-537" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb1-538"><a href="#cb1-538" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. Os</span>
-<span id="cb1-539"><a href="#cb1-539" aria-hidden="true" tabindex="-1"></a>  dois lados da distribuição são espelhados.</span>
-<span id="cb1-540"><a href="#cb1-540" aria-hidden="true" tabindex="-1"></a>  $$\bar{X} = Md = Mo \implies A_s = 0$$ {#eq-nome}</span>
-<span id="cb1-541"><a href="#cb1-541" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-542"><a href="#cb1-542" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Assimétrica Positiva (à Direita):** Apresenta cauda mais longa à</span>
-<span id="cb1-543"><a href="#cb1-543" aria-hidden="true" tabindex="-1"></a>  direita, indicando concentração de dados nos valores abaixo da média.</span>
-<span id="cb1-544"><a href="#cb1-544" aria-hidden="true" tabindex="-1"></a>  $$Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0$$ {#eq-nome}</span>
-<span id="cb1-545"><a href="#cb1-545" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-546"><a href="#cb1-546" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Assimétrica Negativa (à Esquerda):** Apresenta cauda mais longa à</span>
-<span id="cb1-547"><a href="#cb1-547" aria-hidden="true" tabindex="-1"></a>  esquerda, indicando concentração de dados nos valores acima da média.</span>
-<span id="cb1-548"><a href="#cb1-548" aria-hidden="true" tabindex="-1"></a>  $$\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0$$ {#eq-nome}</span>
-<span id="cb1-549"><a href="#cb1-549" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-550"><a href="#cb1-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Fórmulas de Cálculo</span></span>
+<span id="cb1-537"><a href="#cb1-537" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Classificação da Assimetria</span></span>
+<span id="cb1-538"><a href="#cb1-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-539"><a href="#cb1-539" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb1-540"><a href="#cb1-540" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. Os</span>
+<span id="cb1-541"><a href="#cb1-541" aria-hidden="true" tabindex="-1"></a>  dois lados da distribuição são espelhados.</span>
+<span id="cb1-542"><a href="#cb1-542" aria-hidden="true" tabindex="-1"></a>  $$\bar{X} = Md = Mo \implies A_s = 0$$ {#eq-nome}</span>
+<span id="cb1-543"><a href="#cb1-543" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-544"><a href="#cb1-544" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Assimétrica Positiva (à Direita):** Apresenta cauda mais longa à</span>
+<span id="cb1-545"><a href="#cb1-545" aria-hidden="true" tabindex="-1"></a>  direita, indicando concentração de dados nos valores abaixo da média.</span>
+<span id="cb1-546"><a href="#cb1-546" aria-hidden="true" tabindex="-1"></a>  $$Mo &lt; Md &lt; \bar{X} \implies A_s &gt; 0$$ {#eq-nome}</span>
+<span id="cb1-547"><a href="#cb1-547" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-548"><a href="#cb1-548" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Assimétrica Negativa (à Esquerda):** Apresenta cauda mais longa à</span>
+<span id="cb1-549"><a href="#cb1-549" aria-hidden="true" tabindex="-1"></a>  esquerda, indicando concentração de dados nos valores acima da média.</span>
+<span id="cb1-550"><a href="#cb1-550" aria-hidden="true" tabindex="-1"></a>  $$\bar{X} &lt; Md &lt; Mo \implies A_s &lt; 0$$ {#eq-nome}</span>
+<span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-552"><a href="#cb1-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Primeiro Coeficiente de Pearson:**</span>
-<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a>  $$A_S = \frac{\bar{X} - Mo}{S}$$ {#eq-nome}</span>
-<span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Segundo Coeficiente de Pearson:**</span>
-<span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a>  $$A_S = \frac{3(\bar{X} - Md)}{S}$$ {#eq-nome}</span>
-<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coeficiente de Fisher (**$g_1$): Baseado no terceiro momento central</span>
-<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a>  $m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3$: $$g_1 = \frac{m_3}{S^3}$$ {#eq-nome}</span>
-<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a>  *(O intervalo* $<span class="co">[</span><span class="ot">-1, +1</span><span class="co">]</span>$ costuma ser considerado como indicador de</span>
-<span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a>  uma distribuição aproximadamente simétrica).</span>
-<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-565"><a href="#cb1-565" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Fórmulas de Cálculo</span></span>
+<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Primeiro Coeficiente de Pearson:**</span>
+<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a>  $$A_S = \frac{\bar{X} - Mo}{S}$$ {#eq-nome}</span>
+<span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Segundo Coeficiente de Pearson:**</span>
+<span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a>  $$A_S = \frac{3(\bar{X} - Md)}{S}$$ {#eq-nome}</span>
+<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coeficiente de Fisher (**$g_1$): Baseado no terceiro momento central</span>
+<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a>  $m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3$: $$g_1 = \frac{m_3}{S^3}$$ {#eq-nome}</span>
+<span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a>  *(O intervalo* $<span class="co">[</span><span class="ot">-1, +1</span><span class="co">]</span>$ costuma ser considerado como indicador de</span>
+<span id="cb1-565"><a href="#cb1-565" aria-hidden="true" tabindex="-1"></a>  uma distribuição aproximadamente simétrica).</span>
 <span id="cb1-566"><a href="#cb1-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capítulo 6 - Curtose (Kurtosis)</span></span>
+<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a>A Curtose mede o grau de achatamento ou afunilamento (pico) da curva de</span>
-<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a>distribuição de frequências em comparação com a Curva Normal padrão de</span>
-<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a>referência.</span>
-<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Classificação da Curtose</span></span>
+<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a><span class="fu">### Capítulo 6 - Curtose (Kurtosis)</span></span>
+<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a>A Curtose mede o grau de achatamento ou afunilamento (pico) da curva de</span>
+<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a>distribuição de frequências em comparação com a Curva Normal padrão de</span>
+<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a>referência.</span>
 <span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mesocúrtica:** Apresenta o mesmo grau de achatamento da distribuição</span>
-<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a>  normal padrão ($g_2 = 0$ ou $K = 3$);</span>
-<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Leptocúrtica:** Curva mais estreita e pontiaguda que a normal</span>
-<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a>  ($g_2 &gt; 0$ ou $K &gt; 3$), indicando alta concentração de dados ao redor</span>
-<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a>  do centro;</span>
-<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Platicúrtica:** Curva mais achatada e espalhada que a normal</span>
-<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>  ($g_2 &lt; 0$ ou $K &lt; 3$), indicando dados mais distribuídos de forma</span>
-<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a>  homogênea.</span>
-<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Fórmulas de Cálculo</span></span>
+<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Classificação da Curtose</span></span>
+<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mesocúrtica:** Apresenta o mesmo grau de achatamento da distribuição</span>
+<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a>  normal padrão ($g_2 = 0$ ou $K = 3$);</span>
+<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Leptocúrtica:** Curva mais estreita e pontiaguda que a normal</span>
+<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>  ($g_2 &gt; 0$ ou $K &gt; 3$), indicando alta concentração de dados ao redor</span>
+<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a>  do centro;</span>
+<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Platicúrtica:** Curva mais achatada e espalhada que a normal</span>
+<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>  ($g_2 &lt; 0$ ou $K &lt; 3$), indicando dados mais distribuídos de forma</span>
+<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a>  homogênea.</span>
 <span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coeficiente de Fisher (**$g_2$): Baseado no quarto momento central</span>
-<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$ {#eq-nome}:</span>
-<span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a>  $$g_2 = \frac{m_4}{S^4} - 3$$ {#eq-nome}</span>
-<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Fórmulas de Cálculo</span></span>
+<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coeficiente de Fisher (**$g_2$): Baseado no quarto momento central</span>
+<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a>  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$ {#eq-nome}:</span>
+<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a>  $$g_2 = \frac{m_4}{S^4} - 3$$ {#eq-nome}</span>
 <span id="cb1-593"><a href="#cb1-593" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-594"><a href="#cb1-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📖 Referências</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-596"><a href="#cb1-596" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-597"><a href="#cb1-597" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📖 Referências</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
