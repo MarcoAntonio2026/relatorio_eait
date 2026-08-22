@@ -451,7 +451,7 @@ valores discrepantes.
       centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$ {#eq-nome}
       
 - **Dados Agrupados em Classes (Interpolação Linear):**
-  $$Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c$$
+  $$Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c$$ {#eq-nome}
   *Onde:* $L_i$ é o limite inferior da classe mediana, $F_{ac\_ant}$ é a
   frequência acumulada anterior, $f_{md}$ é a frequência absoluta da
   classe mediana e $c$ é a amplitude da classe.
