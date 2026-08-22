@@ -424,7 +424,7 @@ Representa o ponto de equilíbrio dos dados. É única e aplicável a
 variáveis quantitativas, porém altamente sensível a valores extremos
 (*outliers*).
 
-- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ 
+- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ {#eq-nome}
 
 - **Dados Agrupados com Frequências:**
   $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n}$$ {#eq-nome}
