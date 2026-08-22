@@ -322,12 +322,15 @@ Estatística $\rightarrow$ Conclusão
   população.
 - **Variável:** Característica de interesse observada nos elementos.
   - **Qualitativa:** Atributos não numéricos.
-    - *Nominal:* Sem ordenação natural (ex: sexo, cor dos olhos).
+    - *Nominal:* Sem ordenação natural (ex: sexo, cor dos olhos);
     - *Ordinal:* Existe uma hierarquia/ordem (ex: nível de escolaridade,
-      classe social).
-  - **Quantitativa:** Valores numéricos.
+      classe social);
+      
+  - **Quantitativa:** Valores numéricos;
+  
     - *Discreta:* Resulta de contagens; assume valores inteiros (ex:
-      número de filhos).
+      número de filhos);
+      
     - *Contínua:* Resulta de medições; assume valores reais em um
       intervalo (ex: altura, peso).
 
@@ -335,20 +338,20 @@ Estatística $\rightarrow$ Conclusão
 
 O símbolo $\sum$ é utilizado para condensar somas extensas:
 
-$$\sum_{i=1}^{n} X_i = X_1 + X_2 + \dots + X_n$$
+$$\sum_{i=1}^{n} X_i = X_1 + X_2 + \dots + X_n$$ {#eq-nome}
 
 **Propriedades Algébricas:**
 
-1.  **Soma de uma constante:** $$\sum_{i=1}^{n} c = n \cdot c$$
+1.  **Soma de uma constante:** $$\sum_{i=1}^{n} c = n \cdot c$$ {#eq-nome}
 
 2.  **Multiplicação por constante:**
-    $$\sum_{i=1}^{n} c \cdot X_i = c \sum_{i=1}^{n} X_i$$
+    $$\sum_{i=1}^{n} c \cdot X_i = c \sum_{i=1}^{n} X_i$$ {#eq-nome}
 
 3.  **Distributiva da soma e subtração:**
-    $$\sum_{i=1}^{n} (X_i \pm Y_i) = \sum_{i=1}^{n} X_i \pm \sum_{i=1}^{n} Y_i$$
+    $$\sum_{i=1}^{n} (X_i \pm Y_i) = \sum_{i=1}^{n} X_i \pm \sum_{i=1}^{n} Y_i$$ {#eq-nome}
 
 4.  **Soma dos desvios em relação à média (Propriedade Fundamental):**
-    $$\sum_{i=1}^{n} (X_i - \bar{X}) = 0$$
+    $$\sum_{i=1}^{n} (X_i - \bar{X}) = 0$$ {#eq-nome}
 
 ------------------------------------------------------------------------
 
@@ -358,17 +361,24 @@ $$\sum_{i=1}^{n} X_i = X_1 + X_2 + \dots + X_n$$
 
 - **Dados Brutos:** Coleção de dados em seu estado original, sem
   ordenação.
+  
 - **Rol:** Arranjo dos dados brutos em ordem crescente ou decrescente.
 
 #### Representação Tabular de Frequências
 
 - **Frequência Absoluta (**$f_i$): Número de ocorrências de cada
   valor/categoria $i$.
+  
 - **Frequência Relativa (**$f_{ri}$): Proporção em relação ao total de
-  observações: $$f_{ri} = \frac{f_i}{n}$$
-- **Frequência Percentual (**$f_{\%i}$): $$f_{\%i} = f_{ri} \times 100$$
+  observações: 
+  $$f_{ri} = \frac{f_i}{n}$$ {#eq-nome}
+  
+- **Frequência Percentual (**$f_{\%i}$): 
+  $$f_{\%i} = f_{ri} \times 100$$ {#eq-nome}
+  
 - **Frequência Acumulada Abaixo de (**$f_{ac\downarrow}$): Soma
   acumulada das frequências da menor categoria até a classe atual.
+  
 - **Frequência Acumulada Acima de (**$f_{ac\uparrow}$): Soma acumulada
   das frequências da maior categoria até a classe atual.
 
@@ -376,17 +386,17 @@ $$\sum_{i=1}^{n} X_i = X_1 + X_2 + \dots + X_n$$
 
 Recomendado para agrupamento de variáveis quantitativas contínuas:
 
-- **Amplitude Total (**$A_t$): $$A_t = X_{\text{máx}} - X_{\text{mín}}$$
+- **Amplitude Total (**$A_t$): $$A_t = X_{\text{máx}} - X_{\text{mín}}$$ {#eq-nome}
 
 - **Número de Classes (**$k$): Determinado por regra prática ou pela
-  **Regra de Sturges**: $$k \approx 1 + 3{,}322 \cdot \log_{10}(n)$$
+  **Regra de Sturges**: $$k \approx 1 + 3{,}322 \cdot \log_{10}(n)$$ {#eq-nome}
 
 - **Amplitude do Intervalo de Classe (**$c$):
-  $$c \approx \frac{A_t}{k}$$
+  $$c \approx \frac{A_t}{k}$$ {#eq-nome}
 
 - **Ponto Médio da Classe (**$\tilde{X}_i$): Representante de todas as
   observações contidas na classe $i$:
-  $$\tilde{X}_i = \frac{L_{inf} + L_{sup}}{2}$$
+  $$\tilde{X}_i = \frac{L_{inf} + L_{sup}}{2}$$ {#eq-nome}
 
 #### Representação Gráfica
 
@@ -414,13 +424,13 @@ Representa o ponto de equilíbrio dos dados. É única e aplicável a
 variáveis quantitativas, porém altamente sensível a valores extremos
 (*outliers*).
 
-- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$
+- **Dados Não Agrupados:** $$\bar{X} = \frac{\sum_{i=1}^{n} X_i}{n}$$ {#eq-nome}
 
 - **Dados Agrupados com Frequências:**
-  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n}$$
+  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot X_i}{n}$$ {#eq-nome}
 
 - **Dados Agrupados em Classes:**
-  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot \tilde{X}_i}{n}$$
+  $$\bar{X} = \frac{\sum_{i=1}^{k} f_i \cdot \tilde{X}_i}{n}$$ {#eq-nome}
 
 - **Média Aparada:** Descarta simetricamente uma porcentagem dos menores
   e maiores valores para amenizar o impacto de *outliers*.
@@ -433,10 +443,13 @@ valores discrepantes.
 
 - **Dados Não Agrupados:**
   1.  Ordene os dados em Rol.
-  2.  Se $n$ for **ímpar**, a posição é $P = \frac{n + 1}{2}$:
+  
+  2.  Se $n$ for **ímpar**, a posição é $P = \frac{n + 1}{2}$ {#eq-nome}:
       $$Md = X_{(P)}$$
+      
   3.  Se $n$ for **par**, calcula-se a média dos dois elementos
       centrais: $$Md = \frac{X_{(n/2)} + X_{(n/2 + 1)}}{2}$$
+      
 - **Dados Agrupados em Classes (Interpolação Linear):**
   $$Md = L_i + \left[ \frac{\frac{n}{2} - F_{ac\_ant}}{f_{md}} \right] \cdot c$$
   *Onde:* $L_i$ é o limite inferior da classe mediana, $F_{ac\_ant}$ é a
@@ -452,12 +465,16 @@ Valor de ocorrência mais frequente no conjunto de dados.
   - **Amodal:** Sem repetição de dados.
   - **Unimodal / Bimodal / Multimodal:** Apresenta 1, 2 ou mais modas.
 
-- **Relação Empírica de Pearson:** $$Mo = 3 \cdot Md - 2 \cdot \bar{X}$$
+- **Relação Empírica de Pearson:**
+  $$Mo = 3 \cdot Md - 2 \cdot \bar{X}$$ {#eq-nome}
 
 - **Moda de Czuber (para dados agrupados em classes):**
-  $$Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c$$
-  *Onde:* $\Delta_1 = f_{mo} - f_{ant}$ e
-  $\Delta_2 = f_{mo} - f_{post}$.
+  $$Mo = L_i + \left[ \frac{\Delta_1}{\Delta_1 + \Delta_2} \right] \cdot c$$ {#eq-nome}
+  
+  *Onde:* 
+  $\Delta_1 = f_{mo} - f_{ant}$ {#eq-nome}
+  e
+  $\Delta_2 = f_{mo} - f_{post}$ {#eq-nome}.
 
 ------------------------------------------------------------------------
 
@@ -470,28 +487,28 @@ média aritmética.
 
 Diferença entre o maior e o menor valor observado:
 
-$$A_t = X_{\text{máx}} - X_{\text{mín}}$$
+$$A_t = X_{\text{máx}} - X_{\text{mín}}$$ {#eq-nome}
 
 #### Variância ($S^2$ ou $\sigma^2$)
 
 Média dos desvios quadráticos das observações em relação à média.
 
 - **Variância Populacional (**$\sigma^2$):
-  $$\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N}$$
+  $$\sigma^2 = \frac{\sum_{i=1}^{N} (X_i - \mu)^2}{N}$$ {#eq-nome}
 
 - **Variância Amostral (**$S^2$): Utiliza o denominador $n-1$ (graus de
   liberdade) para corrigir o viés estatístico do estimador:
-  $$S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1}$$
+  $$S^2 = \frac{\sum_{i=1}^{n} (X_i - \bar{X})^2}{n - 1}$$ {#eq-nome}
 
 - **Fórmula Prática Computacional (Amostral):**
-  $$S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1}$$
+  $$S^2 = \frac{\sum X_i^2 - \frac{(\sum X_i)^2}{n}}{n - 1}$$ {#eq-nome}
 
 #### Desvio Padrão ($S$ ou $\sigma$)
 
 Raiz quadrada positiva da variância, retornando a variabilidade para a
 mesma unidade original da variável:
 
-$$S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2}$$
+$$S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2}$$ {#eq-nome}
 
 #### Coeficiente de Variação ($CV$)
 
@@ -499,14 +516,14 @@ Medida adimensional de dispersão relativa expressa em percentual,
 permitindo a comparação de variabilidade entre grupos com escalas ou
 médias distintas:
 
-$$CV = \left( \frac{S}{\bar{X}} \right) \times 100\%$$
+$$CV = \left( \frac{S}{\bar{X}} \right) \times 100\%$$ {#eq-nome}
 
 #### Erro Padrão da Média ($S_{\bar{X}}$ ou $\sigma_{\bar{X}}$)
 
 Mede a precisão e a variabilidade das possíveis médias amostrais em
 relação à média populacional:
 
-$$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$
+$$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$ {#eq-nome}
 
 ------------------------------------------------------------------------
 
@@ -520,24 +537,28 @@ de frequências em relação ao seu centro (média).
 ::: callout-note
 - **Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. Os
   dois lados da distribuição são espelhados.
-  $$\bar{X} = Md = Mo \implies A_s = 0$$
+  $$\bar{X} = Md = Mo \implies A_s = 0$$ {#eq-nome}
+  
 - **Assimétrica Positiva (à Direita):** Apresenta cauda mais longa à
   direita, indicando concentração de dados nos valores abaixo da média.
-  $$Mo < Md < \bar{X} \implies A_s > 0$$
+  $$Mo < Md < \bar{X} \implies A_s > 0$$ {#eq-nome}
+  
 - **Assimétrica Negativa (à Esquerda):** Apresenta cauda mais longa à
   esquerda, indicando concentração de dados nos valores acima da média.
-  $$\bar{X} < Md < Mo \implies A_s < 0$$
+  $$\bar{X} < Md < Mo \implies A_s < 0$$ {#eq-nome}
 :::
 
 #### Fórmulas de Cálculo
 
-- **Primeiro Coeficiente de Pearson:** $$A_S = \frac{\bar{X} - Mo}{S}$$
+- **Primeiro Coeficiente de Pearson:**
+  $$A_S = \frac{\bar{X} - Mo}{S}$$ {#eq-nome}
 
 - **Segundo Coeficiente de Pearson:**
-  $$A_S = \frac{3(\bar{X} - Md)}{S}$$
+  $$A_S = \frac{3(\bar{X} - Md)}{S}$$ {#eq-nome}
 
 - **Coeficiente de Fisher (**$g_1$): Baseado no terceiro momento central
-  $m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3$: $$g_1 = \frac{m_3}{S^3}$$
+  $m_3 = \frac{1}{n} \sum (X_i - \bar{X})^3$: $$g_1 = \frac{m_3}{S^3}$$ {#eq-nome}
+  
   *(O intervalo* $[-1, +1]$ costuma ser considerado como indicador de
   uma distribuição aproximadamente simétrica).
 
@@ -552,10 +573,12 @@ referência.
 #### Classificação da Curtose
 
 - **Mesocúrtica:** Apresenta o mesmo grau de achatamento da distribuição
-  normal padrão ($g_2 = 0$ ou $K = 3$).
+  normal padrão ($g_2 = 0$ ou $K = 3$);
+  
 - **Leptocúrtica:** Curva mais estreita e pontiaguda que a normal
   ($g_2 > 0$ ou $K > 3$), indicando alta concentração de dados ao redor
-  do centro.
+  do centro;
+  
 - **Platicúrtica:** Curva mais achatada e espalhada que a normal
   ($g_2 < 0$ ou $K < 3$), indicando dados mais distribuídos de forma
   homogênea.
@@ -563,8 +586,8 @@ referência.
 #### Fórmulas de Cálculo
 
 - **Coeficiente de Fisher (**$g_2$): Baseado no quarto momento central
-  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$:
-  $$g_2 = \frac{m_4}{S^4} - 3$$
+  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$ {#eq-nome}:
+  $$g_2 = \frac{m_4}{S^4} - 3$$ {#eq-nome}
 
 
 
