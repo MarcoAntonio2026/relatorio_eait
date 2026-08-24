@@ -1,11 +1,11 @@
----
-# Só mude aqui!!!!
-author: "Marco Antônio e Matheus Villela"
-title: "Relatório 01 - Aula prática 01"
-bibliography: referencias.bib
-# A partir daqui nao faca alteracoes!!!!!
-link-citations: true
-csl: associacao-brasileira-de-normas-tecnicas-ipea.csl
+--- 
+# Só mude aqui!!!! 
+author: "Marco Antônio e Matheus" 
+title: "Relatório 01 - Introdução ao R" 
+bibliography: referencias.bib 
+# A partir daqui nao faca alteracoes!!!!! 
+link-citations: true 
+csl: associacao-brasileira-de-normas-tecnicas-ipea.csl 
 subtitle: "<a href='https://bendeivide.github.io/courses/eait/' target='_blank'>Estatística Aplicada a Inovações Tecnológicas (UFSJ)</a> </br> <a href='https://bendeivide.github.io' target='_blank'>Prof. Ben Dêivide (DEFIM/CAP/UFSJ)</a>"
 include-before-body: header.html
 date: now
@@ -14,6 +14,8 @@ lang: pt-BR
 format:
   html:
     toc: true
+    toc-title: "Sumário"      # Define o nome do sumário
+    toc-location: left        # Coloca o sumário no lado esquerdo (opcional)
     number-sections: true
     theme: bootstrap
     #css: styles.css
@@ -592,6 +594,899 @@ referência.
   $$g_2 = \frac{m_4}{S^4} - 3$$ {#eq-nome}
 
 
+# 👷‍♂️ Exemplo prático
 
+# 👷‍♂️ Exemplo prático
 
-## 📖 Referências
+Nesta seção, aplicamos o pacote `leem`, desenvolvido pelo Prof. Ben Dêivide, para realizar a análise estatística de 30 séries de concreto empregadas na execução de estacas de fundação do empreendimento **Grand Park (1ª Etapa)**, em **Conselheiro Lafaiete – MG**, sob responsabilidade da empresa **Mount Engenharia Ltda.**
+
+Analisam-se três variáveis essenciais:
+
+1. **Slump (cm):** abatimento do tronco de cone, utilizado como indicador da consistência do concreto fresco;
+2. **Resistência média aos 7 dias (MPa):** calculada a partir dos corpos de prova CP1 e CP2;
+3. **Resistência média aos 14 dias (MPa):** calculada a partir dos corpos de prova CP3 e CP4.
+
+## Organização e importação dos dados
+
+A base de dados utilizada neste estudo foi armazenada em um arquivo `.CSV`. A leitura do arquivo e a organização das variáveis foram realizadas no ambiente R.
+
+```{r}
+# Carregamento do pacote leem
+library(leem)
+
+# Importação da base de dados
+dados <- read.csv(
+  "Analise_de_Concreto.CSV",
+  header = TRUE,
+  sep = ";",
+  dec = ","
+)
+
+# Visualização inicial
+head(dados)
+```
+
+A base é composta por 30 séries experimentais. Cada série possui uma medida de abatimento e quatro resultados de resistência à compressão, sendo dois corpos de prova ensaiados aos 7 dias e dois aos 14 dias.
+
+Para a análise estatística das idades, foi calculada a resistência média dos corpos de prova de cada série:
+
+```{r}
+# Resistência média aos 7 dias
+dados$Resistencia_7d <- rowMeans(
+  dados[, c("CP1_7d", "CP2_7d")]
+)
+
+# Resistência média aos 14 dias
+dados$Resistencia_14d <- rowMeans(
+  dados[, c("CP3_14d", "CP4_14d")]
+)
+
+# Visualização das variáveis utilizadas
+dados[
+  ,
+  c(
+    "Series",
+    "Slump_cm",
+    "Resistencia_7d",
+    "Resistencia_14d"
+  )
+]
+```
+
+O cálculo da média para cada série é importante porque existem dois corpos de prova para cada idade. Dessa forma, a variável utilizada na comparação entre 7 e 14 dias representa a média dos resultados disponíveis para cada série.
+
+---
+
+## Análise do Slump
+
+### Organização dos dados em rol
+
+Inicialmente, os valores de slump são organizados em ordem crescente. Esse procedimento constitui o **rol**, etapa fundamental para a organização dos dados.
+
+```{r}
+rol_slump <- sort(dados$Slump_cm)
+
+rol_slump
+```
+
+A ordenação permite observar diretamente os menores e maiores valores de abatimento e constitui uma etapa inicial para a interpretação da distribuição.
+
+### Distribuição de frequência com o `leem`
+
+Para construir a distribuição de frequência, utiliza-se a função `new_leem()`, que cria o objeto da classe `leem`, seguida da função `tabfreq()`.
+
+```{r}
+freq_slump <- dados$Slump_cm |>
+  new_leem(variable = "continuous") |>
+  tabfreq()
+
+freq_slump
+```
+
+A tabela produzida pelo `leem` apresenta as classes e suas respectivas frequências. Entre as informações disponibilizadas estão a frequência absoluta (`Fi`), frequência relativa (`Fr`), frequência acumulada e frequência percentual.
+
+Esse procedimento permite transformar os dados brutos em uma distribuição organizada, facilitando a identificação da concentração dos valores.
+
+### Histograma do Slump
+
+O histograma é apropriado para representar uma variável quantitativa contínua agrupada em classes.
+
+```{r}
+dados$Slump_cm |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  hist(
+    main = "Histograma do Slump",
+    xlab = "Slump (cm)",
+    ylab = "Frequência"
+  )
+```
+
+O histograma permite verificar visualmente a concentração das observações em determinadas classes. A análise gráfica deve ser realizada conjuntamente com as medidas de posição, dispersão e forma.
+
+### Polígono de frequências
+
+O polígono de frequências utiliza os pontos médios das classes e suas respectivas frequências.
+
+```{r}
+dados$Slump_cm |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  polyfreq(
+    main = "Polígono de frequências do Slump"
+  )
+```
+
+A representação permite observar a tendência geral da distribuição e facilita a identificação da região de maior concentração dos resultados.
+
+### Ogivas
+
+As frequências acumuladas podem ser representadas por meio das ogivas.
+
+```{r}
+dados$Slump_cm |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  ogive(
+    both = TRUE,
+    main = "Ogivas das frequências do Slump"
+  )
+```
+
+As ogivas representam as frequências acumuladas abaixo e acima das classes. Esse tipo de representação permite avaliar a proporção de observações que se encontra abaixo ou acima de determinado valor.
+
+---
+
+# Medidas descritivas do Slump
+
+## Média
+
+A média aritmética é obtida por:
+
+$$
+\bar{X} =
+\frac{\sum X_i}{n}
+$$
+
+No R, o cálculo pode ser realizado diretamente a partir do vetor de dados:
+
+```{r}
+media_slump <- mean(dados$Slump_cm)
+
+media_slump
+```
+
+Para os 30 resultados analisados, a média do slump é de aproximadamente **23,45 cm**.
+
+Esse valor representa o centro de equilíbrio dos resultados observados.
+
+## Mediana
+
+Como existem 30 observações, a mediana corresponde à média dos dois valores centrais do rol.
+
+```{r}
+mediana_slump <- median(dados$Slump_cm)
+
+mediana_slump
+```
+
+A mediana obtida é aproximadamente **24,00 cm**.
+
+A proximidade entre a média e a mediana indica que os resultados estão concentrados em torno de uma região próxima a 24 cm, embora a distribuição apresente assimetria, conforme será discutido posteriormente.
+
+## Moda
+
+A moda corresponde ao valor com maior frequência de ocorrência.
+
+```{r}
+moda_slump <- as.numeric(
+  names(
+    sort(
+      table(dados$Slump_cm),
+      decreasing = TRUE
+    )[1]
+  )
+)
+
+moda_slump
+```
+
+Para esta base, o valor modal do slump é **24 cm**, indicando que esse valor apresentou a maior frequência de ocorrência entre as séries analisadas.
+
+---
+
+# Medidas de dispersão do Slump
+
+## Amplitude total
+
+A amplitude é calculada por:
+
+$$
+A_t = X_{máx} - X_{mín}
+$$
+
+```{r}
+amplitude_slump <- max(dados$Slump_cm) -
+  min(dados$Slump_cm)
+
+amplitude_slump
+```
+
+A amplitude total observada é de aproximadamente **5 cm**.
+
+Isso significa que a diferença entre o maior e o menor abatimento registrado nas séries foi de 5 cm.
+
+## Variância
+
+A variância amostral é calculada por:
+
+$$
+S^2 =
+\frac{
+\sum_{i=1}^{n}(X_i-\bar{X})^2
+}{
+n-1
+}
+$$
+
+No R:
+
+```{r}
+variancia_slump <- var(dados$Slump_cm)
+
+variancia_slump
+```
+
+O resultado é aproximadamente:
+
+$$
+S^2 = 1,506;cm^2
+$$
+
+A unidade da variância é o quadrado da unidade original, portanto sua interpretação deve ser realizada preferencialmente em conjunto com o desvio-padrão.
+
+## Desvio-padrão
+
+O desvio-padrão é obtido pela raiz quadrada da variância:
+
+$$
+S = \sqrt{S^2}
+$$
+
+```{r}
+desvio_slump <- sd(dados$Slump_cm)
+
+desvio_slump
+```
+
+O desvio-padrão é aproximadamente **1,23 cm**.
+
+Esse resultado indica que os valores observados apresentam uma dispersão relativamente pequena em torno da média de 23,45 cm.
+
+## Coeficiente de variação
+
+O coeficiente de variação é:
+
+$$
+CV =
+\frac{S}{\bar{X}}
+\times 100
+$$
+
+```{r}
+cv_slump <- (
+  sd(dados$Slump_cm) /
+    mean(dados$Slump_cm)
+) * 100
+
+cv_slump
+```
+
+O coeficiente de variação é aproximadamente **5,23%**.
+
+Como o CV representa a dispersão relativa em relação à média, esse resultado indica **baixa variabilidade relativa** do slump entre as séries analisadas.
+
+## Erro-padrão da média
+
+O erro-padrão é obtido por:
+
+$$
+S_{\bar X} =
+\frac{S}{\sqrt{n}}
+$$
+
+```{r}
+ep_slump <- sd(dados$Slump_cm) /
+  sqrt(length(dados$Slump_cm))
+
+ep_slump
+```
+
+O erro-padrão é aproximadamente **0,22 cm**, indicando que a média amostral apresenta pequena variabilidade em relação à escala observada dos dados.
+
+---
+
+# Assimetria e curtose do Slump
+
+A assimetria pode ser analisada por meio do terceiro momento central.
+
+Utilizando o coeficiente de Fisher apresentado na revisão teórica:
+
+```{r}
+assimetria_slump <- (
+  mean(
+    (dados$Slump_cm -
+       mean(dados$Slump_cm))^3
+  )
+) /
+  (sd(dados$Slump_cm)^3)
+
+assimetria_slump
+```
+
+O valor obtido é aproximadamente **-1,03**, indicando uma **assimetria negativa**.
+
+Isso significa que a distribuição apresenta uma cauda relativamente mais alongada em direção aos menores valores de slump, enquanto existe maior concentração de observações nos valores mais elevados.
+
+A curtose pode ser calculada a partir do quarto momento central:
+
+```{r}
+curtose_slump <- (
+  mean(
+    (dados$Slump_cm -
+       mean(dados$Slump_cm))^4
+  )
+) /
+  (sd(dados$Slump_cm)^4)
+
+curtose_slump
+```
+
+O coeficiente de curtose obtido é aproximadamente **3,36**.
+
+Como esse valor é superior a 3, a distribuição pode ser classificada como **leptocúrtica**, segundo a classificação apresentada na revisão teórica.
+
+---
+
+# Análise da resistência aos 7 dias
+
+A segunda variável analisada corresponde à resistência média dos corpos de prova aos 7 dias.
+
+## Organização dos dados
+
+```{r}
+rol_7d <- sort(dados$Resistencia_7d)
+
+rol_7d
+```
+
+## Distribuição de frequência
+
+```{r}
+freq_7d <- dados$Resistencia_7d |>
+  new_leem(variable = "continuous") |>
+  tabfreq()
+
+freq_7d
+```
+
+A distribuição de frequência permite identificar como os valores de resistência estão distribuídos entre as diferentes classes.
+
+## Histograma
+
+```{r}
+dados$Resistencia_7d |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  hist(
+    main = "Histograma da Resistência aos 7 dias",
+    xlab = "Resistência (MPa)",
+    ylab = "Frequência"
+  )
+```
+
+## Polígono de frequências
+
+```{r}
+dados$Resistencia_7d |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  polyfreq(
+    main = "Polígono de frequências - 7 dias"
+  )
+```
+
+## Ogivas
+
+```{r}
+dados$Resistencia_7d |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  ogive(
+    both = TRUE,
+    main = "Ogivas da Resistência aos 7 dias"
+  )
+```
+
+---
+
+# Medidas descritivas da resistência aos 7 dias
+
+```{r}
+resumo_7d <- data.frame(
+  Medida = c(
+    "Média",
+    "Mediana",
+    "Desvio-padrão",
+    "Variância",
+    "Amplitude",
+    "Coeficiente de variação (%)",
+    "Erro-padrão"
+  ),
+
+  Resultado = c(
+    mean(dados$Resistencia_7d),
+    median(dados$Resistencia_7d),
+    sd(dados$Resistencia_7d),
+    var(dados$Resistencia_7d),
+    max(dados$Resistencia_7d) -
+      min(dados$Resistencia_7d),
+    (
+      sd(dados$Resistencia_7d) /
+        mean(dados$Resistencia_7d)
+    ) * 100,
+    sd(dados$Resistencia_7d) /
+      sqrt(length(dados$Resistencia_7d))
+  )
+)
+
+knitr::kable(
+  resumo_7d,
+  digits = 3,
+  col.names = c(
+    "Medida",
+    "Resultado"
+  )
+)
+```
+
+A resistência média aos 7 dias é de aproximadamente **20,69 MPa**.
+
+O desvio-padrão é de aproximadamente **2,95 MPa**, enquanto o coeficiente de variação é de aproximadamente **14,25%**.
+
+Comparativamente ao slump, observa-se maior dispersão relativa da resistência aos 7 dias.
+
+Esse comportamento pode ser observado também no histograma e no box-plot, sendo importante destacar que a estatística descritiva identifica a variabilidade, mas não permite determinar isoladamente sua causa.
+
+## Assimetria e curtose aos 7 dias
+
+```{r}
+assimetria_7d <- (
+  mean(
+    (dados$Resistencia_7d -
+       mean(dados$Resistencia_7d))^3
+  )
+) /
+  (sd(dados$Resistencia_7d)^3)
+
+curtose_7d <- (
+  mean(
+    (dados$Resistencia_7d -
+       mean(dados$Resistencia_7d))^4
+  )
+) /
+  (sd(dados$Resistencia_7d)^4)
+
+data.frame(
+  Medida = c(
+    "Assimetria",
+    "Curtose"
+  ),
+  Resultado = c(
+    assimetria_7d,
+    curtose_7d
+  )
+) |>
+  knitr::kable(
+    digits = 3
+  )
+```
+
+O coeficiente de assimetria apresenta valor negativo, indicando maior concentração das observações nos valores superiores da distribuição.
+
+A curtose apresenta valor inferior a 3, caracterizando uma distribuição **platicúrtica** segundo a classificação adotada na revisão teórica.
+
+---
+
+# Análise da resistência aos 14 dias
+
+A terceira variável analisada corresponde à resistência média dos corpos de prova aos 14 dias.
+
+## Organização dos dados
+
+```{r}
+rol_14d <- sort(dados$Resistencia_14d)
+
+rol_14d
+```
+
+## Distribuição de frequência com o `leem`
+
+```{r}
+freq_14d <- dados$Resistencia_14d |>
+  new_leem(variable = "continuous") |>
+  tabfreq()
+
+freq_14d
+```
+
+## Histograma
+
+```{r}
+dados$Resistencia_14d |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  hist(
+    main = "Histograma da Resistência aos 14 dias",
+    xlab = "Resistência (MPa)",
+    ylab = "Frequência"
+  )
+```
+
+## Polígono de frequências
+
+```{r}
+dados$Resistencia_14d |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  polyfreq(
+    main = "Polígono de frequências - 14 dias"
+  )
+```
+
+## Ogivas
+
+```{r}
+dados$Resistencia_14d |>
+  new_leem(variable = "continuous") |>
+  tabfreq() |>
+  ogive(
+    both = TRUE,
+    main = "Ogivas da Resistência aos 14 dias"
+  )
+```
+
+---
+
+# Medidas descritivas da resistência aos 14 dias
+
+```{r}
+resumo_14d <- data.frame(
+  Medida = c(
+    "Média",
+    "Mediana",
+    "Desvio-padrão",
+    "Variância",
+    "Amplitude",
+    "Coeficiente de variação (%)",
+    "Erro-padrão"
+  ),
+
+  Resultado = c(
+    mean(dados$Resistencia_14d),
+    median(dados$Resistencia_14d),
+    sd(dados$Resistencia_14d),
+    var(dados$Resistencia_14d),
+    max(dados$Resistencia_14d) -
+      min(dados$Resistencia_14d),
+    (
+      sd(dados$Resistencia_14d) /
+        mean(dados$Resistencia_14d)
+    ) * 100,
+    sd(dados$Resistencia_14d) /
+      sqrt(length(dados$Resistencia_14d))
+  )
+)
+
+knitr::kable(
+  resumo_14d,
+  digits = 3,
+  col.names = c(
+    "Medida",
+    "Resultado"
+  )
+)
+```
+
+A resistência média aos 14 dias é de aproximadamente **24,14 MPa**.
+
+O desvio-padrão é aproximadamente **1,32 MPa**, enquanto o coeficiente de variação é aproximadamente **5,46%**.
+
+Comparativamente aos resultados aos 7 dias, observa-se uma redução significativa da dispersão relativa.
+
+## Assimetria e curtose aos 14 dias
+
+```{r}
+assimetria_14d <- (
+  mean(
+    (dados$Resistencia_14d -
+       mean(dados$Resistencia_14d))^3
+  )
+) /
+  (sd(dados$Resistencia_14d)^3)
+
+curtose_14d <- (
+  mean(
+    (dados$Resistencia_14d -
+       mean(dados$Resistencia_14d))^4
+  )
+) /
+  (sd(dados$Resistencia_14d)^4)
+
+data.frame(
+  Medida = c(
+    "Assimetria",
+    "Curtose"
+  ),
+  Resultado = c(
+    assimetria_14d,
+    curtose_14d
+  )
+) |>
+  knitr::kable(
+    digits = 3
+  )
+```
+
+A assimetria aos 14 dias apresenta valor próximo de zero, indicando que a distribuição se aproxima de uma condição de simetria.
+
+A curtose apresenta valor inferior a 3, caracterizando uma distribuição platicúrtica.
+
+---
+
+# Comparação entre as idades de 7 e 14 dias
+
+Uma das análises mais relevantes da base consiste na comparação entre as resistências médias aos 7 e 14 dias.
+
+```{r}
+comparacao_idades <- data.frame(
+  Indicador = c(
+    "Média",
+    "Mediana",
+    "Desvio-padrão",
+    "Coeficiente de variação (%)"
+  ),
+
+  `7 dias` = c(
+    mean(dados$Resistencia_7d),
+    median(dados$Resistencia_7d),
+    sd(dados$Resistencia_7d),
+    (
+      sd(dados$Resistencia_7d) /
+        mean(dados$Resistencia_7d)
+    ) * 100
+  ),
+
+  `14 dias` = c(
+    mean(dados$Resistencia_14d),
+    median(dados$Resistencia_14d),
+    sd(dados$Resistencia_14d),
+    (
+      sd(dados$Resistencia_14d) /
+        mean(dados$Resistencia_14d)
+    ) * 100
+  )
+)
+
+knitr::kable(
+  comparacao_idades,
+  digits = 3,
+  caption = "Comparação das estatísticas descritivas entre 7 e 14 dias."
+)
+```
+
+O aumento da resistência média pode ser quantificado por:
+
+$$
+G =
+\frac{
+\bar{X}*{14}-\bar{X}*{7}
+}{
+\bar{X}_{7}
+}
+\times100
+$$
+
+```{r}
+ganho_medio <- (
+  (
+    mean(dados$Resistencia_14d) -
+      mean(dados$Resistencia_7d)
+  ) /
+    mean(dados$Resistencia_7d)
+) * 100
+
+ganho_medio
+```
+
+O resultado indica um aumento médio de aproximadamente **16,7%** entre os resultados de 7 e 14 dias.
+
+Esse comportamento é compatível com a evolução da resistência do concreto ao longo da idade. Entretanto, a análise estatística realizada neste trabalho é descritiva e, portanto, não tem como objetivo estabelecer uma relação causal entre a idade e o ganho de resistência.
+
+---
+
+# Comparação gráfica entre as idades
+
+Para visualizar simultaneamente a distribuição dos resultados aos 7 e 14 dias, pode-se utilizar o box-plot.
+
+```{r}
+boxplot(
+  dados$Resistencia_7d,
+  dados$Resistencia_14d,
+  names = c(
+    "7 dias",
+    "14 dias"
+  ),
+  main = "Distribuição da resistência aos 7 e 14 dias",
+  ylab = "Resistência (MPa)"
+)
+```
+
+O gráfico permite observar simultaneamente a posição central e a dispersão dos resultados.
+
+Visualmente, a distribuição aos 14 dias encontra-se deslocada para valores superiores em relação à distribuição aos 7 dias. Além disso, observa-se uma menor dispersão dos resultados aos 14 dias.
+
+---
+
+# Comparação geral das três variáveis
+
+Para facilitar a comparação entre as variáveis, apresenta-se uma síntese das principais estatísticas.
+
+```{r}
+resumo_geral <- data.frame(
+
+  Variável = c(
+    "Slump (cm)",
+    "Resistência 7 dias (MPa)",
+    "Resistência 14 dias (MPa)"
+  ),
+
+  Média = c(
+    mean(dados$Slump_cm),
+    mean(dados$Resistencia_7d),
+    mean(dados$Resistencia_14d)
+  ),
+
+  Mediana = c(
+    median(dados$Slump_cm),
+    median(dados$Resistencia_7d),
+    median(dados$Resistencia_14d)
+  ),
+
+  Amplitude = c(
+    max(dados$Slump_cm) -
+      min(dados$Slump_cm),
+
+    max(dados$Resistencia_7d) -
+      min(dados$Resistencia_7d),
+
+    max(dados$Resistencia_14d) -
+      min(dados$Resistencia_14d)
+  ),
+
+  Desvio_Padrao = c(
+    sd(dados$Slump_cm),
+    sd(dados$Resistencia_7d),
+    sd(dados$Resistencia_14d)
+  ),
+
+  CV_percentual = c(
+    (
+      sd(dados$Slump_cm) /
+        mean(dados$Slump_cm)
+    ) * 100,
+
+    (
+      sd(dados$Resistencia_7d) /
+        mean(dados$Resistencia_7d)
+    ) * 100,
+
+    (
+      sd(dados$Resistencia_14d) /
+        mean(dados$Resistencia_14d)
+    ) * 100
+  ),
+
+  Assimetria = c(
+    assimetria_slump,
+    assimetria_7d,
+    assimetria_14d
+  ),
+
+  Curtose = c(
+    curtose_slump,
+    curtose_7d,
+    curtose_14d
+  )
+)
+
+knitr::kable(
+  resumo_geral,
+  digits = 3,
+  caption = "Síntese das estatísticas descritivas das variáveis analisadas."
+)
+```
+
+---
+
+# Discussão dos resultados
+
+A análise dos 30 resultados de slump mostra uma distribuição com média de aproximadamente **23,45 cm** e mediana de **24,00 cm**. A proximidade entre essas duas medidas indica concentração dos resultados em torno dessa região.
+
+O desvio-padrão de aproximadamente **1,23 cm** e o coeficiente de variação de aproximadamente **5,23%** indicam baixa dispersão relativa dos valores de abatimento. Dessa forma, entre as séries analisadas, o slump apresentou comportamento relativamente uniforme.
+
+A análise da assimetria complementa essa interpretação. O coeficiente obtido foi aproximadamente **-1,03**, indicando assimetria negativa. Portanto, apesar da concentração dos resultados próximos aos valores mais elevados, existem observações deslocadas em direção aos menores valores de abatimento.
+
+Para a resistência aos 7 dias, a média das séries foi de aproximadamente **20,69 MPa**. O coeficiente de variação foi aproximadamente **14,25%**, valor consideravelmente superior ao observado para o slump. Dessa maneira, a resistência apresentou maior variabilidade relativa no conjunto de dados analisado.
+
+Aos 14 dias, a resistência média aumentou para aproximadamente **24,14 MPa**. Simultaneamente, o coeficiente de variação reduziu-se para aproximadamente **5,46%**. Portanto, além do aumento da resistência média, os resultados aos 14 dias apresentaram menor dispersão relativa.
+
+A comparação entre as duas idades indica um aumento médio de aproximadamente **16,7%** na resistência entre 7 e 14 dias. Esse aumento representa a evolução dos resultados de resistência observada no banco de dados, mas não deve ser interpretado isoladamente como uma previsão do comportamento de qualquer concreto diferente daquele representado pela amostra.
+
+Outro aspecto relevante é o comportamento da assimetria. Aos 7 dias, a distribuição apresenta assimetria negativa mais evidente, enquanto aos 14 dias o coeficiente aproxima-se de zero. Isso indica que a distribuição da resistência aos 14 dias apresenta comportamento mais próximo da simetria.
+
+A curtose também complementa a interpretação dos histogramas. O slump apresentou coeficiente superior a 3, sendo classificado como leptocúrtico, enquanto as distribuições de resistência apresentaram coeficientes inferiores a 3, sendo classificadas como platicúrticas.
+
+De forma geral, os resultados mostram que o **slump apresentou baixa variabilidade relativa**, enquanto a resistência aos 7 dias apresentou maior dispersão. Aos 14 dias, além do aumento da resistência média, ocorreu uma redução expressiva da variabilidade relativa.
+
+É importante destacar que a estatística descritiva permite identificar e quantificar essas características, mas não permite determinar sozinha as causas da variabilidade. Para isso seriam necessárias informações adicionais sobre composição do concreto, condições de produção, transporte, moldagem, cura, preparação dos corpos de prova e condições de ensaio.
+
+---
+
+# Síntese dos resultados
+
+A Tabela abaixo reúne os principais resultados obtidos.
+
+```{r}
+knitr::kable(
+  resumo_geral,
+  digits = 3,
+  caption = "Resumo final das estatísticas descritivas."
+)
+```
+
+A síntese evidencia três comportamentos principais:
+
+1. o **slump** apresenta baixa dispersão relativa;
+2. a **resistência aos 7 dias** apresenta maior variabilidade;
+3. a **resistência aos 14 dias** apresenta maior valor médio e menor dispersão relativa.
+
+Esses resultados demonstram a importância de utilizar simultaneamente medidas de posição, dispersão e forma. A média, isoladamente, não seria suficiente para caracterizar o comportamento do conjunto de dados.
+
+---
+
+# Considerações finais
+
+A aplicação do pacote `leem` possibilitou realizar a organização, tabulação e representação gráfica dos dados experimentais de concreto de maneira integrada ao ambiente R.
+
+A construção das distribuições de frequência permitiu transformar os dados brutos em informações organizadas, enquanto os histogramas, polígonos de frequência e ogivas possibilitaram a análise visual das distribuições.
+
+As medidas de posição permitiram identificar os valores centrais das variáveis, enquanto as medidas de dispersão demonstraram o grau de variabilidade dos resultados. O coeficiente de variação foi especialmente importante para comparar a variabilidade relativa entre o slump e as resistências nas diferentes idades.
+
+A análise das medidas de forma também contribuiu para a caracterização das distribuições. A assimetria permitiu identificar a direção e intensidade do deslocamento das distribuições em relação à simetria, enquanto a curtose possibilitou classificar o formato das distribuições em relação à referência mesocúrtica.
+
+No caso das resistências à compressão, verificou-se aumento da média entre 7 e 14 dias, acompanhado por redução significativa da variabilidade relativa. Esse comportamento demonstra a importância da análise conjunta de posição e dispersão na interpretação de dados experimentais.
+
+Por fim, o desenvolvimento da análise permitiu demonstrar que a utilização de um pacote estatístico não deve ser compreendida como uma substituição do conhecimento matemático. O `leem` automatiza procedimentos de organização, tabulação e representação, mas a interpretação adequada dos resultados exige conhecimento sobre frequência, média, mediana, moda, variância, desvio-padrão, coeficiente de variação, assimetria e curtose.
+
+Dessa forma, o uso do `leem` associado ao conhecimento dos fundamentos estatísticos possibilitou uma análise mais completa dos resultados obtidos nos ensaios de concreto.
+
+---
+
+# Referências
+
+DÊIVIDE, B. **leem: Laboratory of Teaching to Statistics and Mathematics**. Disponível em: https://bendeivide.github.io/leem/. Acesso em: 23 ago. 2026.
+
+DÊIVIDE, B. **Estatística e Probabilidade: curso para estudar o pacote leem em Estatística e Probabilidade**. Disponível em: https://bendeivide.github.io/courses/leem/estprob/. Acesso em: 23 ago. 2026.
+
+DÊIVIDE, B. **Estatística e Probabilidade – Coleta, Organização e Apresentação de Dados**. Disponível em: https://bendeivide.github.io/slides/estprob/s03/. Acesso em: 23 ago. 2026.
