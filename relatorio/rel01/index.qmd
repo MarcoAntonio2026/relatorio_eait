@@ -29,7 +29,11 @@ execute:
 
 # 📌 Introdução
 
-O relatório aborda a aplicação de programação e Estatística Descritiva na Engenharia Civil, com foco na análise da resistência à compressão do concreto. Inicialmente, apresenta os fundamentos da linguagem R, com base no curso R Básico 2024. Em seguida, desenvolve uma revisão sobre Estatística Descritiva, incluindo medidas de posição, dispersão, assimetria e curtose. Por fim, aplica esses conceitos a dados de ensaios de concreto utilizando o pacote leem, realizando organização, tabulação, gráficos e análise estatística, além de discutir criticamente os resultados e os fundamentos matemáticos envolvidos.
+O presente relatório aborda a aplicação da programação e da Estatística Descritiva no contexto da Engenharia Civil, com foco na análise da resistência à compressão do concreto. Inicialmente, são apresentados os fundamentos da linguagem R, com base no curso R Básico 2024, destacando recursos de programação e manipulação de dados relevantes para a análise estatística.
+
+Em seguida, são apresentados os principais conceitos de Estatística Descritiva, tendo como fundamentação os quatro capítulos iniciais do livro Estatística & Probabilidade Aplicada às Engenharias e Ciências, de Ben Dêivide de O. Batista. A partir dessa referência, são abordadas medidas de posição e dispersão, bem como conceitos relacionados à assimetria e à curtose, estabelecendo a base teórica necessária para a interpretação dos dados.
+
+Por fim, os conceitos estudados são aplicados a dados provenientes de ensaios de resistência à compressão do concreto, utilizando o pacote leem para a organização, tabulação e representação gráfica dos dados, além do cálculo das principais medidas estatísticas. Os resultados são analisados e discutidos de forma crítica, relacionando os procedimentos computacionais aos fundamentos matemáticos e estatísticos e à sua aplicação prática na Engenharia Civil.
 
 # 🎯 Objetivo geral
 
@@ -264,12 +268,6 @@ O *R* contorna limitações de desempenho e interface integrando-se a outras lin
 
 --------------------------------------------------------------------------------------
 
-### Conclusão 
-
-A consolidação das bases de sintaxe, semântica e do caminho de busca confere autonomia teórica para que o estudante analise pacotes de forma robusta e compreenda o fluxo de dados na memória virtual.
-
---------------------------------------------------------------------------------------
-
 ## Revisão sobre a estatística descritiva
 
 ### Capítulo 1 - Definições Gerais da Estatística e técnicas de somatórios
@@ -288,7 +286,7 @@ A pesquisa estatística segue uma sequência estruturada:
 
 ::: {.callout-note appearance="simple"}
 **Fluxo do Método:** Identificação do Problema
-$\rightarrow$\$\\rightarrow\$ Formulação de Hipóteses $\rightarrow$
+$\rightarrow$ Formulação de Hipóteses $\rightarrow$
 Revisão de Literatura $\rightarrow$ Plano Amostral $\rightarrow$ Coleta
 e Tratamento de Dados $\rightarrow$ Apresentação $\rightarrow$ Análise
 Estatística $\rightarrow$ Conclusão
@@ -514,7 +512,6 @@ A Assimetria descreve o desvio de simetria de uma curva de distribuição de fre
 
 #### Classificação da Assimetria
 
-::: callout-note
 - **Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. 
 
 Os dois lados da distribuição são espelhados.
@@ -526,7 +523,7 @@ Os dois lados da distribuição são espelhados.
 - **Assimétrica Negativa (à Esquerda):** Apresenta cauda mais longa à
   esquerda, indicando concentração de dados nos valores acima da média.
   $$\bar{X} < Md < Mo \implies A_s < 0$$ {#eq-nome}
-:::
+  
 
 #### Fórmulas de Cálculo
 
@@ -564,13 +561,15 @@ referência.
 #### Fórmulas de Cálculo
 
 - **Coeficiente de Fisher (**$g_2$): Baseado no quarto momento central
-  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$ {#eq-nome}:
+
+  $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$:
+  
   $$g_2 = \frac{m_4}{S^4} - 3$$ {#eq-nome}
 
 
 # 👷‍♂️ Exemplo prático
 
-Nesta seção, aplicamos o pacote `leem`, desenvolvido pelo Prof. Ben Dêivide, para realizar a análise estatística de 30 séries de concreto empregadas na execução de estacas de fundação do empreendimento **Grand Park (1ª Etapa)**, em **Conselheiro Lafaiete – MG**, sob responsabilidade da empresa **Mount Engenharia Ltda.**
+Nesta seção, aplicamos o pacote `leem`, desenvolvido pelo Prof. Ben Dêivide, para realizar a análise estatística de 30 séries de concreto empregadas na execução de estacas de fundação de um empreendimento em **Conselheiro Lafaiete – MG**, sob responsabilidade da empresa **Mount Engenharia Ltda.**
 
 Analisam-se três variáveis essenciais:
 
@@ -1425,11 +1424,11 @@ Esses resultados demonstram a importância de utilizar simultaneamente medidas d
 
 ---
 
-# Considerações finais
+# 🧠 Considerações finais
 
 O pacote leem permitiu organizar, tabular e representar graficamente os dados dos ensaios de concreto. As análises de frequência, posição, dispersão e forma possibilitaram compreender melhor a distribuição e variabilidade dos resultados. Observou-se aumento da resistência média entre 7 e 14 dias e redução da variabilidade relativa. Por fim, destaca-se que o leem automatiza os procedimentos, mas a correta interpretação dos resultados depende do conhecimento dos fundamentos estatísticos.
 
 ---
 
-# Referências
+# 📖 Referências
 
