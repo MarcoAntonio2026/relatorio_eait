@@ -1,7 +1,7 @@
 --- 
 # Só mude aqui!!!! 
-author: "Marco Antônio e Matheus" 
-title: "Relatório 01 - Introdução ao R" 
+author: "Marco Antônio e Matheus Villela" 
+title: "Relatório 01 - Aula prática 01" 
 bibliography: referencias.bib 
 # A partir daqui nao faca alteracoes!!!!! 
 link-citations: true 
@@ -29,17 +29,11 @@ execute:
 
 # 📌 Introdução
 
-A análise de dados e a aplicação de métodos estatísticos são ferramentas fundamentais para a tomada de decisão e controle de qualidade, especialmente na Engenharia Civil. Na tecnologia das construções, a avaliação da resistência à compressão do concreto ($f_{ck}$) por meio do ensaio de amostras cilíndricas é um procedimento crucial para garantir a segurança e o desempenho das estruturas. Neste contexto, o domínio de linguagens de programação voltadas para a análise de dados, como o R, permite otimizar o processamento e a interpretação das medições obtidas em laboratório. O presente relatório tem como objetivo principal integrar os conceitos de programação e estatística, dividindo-se em três etapas centrais de desenvolvimento.
-
-Inicialmente, é apresentada uma introdução à linguagem de programação R, fundamentada no conteúdo das 26 aulas do curso "R Básico 2024". Esta seção aborda os princípios de sintaxe e semântica da linguagem, estabelecendo a base computacional necessária para a manipulação dos dados de engenharia.
-
-Em seguida, o documento traz uma revisão teórica abrangente sobre Estatística Descritiva, pautada nos quatro primeiros capítulos do livro *EPAEC*. Para complementar a base literária e enriquecer a caracterização do comportamento das amostras, a revisão incorpora também pesquisas adicionais detalhando as medidas de forma, especificamente a assimetria e a curtose.
-
-Por fim, a teoria é aplicada na prática por meio da análise de um banco de dados de Engenharia Civil contendo os resultados dos ensaios de resistência à compressão de amostras de concreto. Com o auxílio do pacote `leem` no ambiente R, realiza-se a descrição estatística completa desses dados. Esta etapa engloba a organização, tabulação e apresentação gráfica dos resultados, além do cômputo das medidas de posição, dispersão, assimetria e curtose. O relatório culmina em uma discussão crítica dos resultados encontrados, evidenciando não apenas a facilidade computacional proporcionada pelo pacote `leem`, mas também demonstrando ciência sobre o embasamento matemático e os procedimentos envolvidos no cômputo de cada medida obtida.
+O relatório aborda a aplicação de programação e Estatística Descritiva na Engenharia Civil, com foco na análise da resistência à compressão do concreto. Inicialmente, apresenta os fundamentos da linguagem R, com base no curso R Básico 2024. Em seguida, desenvolve uma revisão sobre Estatística Descritiva, incluindo medidas de posição, dispersão, assimetria e curtose. Por fim, aplica esses conceitos a dados de ensaios de concreto utilizando o pacote leem, realizando organização, tabulação, gráficos e análise estatística, além de discutir criticamente os resultados e os fundamentos matemáticos envolvidos.
 
 # 🎯 Objetivo geral
 
-Integrar os conhecimentos computacionais da linguagem R e os fundamentos teóricos de estatística descritiva para realizar a análise e discussão de um banco de dados sobre amostras de concreto voltado à definição da resistência à compressão, utilizando o pacote `leem` para a tabulação, visualização gráfica e cômputo das medidas de posição, dispersão, assimetria e curtose.
+Integrar R e Estatística Descritiva para analisar dados de resistência à compressão do concreto, utilizando o pacote leem para tabulação, gráficos e cálculo das medidas estatísticas.
 
 ## Objetivos específicos
 
@@ -68,22 +62,13 @@ A metodologia está estruturada em três etapas principais:
 
 **3. Aplicação Prática – **Análise de um conjunto de dados obtidos em ensaios de resistência à compressão axial simples de amostras de concreto e no teste de slump (que mede a consistência do concreto). Esse trabalho foi feito com o pacote leem no R e envolveu a organização e limpeza dos dados, a criação de gráficos, o cálculo de medidas como média, desvio-padrão, assimetria e curtose, além de uma interpretação dos resultados para avaliar se as informações obtidas são pertinentes do ponto de vista técnico.
 
-
-
-
 # 🔍 Resultados e Discussão
 
 ## Introdução ao R
 
 ### Filosofia, Histórico e Diretrizes Teóricas
 
-A linguagem R é um ambiente de software livre e de código aberto focado em computação estatística e representação gráfica. O projeto foi iniciado em 1991 por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia, motivado pela necessidade de uma alternativa de código aberto para laboratórios de ensino de estatística.
-
-A base sintática da linguagem deriva diretamente da linguagem S (desenvolvida por John Chambers no Bell Labs), enquanto sua semântica baseia-se na linguagem Scheme . A partir de 1997, a manutenção e evolução do núcleo do sistema passaram a ser geridas pelo R Core Team (composto por pesquisadores voluntários como Brian Ripley e Paul Murrell), acompanhado do surgimento da rede oficial de repositórios CRAN (Comprehensive R Archive Network).
-
-Diferente de sistemas proprietários fechados que funcionam como "caixas-pretas", o caráter de código aberto do R viabiliza que qualquer usuário inspecione o código de baixo nível de suas funções (closures) digitando o nome do objeto diretamente no console.
-
-No fluxo de trabalho moderno, o interpretador nativo da linguagem é integrado à IDE RStudio, cuja interface organiza-se em quatro quadrantes padronizados: Script (persistencia de rotinas), Console (processamento imediato), Environment/History (memória ativa e log de comandos) e Plots/Packages/Files/Help (visualização de saídas e manuais de ajuda autossuficientes).
+O R é um software livre e de código aberto voltado à computação estatística e gráficos, criado por Ross Ihaka e Robert Gentleman. Sua sintaxe deriva da linguagem S e sua semântica de Scheme. Desde 1997, é mantido pelo R Core Team e conta com o repositório CRAN. Por ser aberto, permite a inspeção de seu código. Atualmente, é frequentemente utilizado com o RStudio, que organiza ferramentas de programação, execução, ambiente, gráficos e ajuda em uma interface integrada.
 
 ------------------------------------------------------------------------
 
@@ -105,9 +90,9 @@ A *Sintaxe* determina a forma de escrita legítima do código, ao passo que a *S
 
 - **Comentários:** Qualquer linha ou trecho iniciado pelo caractere cerquilha *(#)* é interpretado como comentário e ignorado pelo interpretador;
 
-- **Nomes Sintáticos:** Variáveis e objetos válidos em R devem consistir estritamente de letras, dígitos, pontos e caracteres de sublinha (\_). Eles não podem ser iniciados por dígitos, caracteres de sublinha ou pontos seguidos de números. O R é estritamente sensível a maiúsculas e minúsculas (case-sensitive) e reserva palavras-chave do sistema (TRUE, FALSE, if, for, function, etc.) que não podem ser associadas a objetos. Nomes não sintáticos podem ser convertidos em sintáticos utilizando a função make.names().;
+- **Nomes Sintáticos:** No R, nomes de objetos podem usar letras, números, pontos e _, mas não podem começar por número ou _, nem por ponto seguido de número. O R diferencia maiúsculas de minúsculas e possui palavras reservadas que não podem ser usadas como nomes. Nomes inválidos podem ser corrigidos com make.names();
 
-- **Atribuição vs. Igualdade:** O *R* diferencia comandos de declaração (expressões que geram saídas na tela) de comandos de atribuição. A vinculação estável de nomes a objetos na memória deve utilizar prioritariamente a seta à esquerda \<-. O uso do sinal de igual = deve ser reservado estritamente para a definição e declaração de argumentos internos em chamadas de funções;
+- **Atribuição vs. Igualdade:** No R, a atribuição de valores a objetos deve ser feita preferencialmente com <-. Já o = deve ser usado principalmente para definir argumentos dentro de funções;
 
 - **Supressão de Exibição:** O uso da função Invisible() permite ocultar a saída impressa no console ao suprimir a chamada interna automática da função print;
 
@@ -117,7 +102,7 @@ A *Sintaxe* determina a forma de escrita legítima do código, ao passo que a *S
 
 ### Tipagem Física e Estruturas de Dados Nativas
 
-Internamente, o *R* gerencia os dados por meio de 24 tipos físicos de objetos nativos codificados em *C*, modificáveis apenas pelos mantenedores do sistema. Cada objeto carrega dois atributos intrínsecos imutáveis: comprimento (length) e modo (mode). A tipagem real do baixo nível (em *C*) é acessada com a função typeof(), enquanto a tipagem baseada em S é verificada com mode().
+Internamente, o *R* gerencia os dados por meio de 24 tipos físicos de objetos nativos codificados em *C*, modificáveis apenas pelos mantenedores do sistema. Cada objeto carrega dois atributos intrínsecos imutáveis: comprimento e modo. A tipagem real do baixo nível (em *C*) é acessada com a função typeof(), enquanto a tipagem baseada em S é verificada com mode().
 
 #### Vetores Atômicos e Regras de Coerção
 
@@ -139,7 +124,7 @@ O operador de sequência (:) é otimizado fisicamente para armazenar apenas o pr
 
 A linguagem R reserva comportamentos semânticos específicos para dados excepcionais:
 
-- **NA (Not Available):** Representa a ausência de informação física (um dado omitido no mundo real). É um valor lógico sob a tipagem C que se adapta dinamicamente à classe do vetor onde está inserido. O NA preserva espaço de memória e afeta o comprimento (length()) do vetoR;
+- **NA (Not Available):** No R representa um dado ausente ou não disponível. Ele se adapta ao tipo do vetor, ocupa uma posição no vetor e, portanto, afeta seu length();
 
 - **NaN (Not a Number):** Indica indeterminações matemáticas (como 0/0). Sob o ponto de vista físico, é tratado como um tipo real de dupla precisão (double);
 
@@ -149,7 +134,7 @@ A linguagem R reserva comportamentos semânticos específicos para dados excepci
 
 #### A Regra de Reciclagem
 
-Em operações aritméticas elementares envolvendo vetores atômicos de comprimentos desiguais, o *R* estende de forma recursiva os elementos do vetor menor até que este alcance o mesmo comprimento do vetor maior, executando a conta e emitindo um aviso de incompatibilidade (*warning*) se os tamanhos não forem múltiplos.
+Ao realizar operações entre vetores de tamanhos diferentes, o vetor menor é reciclado até igualar o tamanho do maior. Se os comprimentos não forem múltiplos, o R realiza a operação, mas gera um warning.
 
 #### Atributos como Metadados: Matrizes e Arrays
 
@@ -163,7 +148,7 @@ As estruturas bidimensionais (*matrizes*) e multidimensionais (*arrays*) não ex
 
 #### Listas
 
-As listas constituem vetores complexos, heterogêneos e recursivos. Podem agrupar objetos de quaisquer naturezas (matrizes, funções, data frames e outras listas) . Fisicamente, operam como ponteiros em linguagem C apontando para diferentes endereços de memória. A indexação ocorre por colchetes duplos \[\[\]\] em elementos não nominados ou pelo operador de cifrão *\$* em posições que receberam nomes.
+As listas são estruturas heterogêneas e recursivas que podem armazenar diferentes tipos de objetos. Seus elementos são acessados principalmente por [[ ]] ou pelo operador $ quando possuem nomes.
 
 #### Quadros de Dados (Data Frames)
 
@@ -179,13 +164,13 @@ O quadro de dados (data frame) é um objeto pertencente à classe S3 "data.frame
 
 ### Importação, Exportação e Publicação Dinâmica
 
-A importação e a exportação de bases de dados fundamentam-se no Princípio da Interface. Para garantir a leitura correta de planilhas de dados externos pelo R, as planilhas devem ser salvas sem anotações paralelas, em arquivos de texto sob codificação estável (ASCII), com variáveis dispostas em colunas homogêneas e nomes sintáticos (evitando o caractere ponto ., associado a métodos S3; recomenda-se sublinhado \_).
+A importação e exportação de dados no R seguem o Princípio da Interface. Para evitar erros, os arquivos devem estar em texto com codificação estável, sem anotações extras, com colunas homogêneas e nomes sintáticos, preferencialmente usando _ em vez de ..
 
-- **Importação:** O mecanismo básico nativo é controlado pela função de baixo nível scan(), que lê elementos de forma sequencial e manual. A função read.table() (e seu derivado mais seguro para bases complexas, o read.csv()) carrega os dados externos no formato de data fram;
+- **Importação:** Pode ser feita com scan(), que lê os dados sequencialmente, e com read.table() ou read.csv(), que são usados para carregar dados externos em data frames;
 
-- **Exportação:** Arquivos de texto estruturado são gravados com write.table(). A exportação para planilhas do Excel usa writexl::write_xlsx(), a qual, se receber como argumento uma lista de múltiplos data frames, gera abas (sheets) apartadas automaticamente no arquivo resultante. Para tabelas no formato LaTeX, utiliza-se a função xtable() do pacote homônimo.
+- **Exportação:** No R, write.table() exporta dados para arquivos de texto, writexl::write_xlsx() para Excel (podendo criar várias abas), e xtable() para gerar tabelas em LaTeX;
 
-- **Publicação e Relatórios:** O princípio se estende à compilação de relatórios automatizados por meio de linguagens de marcação. O *R* Markdown (knitr) e o sistema Quarto realizam a costura (weave/knit) de códigos em *R* integrados a marcações traduzindo-os para formatos de saída como HTML, PDF, DOCX e apresentações sob o framework JavaScript revealjs. Painéis interativos e dashboards dinâmicos em tempo real são viabilizados por meio da integração com o pacote Shiny.
+- **Publicação e Relatórios:** O R Markdown (knitr) e o Quarto permitem criar relatórios automatizados integrando código R e textos, gerando formatos como HTML, PDF e DOCX. O Shiny permite criar painéis e dashboards interativos e dinâmicos.
 
 ------------------------------------------------------------------------
 
@@ -209,7 +194,7 @@ Uma função de usuário possui três componentes essenciais:
 
 - **Environment:** O ambiente envolvente no qual a função foi gerada (geralmente o Ambiente Global).
 
-A função *return()* não é obrigatória no término do corpo; o R retorna de forma sequencial a última linha que foi avaliada no algoritmo. No entanto, se a última linha consistir de uma atribuição (ex: res \<- x + 1), nada será exibido no console por padrão, uma vez que atribuições não disparam a impressão de tela de forma nativa.
+A função *return()* é opcional, pois a função retorna automaticamente o último valor avaliado. Porém, se a última linha for uma atribuição, o resultado não é exibido no console automaticamente.
 
 #### Chamadas de Função e Operador Pipe
 
@@ -223,11 +208,11 @@ O *R* permite executar funções sob três formas de fluxo, sendo:
 
 #### Ambientes de Execução, Escopo Léxico e "Novo Começo"
 
-- **Ambiente de Execução:** É um ambiente temporário gerado de forma blindada no instante em que a função é chamada na memória. Ele retém de forma isolada as associações locais de variáveis da execução. Assim que o processamento da função termina de enviar a resposta, esse ambiente temporário é inteiramente destruído pelo sistema;
+- **Ambiente de Execução:** É um ambiente temporário gerado de forma blindada no instante em que a função é chamada na memória. Ele retém de forma isolada as associações locais de variáveis da execução. 
 
 - **Princípio do Novo Começo:** O *R* inicia toda nova chamada de função a partir de um ambiente de execução inteiramente limpo e zerado, não memorizando os estados das ligações de chamadas passadas;
 
-- **Escopo Léxico:** Caso um determinado objeto invocado no corpo de uma função não seja localizado em seu ambiente de execução temporário, o interpretador buscará o nome subindo hierarquicamente para o ambiente envolvente (onde a função foi fisicamente gerada, ex: Global Environment) antes de retornar um erro.
+- **Escopo Léxico:** Se um objeto não for encontrado no ambiente da função, o interpretador procura esse objeto nos ambientes externos hierarquicamente, até encontrá-lo ou retornar um erro.
 
 ------------------------------------------------------------------------
 
@@ -237,17 +222,17 @@ A lentidão do R em loops geralmente não é culpa da linguagem, mas da falta de
 
 As estruturas nativas de controle de fluxo dividem-se em:
 
-- **if e else:** Estrutura condicional clássica de tamanho unitário (não vetorizada). Escrever explicitamente == TRUE na condição lógica do parêntese é sintaticamente redundante, pois o if já assume a verificação de verdade como seu padrão;
+- **if e else:** Estrutura condicional clássica de tamanho unitário (não vetorizada);
 
-- **ifelse (Vetorizado):** Realiza comparações lógicas elemento a elemento entre vetores. Caso possuam comprimentos diferentes, ativa a regra de reciclagem recursiva dos elementos do vetor menor;
+- **ifelse (Vetorizado):** Realiza comparações lógicas elemento a elemento entre vetores. 
 
 - **switch:** Alternativa limpa que mapeia o fluxo a caminhos específicos sem necessidade de múltiplos blocos if/else encadeados na memóri;
 
-- **repeat:** Repetição contínua de blocos sem critério de parada explícito na declaração. Exige o uso obrigatório de um contador e do comando break interno para interromper o ciclo na memória ativa e evitar loops infinitos. Também suporta o comando next para saltar passadas específicas e continuar a repetição;
+- **repeat:** Repetição contínua de blocos sem critério de parada explícito na declaração. Exige o uso obrigatório de um contador e do comando break interno;
 
-- **while:** Loop com critério de parada explícito indicado em parênteses na sua declaração. Continua rodando enquanto a condição lógica se mantiver verdadeira. Exige atualização manual de contadores locais no corpo;
+- **while:** Loop com critério de parada explícito indicado em parênteses na sua declaração;
 
-- **for:** Estrutura de iteração sofisticada em que o contador, os passos e o critério de parada automática já vêm integrados em sua própria declaração de condição de loop (utilizando o operador de pertinência in), dispensando o programador de atualizar contadores manualmente a cada ciclo.
+- **for:** Estrutura de iteração sofisticada em que o contador, os passos e o critério de parada automática já vêm integrados em sua própria declaração de condição de loop.
 
 -------------------------------------------------------------------------------------
 
@@ -259,9 +244,9 @@ Diferenciam-se das listas por quatro aspectos fundamentais:
 
 - **Chaves exclusivas:** Não admitem nomes duplicados dentro do mesmo ambiente;
 
-- **Ausência de ordenação:** Elementos não possuem posições fixas, inviabilizando qualquer tipo de indexação numérica posicional (como [] ou [], que geram erro). O acesso deve ocorrer estritamente por nomes de chaves utilizando o cifrão $ ou colchetes duplos [[]];
+- **Ausência de ordenação:** Elementos não possuem posições fixas, inviabilizando qualquer tipo de indexação numérica posicional. O acesso deve ocorrer estritamente por nomes de chaves utilizando o cifrão $ ou colchetes duplos;
 
-- **Herança hierárquica:** Todos os ambientes na memória (com exceção estrita do ambiente vazio) apontam para um ambiente pai imediato. Se um nome não é encontrado localmente, a varredura prossegue subindo na árvore hierárquica;
+- **Herança hierárquica:** Todos os ambientes na memória (com exceção estrita do ambiente vazio) apontam para um ambiente pai imediato;
 
 - **Ausência de cópia em modificações:** Os ambientes não sofrem duplicação física na memória do sistema quando sofrem alteração local.
 
@@ -289,19 +274,13 @@ A consolidação das bases de sintaxe, semântica e do caminho de busca confere 
 
 ### Capítulo 1 - Definições Gerais da Estatística e técnicas de somatórios
 
-A **Estatística** é a ciência responsável por fornecer métodos para
-coletar, organizar, descrever, analisar e interpretar dados, servindo de
-base analítica para a tomada de decisões. Divide-se em três grandes
-ramos:
+A **Estatística** é a ciência responsável por fornecer métodos para coletar, organizar, descrever, analisar e interpretar dados, servindo de base analítica para a tomada de decisões. Divide-se em três grandes ramos:
 
-1.  **Estatística Descritiva (Dedutiva):** Conjunto de técnicas voltadas
-    para a coleta, descrição, organização, tabulação e sintetização dos
-    dados.
-2.  **Probabilidade:** Teoria matemática dedicada a modelar e estudar a
-    incerteza de fenômenos aleatórios.
-3.  **Estatística Inferencial (Indutiva):** Conjunto de técnicas que
-    permitem extrapolar conclusões obtidas de uma amostra para toda a
-    população correspondente.
+1.  **Estatística Descritiva (Dedutiva):** Conjunto de técnicas voltadas para a coleta, descrição, organização, tabulação e sintetização dos dados;
+
+2.  **Probabilidade:** Teoria matemática dedicada a modelar e estudar a incerteza de fenômenos aleatórios;
+
+3.  **Estatística Inferencial (Indutiva):** Conjunto de técnicas que permitem extrapolar conclusões obtidas de uma amostra para toda a população correspondente.
 
 #### Método Científico / Estatístico
 
@@ -318,11 +297,12 @@ Estatística $\rightarrow$ Conclusão
 #### Conceitos Fundamentais
 
 - **População (**$N$): Conjunto de todos os elementos (finito ou
-  infinito) que compartilham ao menos uma característica comum de
-  interesse.
-- **Amostra (**$n$): Subconjunto finito e representativo extraído de uma
-  população.
-- **Variável:** Característica de interesse observada nos elementos.
+  infinito) que compartilham ao menos uma característica comum de interesse;
+  
+- **Amostra (**$n$): Subconjunto finito e representativo extraído de uma população;
+
+- **Variável:** Característica de interesse observada nos elementos;
+
   - **Qualitativa:** Atributos não numéricos.
     - *Nominal:* Sem ordenação natural (ex: sexo, cor dos olhos);
     - *Ordinal:* Existe uma hierarquia/ordem (ex: nível de escolaridade,
@@ -516,35 +496,31 @@ $$S = \sqrt{S^2} \quad \text{ou} \quad \sigma = \sqrt{\sigma^2}$$ {#eq-nome}
 
 #### Coeficiente de Variação ($CV$)
 
-Medida adimensional de dispersão relativa expressa em percentual,
-permitindo a comparação de variabilidade entre grupos com escalas ou
-médias distintas:
+Medida adimensional de dispersão relativa expressa em percentual, permitindo a comparação de variabilidade entre grupos com escalas ou médias distintas:
 
 $$CV = \left( \frac{S}{\bar{X}} \right) \times 100\%$$ {#eq-nome}
 
 #### Erro Padrão da Média ($S_{\bar{X}}$ ou $\sigma_{\bar{X}}$)
 
-Mede a precisão e a variabilidade das possíveis médias amostrais em
-relação à média populacional:
+Mede a precisão e a variabilidade das possíveis médias amostrais em relação à média populacional:
 
 $$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$ {#eq-nome}
 
 ------------------------------------------------------------------------
 
-### Capítulo 5 - Assimetria (Skewness)
+### Assimetria (Skewness)
 
-A Assimetria descreve o desvio de simetria de uma curva de distribuição
-de frequências em relação ao seu centro (média).
+A Assimetria descreve o desvio de simetria de uma curva de distribuição de frequências em relação ao seu centro (média).
 
 #### Classificação da Assimetria
 
 ::: callout-note
-- **Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. Os
-  dois lados da distribuição são espelhados.
+- **Simétrica:** Ocorre quando a média, a mediana e a moda coincidem. 
+
+Os dois lados da distribuição são espelhados.
   $$\bar{X} = Md = Mo \implies A_s = 0$$ {#eq-nome}
   
-- **Assimétrica Positiva (à Direita):** Apresenta cauda mais longa à
-  direita, indicando concentração de dados nos valores abaixo da média.
+- **Assimétrica Positiva (à Direita):** Apresenta cauda mais longa à direita, indicando concentração de dados nos valores abaixo da média.
   $$Mo < Md < \bar{X} \implies A_s > 0$$ {#eq-nome}
   
 - **Assimétrica Negativa (à Esquerda):** Apresenta cauda mais longa à
@@ -568,7 +544,7 @@ de frequências em relação ao seu centro (média).
 
 ------------------------------------------------------------------------
 
-### Capítulo 6 - Curtose (Kurtosis)
+### Curtose (Kurtosis)
 
 A Curtose mede o grau de achatamento ou afunilamento (pico) da curva de
 distribuição de frequências em comparação com a Curva Normal padrão de
@@ -580,12 +556,10 @@ referência.
   normal padrão ($g_2 = 0$ ou $K = 3$);
   
 - **Leptocúrtica:** Curva mais estreita e pontiaguda que a normal
-  ($g_2 > 0$ ou $K > 3$), indicando alta concentração de dados ao redor
-  do centro;
+  ($g_2 > 0$ ou $K > 3$), indicando alta concentração de dados ao redor do centro;
   
 - **Platicúrtica:** Curva mais achatada e espalhada que a normal
-  ($g_2 < 0$ ou $K < 3$), indicando dados mais distribuídos de forma
-  homogênea.
+  ($g_2 < 0$ ou $K < 3$), indicando dados mais distribuídos de forma homogênea.
 
 #### Fórmulas de Cálculo
 
@@ -593,8 +567,6 @@ referência.
   $m_4 = \frac{1}{n} \sum (X_i - \bar{X})^4$ {#eq-nome}:
   $$g_2 = \frac{m_4}{S^4} - 3$$ {#eq-nome}
 
-
-# 👷‍♂️ Exemplo prático
 
 # 👷‍♂️ Exemplo prático
 
@@ -737,16 +709,16 @@ As ogivas representam as frequências acumuladas abaixo e acima das classes. Ess
 
 ---
 
-# Medidas descritivas do Slump
+## Medidas descritivas do Slump
 
-## Média
+### Média
 
 A média aritmética é obtida por:
 
 $$
 \bar{X} =
 \frac{\sum X_i}{n}
-$$
+$$ {#eq-nome}
 
 No R, o cálculo pode ser realizado diretamente a partir do vetor de dados:
 
@@ -760,7 +732,7 @@ Para os 30 resultados analisados, a média do slump é de aproximadamente **23,4
 
 Esse valor representa o centro de equilíbrio dos resultados observados.
 
-## Mediana
+### Mediana
 
 Como existem 30 observações, a mediana corresponde à média dos dois valores centrais do rol.
 
@@ -774,7 +746,7 @@ A mediana obtida é aproximadamente **24,00 cm**.
 
 A proximidade entre a média e a mediana indica que os resultados estão concentrados em torno de uma região próxima a 24 cm, embora a distribuição apresente assimetria, conforme será discutido posteriormente.
 
-## Moda
+### Moda
 
 A moda corresponde ao valor com maior frequência de ocorrência.
 
@@ -795,15 +767,15 @@ Para esta base, o valor modal do slump é **24 cm**, indicando que esse valor ap
 
 ---
 
-# Medidas de dispersão do Slump
+## Medidas de dispersão do Slump
 
-## Amplitude total
+### Amplitude total
 
 A amplitude é calculada por:
 
 $$
 A_t = X_{máx} - X_{mín}
-$$
+$$ {#eq-nome}
 
 ```{r}
 amplitude_slump <- max(dados$Slump_cm) -
@@ -816,7 +788,7 @@ A amplitude total observada é de aproximadamente **5 cm**.
 
 Isso significa que a diferença entre o maior e o menor abatimento registrado nas séries foi de 5 cm.
 
-## Variância
+### Variância
 
 A variância amostral é calculada por:
 
@@ -827,7 +799,7 @@ S^2 =
 }{
 n-1
 }
-$$
+$$ {#eq-nome}
 
 No R:
 
@@ -845,13 +817,13 @@ $$
 
 A unidade da variância é o quadrado da unidade original, portanto sua interpretação deve ser realizada preferencialmente em conjunto com o desvio-padrão.
 
-## Desvio-padrão
+### Desvio-padrão
 
 O desvio-padrão é obtido pela raiz quadrada da variância:
 
 $$
 S = \sqrt{S^2}
-$$
+$$ {#eq-nome}
 
 ```{r}
 desvio_slump <- sd(dados$Slump_cm)
@@ -863,7 +835,7 @@ O desvio-padrão é aproximadamente **1,23 cm**.
 
 Esse resultado indica que os valores observados apresentam uma dispersão relativamente pequena em torno da média de 23,45 cm.
 
-## Coeficiente de variação
+### Coeficiente de variação
 
 O coeficiente de variação é:
 
@@ -871,7 +843,7 @@ $$
 CV =
 \frac{S}{\bar{X}}
 \times 100
-$$
+$$ {#eq-nome}
 
 ```{r}
 cv_slump <- (
@@ -886,14 +858,14 @@ O coeficiente de variação é aproximadamente **5,23%**.
 
 Como o CV representa a dispersão relativa em relação à média, esse resultado indica **baixa variabilidade relativa** do slump entre as séries analisadas.
 
-## Erro-padrão da média
+### Erro-padrão da média
 
 O erro-padrão é obtido por:
 
 $$
 S_{\bar X} =
 \frac{S}{\sqrt{n}}
-$$
+$$ {#eq-nome}
 
 ```{r}
 ep_slump <- sd(dados$Slump_cm) /
@@ -906,7 +878,7 @@ O erro-padrão é aproximadamente **0,22 cm**, indicando que a média amostral a
 
 ---
 
-# Assimetria e curtose do Slump
+## Assimetria e curtose do Slump
 
 A assimetria pode ser analisada por meio do terceiro momento central.
 
@@ -948,11 +920,11 @@ Como esse valor é superior a 3, a distribuição pode ser classificada como **l
 
 ---
 
-# Análise da resistência aos 7 dias
+## Análise da resistência aos 7 dias
 
 A segunda variável analisada corresponde à resistência média dos corpos de prova aos 7 dias.
 
-## Organização dos dados
+### Organização dos dados
 
 ```{r}
 rol_7d <- sort(dados$Resistencia_7d)
@@ -960,7 +932,7 @@ rol_7d <- sort(dados$Resistencia_7d)
 rol_7d
 ```
 
-## Distribuição de frequência
+### Distribuição de frequência
 
 ```{r}
 freq_7d <- dados$Resistencia_7d |>
@@ -972,7 +944,7 @@ freq_7d
 
 A distribuição de frequência permite identificar como os valores de resistência estão distribuídos entre as diferentes classes.
 
-## Histograma
+### Histograma
 
 ```{r}
 dados$Resistencia_7d |>
@@ -985,7 +957,7 @@ dados$Resistencia_7d |>
   )
 ```
 
-## Polígono de frequências
+### Polígono de frequências
 
 ```{r}
 dados$Resistencia_7d |>
@@ -996,7 +968,7 @@ dados$Resistencia_7d |>
   )
 ```
 
-## Ogivas
+### Ogivas
 
 ```{r}
 dados$Resistencia_7d |>
@@ -1010,7 +982,7 @@ dados$Resistencia_7d |>
 
 ---
 
-# Medidas descritivas da resistência aos 7 dias
+## Medidas descritivas da resistência aos 7 dias
 
 ```{r}
 resumo_7d <- data.frame(
@@ -1058,7 +1030,7 @@ Comparativamente ao slump, observa-se maior dispersão relativa da resistência 
 
 Esse comportamento pode ser observado também no histograma e no box-plot, sendo importante destacar que a estatística descritiva identifica a variabilidade, mas não permite determinar isoladamente sua causa.
 
-## Assimetria e curtose aos 7 dias
+### Assimetria e curtose aos 7 dias
 
 ```{r}
 assimetria_7d <- (
@@ -1098,11 +1070,11 @@ A curtose apresenta valor inferior a 3, caracterizando uma distribuição **plat
 
 ---
 
-# Análise da resistência aos 14 dias
+## Análise da resistência aos 14 dias
 
 A terceira variável analisada corresponde à resistência média dos corpos de prova aos 14 dias.
 
-## Organização dos dados
+### Organização dos dados
 
 ```{r}
 rol_14d <- sort(dados$Resistencia_14d)
@@ -1110,7 +1082,7 @@ rol_14d <- sort(dados$Resistencia_14d)
 rol_14d
 ```
 
-## Distribuição de frequência com o `leem`
+### Distribuição de frequência com o `leem`
 
 ```{r}
 freq_14d <- dados$Resistencia_14d |>
@@ -1120,7 +1092,7 @@ freq_14d <- dados$Resistencia_14d |>
 freq_14d
 ```
 
-## Histograma
+### Histograma
 
 ```{r}
 dados$Resistencia_14d |>
@@ -1133,7 +1105,7 @@ dados$Resistencia_14d |>
   )
 ```
 
-## Polígono de frequências
+### Polígono de frequências
 
 ```{r}
 dados$Resistencia_14d |>
@@ -1144,7 +1116,7 @@ dados$Resistencia_14d |>
   )
 ```
 
-## Ogivas
+### Ogivas
 
 ```{r}
 dados$Resistencia_14d |>
@@ -1158,7 +1130,7 @@ dados$Resistencia_14d |>
 
 ---
 
-# Medidas descritivas da resistência aos 14 dias
+## Medidas descritivas da resistência aos 14 dias
 
 ```{r}
 resumo_14d <- data.frame(
@@ -1204,7 +1176,7 @@ O desvio-padrão é aproximadamente **1,32 MPa**, enquanto o coeficiente de vari
 
 Comparativamente aos resultados aos 7 dias, observa-se uma redução significativa da dispersão relativa.
 
-## Assimetria e curtose aos 14 dias
+### Assimetria e curtose aos 14 dias
 
 ```{r}
 assimetria_14d <- (
@@ -1244,7 +1216,7 @@ A curtose apresenta valor inferior a 3, caracterizando uma distribuição platic
 
 ---
 
-# Comparação entre as idades de 7 e 14 dias
+## Comparação entre as idades de 7 e 14 dias
 
 Uma das análises mais relevantes da base consiste na comparação entre as resistências médias aos 7 e 14 dias.
 
@@ -1295,7 +1267,7 @@ G =
 \bar{X}_{7}
 }
 \times100
-$$
+$$ {#eq-nome}
 
 ```{r}
 ganho_medio <- (
@@ -1315,7 +1287,7 @@ Esse comportamento é compatível com a evolução da resistência do concreto a
 
 ---
 
-# Comparação gráfica entre as idades
+## Comparação gráfica entre as idades
 
 Para visualizar simultaneamente a distribuição dos resultados aos 7 e 14 dias, pode-se utilizar o box-plot.
 
@@ -1338,7 +1310,7 @@ Visualmente, a distribuição aos 14 dias encontra-se deslocada para valores sup
 
 ---
 
-# Comparação geral das três variáveis
+## Comparação geral das três variáveis
 
 Para facilitar a comparação entre as variáveis, apresenta-se uma síntese das principais estatísticas.
 
@@ -1419,31 +1391,19 @@ knitr::kable(
 
 ---
 
-# Discussão dos resultados
+## Discussão dos resultados
 
-A análise dos 30 resultados de slump mostra uma distribuição com média de aproximadamente **23,45 cm** e mediana de **24,00 cm**. A proximidade entre essas duas medidas indica concentração dos resultados em torno dessa região.
+A análise dos 30 resultados de slump apresentou média de 23,45 cm e mediana de 24,00 cm, indicando concentração dos valores nessa faixa. O desvio-padrão de 1,23 cm e o coeficiente de variação de 5,23% demonstram baixa variabilidade relativa. A assimetria de -1,03 indica distribuição com assimetria negativa, com alguns valores deslocados para menores abatimentos.
 
-O desvio-padrão de aproximadamente **1,23 cm** e o coeficiente de variação de aproximadamente **5,23%** indicam baixa dispersão relativa dos valores de abatimento. Dessa forma, entre as séries analisadas, o slump apresentou comportamento relativamente uniforme.
+Para a resistência aos 7 dias, a média foi de 20,69 MPa e o coeficiente de variação de 14,25%, evidenciando maior dispersão dos resultados. Aos 14 dias, a média aumentou para 24,14 MPa, enquanto o coeficiente de variação caiu para 5,46%, indicando aumento da resistência e maior uniformidade dos resultados. O aumento médio da resistência entre 7 e 14 dias foi de aproximadamente 16,7%.
 
-A análise da assimetria complementa essa interpretação. O coeficiente obtido foi aproximadamente **-1,03**, indicando assimetria negativa. Portanto, apesar da concentração dos resultados próximos aos valores mais elevados, existem observações deslocadas em direção aos menores valores de abatimento.
+A assimetria foi mais evidente aos 7 dias e aproximou-se da simetria aos 14 dias. Quanto à curtose, o slump foi leptocúrtico (coeficiente > 3), enquanto as resistências foram platicúrticas (coeficiente < 3).
 
-Para a resistência aos 7 dias, a média das séries foi de aproximadamente **20,69 MPa**. O coeficiente de variação foi aproximadamente **14,25%**, valor consideravelmente superior ao observado para o slump. Dessa maneira, a resistência apresentou maior variabilidade relativa no conjunto de dados analisado.
-
-Aos 14 dias, a resistência média aumentou para aproximadamente **24,14 MPa**. Simultaneamente, o coeficiente de variação reduziu-se para aproximadamente **5,46%**. Portanto, além do aumento da resistência média, os resultados aos 14 dias apresentaram menor dispersão relativa.
-
-A comparação entre as duas idades indica um aumento médio de aproximadamente **16,7%** na resistência entre 7 e 14 dias. Esse aumento representa a evolução dos resultados de resistência observada no banco de dados, mas não deve ser interpretado isoladamente como uma previsão do comportamento de qualquer concreto diferente daquele representado pela amostra.
-
-Outro aspecto relevante é o comportamento da assimetria. Aos 7 dias, a distribuição apresenta assimetria negativa mais evidente, enquanto aos 14 dias o coeficiente aproxima-se de zero. Isso indica que a distribuição da resistência aos 14 dias apresenta comportamento mais próximo da simetria.
-
-A curtose também complementa a interpretação dos histogramas. O slump apresentou coeficiente superior a 3, sendo classificado como leptocúrtico, enquanto as distribuições de resistência apresentaram coeficientes inferiores a 3, sendo classificadas como platicúrticas.
-
-De forma geral, os resultados mostram que o **slump apresentou baixa variabilidade relativa**, enquanto a resistência aos 7 dias apresentou maior dispersão. Aos 14 dias, além do aumento da resistência média, ocorreu uma redução expressiva da variabilidade relativa.
-
-É importante destacar que a estatística descritiva permite identificar e quantificar essas características, mas não permite determinar sozinha as causas da variabilidade. Para isso seriam necessárias informações adicionais sobre composição do concreto, condições de produção, transporte, moldagem, cura, preparação dos corpos de prova e condições de ensaio.
+De modo geral, o slump apresentou baixa variabilidade, a resistência aos 7 dias apresentou maior dispersão e, aos 14 dias, houve maior resistência e menor variabilidade relativa. Entretanto, a estatística descritiva identifica os padrões dos dados, mas não determina suas causas, que dependem de fatores como composição, produção, transporte, moldagem, cura e condições de ensaio.
 
 ---
 
-# Síntese dos resultados
+## Síntese dos resultados
 
 A Tabela abaixo reúne os principais resultados obtidos.
 
@@ -1467,26 +1427,9 @@ Esses resultados demonstram a importância de utilizar simultaneamente medidas d
 
 # Considerações finais
 
-A aplicação do pacote `leem` possibilitou realizar a organização, tabulação e representação gráfica dos dados experimentais de concreto de maneira integrada ao ambiente R.
-
-A construção das distribuições de frequência permitiu transformar os dados brutos em informações organizadas, enquanto os histogramas, polígonos de frequência e ogivas possibilitaram a análise visual das distribuições.
-
-As medidas de posição permitiram identificar os valores centrais das variáveis, enquanto as medidas de dispersão demonstraram o grau de variabilidade dos resultados. O coeficiente de variação foi especialmente importante para comparar a variabilidade relativa entre o slump e as resistências nas diferentes idades.
-
-A análise das medidas de forma também contribuiu para a caracterização das distribuições. A assimetria permitiu identificar a direção e intensidade do deslocamento das distribuições em relação à simetria, enquanto a curtose possibilitou classificar o formato das distribuições em relação à referência mesocúrtica.
-
-No caso das resistências à compressão, verificou-se aumento da média entre 7 e 14 dias, acompanhado por redução significativa da variabilidade relativa. Esse comportamento demonstra a importância da análise conjunta de posição e dispersão na interpretação de dados experimentais.
-
-Por fim, o desenvolvimento da análise permitiu demonstrar que a utilização de um pacote estatístico não deve ser compreendida como uma substituição do conhecimento matemático. O `leem` automatiza procedimentos de organização, tabulação e representação, mas a interpretação adequada dos resultados exige conhecimento sobre frequência, média, mediana, moda, variância, desvio-padrão, coeficiente de variação, assimetria e curtose.
-
-Dessa forma, o uso do `leem` associado ao conhecimento dos fundamentos estatísticos possibilitou uma análise mais completa dos resultados obtidos nos ensaios de concreto.
+O pacote leem permitiu organizar, tabular e representar graficamente os dados dos ensaios de concreto. As análises de frequência, posição, dispersão e forma possibilitaram compreender melhor a distribuição e variabilidade dos resultados. Observou-se aumento da resistência média entre 7 e 14 dias e redução da variabilidade relativa. Por fim, destaca-se que o leem automatiza os procedimentos, mas a correta interpretação dos resultados depende do conhecimento dos fundamentos estatísticos.
 
 ---
 
 # Referências
 
-DÊIVIDE, B. **leem: Laboratory of Teaching to Statistics and Mathematics**. Disponível em: https://bendeivide.github.io/leem/. Acesso em: 23 ago. 2026.
-
-DÊIVIDE, B. **Estatística e Probabilidade: curso para estudar o pacote leem em Estatística e Probabilidade**. Disponível em: https://bendeivide.github.io/courses/leem/estprob/. Acesso em: 23 ago. 2026.
-
-DÊIVIDE, B. **Estatística e Probabilidade – Coleta, Organização e Apresentação de Dados**. Disponível em: https://bendeivide.github.io/slides/estprob/s03/. Acesso em: 23 ago. 2026.
