@@ -29,23 +29,235 @@ execute:
 
 # 📌 Introdução
 
+No **controle tecnológico do concreto**, a qualidade das decisões técnicas depende diretamente da confiabilidade dos dados coletados em campo e em laboratório. Contudo, na prática profissional, é comum que bases de dados apresentem inconsistências, como **valores ausentes, erros de digitação, padronização inadequada de categorias e registros incompatíveis com a realidade física do concreto**. Esses problemas, quando não tratados adequadamente, podem comprometer as análises estatísticas e levar a interpretações equivocadas.
+
+Esta atividade simula uma situação real em que o engenheiro recebe uma **base de dados bruta contendo 100 registros e 10 variáveis relacionadas ao concreto**. Utilizando a linguagem **R, com ênfase nos recursos do Base R**, o trabalho consiste em **inspecionar, diagnosticar, limpar e explorar os dados**, transformando informações inconsistentes em dados confiáveis para auxiliar na tomada de decisão no contexto da **Engenharia Civil**.
 
 # 🎯 Objetivo geral
 
-
+Inspecionar, diagnosticar, limpar e explorar uma base de dados do **controle tecnológico do concreto** utilizando o **R (Base R)**, transformando dados brutos e inconsistentes em informações confiáveis para a **tomada de decisão técnica no âmbito da Engenharia Civil**.
 
 ## Objetivos específicos
 
+* **Conhecer a estrutura da base**, identificando o número de observações, variáveis, tipos de dados e valores ausentes.
+
+* **Diagnosticar problemas**, como erros de digitação, separadores decimais incorretos, categorias despadronizadas e valores incompatíveis com o contexto da Engenharia Civil.
+
+* **Padronizar e limpar os dados**, corrigindo variáveis qualitativas e quantitativas, tratando valores ausentes e criando uma versão limpa da base.
+
+* **Explorar os dados tratados** por meio de estatísticas descritivas e análises agrupadas por obra, tipo de concreto e idade.
+
+* **Criar variáveis derivadas com interpretação técnica**, como resistência relativa, classificação de desempenho e indicador de desempenho acima da média.
+
+* **Aplicar funções do Base R**, como `split()`, `lapply()`, `sapply()`, `apply()`, `aggregate()`, `for` e `if`, para o processamento e a análise dos dados.
+
+* **Responder questões práticas da Engenharia Civil**, como a comparação de desempenho entre blocos e a relação entre diferentes variáveis do concreto.
+
+* **Documentar e justificar as decisões de limpeza e análise**, garantindo maior rastreabilidade e reprodutibilidade dos procedimentos realizados.
+
+* **Desenvolver um script organizado e comentado** que execute todo o fluxo de trabalho, desde a inspeção inicial até a geração de estatísticas e variáveis derivadas.
 
 # ⚙️ Metodologia
 
+A metodologia adotada neste trabalho consiste no **processamento completo de uma base de dados do controle tecnológico do concreto**, utilizando a linguagem **R**, com ênfase nos recursos disponíveis no **Base R**.
 
+O fluxo de trabalho segue uma sequência lógica composta pelas etapas de:
+
+1. **Importação dos dados**;
+2. **Inspeção inicial da base**;
+3. **Diagnóstico de inconsistências**;
+4. **Limpeza e padronização dos dados**;
+5. **Tratamento dos valores ausentes**;
+6. **Exploração estatística**;
+7. **Criação de variáveis derivadas**;
+8. **Aplicação de funções de processamento**;
+9. **Interpretação dos resultados sob a perspectiva da Engenharia Civil**.
+
+As etapas foram organizadas em **35 questões**, que orientam o desenvolvimento progressivo da atividade.
+
+## 📋 Etapas de desenvolvimento
+
+**Questão 01 — Importação dos dados**
+
+Importe a base de dados para o R e atribua-a ao objeto `dados`, verificando a correta importação.
+
+**Questão 02 — Dimensões da base**
+
+Determine as dimensões da base, identificando o número de **observações (linhas)** e **variáveis (colunas)**.
+
+**Questão 03 — Estrutura da base**
+
+Apresente a estrutura completa da base utilizando a função `str()` e analise detalhadamente o resultado obtido.
+
+**Questão 04 — Resumo estatístico**
+
+Gere um resumo estatístico das variáveis com a função `summary()` e identifique informações que merecem atenção.
+
+**Questão 05 — Classificação das variáveis**
+
+Classifique as variáveis em **quantitativas** e **qualitativas**, com base na estrutura apresentada pelo R.
+
+**Questão 06 — Valores ausentes**
+
+Verifique a existência de **valores ausentes (*missing values*)**, identificando a quantidade, as variáveis e as observações afetadas.
+
+**Questão 07 — Valores incompatíveis**
+
+Verifique valores incompatíveis com o contexto da Engenharia Civil nas variáveis `idade_dias`, `resistencia_mpa`, `abatimento_mm`, `densidade_kg_m3`, `relacao_a_c` e `absorção_agregado_pct`, criando códigos para a localização das observações problemáticas.
+
+**Questão 08 — Erros de digitação**
+
+Localize possíveis **erros de digitação** e apresente os registros completos das observações afetadas.
+
+**Questão 09 — Padronização da variável `obra`**
+
+Verifique a padronização das categorias da variável `obra` e identifique possíveis inconsistências.
+
+**Questão 10 — Padronização da variável `tipo_concreto`**
+
+Verifique a padronização das categorias da variável `tipo_concreto` e identifique categorias que representam o mesmo tipo de concreto com **grafias diferentes**.
+
+**Questão 11 — Reavaliação dos tipos**
+
+Reavalie os tipos das variáveis após a identificação dos problemas e reflita sobre como **um único valor digitado incorretamente pode alterar a interpretação de uma variável inteira pelo R**.
+
+**Questão 12 — Cópia da base original**
+
+Crie uma cópia da base original chamada `dados_limpos` e discuta a importância de **preservar a base original** durante o processo de tratamento dos dados.
+
+**Questão 13 — Correção das variáveis qualitativas**
+
+Corrija os problemas encontrados nas variáveis qualitativas, **padronizando suas categorias**.
+
+**Questão 14 — Conversão das variáveis quantitativas**
+
+Converta para o tipo adequado as variáveis que deveriam ser quantitativas e verifique se a conversão foi realizada corretamente.
+
+**Questão 15 — Tratamento dos valores ausentes**
+
+Identifique os valores ausentes e discuta os procedimentos mais adequados para cada situação, considerando **exclusão, substituição, manutenção do `NA` ou consulta à fonte original**. Justifique tecnicamente as decisões adotadas.
+
+**Questão 16 — Reavaliação da base limpa**
+
+Reavalie a estrutura (`str()`) e o resumo (`summary()`) da base limpa e compare os resultados obtidos com aqueles observados na **base original**.
+
+**Questão 17 — Resistência média**
+
+Calcule a **resistência média à compressão** dos corpos de prova globalmente e por bloco da obra, tipo de concreto e idade do corpo de prova.
+
+**Questão 18 — Maior e menor resistência média**
+
+Identifique o bloco da obra que apresenta a **maior e a menor resistência média**, apresentando os códigos utilizados para essa identificação.
+
+**Questão 19 — Resistência por classe de concreto**
+
+Calcule a resistência média para cada classe de concreto (**C25, C30, C35 e C40**) e identifique a classe que apresenta a **maior resistência média**.
+
+**Questão 20 — Aplicação da função `aggregate()`**
+
+Utilize a função `aggregate()` para obter a média das variáveis `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm` e `densidade_kg_m3` para cada tipo de concreto e interprete os resultados.
+
+**Questão 21 — Resistência relativa**
+
+Crie a variável `resistencia_relativa`, representando a razão entre a **resistência observada** e uma **resistência de referência associada à classe do concreto**, e explique como a referência foi definida.
+
+**Questão 22 — Classificação do desempenho**
+
+Crie a variável `classificacao`, classificando os corpos de prova segundo um critério relacionado à resistência, definindo e justificando tecnicamente os critérios utilizados.
+
+**Questão 23 — Desempenho acima da média**
+
+Crie a variável `acima_media`, indicando se a resistência do corpo de prova está **acima ou abaixo da resistência média de seu respectivo tipo de concreto**, utilizando os valores `TRUE` ou `FALSE`.
+
+**Questão 24 — Aplicação da função `split()`**
+
+Utilize a função `split()` para dividir a base de dados de acordo com a variável `tipo_concreto` e conte o **número de observações em cada grupo**.
+
+**Questão 25 — Aplicação da função `lapply()`**
+
+Utilizando a estrutura criada com `split()`, calcule a **resistência média de cada tipo de concreto** utilizando a função `lapply()`.
+
+**Questão 26 — Aplicação da função `sapply()`**
+
+Repita a operação utilizando `sapply()` e explique a diferença entre os resultados produzidos por `lapply()` e `sapply()`.
+
+**Questão 27 — Aplicação da função `apply()` para médias**
+
+Selecione as variáveis quantitativas relacionadas às propriedades do concreto e utilize a função `apply()` para calcular a **média de cada variável**.
+
+**Questão 28 — Aplicação da função `apply()` por observação**
+
+Utilize a função `apply()` para obter, para cada observação, uma **medida resumo envolvendo as variáveis quantitativas selecionadas** e discuta a interpretação física dessa medida.
+
+**Questão 29 — Aplicação de `for` e `if`**
+
+Utilizando `for` e `if` — **sem utilizar `ifelse()`** — percorra as 100 observações e identifique os corpos de prova cuja resistência está acima da **resistência média de sua respectiva classe de concreto**.
+
+**Questão 30 — Abordagem vetorizada**
+
+Repita a questão anterior utilizando uma **abordagem vetorizada** e compare as duas soluções quanto à simplicidade, legibilidade e eficiência, justificando sua análise.
+
+**Questão 31 — Comparação entre blocos**
+
+Verifique descritivamente a afirmação:
+
+> **"Os concretos utilizados no Bloco C apresentam desempenho superior aos utilizados nos demais blocos."**
+
+Realize a análise **sem utilizar teste de hipótese**.
+
+**Questão 32 — Consumo de cimento e resistência**
+
+Investigue a afirmação:
+
+> **"Quanto maior o consumo de cimento, maior tende a ser a resistência do concreto."**
+
+Identifique as variáveis que devem ser analisadas conjuntamente para avaliar essa relação.
+
+**Questão 33 — Relação água/cimento e resistência**
+
+Investigue a relação entre `relacao_a_c` e `resistencia_mpa`, analisando os padrões encontrados e interpretando os resultados considerando o **comportamento esperado do concreto**.
+
+**Questão 34 — Evolução da resistência com a idade**
+
+Compare a **resistência média dos concretos em diferentes idades** e analise a evolução da resistência com o aumento da idade dos corpos de prova.
+
+**Questão 35 — Informações estatísticas relevantes**
+
+Selecione e justifique as **cinco informações estatísticas mais importantes** para compor um relatório técnico destinado ao engenheiro responsável.
+
+
+## 🏁 Etapa conclusiva — Script final
+
+Como etapa conclusiva, desenvolva um **script final em R, organizado e comentado**, contemplando todo o fluxo de trabalho desenvolvido ao longo da atividade.
+
+O script deverá contemplar:
+
+1. **Inspeção inicial da base**;
+2. **Identificação de problemas e inconsistências**;
+3. **Verificação de valores ausentes**;
+4. **Verificação e correção de inconsistências nas variáveis**;
+5. **Produção de uma versão limpa dos dados**;
+6. **Geração de estatísticas descritivas relevantes**;
+7. **Criação de pelo menos duas variáveis derivadas**;
+8. **Produção de informações úteis para auxiliar o engenheiro responsável pela obra**.
+
+O código deverá ser estruturado de forma que **outro engenheiro consiga compreender as etapas realizadas**, permitindo a reprodução das análises e dos resultados obtidos.
+
+Para isso, deverão ser utilizadas, sempre que pertinentes, as ferramentas de **Base R trabalhadas em sala de aula**, incluindo:
+
+`str()`, `summary()`, `subset()`, `apply()`, `lapply()`, `sapply()`, `ifelse()`, `for`, `if`, `tapply()`, `aggregate()`, `split()`, `with()`, `by()`, `within()` e `ave()`.
 
 # 📚 Fundamentação teórica
 
+A **Estatística Descritiva** reúne métodos utilizados para organizar, resumir e apresentar dados, facilitando sua interpretação e permitindo uma compreensão inicial do comportamento de um conjunto de informações. Entre seus principais recursos estão as **medidas de posição**, como a média, e as **medidas de dispersão**, utilizadas para avaliar a variabilidade dos dados [@batista2024estatistica].
 
+O **R** é uma linguagem de programação e ambiente computacional amplamente utilizado para **análise de dados e cálculos estatísticos**. O **Base R** disponibiliza diversas funções para manipulação, processamento e análise de dados, incluindo `summary()`, `mean()`, `apply()`, `lapply()` e `sapply()` [@batista2023rbasico].
+
+Neste trabalho, esses conceitos são utilizados como **fundamentação para o desenvolvimento das análises estatísticas e computacionais** apresentadas nas etapas seguintes. A aplicação dessas ferramentas permite transformar uma base de dados inicialmente bruta em informações organizadas, interpretáveis e úteis para o **processo de tomada de decisão na Engenharia Civil**.
 
 # 🔍 Resultados e Discussão
+
+## Questão 1
 
 
 
