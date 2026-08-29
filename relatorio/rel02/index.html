@@ -160,7 +160,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">29/08/2026, 14:59</p>
+      <p class="date">29/08/2026, 15:13</p>
     </div>
   </div>
   
@@ -396,7 +396,7 @@ div.csl-indent {
 </section>
 <section id="questão-4-resumo-estatístico-da-base-de-dados" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="questão-4-resumo-estatístico-da-base-de-dados"><span class="header-section-number">5.4</span> Questão 4 — Resumo estatístico da base de dados</h2>
-<p>Para obter uma visão geral das variáveis presentes na base de dados, foi utilizada a função <code>summary()</code>, que apresenta informações diferentes de acordo com o tipo de variável.</p>
+<p>Para obter uma visão geral das variáveis presentes na base de dados, foi utilizada a função <code>summary()</code>, que apresenta diferentes informações de acordo com o tipo de variável.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
@@ -429,7 +429,8 @@ div.csl-indent {
  NAs    :1       NAs    :1            </code></pre>
 </div>
 </div>
-<p>A função permite identificar a quantidade de observações, o número de valores distintos, as principais medidas estatísticas e as categorias das variáveis. A tabela abaixo apresenta um resumo dos resultados obtidos nessa função:</p>
+<p>Para as <strong>variáveis quantitativas</strong>, a função apresenta medidas como mínimo, quartis, mediana, média e máximo. Para as <strong>variáveis qualitativas</strong>, são apresentadas as categorias existentes e suas respectivas frequências. Também são disponibilizadas informações sobre valores em branco e características das variáveis de texto.</p>
+<p>A tabela abaixo apresenta um resumo dos resultados obtidos por meio dessa função:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 24%">
@@ -446,7 +447,7 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td><strong>Length</strong></td>
-<td>Quantitativa</td>
+<td>Qualitativa</td>
 <td>Quantidade total de elementos da variável.</td>
 </tr>
 <tr class="even">
@@ -503,11 +504,6 @@ div.csl-indent {
 <td><strong>maxcharn</strong></td>
 <td>Qualitativa</td>
 <td>Maior número de caracteres encontrados.</td>
-</tr>
-<tr class="odd">
-<td><strong>Categorias</strong></td>
-<td>Qualitativa</td>
-<td>Categorias existentes e suas respectivas frequências.</td>
 </tr>
 </tbody>
 </table>
@@ -1291,34 +1287,34 @@ BATISTA, B. D. DE O.; ARTHUR, D. <strong><a href="https://bendeivide.github.io/b
 <span id="cb9-311"><a href="#cb9-311" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-312"><a href="#cb9-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 4 — Resumo estatístico da base de dados</span></span>
 <span id="cb9-313"><a href="#cb9-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-314"><a href="#cb9-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-315"><a href="#cb9-315" aria-hidden="true" tabindex="-1"></a>Para obter uma visão geral das variáveis presentes na base de dados, foi utilizada a função <span class="in">`summary()`</span>, que apresenta informações diferentes de acordo com o tipo de variável.</span>
-<span id="cb9-316"><a href="#cb9-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-319"><a href="#cb9-319" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-320"><a href="#cb9-320" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dados)</span>
-<span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a>A função permite identificar a quantidade de observações, o número de valores distintos, as principais medidas estatísticas e as categorias das variáveis. A tabela abaixo apresenta um resumo dos resultados obtidos nessa função:</span>
-<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Informação apresentada <span class="pp">|</span> Tipo de variável <span class="pp">|</span> Significado                                           <span class="pp">|</span></span>
-<span id="cb9-326"><a href="#cb9-326" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------</span> <span class="pp">| ----------------</span> <span class="pp">| -----------------------------------------------------</span> <span class="pp">|</span></span>
-<span id="cb9-327"><a href="#cb9-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Length**             <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Quantidade total de elementos da variável.            <span class="pp">|</span></span>
-<span id="cb9-328"><a href="#cb9-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **N.unique**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Número de valores ou categorias diferentes.           <span class="pp">|</span></span>
-<span id="cb9-329"><a href="#cb9-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Min.**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Menor valor observado.                                <span class="pp">|</span></span>
-<span id="cb9-330"><a href="#cb9-330" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **1st Qu.**            <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Primeiro quartil (25% dos dados).                     <span class="pp">|</span></span>
-<span id="cb9-331"><a href="#cb9-331" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Median**             <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Mediana (50% dos dados).                              <span class="pp">|</span></span>
-<span id="cb9-332"><a href="#cb9-332" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Mean**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Média dos valores.                                    <span class="pp">|</span></span>
-<span id="cb9-333"><a href="#cb9-333" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **3rd Qu.**            <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Terceiro quartil (75% dos dados).                     <span class="pp">|</span></span>
-<span id="cb9-334"><a href="#cb9-334" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Max.**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Maior valor observado.                                <span class="pp">|</span></span>
-<span id="cb9-335"><a href="#cb9-335" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **NA's**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Quantidade de valores ausentes (*missing values*).    <span class="pp">|</span></span>
-<span id="cb9-336"><a href="#cb9-336" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **n. blank**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Quantidade de valores em branco.                      <span class="pp">|</span></span>
-<span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **mincharn**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Menor número de caracteres encontrados.               <span class="pp">|</span></span>
-<span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **maxcharn**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Maior número de caracteres encontrados.               <span class="pp">|</span></span>
-<span id="cb9-339"><a href="#cb9-339" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Categorias**         <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Categorias existentes e suas respectivas frequências. <span class="pp">|</span></span>
-<span id="cb9-340"><a href="#cb9-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-341"><a href="#cb9-341" aria-hidden="true" tabindex="-1"></a>Dessa forma, o <span class="in">`summary()`</span> fornece uma visão inicial da estrutura e das características dos dados, permitindo verificar a distribuição das variáveis, suas frequências e a presença de valores ausentes.</span>
+<span id="cb9-314"><a href="#cb9-314" aria-hidden="true" tabindex="-1"></a>Para obter uma visão geral das variáveis presentes na base de dados, foi utilizada a função <span class="in">`summary()`</span>, que apresenta diferentes informações de acordo com o tipo de variável.</span>
+<span id="cb9-315"><a href="#cb9-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-318"><a href="#cb9-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-319"><a href="#cb9-319" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dados)</span>
+<span id="cb9-320"><a href="#cb9-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a>Para as **variáveis quantitativas**, a função apresenta medidas como mínimo, quartis, mediana, média e máximo. Para as **variáveis qualitativas**, são apresentadas as categorias existentes e suas respectivas frequências. Também são disponibilizadas informações sobre valores em branco e características das variáveis de texto.</span>
+<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a>A tabela abaixo apresenta um resumo dos resultados obtidos por meio dessa função:</span>
+<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-326"><a href="#cb9-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-327"><a href="#cb9-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Informação apresentada <span class="pp">|</span> Tipo de variável <span class="pp">|</span> Significado                                           <span class="pp">|</span></span>
+<span id="cb9-328"><a href="#cb9-328" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------</span> <span class="pp">| ----------------</span> <span class="pp">| -----------------------------------------------------</span> <span class="pp">|</span></span>
+<span id="cb9-329"><a href="#cb9-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Length**             <span class="pp">|</span> Qualitativa     <span class="pp">|</span> Quantidade total de elementos da variável.            <span class="pp">|</span></span>
+<span id="cb9-330"><a href="#cb9-330" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **N.unique**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Número de valores ou categorias diferentes.           <span class="pp">|</span></span>
+<span id="cb9-331"><a href="#cb9-331" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Min.**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Menor valor observado.                                <span class="pp">|</span></span>
+<span id="cb9-332"><a href="#cb9-332" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **1st Qu.**            <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Primeiro quartil (25% dos dados).                     <span class="pp">|</span></span>
+<span id="cb9-333"><a href="#cb9-333" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Median**             <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Mediana (50% dos dados).                              <span class="pp">|</span></span>
+<span id="cb9-334"><a href="#cb9-334" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Mean**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Média dos valores.                                    <span class="pp">|</span></span>
+<span id="cb9-335"><a href="#cb9-335" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **3rd Qu.**            <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Terceiro quartil (75% dos dados).                     <span class="pp">|</span></span>
+<span id="cb9-336"><a href="#cb9-336" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Max.**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Maior valor observado.                                <span class="pp">|</span></span>
+<span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **NA's**               <span class="pp">|</span> Quantitativa     <span class="pp">|</span> Quantidade de valores ausentes (*missing values*).    <span class="pp">|</span></span>
+<span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **n. blank**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Quantidade de valores em branco.                      <span class="pp">|</span></span>
+<span id="cb9-339"><a href="#cb9-339" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **mincharn**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Menor número de caracteres encontrados.               <span class="pp">|</span></span>
+<span id="cb9-340"><a href="#cb9-340" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **maxcharn**           <span class="pp">|</span> Qualitativa      <span class="pp">|</span> Maior número de caracteres encontrados.               <span class="pp">|</span></span>
+<span id="cb9-341"><a href="#cb9-341" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-342"><a href="#cb9-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-343"><a href="#cb9-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-343"><a href="#cb9-343" aria-hidden="true" tabindex="-1"></a>Dessa forma, o <span class="in">`summary()`</span> fornece uma visão inicial da estrutura e das características dos dados, permitindo verificar a distribuição das variáveis, suas frequências e a presença de valores ausentes.</span>
 <span id="cb9-344"><a href="#cb9-344" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-345"><a href="#cb9-345" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-346"><a href="#cb9-346" aria-hidden="true" tabindex="-1"></a></span>
@@ -1339,13 +1335,15 @@ BATISTA, B. D. DE O.; ARTHUR, D. <strong><a href="https://bendeivide.github.io/b
 <span id="cb9-361"><a href="#cb9-361" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-362"><a href="#cb9-362" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-363"><a href="#cb9-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-364"><a href="#cb9-364" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Considerações finais</span></span>
+<span id="cb9-364"><a href="#cb9-364" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-365"><a href="#cb9-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-366"><a href="#cb9-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-366"><a href="#cb9-366" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Considerações finais</span></span>
 <span id="cb9-367"><a href="#cb9-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-368"><a href="#cb9-368" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📖 Referências</span></span>
+<span id="cb9-368"><a href="#cb9-368" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-369"><a href="#cb9-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-370"><a href="#cb9-370" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb9-370"><a href="#cb9-370" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📖 Referências</span></span>
+<span id="cb9-371"><a href="#cb9-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-372"><a href="#cb9-372" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
