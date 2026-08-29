@@ -257,7 +257,99 @@ Neste trabalho, esses conceitos são utilizados como **fundamentação para o de
 
 # 🔍 Resultados e Discussão
 
-## Questão 1
+## Questão 1 — Importação dos dados
+
+A base de dados foi importada para o R utilizando a função `read.csv()` e armazenada no objeto `dados`.
+
+```{r}
+# Importação da base de dados
+dados <- read.csv("base_de_dados.csv",
+                  header = TRUE,
+                  sep = ";")
+
+# Visualização das primeiras observações
+head(dados)
+```
+
+O código utilizado foi dividido em duas etapas. Primeiramente, `read.csv()` realiza a **leitura do arquivo**, enquanto `header = TRUE` informa que a primeira linha contém os **nomes das variáveis**. O argumento `sep = ";"` define o **ponto e vírgula como separador das colunas**, conforme a estrutura do arquivo.
+
+Em seguida, `head(dados)` apresenta as **primeiras observações da base**, permitindo verificar se os dados foram importados e organizados corretamente.
+
+
+## Questão 2 — Dimensões da base
+
+Para verificar o tamanho da base de dados, foi utilizada a função `dim()`, que retorna o número de **linhas e colunas** do objeto `dados`.
+
+```{r}
+# Verificação das dimensões da base
+dim(dados)
+```
+
+A função `dim()` apresenta as dimensões no formato **(linhas, colunas)**. Portanto, o primeiro valor corresponde ao número de **observações**, enquanto o segundo representa o número de **variáveis**.
+
+No caso da base analisada, o resultado foi **100 observações e 10 variáveis**, confirmando que a base possui **100 registros de corpos de prova**, distribuídos em 10 características.
+
+
+## Questão 3 — Estrutura da base de dados
+
+Para verificar a estrutura da base de dados, foi utilizada a função `str()`, que permite identificar o número de observações e variáveis, os nomes das colunas e os respectivos tipos de dados.
+
+```{r}
+str(dados)
+```
+
+A análise da estrutura permite verificar como o R interpretou cada variável e identificar possíveis problemas de importação ou classificação. As variáveis quantitativas devem estar armazenadas como numéricas (**"num"** ou **"int"**), enquanto as variáveis qualitativas, como categorias de obra e tipo de concreto, podem ser armazenadas como caracteres (**"chr"**). 
+
+Essa verificação é importante antes da realização das análises estatísticas, pois a classificação incorreta de uma variável pode interferir nos cálculos e na interpretação dos resultados.
+
+
+## Questão 4 — Resumo estatístico da base de dados
+
+
+Para obter uma visão geral das variáveis presentes na base de dados, foi utilizada a função `summary()`, que apresenta informações diferentes de acordo com o tipo de variável.
+
+```{r}
+summary(dados)
+```
+
+A função permite identificar a quantidade de observações, o número de valores distintos, as principais medidas estatísticas e as categorias das variáveis. A tabela abaixo apresenta um resumo dos resultados obtidos nessa função:
+
+| Informação apresentada | Tipo de variável | Significado                                           |
+| ---------------------- | ---------------- | ----------------------------------------------------- |
+| **Length**             | Quantitativa     | Quantidade total de elementos da variável.            |
+| **N.unique**           | Qualitativa      | Número de valores ou categorias diferentes.           |
+| **Min.**               | Quantitativa     | Menor valor observado.                                |
+| **1st Qu.**            | Quantitativa     | Primeiro quartil (25% dos dados).                     |
+| **Median**             | Quantitativa     | Mediana (50% dos dados).                              |
+| **Mean**               | Quantitativa     | Média dos valores.                                    |
+| **3rd Qu.**            | Quantitativa     | Terceiro quartil (75% dos dados).                     |
+| **Max.**               | Quantitativa     | Maior valor observado.                                |
+| **NA's**               | Quantitativa     | Quantidade de valores ausentes (*missing values*).    |
+| **n. blank**           | Qualitativa      | Quantidade de valores em branco.                      |
+| **mincharn**           | Qualitativa      | Menor número de caracteres encontrados.               |
+| **maxcharn**           | Qualitativa      | Maior número de caracteres encontrados.               |
+| **Categorias**         | Qualitativa      | Categorias existentes e suas respectivas frequências. |
+
+Dessa forma, o `summary()` fornece uma visão inicial da estrutura e das características dos dados, permitindo verificar a distribuição das variáveis, suas frequências e a presença de valores ausentes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
