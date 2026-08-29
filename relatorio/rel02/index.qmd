@@ -470,23 +470,121 @@ Os códigos acima realizam uma **triagem inicial**, permitindo localizar as obse
 
 Na base analisada, esses critérios permitem identificar, entre outros, **idade de 280 dias**, **abatimento de 1250 mm**, **densidade de 238 kg/m³** e **absorção de 18,4%**. Esses valores apresentam grande afastamento em relação aos demais registros e, portanto, devem ser conferidos antes da utilização da base nas análises estatísticas.
 
+## Questão 8 — Possíveis erros de digitação
 
+Nesta etapa, foram procurados valores que apresentam características de **erro de digitação ou preenchimento**, como uso incorreto de letras, separadores decimais, espaços desnecessários e categorias com grafia diferente das demais.
 
+Para localizar esses problemas, foram utilizados códigos que verificam automaticamente padrões diferentes dos predominantes na base.
 
+```{r}
+# 1. Resistência com caracteres diferentes do padrão numérico
+dados[!grepl("^[0-9]+([.,][0-9]+)?$", dados$resistencia_mpa), ]
 
+# 2. Relação água/cimento com separador decimal diferente
+dados[!grepl("^[0-9]+([.,][0-9]+)?$", dados$relacao_a_c), ]
 
+# 3. Consumo de cimento com caracteres não numéricos
+dados[!grepl("^[0-9]+([.,][0-9]+)?$", dados$cimento_kg_m3), ]
 
+# 4. Categorias de obra com espaços no início ou no final
+dados[trimws(dados$obra) != dados$obra, ]
 
+# 5. Categorias de tipo de concreto diferentes do padrão
+dados[!dados$tipo_concreto %in% c("C25", "C30", "C35", "C40"), ]
+```
 
+A aplicação dos códigos permite localizar os seguintes possíveis erros de preenchimento:
 
+| Observação | Variável          | Valor encontrado | Possível problema                              |
+| ---------- | ----------------- | ---------------- | ---------------------------------------------- |
+| **CP-008** | `resistencia_mpa` | `38,7`           | Uso de vírgula como separador decimal          |
+| **CP-019** | `resistencia_mpa` | `3O,4`           | Letra **O** utilizada no lugar do número **0** |
+| **CP-027** | `obra`            | `Bloco B `       | Espaço desnecessário ao final do texto         |
+| **CP-045** | `relacao_a_c`     | `0,55`           | Uso de vírgula como separador decimal          |
+| **CP-059** | `tipo_concreto`   | `c30`            | Categoria escrita com letra minúscula          |
+| **CP-064** | `cimento_kg_m3`   | `390O`           | Letra **O** utilizada no lugar do número **0** |
 
+Além desses casos, os códigos permitem verificar a existência de outros registros com padrões diferentes sem que seja necessário conhecer previamente onde os problemas estão.
 
+Os casos identificados representam **problemas de preenchimento ou padronização**, e não necessariamente erros nos valores físicos medidos. Por exemplo, `38,7` pode representar corretamente uma resistência de 38,7 MPa, mas está registrada utilizando vírgula decimal, enquanto os demais valores utilizam ponto.
 
+O caso mais evidente de erro de digitação ocorre em **CP-019**, onde `3O,4` apresenta a letra **O** no lugar do número **0**, e em **CP-064**, onde `390O` apresenta o mesmo problema. Esses registros impedem que o R reconheça diretamente os valores como numéricos.
 
+Os registros completos identificados são apresentados a seguir:
 
+```{r}
+# Apresentação dos registros completos com possíveis
+# erros de digitação ou preenchimento
 
+dados[c(8, 19, 27, 45, 59, 64), ]
+```
 
+Assim, foram identificados **seis registros que apresentam possíveis problemas de digitação ou padronização**, envolvendo as variáveis `resistencia_mpa`, `obra`, `relacao_a_c`, `tipo_concreto` e `cimento_kg_m3`.
 
+## Questão 9 — Padronização da variável `obra`
+
+Para verificar se todas as categorias da variável `obra` estão padronizadas, foram analisados os valores existentes e também removidos temporariamente os espaços no início e no final dos textos para comparação.
+
+```{r} 
+# Verificação das categorias existentes
+unique(dados$obra)
+
+# Identificação de categorias que possuem espaços extras
+dados[trimws(dados$obra) != dados$obra, ]
+
+# Comparação das categorias após remoção dos espaços
+unique(trimws(dados$obra))
+```
+
+A análise identificou uma inconsistência na variável `obra`. O registro **CP-027** apresenta a categoria:
+
+```text
+"Bloco B "
+```
+
+enquanto os demais registros correspondentes apresentam:
+
+```text
+"Bloco B"
+```
+
+A diferença está apenas na presença de um **espaço em branco ao final do texto**. Embora visualmente pareçam iguais, o R considera `"Bloco B "` e `"Bloco B"` como categorias diferentes.
+
+Portanto, a variável `obra` **não está completamente padronizada**.
+
+## Questão 10 — Padronização da variável `tipo_concreto`
+
+Para verificar se as categorias da variável `tipo_concreto` estão padronizadas, foram observadas as categorias existentes e realizada uma comparação após a padronização temporária de letras maiúsculas e espaços.
+
+```{r} 
+# Verificação das categorias existentes
+unique(dados$tipo_concreto)
+
+# Padronização temporária para comparação
+tipo_padronizado <- toupper(trimws(dados$tipo_concreto))
+
+# Identificação das categorias diferentes do padrão
+dados[tipo_padronizado != dados$tipo_concreto, ]
+
+# Verificação das categorias após a padronização
+unique(tipo_padronizado)
+```
+
+A análise identificou uma inconsistência no registro **CP-059**, em que a variável `tipo_concreto` foi preenchida como:
+
+```text
+"c30"
+```
+
+enquanto os demais registros utilizam:
+
+```text
+"C30"
+```
+
+Nesse caso, `"c30"` e `"C30"` representam o **mesmo tipo de concreto**, porém foram escritos de maneiras diferentes devido ao uso de letra minúscula.
+
+Portanto, a variável `tipo_concreto` **não está totalmente padronizada**.
 
 
 
