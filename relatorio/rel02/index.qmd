@@ -335,6 +335,37 @@ A tabela abaixo apresenta um resumo dos resultados obtidos por meio dessa funç�
 Dessa forma, o `summary()` fornece uma visão inicial da estrutura e das características dos dados, permitindo verificar a distribuição das variáveis, suas frequências e a presença de valores ausentes.
 
 
+## Questão 5 — Classificação das variáveis
+
+Antes de verificar a classificação realizada pelo R, foram definidos os **tipos esperados para cada variável**, considerando sua natureza e seu significado no contexto do controle tecnológico do concreto. Assim, variáveis que representam categorias ou identificações são consideradas **qualitativas**, enquanto aquelas que representam medidas ou quantidades são consideradas **quantitativas**.
+
+Para verificar como o R reconheceu cada variável, foi utilizada a função `sapply()` em conjunto com `class()`.
+
+```{r}
+# Verificação do tipo de cada variável
+sapply(dados, class)
+```
+
+O resultado obtido foi:
+
+| Variável                | Tipo esperado | Tipo reconhecido pelo R | Classificação |
+| ----------------------- | ------------- | ----------------------- | ------------- |
+| `id_corpo_prova`        | Qualitativa   | `character`             | Qualitativa   |
+| `obra`                  | Qualitativa   | `character`             | Qualitativa   |
+| `tipo_concreto`         | Qualitativa   | `character`             | Qualitativa   |
+| `idade_dias`            | Quantitativa  | `integer`               | Quantitativa  |
+| `resistencia_mpa`       | Quantitativa  | `character`             | Qualitativa  |
+| `cimento_kg_m3`         | Quantitativa  | `character`             | Qualitativa  |
+| `relacao_a_c`           | Quantitativa  | `character`             | Qualitativa  |
+| `abatimento_mm`         | Quantitativa  | `numeric`               | Quantitativa  |
+| `densidade_kg_m3`       | Quantitativa  | `numeric`               | Quantitativa  |
+| `absorção_agregado_pct` | Quantitativa  | `numeric`               | Quantitativa  |
+
+A partir da estrutura apresentada pelo R, as variáveis **`id_corpo_prova`**, **`obra`** e **`tipo_concreto`** foram reconhecidas como `character`, estando de acordo com o esperado para variáveis qualitativas. Já **`idade_dias`**, **`abatimento_mm`**, **`densidade_kg_m3`** e **`absorção_agregado_pct`** foram reconhecidas como `integer` ou `numeric`, também de acordo com sua natureza quantitativa.
+
+Entretanto, **`resistencia_mpa`**, **`cimento_kg_m3`** e **`relacao_a_c`** são quantitativas por sua natureza, mas foram reconhecidas pelo R como `character`. Essa divergência pode estar relacionada a **erros de digitação, caracteres inseridos nos valores ou separadores decimais inadequados**, fazendo com que o R interprete essas informações como texto.
+
+Portanto, a estrutura apresentada pelo R permite identificar que essas três variáveis precisarão ser **corrigidas e convertidas para um formato quantitativo** nas etapas posteriores de limpeza da base.
 
 
 
