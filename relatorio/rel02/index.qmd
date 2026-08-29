@@ -395,7 +395,7 @@ O primeiro comando contabiliza o **total de valores ausentes ou vazios** encontr
 Dessa forma, a análise não considera apenas os valores `NA` reconhecidos automaticamente pelo R, mas também registros preenchidos com diferentes formas de indicar ausência de informação.
 
 
-## Investigação dos erros de preenchimento e padronização
+### Investigação dos erros de preenchimento e padronização
 
 Nesta etapa, foram investigados possíveis **erros de preenchimento e inconsistências de padronização** em todas as células da base. A análise buscou identificar automaticamente diferenças de escrita, caracteres inadequados, espaços desnecessários e formas diferentes de representação dos mesmos valores.
 
@@ -428,7 +428,60 @@ sapply(dados[variaveis_quantitativas], function(x)
 
 A investigação permitiu identificar **erros de preenchimento e diferenças de padronização** nas variáveis da base. Foram encontrados registros com **espaços adicionais**, diferenças de **maiúsculas e minúsculas**, utilização de **vírgula como separador decimal** e presença de **caracteres alfabéticos em variáveis que deveriam conter valores numéricos**.
 
-Essas inconsistências podem fazer com que valores que representam a mesma informação sejam interpretados de maneiras diferentes pelo R. Por isso, os registros identificados deverão ser avaliados e padronizados nas etapas posteriores de tratamento dos dados.
+Essas inconsistências podem fazer com que valores que representam a mesma informação sejam interpretados de maneiras diferentes pelo R. 
+
+
+## Questão 7 — Valores potencialmente incompatíveis
+
+Nesta etapa, foram investigados valores que podem ser **incompatíveis ou suspeitos no contexto da Engenharia Civil**. Os critérios utilizados foram baseados, quando aplicável, em referências normativas e, nos demais casos, na identificação de valores que se afastam significativamente do padrão observado na própria base.
+
+Para o **abatimento**, foi considerada a **ABNT NBR 16889:2020**, que estabelece o método para determinação da consistência do concreto pelo abatimento do tronco de cone, em conjunto com as classes de abatimento estabelecidas pela **ABNT NBR 8953:2015** [@abnt16889; @abnt8953].
+
+Para a **resistência à compressão**, foi considerada a **ABNT NBR 5739:2018**, que estabelece o método para determinação da resistência à compressão de corpos de prova cilíndricos de concreto [@abnt5739]. Como a norma não estabelece um intervalo universal de resistência válido para todos os concretos, os valores utilizados na triagem foram definidos a partir do contexto e do padrão observado na própria base.
+
+Para **densidade e absorção**, foi considerada a **ABNT NBR 9778:2005**, que estabelece métodos para determinação da absorção de água, índice de vazios e massa específica de argamassas e concretos endurecidos [@abnt9778].
+
+Para **idade dos corpos de prova** e **relação água/cimento**, foi realizada uma análise exploratória baseada nos valores observados na própria base, pois esses parâmetros dependem das condições de projeto, dosagem e programa experimental.
+
+```{r}
+# Valores potencialmente incompatíveis com o contexto dos dados
+
+# Idade dos corpos de prova
+dados[dados$idade_dias <= 0 | dados$idade_dias > 56, ]
+
+# Resistência à compressão
+dados[dados$resistencia_mpa < 20 | dados$resistencia_mpa > 60, ]
+
+# Abatimento
+dados[dados$abatimento_mm < 10 | dados$abatimento_mm > 220, ]
+
+# Densidade
+dados[dados$densidade_kg_m3 < 2000 | dados$densidade_kg_m3 > 2600, ]
+
+# Relação água/cimento
+dados[dados$relacao_a_c < 0.40 | dados$relacao_a_c > 0.70, ]
+
+# Absorção
+dados[dados$`absorção_agregado_pct` < 0 | 
+        dados$`absorção_agregado_pct` > 10, ]
+```
+
+Os códigos acima realizam uma **triagem inicial**, permitindo localizar as observações que merecem investigação. Um valor identificado não deve ser automaticamente considerado incorreto, pois pode representar uma condição real de ensaio ou de dosagem.
+
+Na base analisada, esses critérios permitem identificar, entre outros, **idade de 280 dias**, **abatimento de 1250 mm**, **densidade de 238 kg/m³** e **absorção de 18,4%**. Esses valores apresentam grande afastamento em relação aos demais registros e, portanto, devem ser conferidos antes da utilização da base nas análises estatísticas.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
