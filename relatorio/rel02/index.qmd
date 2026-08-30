@@ -1359,17 +1359,453 @@ Para o relatório técnico, as cinco informações mais importantes são:
 
 Essas informações fornecem uma visão geral do **desempenho, variabilidade e evolução da resistência**, auxiliando o engenheiro na tomada de decisões relacionadas ao controle tecnológico.
 
+## 🏆 Desafio Final 
 
+Nesta etapa final, foi desenvolvido um **script integrado em R** para simular a atuação de um engenheiro responsável pelo controle e tratamento de uma base de dados produzida por diferentes profissionais. Como os erros não são conhecidos previamente, o código foi organizado para realizar uma sequência de **inspeção, diagnóstico, limpeza, tratamento e análise dos dados**.
 
+O objetivo é transformar a base inicialmente bruta em uma estrutura mais confiável para a realização de análises estatísticas e para a **tomada de decisão na Engenharia Civil**.
 
+### Script final
 
+O código abaixo reúne as principais etapas desenvolvidas ao longo da atividade, utilizando funções do **Base R** trabalhadas em aula.
 
+```{r}
+# ============================================================
+# DESAFIO FINAL — O ENGENHEIRO RESPONSÁVEL PELOS DADOS
+# ============================================================
 
+# ------------------------------------------------------------
+# 1. IMPORTAÇÃO DA BASE
+# ------------------------------------------------------------
 
+dados <- read.csv("base_de_dados.csv",
+                  header = TRUE,
+                  sep = ";")
+
+# Visualização inicial
+head(dados)
+
+# ------------------------------------------------------------
+# 2. INSPEÇÃO INICIAL
+# ------------------------------------------------------------
+
+# Dimensões da base
+dim(dados)
+
+# Estrutura das variáveis
+str(dados)
+
+# Resumo estatístico
+summary(dados)
+
+# Tipos das variáveis
+sapply(dados, class)
+
+# ------------------------------------------------------------
+# 3. IDENTIFICAÇÃO DE VALORES AUSENTES
+# ------------------------------------------------------------
+
+ausentes <- c("", " ", "NA", "N/A", "-", "null", "NULL")
+
+# Quantidade de valores ausentes por variável
+sapply(dados, function(x)
+  sum(is.na(x) | x %in% ausentes, na.rm = TRUE)
+)
+
+# Localização das observações com valores ausentes
+which(apply(dados, 1, function(x)
+  any(is.na(x) | x %in% ausentes)
+))
+
+# ------------------------------------------------------------
+# 4. IDENTIFICAÇÃO DE INCONSISTÊNCIAS
+# ------------------------------------------------------------
+
+# Categorias existentes em obra
+unique(dados$obra)
+
+# Categorias existentes em tipo_concreto
+unique(dados$tipo_concreto)
+
+# Verificação de espaços desnecessários
+sapply(dados, function(x)
+  sum(grepl("^ | $", x))
+)
+
+# Verificação de vírgulas decimais
+sapply(dados, function(x)
+  sum(grepl(",", x))
+)
+
+# ------------------------------------------------------------
+# 5. VERIFICAÇÃO DE VALORES SUSPEITOS
+# ------------------------------------------------------------
+
+# Idade dos corpos de prova
+dados[dados$idade_dias <= 0 |
+      dados$idade_dias > 56, ]
+
+# Resistência
+dados[dados$resistencia_mpa < 20 |
+      dados$resistencia_mpa > 60, ]
+
+# Abatimento
+dados[dados$abatimento_mm < 10 |
+      dados$abatimento_mm > 220, ]
+
+# Densidade
+dados[dados$densidade_kg_m3 < 2000 |
+      dados$densidade_kg_m3 > 2600, ]
+
+# Relação água/cimento
+dados[dados$relacao_a_c < 0.40 |
+      dados$relacao_a_c > 0.70, ]
+
+# Absorção
+dados[dados$`absorção_agregado_pct` < 0 |
+      dados$`absorção_agregado_pct` > 10, ]
+
+# ------------------------------------------------------------
+# 6. CRIAÇÃO DA BASE PARA LIMPEZA
+# ------------------------------------------------------------
+
+dados_limpos <- dados
+
+# ------------------------------------------------------------
+# 7. CORREÇÃO DAS VARIÁVEIS QUALITATIVAS
+# ------------------------------------------------------------
+
+# Remoção de espaços desnecessários
+dados_limpos$obra <- trimws(dados_limpos$obra)
+
+# Padronização das classes de concreto
+dados_limpos$tipo_concreto <-
+  toupper(trimws(dados_limpos$tipo_concreto))
+
+# ------------------------------------------------------------
+# 8. CORREÇÃO DAS VARIÁVEIS QUANTITATIVAS
+# ------------------------------------------------------------
+
+dados_limpos$idade_dias <-
+  as.numeric(dados_limpos$idade_dias)
+
+dados_limpos$resistencia_mpa <-
+  as.numeric(
+    gsub(",",
+         ".",
+         gsub("O",
+              "0",
+              dados_limpos$resistencia_mpa))
+  )
+
+dados_limpos$cimento_kg_m3 <-
+  as.numeric(
+    gsub("O",
+         "0",
+         dados_limpos$cimento_kg_m3)
+  )
+
+dados_limpos$relacao_a_c <-
+  as.numeric(
+    gsub(",",
+         ".",
+         dados_limpos$relacao_a_c)
+  )
+
+dados_limpos$abatimento_mm <-
+  as.numeric(dados_limpos$abatimento_mm)
+
+dados_limpos$densidade_kg_m3 <-
+  as.numeric(dados_limpos$densidade_kg_m3)
+
+dados_limpos$`absorção_agregado_pct` <-
+  as.numeric(dados_limpos$`absorção_agregado_pct`)
+
+# ------------------------------------------------------------
+# 9. VERIFICAÇÃO DA BASE APÓS A LIMPEZA
+# ------------------------------------------------------------
+
+str(dados_limpos)
+
+summary(dados_limpos)
+
+# Verificação dos tipos
+sapply(dados_limpos, class)
+
+# ------------------------------------------------------------
+# 10. TRATAMENTO DOS VALORES AUSENTES
+# ------------------------------------------------------------
+
+# Criação da base final somente com observações completas
+dados_finais <-
+  dados_limpos[complete.cases(dados_limpos), ]
+
+# Número de observações após o tratamento
+nrow(dados_finais)
+
+# ------------------------------------------------------------
+# 11. ESTATÍSTICAS DESCRITIVAS
+# ------------------------------------------------------------
+
+# Resistência média global
+media_global <-
+  mean(dados_finais$resistencia_mpa)
+
+media_global
+
+# Resistência mínima
+min(dados_finais$resistencia_mpa)
+
+# Resistência máxima
+max(dados_finais$resistencia_mpa)
+
+# Resistência média por obra
+media_obra <-
+  aggregate(resistencia_mpa ~ obra,
+            data = dados_finais,
+            FUN = mean)
+
+media_obra
+
+# Resistência média por tipo de concreto
+media_tipo <-
+  aggregate(resistencia_mpa ~ tipo_concreto,
+            data = dados_finais,
+            FUN = mean)
+
+media_tipo
+
+# Resistência média por idade
+media_idade <-
+  aggregate(resistencia_mpa ~ idade_dias,
+            data = dados_finais,
+            FUN = mean)
+
+media_idade
+
+# ------------------------------------------------------------
+# 12. ANÁLISE DAS PROPRIEDADES DO CONCRETO
+# ------------------------------------------------------------
+
+aggregate(
+  cbind(resistencia_mpa,
+        cimento_kg_m3,
+        relacao_a_c,
+        abatimento_mm,
+        densidade_kg_m3) ~ tipo_concreto,
+  data = dados_finais,
+  FUN = mean
+)
+
+# ------------------------------------------------------------
+# 13. PRIMEIRA VARIÁVEL DERIVADA:
+#     RESISTÊNCIA RELATIVA
+# ------------------------------------------------------------
+
+resistencia_referencia <-
+  ifelse(dados_finais$tipo_concreto == "C25", 25,
+  ifelse(dados_finais$tipo_concreto == "C30", 30,
+  ifelse(dados_finais$tipo_concreto == "C35", 35,
+  ifelse(dados_finais$tipo_concreto == "C40", 40,
+         NA))))
+
+dados_finais$resistencia_relativa <-
+  dados_finais$resistencia_mpa /
+  resistencia_referencia
+
+# Visualização
+dados_finais[, c("tipo_concreto",
+                 "resistencia_mpa",
+                 "resistencia_relativa")]
+
+# ------------------------------------------------------------
+# 14. SEGUNDA VARIÁVEL DERIVADA:
+#     CLASSIFICAÇÃO DO DESEMPENHO
+# ------------------------------------------------------------
+
+dados_finais$classificacao <-
+  ifelse(
+    dados_finais$resistencia_relativa >= 1,
+    "Atingiu ou superou a referência",
+    "Abaixo da referência"
+  )
+
+table(dados_finais$classificacao)
+
+# ------------------------------------------------------------
+# 15. TERCEIRA VARIÁVEL DERIVADA:
+#     DESEMPENHO ACIMA DA MÉDIA DA CLASSE
+# ------------------------------------------------------------
+
+media_tipo_2 <-
+  aggregate(resistencia_mpa ~ tipo_concreto,
+            data = dados_finais,
+            FUN = mean)
+
+media_por_observacao <-
+  media_tipo_2$resistencia_mpa[
+    match(dados_finais$tipo_concreto,
+          media_tipo_2$tipo_concreto)
+  ]
+
+dados_finais$acima_media <-
+  dados_finais$resistencia_mpa >
+  media_por_observacao
+
+table(dados_finais$acima_media)
+
+# ------------------------------------------------------------
+# 16. UTILIZAÇÃO DE split() E sapply()
+# ------------------------------------------------------------
+
+dados_por_tipo <-
+  split(dados_finais,
+        dados_finais$tipo_concreto)
+
+# Quantidade de observações por classe
+quantidade_por_tipo <-
+  sapply(dados_por_tipo, nrow)
+
+quantidade_por_tipo
+
+# Resistência média por classe
+media_resistencia_tipo <-
+  sapply(
+    dados_por_tipo,
+    function(x)
+      mean(x$resistencia_mpa)
+  )
+
+media_resistencia_tipo
+
+# ------------------------------------------------------------
+# 17. APLICAÇÃO DE apply()
+# ------------------------------------------------------------
+
+propriedades <-
+  dados_finais[, c(
+    "resistencia_mpa",
+    "cimento_kg_m3",
+    "relacao_a_c",
+    "abatimento_mm",
+    "densidade_kg_m3"
+  )]
+
+# Média das propriedades
+apply(propriedades, 2, mean)
+
+# ------------------------------------------------------------
+# 18. RELAÇÃO ÁGUA/CIMENTO E RESISTÊNCIA
+# ------------------------------------------------------------
+
+cor(
+  dados_finais$relacao_a_c,
+  dados_finais$resistencia_mpa
+)
+
+# ------------------------------------------------------------
+# 19. COMPARAÇÃO ENTRE BLOCOS
+# ------------------------------------------------------------
+
+media_obra
+
+# Maior média
+media_obra[
+  which.max(media_obra$resistencia_mpa),
+]
+
+# Menor média
+media_obra[
+  which.min(media_obra$resistencia_mpa),
+]
+
+# ------------------------------------------------------------
+# 20. INFORMAÇÕES PARA AUXILIAR O ENGENHEIRO
+# ------------------------------------------------------------
+
+cat("====================================\n")
+cat("RELATÓRIO RESUMIDO DO CONTROLE\n")
+cat("====================================\n")
+
+cat("Número de observações analisadas:",
+    nrow(dados_finais), "\n")
+
+cat("Resistência média global:",
+    round(media_global, 2), "MPa\n")
+
+cat("Menor resistência:",
+    min(dados_finais$resistencia_mpa),
+    "MPa\n")
+
+cat("Maior resistência:",
+    max(dados_finais$resistencia_mpa),
+    "MPa\n")
+
+cat("Bloco com maior resistência média:",
+    as.character(
+      media_obra$obra[
+        which.max(media_obra$resistencia_mpa)
+      ]
+    ), "\n")
+
+cat("Resistência média do melhor bloco:",
+    round(
+      max(media_obra$resistencia_mpa),
+      2
+    ),
+    "MPa\n")
+
+cat("====================================\n")
+```
+
+O script realiza o processamento de forma sequencial. Inicialmente, a base é importada e inspecionada para verificar suas **dimensões, estrutura, tipos de variáveis e estatísticas descritivas**. Em seguida, são procurados valores ausentes, erros de preenchimento, categorias despadronizadas e valores potencialmente incompatíveis com o contexto do concreto.
+
+Na etapa de limpeza, a base original é preservada no objeto `dados`, enquanto uma cópia chamada `dados_limpos` é utilizada para as correções. As variáveis qualitativas são padronizadas com `trimws()` e `toupper()`, enquanto as variáveis quantitativas são corrigidas e convertidas para o formato numérico.
+
+Após o tratamento, foi criada a base `dados_finais`, contendo apenas as observações completas. Essa base é utilizada nas análises estatísticas posteriores, evitando que valores ausentes interfiram nos cálculos.
+
+Foram também criadas variáveis derivadas para ampliar a interpretação dos dados. A variável `resistencia_relativa` compara a resistência observada com a resistência de referência da classe do concreto. A variável `classificacao` indica se o corpo de prova atingiu ou superou essa referência. Além disso, `acima_media` identifica os corpos de prova cuja resistência está acima da média de sua respectiva classe.
+
+As funções `aggregate()`, `split()`, `sapply()` e `apply()` foram utilizadas para produzir informações agrupadas e estatísticas relevantes para a análise do desempenho dos concretos.
+
+### Informações geradas para o engenheiro
+
+A partir do script, podem ser obtidas informações importantes para o acompanhamento do controle tecnológico, como:
+
+* **número de corpos de prova analisados** após o tratamento;
+* **resistência média global**;
+* **menor resistência observada**;
+* **maior resistência observada**;
+* **resistência média por bloco**;
+* **resistência média por classe de concreto**;
+* **resistência média por idade**;
+* **quantidade de corpos de prova por classe**;
+* **relação entre água/cimento e resistência**;
+* **quantidade de corpos de prova acima da média de sua classe**;
+* **quantidade de corpos de prova que atingiram ou superaram a resistência de referência**.
+
+Essas informações permitem ao engenheiro identificar diferenças de desempenho entre os blocos, acompanhar a evolução da resistência e verificar possíveis situações que mereçam investigação adicional.
+
+### Principal problema identificado
+
+O principal problema encontrado na base foi a presença de **inconsistências de preenchimento nas variáveis quantitativas**. Alguns valores que deveriam ser numéricos foram armazenados como texto devido à utilização de vírgulas como separador decimal e à presença da letra `O` no lugar do número `0`.
+
+Um exemplo foi o registro `3O,4`, que representa um provável erro de digitação. Como a coluna contém esse tipo de caractere, o R passa a interpretar a variável inteira como `character`, mesmo que a maioria dos valores seja numérica.
+
+Também foram identificadas inconsistências nas variáveis qualitativas, como `Bloco B `, contendo espaço adicional, e `c30`, escrito com letra minúscula.
+
+A decisão adotada foi **corrigir os erros de formatação e padronização identificados**, converter as variáveis quantitativas para o formato numérico e remover as observações que permaneceram incompletas após o tratamento. A base original foi preservada para garantir a rastreabilidade das alterações realizadas.
 
 
 # 🧠 Considerações finais
 
+O processamento e a limpeza dos dados são etapas fundamentais antes da aplicação de métodos estatísticos na Engenharia Civil porque **resultados estatísticos confiáveis dependem diretamente da qualidade dos dados utilizados**. Erros de digitação, valores ausentes, categorias diferentes para uma mesma informação e variáveis classificadas incorretamente podem alterar médias, correlações e comparações, levando a conclusões técnicas equivocadas.
+
+No caso analisado, um dos principais problemas foi a presença de **valores quantitativos registrados como texto**, principalmente devido a erros de digitação e separadores decimais inconsistentes. Esse problema alterou a forma como o R interpretou algumas variáveis e precisou ser corrigido antes da realização das análises.
+
+A limpeza permitiu transformar a base bruta em uma estrutura mais organizada e adequada ao processamento estatístico. Dessa forma, as informações obtidas passam a oferecer maior suporte para decisões relacionadas ao **controle tecnológico, desempenho dos concretos e acompanhamento da qualidade da obra**.
+
+O principal aprendizado do desafio é que o trabalho do engenheiro não consiste apenas em calcular estatísticas, mas também em **verificar a qualidade dos dados antes de utilizá-los para tomar decisões**. Portanto, a combinação entre conhecimento técnico da Engenharia Civil e domínio das ferramentas de análise de dados é fundamental para produzir informações confiáveis e úteis para a gestão das obras.
 
 
 # 📖 Referências
