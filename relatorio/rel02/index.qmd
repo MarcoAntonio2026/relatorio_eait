@@ -883,31 +883,23 @@ O critério foi escolhido por permitir uma interpretação direta do desempenho 
 
 Essa classificação fornece uma forma simples de avaliar o desempenho dos corpos de prova, sem estabelecer limites adicionais que não estejam diretamente relacionados à classe do concreto.
 
-## Questão 23 — Desempenho acima da média
 
-Foi criada a variável `acima_media` para indicar se a resistência de cada corpo de prova está acima da **resistência média do seu respectivo tipo de concreto**.
+## Questão 23 — Desempenho acima da referência
 
-Inicialmente, foi calculada a resistência média para cada classe utilizando `ave()`. Em seguida, cada resistência observada foi comparada com a média correspondente.
+Utilizando a variável `resistencia_relativa` criada na Questão 21, foi criada a variável `acima_media` para indicar se a resistência observada está acima da resistência de referência correspondente à classe do concreto.
 
 ```{r}
-# Cálculo da resistência média por tipo de concreto
-media_tipo <- ave(
-  dados_sem_na$resistencia_mpa,
-  dados_sem_na$tipo_concreto,
-  FUN = mean
-)
-
-# Classificação acima ou abaixo da média
-dados_sem_na$acima_media <- 
-  dados_sem_na$resistencia_mpa > media_tipo
+# Verificação da resistência em relação à referência da classe
+dados_sem_na$acima_media <- dados_sem_na$resistencia_relativa > 1
 
 # Visualização dos resultados
-dados_sem_na[, c("tipo_concreto", "resistencia_mpa", "acima_media")]
+dados_sem_na[, c("tipo_concreto", "resistencia_mpa",
+                 "resistencia_relativa", "acima_media")]
 ```
 
-A variável `acima_media` assume o valor **`TRUE`** quando a resistência do corpo de prova é superior à média de seu respectivo tipo de concreto e **`FALSE`** quando é igual ou inferior à média.
+A variável assume **`TRUE`** quando a resistência observada é superior à resistência de referência da classe e **`FALSE`** quando é igual ou inferior a ela.
 
-Dessa forma, a comparação é realizada dentro de cada classe, evitando que corpos de prova de diferentes tipos de concreto sejam comparados com uma única média geral.
+Assim, por exemplo, um corpo de prova de **C30** apresenta `TRUE` quando sua resistência é superior a **30 MPa**, pois sua `resistencia_relativa` será maior que 1.
 
 
 ## Questão 24 — Aplicação da função `split()`
@@ -1104,6 +1096,53 @@ Portanto, **os valores calculados são os mesmos**, mas a forma como o R apresen
 Neste caso específico, como cada tipo de concreto gera apenas **uma resistência média**, o `sapply()` produz um resultado mais compacto e fácil de visualizar. Já o `lapply()` mantém explicitamente a estrutura de lista criada a partir dos grupos.
 
 Dessa forma, ambas as funções são adequadas para o cálculo solicitado, mas o `sapply()` oferece uma apresentação mais simples dos resultados quando todos os grupos retornam um único valor.
+
+
+## Questão 27 — Aplicação da função `apply()` para médias
+
+Para calcular a média das principais propriedades do concreto, foram selecionadas as variáveis quantitativas `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct`. Em seguida, foi utilizada a função `apply()` para calcular a média de cada variável.
+
+```{r}
+# Seleção das variáveis quantitativas relacionadas às propriedades do concreto
+propriedades_concreto <- dados_sem_na[, c(
+  "resistencia_mpa",
+  "cimento_kg_m3",
+  "relacao_a_c",
+  "abatimento_mm",
+  "densidade_kg_m3",
+  "absorção_agregado_pct"
+)]
+
+# Cálculo da média de cada variável
+apply(propriedades_concreto, 2, mean)
+```
+
+A função `apply()` foi aplicada sobre as colunas da base, utilizando o argumento `2`, que indica que a função `mean()` deve ser aplicada **a cada coluna**.
+
+Dessa forma, o resultado apresenta a **média de cada propriedade quantitativa selecionada**, permitindo obter uma caracterização geral dos concretos analisados.
+
+## Questão 28 — Aplicação da função `apply()` por observação
+
+Nesta etapa, foi utilizada a função `apply()` para calcular, para cada corpo de prova, a **média das variáveis quantitativas relacionadas às propriedades do concreto**.
+
+```{r}
+# Cálculo da média das propriedades para cada observação
+media_observacao <- apply(
+  propriedades_concreto,
+  1,
+  mean
+)
+
+# Visualização dos resultados
+media_observacao
+```
+
+O argumento `1` indica que a função deve ser aplicada **por linha**, ou seja, para cada observação. Assim, `mean()` calcula uma média envolvendo as seis variáveis quantitativas selecionadas.
+
+Entretanto, essa medida **não possui necessariamente uma interpretação física direta**. Isso ocorre porque as variáveis utilizadas possuem **unidades e significados diferentes**, como MPa, kg/m³, mm, porcentagem e uma razão adimensional.
+
+Portanto, embora a média possa ser calculada matematicamente, seu resultado não representa diretamente uma propriedade física do concreto. Nesse caso, a medida deve ser entendida apenas como um **resumo numérico das variáveis selecionadas**, e não como uma grandeza física com significado técnico específico.
+
 
 
 
