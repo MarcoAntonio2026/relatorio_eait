@@ -910,10 +910,200 @@ A variável `acima_media` assume o valor **`TRUE`** quando a resistência do cor
 Dessa forma, a comparação é realizada dentro de cada classe, evitando que corpos de prova de diferentes tipos de concreto sejam comparados com uma única média geral.
 
 
+## Questão 24 — Aplicação da função `split()`
+
+A função `split()` foi utilizada para **dividir a base de dados em grupos de acordo com a variável `tipo_concreto`**. Dessa forma, cada classe de concreto é separada em um grupo independente, permitindo realizar análises específicas para cada tipo.
+
+Para realizar a divisão, foi utilizada a base `dados_sem_na`, que contém apenas as observações completas após o tratamento dos dados.
+
+```{r}
+
+# Divisão da base por tipo de concreto
+
+dados_por_tipo <- split(
+
+  dados_sem_na,
+
+  dados_sem_na$tipo_concreto
+
+)
+
+# Verificação dos grupos criados
+
+names(dados_por_tipo)
+
+# Contagem do número de observações em cada grupo
+
+sapply(dados_por_tipo, nrow)
+
+```
+
+A função `split()` recebe a base de dados como primeiro argumento e a variável utilizada para definir os grupos como segundo argumento. Nesse caso, `tipo_concreto` determina a separação dos dados.
+
+O resultado é armazenado no objeto `dados_por_tipo`, que passa a ser uma **lista contendo um grupo para cada classe de concreto**. Assim, os registros classificados como C25 ficam em um grupo, os registros C30 em outro, e assim sucessivamente.
+
+A função `names()` permite verificar quais grupos foram criados, enquanto `sapply()` aplica a função `nrow()` a cada elemento da lista. Como `nrow()` retorna o número de linhas de uma base, o resultado corresponde ao **número de observações existentes em cada tipo de concreto**.
+
+Para apresentar a quantidade de observações de forma mais organizada, pode-se utilizar:
+
+```{r}
+
+# Quantidade de observações por tipo de concreto
+
+quantidade_por_tipo <- sapply(
+
+  dados_por_tipo,
+
+  nrow
+
+)
+
+quantidade_por_tipo
+
+```
+
+O resultado apresenta a quantidade de corpos de prova pertencentes a cada classe de concreto. Dessa forma, é possível verificar se os grupos **C25, C30, C35 e C40** possuem a mesma quantidade de observações ou se existe diferença no número de registros entre eles.
+
+A utilização do `split()` é importante porque permite **organizar a base em subconjuntos independentes**, facilitando a aplicação posterior de outras funções do Base R. Essa estrutura será utilizada na **Questão 25**, na qual será calculada a resistência média de cada tipo de concreto utilizando a função `lapply()`.
+
+Portanto, o `split()` não realiza nenhum cálculo estatístico por si só. Sua função principal nesta etapa é **separar os dados de acordo com uma variável categórica**, criando uma estrutura que facilita o processamento individual de cada grupo.
 
 
+## Questão 25 — Aplicação da função `lapply()`
+
+Utilizando a estrutura criada na questão anterior com a função `split()`, foi calculada a **resistência média à compressão de cada tipo de concreto**. Para isso, foi utilizada a função `lapply()`, que permite aplicar uma mesma função a cada grupo armazenado na lista `dados_por_tipo`.
+
+```{r}
+
+# Cálculo da resistência média de cada tipo de concreto
+
+media_resistencia_tipo <- lapply(
+
+  dados_por_tipo,
+
+  function(x) mean(x$resistencia_mpa)
+
+)
+
+# Visualização dos resultados
+
+media_resistencia_tipo
+
+```
+
+A função `lapply()` percorre cada elemento da lista `dados_por_tipo`. Em cada grupo, a expressão `x$resistencia_mpa` seleciona a variável de resistência e a função `mean()` calcula sua média.
+
+O resultado é uma **lista**, na qual cada elemento corresponde a um tipo de concreto. Assim, são obtidas separadamente as resistências médias dos concretos **C25, C30, C35 e C40**.
+
+Para visualizar os resultados de forma mais organizada, pode-se utilizar:
+
+```{r}
+
+# Apresentação das médias por tipo de concreto
+
+data.frame(
+
+  tipo_concreto = names(media_resistencia_tipo),
+
+  resistencia_media_mpa = unlist(media_resistencia_tipo)
+
+)
+
+```
+
+A tabela resultante permite comparar diretamente a resistência média das diferentes classes de concreto.
+
+A utilização do `lapply()` é adequada porque a função aplica **a mesma operação a cada grupo**, evitando a necessidade de calcular manualmente a média de cada classe. Além disso, como os grupos foram previamente criados com `split()`, o código mantém uma sequência lógica: primeiro os dados são **separados por tipo de concreto** e, posteriormente, a resistência média é calculada **individualmente para cada grupo**.
+
+Portanto, nesta questão, o `split()` foi responsável por **organizar a base em grupos**, enquanto o `lapply()` foi utilizado para **aplicar o cálculo da média de resistência a cada um desses grupos**. O resultado servirá de base para a Questão 26, na qual a mesma operação será realizada utilizando `sapply()`.
 
 
+## Questão 26 — Aplicação da função `sapply()`
+
+Nesta questão, a operação realizada anteriormente com `lapply()` foi repetida utilizando a função `sapply()`. O objetivo é calcular novamente a **resistência média de cada tipo de concreto**, utilizando a estrutura `dados_por_tipo` criada com `split()`.
+
+```{r} 
+
+# Cálculo da resistência média de cada tipo de concreto
+
+media_resistencia_tipo_sapply <- sapply(
+
+  dados_por_tipo,
+
+  function(x) mean(x$resistencia_mpa)
+
+)
+
+# Visualização dos resultados
+
+media_resistencia_tipo_sapply
+
+```
+
+A função `sapply()` percorre cada grupo armazenado em `dados_por_tipo` e aplica a função `mean()` à variável `resistencia_mpa`. Dessa forma, são calculadas as médias de resistência para cada classe de concreto.
+
+Para apresentar os resultados de forma organizada:
+
+```{r} 
+
+# Organização dos resultados em tabela
+
+data.frame(
+
+  tipo_concreto = names(media_resistencia_tipo_sapply),
+
+  resistencia_media_mpa = as.numeric(media_resistencia_tipo_sapply)
+
+)
+
+```
+
+O resultado permite comparar diretamente a **resistência média dos concretos C25, C30, C35 e C40**.
+
+**Diferença entre `lapply()` e `sapply()`:**
+
+Embora as duas funções realizem a mesma operação neste caso, existe uma diferença importante na **estrutura do resultado produzido**.
+
+A função `lapply()` **sempre retorna uma lista**, mantendo cada resultado como um elemento separado:
+
+```{r} 
+
+# Resultado utilizando lapply()
+
+media_resistencia_tipo_lapply <- lapply(
+
+  dados_por_tipo,
+
+  function(x) mean(x$resistencia_mpa)
+
+)
+
+media_resistencia_tipo_lapply
+
+```
+
+Já a função `sapply()` tenta **simplificar automaticamente o resultado**. Como neste caso cada grupo produz apenas um único valor numérico, os resultados podem ser organizados em um **vetor numérico nomeado**:
+
+```{r} 
+
+# Resultado utilizando sapply()
+
+media_resistencia_tipo_sapply
+
+```
+
+Assim, a diferença pode ser resumida da seguinte forma:
+
+| Função     | Resultado principal | Característica                                            |
+| ---------- | ------------------- | --------------------------------------------------------- |
+| `lapply()` | Lista               | Mantém os resultados separados em uma lista               |
+| `sapply()` | Vetor               | Tenta simplificar a lista para uma estrutura mais simples |
+
+Portanto, **os valores calculados são os mesmos**, mas a forma como o R apresenta e armazena os resultados é diferente. O `lapply()` é mais apropriado quando se deseja **preservar uma estrutura de lista**, enquanto o `sapply()` é mais conveniente quando os resultados podem ser simplificados para um vetor ou matriz.
+
+Neste caso específico, como cada tipo de concreto gera apenas **uma resistência média**, o `sapply()` produz um resultado mais compacto e fácil de visualizar. Já o `lapply()` mantém explicitamente a estrutura de lista criada a partir dos grupos.
+
+Dessa forma, ambas as funções são adequadas para o cálculo solicitado, mas o `sapply()` oferece uma apresentação mais simples dos resultados quando todos os grupos retornam um único valor.
 
 
 
