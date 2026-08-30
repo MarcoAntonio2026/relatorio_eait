@@ -435,13 +435,14 @@ Essas inconsistências podem fazer com que valores que representam a mesma infor
 
 Nesta etapa, foram investigados valores que podem ser **incompatíveis ou suspeitos no contexto da Engenharia Civil**. Os critérios utilizados foram baseados, quando aplicável, em referências normativas e, nos demais casos, na identificação de valores que se afastam significativamente do padrão observado na própria base.
 
-Para o **abatimento**, foi considerada a **ABNT NBR 16889:2020**, que estabelece o método para determinação da consistência do concreto pelo abatimento do tronco de cone, em conjunto com as classes de abatimento estabelecidas pela **ABNT NBR 8953:2015** [@abnt16889; @abnt8953].
+Para o **abatimento**, foi considerada a **ABNT NBR 16889:2020** [@abnt16889], que estabelece o método para determinação da consistência do concreto pelo abatimento do tronco de cone, em conjunto com as classes de abatimento estabelecidas pela **ABNT NBR 8953:2015** [@abnt8953].
 
-Para a **resistência à compressão**, foi considerada a **ABNT NBR 5739:2018**, que estabelece o método para determinação da resistência à compressão de corpos de prova cilíndricos de concreto [@abnt5739]. Como a norma não estabelece um intervalo universal de resistência válido para todos os concretos, os valores utilizados na triagem foram definidos a partir do contexto e do padrão observado na própria base.
+Para a **resistência à compressão**, foi considerada a **ABNT NBR 5739:2018** [@abnt5739], que estabelece o método para determinação da resistência à compressão de corpos de prova cilíndricos de concreto. Como a norma não estabelece um intervalo universal de resistência válido para todos os concretos, os valores utilizados na triagem foram definidos a partir do contexto e do padrão observado na própria base.
 
-Para **densidade e absorção**, foi considerada a **ABNT NBR 9778:2005**, que estabelece métodos para determinação da absorção de água, índice de vazios e massa específica de argamassas e concretos endurecidos [@abnt9778].
+Para **densidade e absorção**, foi considerada a **ABNT NBR 9778:2005** [@abnt9778], que estabelece métodos para determinação da absorção de água, índice de vazios e massa específica de argamassas e concretos endurecidos.
 
 Para **idade dos corpos de prova** e **relação água/cimento**, foi realizada uma análise exploratória baseada nos valores observados na própria base, pois esses parâmetros dependem das condições de projeto, dosagem e programa experimental.
+
 
 ```{r}
 # Valores potencialmente incompatíveis com o contexto dos dados
