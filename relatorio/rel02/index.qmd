@@ -1212,11 +1212,8 @@ dados_sem_na$resistencia_mpa[i] > media
 
 Portanto, somente os corpos de prova que apresentam resistência **estritamente superior à média de sua própria classe** são selecionados.
 
-Nesta questão, **não foi utilizada a função `ifelse()`**. A identificação dos corpos de prova foi realizada exclusivamente com `for` e `if`, conforme solicitado.
 
 O objeto `resultado_q29` apresenta os **registros completos dos corpos de prova identificados**, enquanto `length(acima_da_media)` informa a quantidade total de observações que apresentam resistência acima da média de sua respectiva classe.
-
-Dessa forma, o procedimento permite avaliar individualmente o desempenho dos corpos de prova, realizando uma comparação adequada dentro de cada classe de concreto. O uso conjunto de `for` e `if` também demonstra como estruturas de repetição e decisão podem ser utilizadas no **Base R** para realizar análises condicionais sobre uma base de dados.
 
 
 ## Questão 30 — Abordagem vetorizada
@@ -1253,10 +1250,114 @@ A solução com `for` e `if` é útil para demonstrar estruturas de repetição 
 
 **Conclusão:** para esta análise, considero a **abordagem vetorizada a melhor solução**, por utilizar menos código e realizar o processamento de forma mais direta.
 
+## Questão 31 — Comparação entre blocos
 
+Para verificar descritivamente a afirmação de que os concretos utilizados no **Bloco C apresentam desempenho superior** aos demais blocos, foi calculada a resistência média à compressão para cada obra. Também foi comparada a média do Bloco C com a média conjunta dos demais blocos.
 
+```{r}
+# Resistência média por bloco
+media_obra <- aggregate(
+  resistencia_mpa ~ obra,
+  data = dados_sem_na,
+  FUN = mean
+)
 
+# Média do Bloco C
+media_bloco_c <- mean(
+  dados_sem_na$resistencia_mpa[dados_sem_na$obra == "Bloco C"]
+)
 
+# Média dos demais blocos
+media_demais <- mean(
+  dados_sem_na$resistencia_mpa[dados_sem_na$obra != "Bloco C"]
+)
+
+# Resultados
+media_obra
+media_bloco_c
+media_demais
+```
+
+A análise descritiva apresentou as seguintes resistências médias:
+
+| Bloco       | Resistência média (MPa) |
+| ----------- | ----------------------: |
+| Bloco A     |                   33,43 |
+| Bloco B     |                   35,68 |
+| **Bloco C** |               **32,62** |
+| Bloco D     |                   33,35 |
+
+A resistência média do **Bloco C foi de aproximadamente 32,62 MPa**, enquanto a média conjunta dos demais blocos foi de aproximadamente **34,31 MPa**.
+
+Portanto, **os dados não dão suporte, em termos descritivos, à afirmação do engenheiro**. O Bloco C apresentou a menor resistência média entre os quatro blocos analisados, ficando abaixo dos blocos A, B e D.
+
+Essa conclusão é exclusivamente **descritiva**, baseada na comparação das médias observadas, não sendo possível afirmar, a partir dessa análise, se as diferenças são estatisticamente significativas. Além disso, fatores como **classe do concreto e idade dos corpos de prova** podem influenciar as diferenças observadas entre os blocos.
+
+## Questão 32 — Consumo de cimento e resistência
+
+Para investigar a afirmação de que **“quanto maior o consumo de cimento, maior tende a ser a resistência do concreto”**, devem ser analisadas conjuntamente as variáveis `cimento_kg_m3` e `resistencia_mpa`.
+
+```{r}
+# Análise conjunta entre consumo de cimento e resistência
+dados_sem_na[, c("cimento_kg_m3", "resistencia_mpa")]
+```
+
+A variável `cimento_kg_m3` representa o **consumo de cimento por metro cúbico de concreto**, enquanto `resistencia_mpa` representa a **resistência à compressão** dos corpos de prova.
+
+Para uma análise mais adequada, também é importante considerar `relacao_a_c`, `tipo_concreto` e `idade_dias`, pois essas variáveis podem influenciar a resistência e interferir na relação observada entre consumo de cimento e resistência.
+
+Portanto, as principais variáveis a serem analisadas conjuntamente são **`cimento_kg_m3` e `resistencia_mpa`**, considerando também **`relacao_a_c`, `tipo_concreto` e `idade_dias`** como variáveis de contexto.
+
+## Questão 33 — Relação água/cimento e resistência
+
+Para investigar a relação entre a relação água/cimento e a resistência à compressão, foi calculada a correlação entre as duas variáveis.
+
+```{r}
+cor(
+  dados_sem_na$relacao_a_c,
+  dados_sem_na$resistencia_mpa
+)
+```
+
+A correlação obtida foi **negativa (aproximadamente -0,76)**, indicando que, na base analisada, **maiores relações água/cimento tendem a estar associadas a menores resistências**.
+
+Esse padrão merece investigação e está de acordo com o comportamento esperado do concreto. Entretanto, a resistência também pode ser influenciada por fatores como **tipo de concreto, consumo de cimento e idade**.
+
+## Questão 34 — Evolução da resistência com a idade
+
+Para comparar a resistência média dos corpos de prova em diferentes idades, foi utilizada a função `aggregate()`.
+
+```{r}
+# Resistência média por idade
+media_idade <- aggregate(
+  resistencia_mpa ~ idade_dias,
+  data = dados_sem_na,
+  FUN = mean
+)
+
+# Ordenação das idades
+media_idade <- media_idade[
+  order(media_idade$idade_dias),
+]
+
+media_idade
+```
+
+Os resultados indicam uma **tendência geral de aumento da resistência com o avanço da idade**. Entretanto, essa evolução não é perfeitamente crescente: em algumas idades, a resistência média apresenta pequenas reduções em relação à idade anterior. Essas variações podem ocorrer devido à **variabilidade dos corpos de prova, condições de cura e diferenças entre os concretos analisados**.
+
+Portanto, a tendência geral é de **aumento da resistência com a idade**, mas com algumas oscilações nos valores médios observados.
+
+## Questão 35 — Informações estatísticas relevantes
+
+Para o relatório técnico, as cinco informações mais importantes são:
+
+1. **Resistência média à compressão (MPa):** indica o desempenho médio dos concretos.
+2. **Resistência mínima e máxima:** permite identificar a amplitude dos resultados e possíveis valores extremos.
+3. **Resistência média por classe de concreto:** possibilita comparar o desempenho entre C25, C30, C35 e C40.
+4. **Resistência média por idade:** permite acompanhar a evolução da resistência ao longo do tempo.
+5. **Relação água/cimento e resistência:** permite avaliar uma das principais relações que influenciam o desempenho mecânico do concreto.
+
+Essas informações fornecem uma visão geral do **desempenho, variabilidade e evolução da resistência**, auxiliando o engenheiro na tomada de decisões relacionadas ao controle tecnológico.
 
 
 
