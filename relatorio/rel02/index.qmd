@@ -587,6 +587,150 @@ Nesse caso, `"c30"` e `"C30"` representam o **mesmo tipo de concreto**, porém f
 Portanto, a variável `tipo_concreto` **não está totalmente padronizada**.
 
 
+## Questão 11 — Reavaliação dos tipos
+
+Após a identificação dos problemas, os tipos das variáveis foram novamente verificados utilizando `sapply()` e `class()`.
+
+```{r}
+# Verificação dos tipos das variáveis
+sapply(dados, class)
+```
+
+O resultado obtido permanece:
+
+| Variável                | Tipo reconhecido pelo R |
+| ----------------------- | ----------------------- |
+| `id_corpo_prova`        | `character`             |
+| `obra`                  | `character`             |
+| `tipo_concreto`         | `character`             |
+| `idade_dias`            | `integer`               |
+| `resistencia_mpa`       | `character`             |
+| `cimento_kg_m3`         | `character`             |
+| `relacao_a_c`           | `character`             |
+| `abatimento_mm`         | `numeric`               |
+| `densidade_kg_m3`       | `numeric`               |
+| `absorção_agregado_pct` | `numeric`               |
+
+
+O resultado permanece com `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` como `character`, embora sejam variáveis quantitativas por sua natureza.
+
+Isso ocorre porque **um único valor incompatível pode fazer com que o R interprete toda a coluna como texto**. Por exemplo, os valores `3O,4` e `390O` contêm a letra **O** no lugar do número **0**, impedindo que o R reconheça essas colunas diretamente como numéricas.
+
+
+## Questão 12 — Cópia da base original
+
+Foi criada uma cópia da base original para realizar as etapas de limpeza sem alterar os dados inicialmente importados.
+
+```{r}
+# Criação da cópia para limpeza
+dados_limpos <- dados
+```
+
+É recomendável preservar a base original para **evitar a perda dos dados brutos**, permitir a **comparação entre os dados originais e os dados tratados** e possibilitar a **reversão ou revisão das decisões de limpeza**, garantindo maior rastreabilidade e segurança na análise.
+
+
+## Questão 13 — Correção das variáveis qualitativas
+
+Foram corrigidas as inconsistências identificadas nas variáveis qualitativas `obra` e `tipo_concreto`, padronizando espaços e letras maiúsculas.
+
+```{r}
+# Padronização das variáveis qualitativas
+dados_limpos$obra <- trimws(dados_limpos$obra)
+dados_limpos$tipo_concreto <- toupper(trimws(dados_limpos$tipo_concreto))
+
+# Verificação das categorias após a correção
+unique(dados_limpos$obra)
+unique(dados_limpos$tipo_concreto)
+```
+
+A função `trimws()` remove espaços desnecessários no início e no final dos textos, enquanto `toupper()` transforma as letras em maiúsculas. Dessa forma, categorias como `"Bloco B "` e `"c30"` passam a ser representadas de forma padronizada como `"Bloco B"` e `"C30"`.
+
+## Questão 14 - Correção das variáveis quantitativas
+
+As variáveis quantitativas foram convertidas para o tipo numérico, corrigindo também os valores que apresentavam caracteres incompatíveis com esse formato.
+
+```{r}
+dados_limpos$idade_dias <- as.numeric(dados_limpos$idade_dias)
+
+dados_limpos$resistencia_mpa <- as.numeric(
+  gsub(",", ".",
+       gsub("O", "0", dados_limpos$resistencia_mpa)
+  )
+)
+
+dados_limpos$cimento_kg_m3 <- as.numeric(
+  gsub("O", "0", dados_limpos$cimento_kg_m3)
+)
+
+dados_limpos$relacao_a_c <- as.numeric(
+  gsub(",", ".", dados_limpos$relacao_a_c)
+)
+
+dados_limpos$abatimento_mm <- as.numeric(dados_limpos$abatimento_mm)
+dados_limpos$densidade_kg_m3 <- as.numeric(dados_limpos$densidade_kg_m3)
+
+dados_limpos$`absorção_agregado_pct` <- as.numeric(
+  dados_limpos$`absorção_agregado_pct`
+)
+
+# Verificação
+str(dados_limpos)
+```
+
+A função `str()` foi utilizada para confirmar que as variáveis passaram a ser reconhecidas pelo R como **numéricas (`num`)**.
+
+
+## Questão 15 — Tratamento dos valores ausentes
+
+Inicialmente, foram identificados os valores ausentes (`NA`) presentes na base e as respectivas variáveis afetadas.
+
+```{r}
+# Quantidade de valores ausentes por variável
+sapply(dados_limpos, function(x) sum(is.na(x)))
+
+# Localização das observações que possuem valores ausentes
+dados_limpos[!complete.cases(dados_limpos), ]
+```
+
+A função `is.na()` identifica os valores ausentes e, em conjunto com `sum()`, permite contabilizar a quantidade de `NA` em cada variável. Já `complete.cases()` permite identificar as observações que possuem todos os valores preenchidos.
+
+Como não é possível consultar a fonte original para recuperar os valores ausentes, optou-se pela **exclusão das observações que apresentam dados vazios**. Essa decisão evita a introdução de valores estimados ou artificiais na base, preservando a confiabilidade dos resultados.
+
+Para preservar a base `dados_limpos` e permitir a comparação entre as versões, foi criada uma nova variável denominada `dados_sem_na`:
+
+```{r} 
+# Criação de uma nova base sem observações com valores ausentes
+dados_sem_na <- dados_limpos[complete.cases(dados_limpos), ]
+
+# Verificação da quantidade de observações após a exclusão
+nrow(dados_sem_na)
+```
+
+A função `complete.cases()` seleciona apenas as observações que não possuem valores ausentes. Dessa forma, `dados_sem_na` contém somente os registros completos, enquanto `dados_limpos` é mantida como referência para comparação.
+
+A exclusão das observações foi adotada de forma criteriosa, considerando o impacto da perda de registros sobre o tamanho da amostra. Essa abordagem é preferível à substituição dos valores por média, mediana ou outros valores estimados, pois evita a criação de informações que não foram efetivamente observadas.
+
+## Questão 16 — Reavaliação da base limpa
+
+Após a correção das variáveis e a remoção das observações que apresentavam valores ausentes, foi realizada uma nova verificação da estrutura e do resumo estatístico da base `dados_sem_na`.
+
+```{r}
+# Verificação da estrutura da base sem valores ausentes
+str(dados_sem_na)
+
+# Verificação do resumo estatístico
+summary(dados_sem_na)
+```
+
+Em relação à base original, as principais alterações foram a **correção dos tipos das variáveis que estavam classificadas de forma inadequada** e a **remoção das observações que apresentavam valores ausentes**.
+
+Com isso, `dados_sem_na` apresenta uma estrutura mais adequada para as análises estatísticas seguintes, sem registros contendo `NA` nas variáveis analisadas. A quantidade de observações também foi reduzida em função da exclusão dos registros incompletos.
+
+
+
+
+
+
 
 
 
