@@ -727,6 +727,120 @@ Em relação à base original, as principais alterações foram a **correção d
 Com isso, `dados_sem_na` apresenta uma estrutura mais adequada para as análises estatísticas seguintes, sem registros contendo `NA` nas variáveis analisadas. A quantidade de observações também foi reduzida em função da exclusão dos registros incompletos.
 
 
+## Questão 17 — Resistência média
+
+Para avaliar o desempenho dos corpos de prova, foi calculada inicialmente a resistência média à compressão considerando todos os registros da base. Em seguida, a média foi calculada separadamente por **bloco da obra**, **tipo de concreto** e **idade do corpo de prova**. Para isso, foi utilizada a função `aggregate()`, que permite calcular estatísticas resumidas para diferentes grupos de observações.
+
+
+```{r}
+aggregate(resistencia_mpa ~ obra + tipo_concreto + idade_dias,
+          data = dados_sem_na,
+          FUN = mean)
+
+# Resistência média global
+mean(dados_sem_na$resistencia_mpa)
+
+# Resistência média por bloco
+aggregate(resistencia_mpa ~ obra,
+          data = dados_sem_na,
+          FUN = mean)
+
+# Resistência média por tipo de concreto
+aggregate(resistencia_mpa ~ tipo_concreto,
+          data = dados_sem_na,
+          FUN = mean)
+
+# Resistência média por idade
+aggregate(resistencia_mpa ~ idade_dias,
+          data = dados_sem_na,
+          FUN = mean)
+```
+
+O primeiro cálculo apresenta a resistência média considerando simultaneamente o **bloco da obra, o tipo de concreto e a idade**. Em seguida, `mean()` calcula a resistência média global, enquanto `aggregate()` permite obter as médias separadamente para cada bloco, tipo de concreto e idade.
+
+Essa análise permite comparar o desempenho dos corpos de prova sob diferentes condições e verificar como a **resistência à compressão varia entre as obras, classes de concreto e idades de ensaio**.
+
+
+## Questão 18 — Comparação entre obras
+
+Para identificar qual bloco da obra apresentou a **maior e a menor resistência média**, foram calculadas inicialmente as médias de resistência por bloco utilizando a função `aggregate()`. Em seguida, as funções `which.max()` e `which.min()` foram utilizadas para localizar, respectivamente, os blocos com a maior e a menor resistência média.
+
+```{r}
+media_obra <- aggregate(resistencia_mpa ~ obra,
+                        data = dados_sem_na,
+                        FUN = mean)
+
+# Maior resistência média
+media_obra[which.max(media_obra$resistencia_mpa), ]
+
+# Menor resistência média
+media_obra[which.min(media_obra$resistencia_mpa), ]
+```
+
+A função `aggregate()` calcula a **resistência média para cada bloco da obra** e armazena os resultados no objeto `media_obra`. A função `which.max()` identifica a posição da maior média, enquanto `which.min()` identifica a posição da menor média.
+
+Dessa forma, os códigos permitem determinar diretamente **qual bloco apresentou o maior desempenho médio e qual apresentou o menor desempenho médio**, utilizando como critério a resistência à compressão dos corpos de prova.
+
+
+## Questão 19 — Resistência média por classe de concreto
+
+Para comparar o desempenho das diferentes classes de concreto, foi calculada a **resistência média à compressão** para as classes C25, C30, C35 e C40. Em seguida, foi identificada a classe que apresentou a maior resistência média.
+
+```{r}
+media_tipo <- aggregate(resistencia_mpa ~ tipo_concreto,
+                         data = dados_sem_na,
+                         FUN = mean)
+
+# Resistência média de cada classe
+media_tipo
+
+# Classe com maior resistência média
+media_tipo[which.max(media_tipo$resistencia_mpa), ]
+```
+
+A função `aggregate()` calcula a resistência média para cada classe de concreto, permitindo comparar o desempenho entre **C25, C30, C35 e C40**. Em seguida, a função `which.max()` identifica a classe que apresenta a **maior resistência média**.
+
+Assim, a classe apresentada no último resultado corresponde ao **tipo de concreto com maior resistência média à compressão** na base analisada.
+
+
+## Questão 20 — Utilizando `aggregate()`
+
+Para analisar as características dos diferentes tipos de concreto, foram calculadas as médias de **resistência à compressão, consumo de cimento, relação água/cimento, abatimento e densidade** para cada classe de concreto. Para isso, foi utilizada a função `aggregate()`.
+
+```{r} 
+aggregate(
+  cbind(resistencia_mpa,
+        cimento_kg_m3,
+        relacao_a_c,
+        abatimento_mm,
+        densidade_kg_m3) ~ tipo_concreto,
+  data = dados_sem_na,
+  FUN = mean
+)
+```
+
+A função `aggregate()` permite calcular simultaneamente a média de várias variáveis quantitativas, agrupando os resultados pela variável `tipo_concreto`.
+
+Os resultados permitem comparar as características médias das classes **C25, C30, C35 e C40**. A resistência média indica o desempenho mecânico de cada classe, enquanto o consumo médio de cimento mostra a quantidade de cimento utilizada por metro cúbico. A relação água/cimento permite avaliar a proporção entre água e cimento, sendo uma variável importante para o comportamento da resistência. O abatimento representa a consistência do concreto no estado fresco e a densidade indica sua massa por unidade de volume.
+
+A comparação conjunta dessas médias permite verificar diferenças entre as classes de concreto e observar se os maiores valores de resistência estão associados a diferenças no **consumo de cimento e na relação água/cimento**, considerando também as características do concreto no estado fresco e endurecido.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
