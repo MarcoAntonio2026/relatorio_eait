@@ -1370,10 +1370,7 @@ O objetivo é transformar a base inicialmente bruta em uma estrutura mais confi�
 
 O código abaixo reúne as principais etapas desenvolvidas ao longo da atividade, utilizando funções do **Base R** trabalhadas em aula.
 
-```{r}
-# ============================================================
-# DESAFIO FINAL — O ENGENHEIRO RESPONSÁVEL PELOS DADOS
-# ============================================================
+```r
 
 # ------------------------------------------------------------
 # 1. IMPORTAÇÃO DA BASE
@@ -1720,13 +1717,11 @@ media_obra[
   which.min(media_obra$resistencia_mpa),
 ]
 
-# ------------------------------------------------------------
-# 20. INFORMAÇÕES PARA AUXILIAR O ENGENHEIRO
-# ------------------------------------------------------------
+# --------------------------------------------------------------
+# INFORMAÇÕES PARA AUXILIAR NO PROCESSO DECISSÓRIO DO ENGENHEIRO
+# --------------------------------------------------------------
 
-cat("====================================\n")
 cat("RELATÓRIO RESUMIDO DO CONTROLE\n")
-cat("====================================\n")
 
 cat("Número de observações analisadas:",
     nrow(dados_finais), "\n")
@@ -1756,7 +1751,6 @@ cat("Resistência média do melhor bloco:",
     ),
     "MPa\n")
 
-cat("====================================\n")
 ```
 
 O script realiza o processamento de forma sequencial. Inicialmente, a base é importada e inspecionada para verificar suas **dimensões, estrutura, tipos de variáveis e estatísticas descritivas**. Em seguida, são procurados valores ausentes, erros de preenchimento, categorias despadronizadas e valores potencialmente incompatíveis com o contexto do concreto.
