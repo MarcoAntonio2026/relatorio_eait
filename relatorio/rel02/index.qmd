@@ -1144,6 +1144,114 @@ Entretanto, essa medida **não possui necessariamente uma interpretação físic
 Portanto, embora a média possa ser calculada matematicamente, seu resultado não representa diretamente uma propriedade física do concreto. Nesse caso, a medida deve ser entendida apenas como um **resumo numérico das variáveis selecionadas**, e não como uma grandeza física com significado técnico específico.
 
 
+## Questão 29 — Aplicação de `for` e `if`
+
+Nesta etapa, foi utilizada uma estrutura de repetição `for` em conjunto com a estrutura condicional `if` para percorrer as observações da base e identificar os corpos de prova cuja resistência à compressão está **acima da resistência média de sua respectiva classe de concreto**.
+
+Para cada observação, a classe do concreto é identificada e sua resistência individual é comparada com a resistência média correspondente àquela classe.
+
+```{r}
+# Cálculo da resistência média de cada tipo de concreto
+media_tipo <- aggregate(
+  resistencia_mpa ~ tipo_concreto,
+  data = dados_sem_na,
+  FUN = mean
+)
+
+# Vetor vazio para armazenar os corpos de prova
+# que apresentam resistência acima da média de sua classe
+acima_da_media <- character(0)
+
+# Percorrendo todas as observações da base
+for (i in 1:nrow(dados_sem_na)) {
+  
+  # Identificação do tipo de concreto da observação
+  tipo <- dados_sem_na$tipo_concreto[i]
+  
+  # Localização da resistência média do respectivo tipo
+  media <- media_tipo$resistencia_mpa[
+    media_tipo$tipo_concreto == tipo
+  ]
+  
+  # Comparação da resistência do corpo de prova com a média
+  if (dados_sem_na$resistencia_mpa[i] > media) {
+    
+    # Armazenamento do identificador do corpo de prova
+    acima_da_media <- c(
+      acima_da_media,
+      dados_sem_na$id_corpo_prova[i]
+    )
+  }
+}
+
+# Identificação dos registros completos
+# que apresentam resistência acima da média de sua classe
+resultado_q29 <- dados_sem_na[
+  dados_sem_na$id_corpo_prova %in% acima_da_media,
+]
+
+# Apresentação dos resultados
+resultado_q29
+
+# Quantidade de corpos de prova acima da média
+length(acima_da_media)
+
+# Lista dos identificadores dos corpos de prova
+acima_da_media
+```
+
+O código calcula inicialmente a **resistência média de cada tipo de concreto** utilizando `aggregate()`. Em seguida, o `for` percorre todas as observações presentes em `dados_sem_na`.
+
+Para cada corpo de prova, o código identifica seu `tipo_concreto` e localiza a resistência média correspondente. A estrutura `if` compara a resistência individual com essa média. Quando a resistência observada é maior que a média de sua respectiva classe, o identificador do corpo de prova é armazenado no vetor `acima_da_media`.
+
+A condição utilizada foi:
+
+```{r}
+dados_sem_na$resistencia_mpa[i] > media
+```
+
+Portanto, somente os corpos de prova que apresentam resistência **estritamente superior à média de sua própria classe** são selecionados.
+
+Nesta questão, **não foi utilizada a função `ifelse()`**. A identificação dos corpos de prova foi realizada exclusivamente com `for` e `if`, conforme solicitado.
+
+O objeto `resultado_q29` apresenta os **registros completos dos corpos de prova identificados**, enquanto `length(acima_da_media)` informa a quantidade total de observações que apresentam resistência acima da média de sua respectiva classe.
+
+Dessa forma, o procedimento permite avaliar individualmente o desempenho dos corpos de prova, realizando uma comparação adequada dentro de cada classe de concreto. O uso conjunto de `for` e `if` também demonstra como estruturas de repetição e decisão podem ser utilizadas no **Base R** para realizar análises condicionais sobre uma base de dados.
+
+
+## Questão 30 — Abordagem vetorizada
+
+A questão anterior foi repetida utilizando uma **abordagem vetorizada**, sem `for` e `if`. A comparação é realizada simultaneamente para todas as observações.
+
+```{r}
+# Resistência média por tipo de concreto
+media_tipo <- aggregate(
+  resistencia_mpa ~ tipo_concreto,
+  data = dados_sem_na,
+  FUN = mean
+)
+
+# Média correspondente a cada observação
+media_por_observacao <- media_tipo$resistencia_mpa[
+  match(dados_sem_na$tipo_concreto,
+        media_tipo$tipo_concreto)
+]
+
+# Comparação vetorizada
+acima_da_media_vetor <-
+  dados_sem_na$resistencia_mpa > media_por_observacao
+
+# Corpos de prova acima da média
+resultado_q30 <- dados_sem_na[acima_da_media_vetor, ]
+
+resultado_q30
+```
+
+A abordagem vetorizada é **mais simples, mais legível e geralmente mais eficiente** que a solução com `for` e `if`, pois realiza a comparação de todas as observações simultaneamente.
+
+A solução com `for` e `if` é útil para demonstrar estruturas de repetição e decisão, enquanto a abordagem vetorizada é mais adequada para o processamento de dados no R.
+
+**Conclusão:** para esta análise, considero a **abordagem vetorizada a melhor solução**, por utilizar menos código e realizar o processamento de forma mais direta.
 
 
 
