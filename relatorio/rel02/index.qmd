@@ -825,8 +825,89 @@ Os resultados permitem comparar as características médias das classes **C25, C
 
 A comparação conjunta dessas médias permite verificar diferenças entre as classes de concreto e observar se os maiores valores de resistência estão associados a diferenças no **consumo de cimento e na relação água/cimento**, considerando também as características do concreto no estado fresco e endurecido.
 
+## Questão 21 — Resistência relativa
 
+A variável `resistencia_relativa` foi criada para comparar a resistência à compressão observada em cada corpo de prova com a **resistência de referência correspondente à sua classe de concreto**.
 
+As resistências de referência foram definidas de acordo com a classe do concreto, considerando o valor numérico indicado pela própria classificação: **C25 = 25 MPa, C30 = 30 MPa, C35 = 35 MPa e C40 = 40 MPa**.
+
+```{r}
+# Definição da resistência de referência de acordo com a classe
+resistencia_referencia <- ifelse(dados_sem_na$tipo_concreto == "C25", 25,
+                          ifelse(dados_sem_na$tipo_concreto == "C30", 30,
+                          ifelse(dados_sem_na$tipo_concreto == "C35", 35,
+                          ifelse(dados_sem_na$tipo_concreto == "C40", 40, NA))))
+
+# Cálculo da resistência relativa
+dados_sem_na$resistencia_relativa <- 
+  dados_sem_na$resistencia_mpa / resistencia_referencia
+
+# Visualização dos resultados
+dados_sem_na[, c("tipo_concreto", "resistencia_mpa", "resistencia_relativa")]
+```
+
+A resistência relativa foi calculada pela expressão:
+
+$$
+R_{rel} = \frac{R_{obs}}{R_{ref}} 
+$$ {#eq-resistencia_relativa}
+
+em que \(R_{rel}\) representa a resistência relativa, \(R_{obs}\) é a resistência observada no corpo de prova e \(R_{ref}\) é a resistência de referência da classe do concreto.
+
+Valores de `resistencia_relativa` **iguais a 1** indicam que a resistência observada corresponde à resistência de referência. Valores **maiores que 1** indicam resistência superior à referência, enquanto valores **menores que 1** indicam resistência inferior à referência.
+
+A utilização dessa variável permite comparar o desempenho dos corpos de prova de diferentes classes em uma mesma escala relativa.
+
+## Questão 22 — Classificação do desempenho
+
+Para classificar os corpos de prova, foi utilizada a variável `resistencia_relativa`, criada na questão anterior. O critério adotado compara a resistência observada com a resistência de referência da classe do concreto.
+
+Foram estabelecidas duas categorias:
+
+* **"Abaixo da referência"**: `resistencia_relativa < 1`;
+* **"Atingiu ou superou a referência"**: `resistencia_relativa >= 1`.
+
+```{r}
+# Classificação dos corpos de prova
+dados_sem_na$classificacao <- ifelse(
+  dados_sem_na$resistencia_relativa < 1,
+  "Abaixo da referência",
+  "Atingiu ou superou a referência"
+)
+
+# Verificação das classificações
+table(dados_sem_na$classificacao)
+```
+
+O critério foi escolhido por permitir uma interpretação direta do desempenho em relação à **resistência de referência da classe do concreto**. Quando a resistência relativa é menor que 1, o corpo de prova apresenta resistência inferior ao valor de referência. Quando é igual ou superior a 1, a resistência observada atinge ou supera esse valor.
+
+Essa classificação fornece uma forma simples de avaliar o desempenho dos corpos de prova, sem estabelecer limites adicionais que não estejam diretamente relacionados à classe do concreto.
+
+## Questão 23 — Desempenho acima da média
+
+Foi criada a variável `acima_media` para indicar se a resistência de cada corpo de prova está acima da **resistência média do seu respectivo tipo de concreto**.
+
+Inicialmente, foi calculada a resistência média para cada classe utilizando `ave()`. Em seguida, cada resistência observada foi comparada com a média correspondente.
+
+```{r}
+# Cálculo da resistência média por tipo de concreto
+media_tipo <- ave(
+  dados_sem_na$resistencia_mpa,
+  dados_sem_na$tipo_concreto,
+  FUN = mean
+)
+
+# Classificação acima ou abaixo da média
+dados_sem_na$acima_media <- 
+  dados_sem_na$resistencia_mpa > media_tipo
+
+# Visualização dos resultados
+dados_sem_na[, c("tipo_concreto", "resistencia_mpa", "acima_media")]
+```
+
+A variável `acima_media` assume o valor **`TRUE`** quando a resistência do corpo de prova é superior à média de seu respectivo tipo de concreto e **`FALSE`** quando é igual ou inferior à média.
+
+Dessa forma, a comparação é realizada dentro de cada classe, evitando que corpos de prova de diferentes tipos de concreto sejam comparados com uma única média geral.
 
 
 
