@@ -1,0 +1,446 @@
+--- 
+# Só mude aqui!!!! 
+author: "Marco Antônio e Matheus Villela" 
+title: "Relatório 03 - Aula prática 03" 
+bibliography: referencias.bib 
+# A partir daqui nao faca alteracoes!!!!! 
+link-citations: true 
+csl: associacao-brasileira-de-normas-tecnicas-ipea.csl 
+subtitle: "<a href='https://bendeivide.github.io/courses/eait/' target='_blank'>Estatística Aplicada a Inovações Tecnológicas (UFSJ)</a> </br> <a href='https://bendeivide.github.io' target='_blank'>Prof. Ben Dêivide (DEFIM/CAP/UFSJ)</a>"
+include-before-body: header.html
+date: now
+date-format: "DD/MM/YYYY, HH:mm"
+lang: pt-BR
+format:
+  html:
+    toc: true
+    toc-title: "Sumário"      # Define o nome do sumário
+    toc-location: left        # Coloca o sumário no lado esquerdo (opcional)
+    number-sections: true
+    theme: bootstrap
+    #css: styles.css
+    code-fold: true
+    code-tools: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# 📌 Introdução
+
+No **controle tecnológico do concreto**, a qualidade das decisões técnicas depende diretamente da confiabilidade dos dados obtidos em campo e em laboratório. Em situações reais, essas informações podem apresentar **valores ausentes, erros de digitação, inconsistências de preenchimento, diferentes formas de representação dos mesmos dados e valores aparentemente incompatíveis com o fenômeno analisado**. Quando esses problemas não são identificados e tratados adequadamente, podem comprometer os resultados estatísticos e conduzir a interpretações equivocadas.
+
+Dessa forma, o processamento e a organização dos dados constituem etapas fundamentais antes da realização de análises estatísticas. O engenheiro deve ser capaz de **inspecionar, diagnosticar, limpar, transformar e explorar os dados**, garantindo que as informações utilizadas nas análises sejam consistentes e adequadas ao contexto da Engenharia Civil.
+
+Nesta atividade, é utilizada a mesma base de dados relacionada ao **controle tecnológico do concreto**, composta por **100 observações e 10 variáveis**. Cada registro representa um corpo de prova ou informação de controle, enquanto as variáveis descrevem características como obra, tipo de concreto, idade, resistência à compressão, consumo de cimento, relação água/cimento, abatimento, densidade e absorção do agregado.
+
+Diferentemente do relatório anterior, que priorizou as ferramentas do **Base R**, este trabalho utiliza prioritariamente a **família tidyverse**, explorando recursos para manipulação, transformação, organização, tratamento de textos, processamento e visualização dos dados.
+
+Assim, busca-se demonstrar como ferramentas como `dplyr`, `tidyr`, `stringr`, `readr`, `purrr` e `ggplot2` podem ser utilizadas para transformar uma base de dados inicialmente bruta em **informações organizadas, interpretáveis e úteis para a tomada de decisão na Engenharia Civil**.
+
+
+# 🎯 Objetivo geral
+
+Desenvolver um fluxo de **inspeção, diagnóstico, limpeza, transformação e exploração de uma base de dados do controle tecnológico do concreto**, utilizando prioritariamente ferramentas da **família tidyverse no R**, de modo a transformar dados brutos em informações confiáveis para auxiliar na **tomada de decisão técnica na Engenharia Civil**.
+
+## Objetivos específicos
+
+* **Conhecer a estrutura da base**, identificando suas observações, variáveis, tipos de dados e valores ausentes.
+
+* **Identificar inconsistências nos dados**, como erros de digitação, valores inadequados, problemas de padronização e registros incompatíveis com o contexto da Engenharia Civil.
+
+* **Limpar e padronizar a base**, corrigindo variáveis qualitativas e quantitativas e tratando os valores ausentes de maneira tecnicamente justificável.
+
+* **Utilizar ferramentas do `dplyr`** para filtrar, selecionar, transformar, agrupar e resumir os dados.
+
+* **Criar novas variáveis** por meio de `mutate()` e `case_when()`, permitindo análises complementares do desempenho do concreto.
+
+* **Aplicar ferramentas de `stringr` e `readr`** para o tratamento de textos e a conversão adequada de valores numéricos.
+
+* **Utilizar `across()` e outras ferramentas do tidyverse** para realizar operações de forma sistemática sobre diferentes variáveis.
+
+* **Explorar relações entre as características do concreto**, incluindo resistência, consumo de cimento, relação água/cimento e idade dos corpos de prova.
+
+* **Produzir representações gráficas utilizando `ggplot2`**, auxiliando na identificação de padrões e na interpretação dos resultados.
+
+* **Gerar informações estatísticas relevantes para o engenheiro responsável**, relacionando os resultados obtidos ao contexto do controle tecnológico do concreto.
+
+* **Desenvolver um script organizado e reprodutível**, permitindo que outro profissional compreenda e reproduza as etapas de processamento e análise realizadas.
+
+
+# ⚙️ Metodologia
+
+A metodologia adotada neste trabalho consiste no **processamento, organização, limpeza, transformação e exploração de uma base de dados relacionada ao controle tecnológico do concreto**, utilizando a linguagem **R**, com ênfase nas ferramentas da família **tidyverse**.
+
+O fluxo de trabalho mantém a estrutura desenvolvida no Relatório 02, porém substitui progressivamente as funções do **Base R** por ferramentas voltadas à manipulação e análise organizada dos dados, como `dplyr`, `tidyr`, `stringr`, `readr` e `ggplot2`.
+
+O desenvolvimento foi organizado em uma sequência lógica composta pelas etapas de:
+
+1. **Importação e inspeção inicial dos dados**;
+2. **Verificação das dimensões e estrutura da base**;
+3. **Identificação de valores ausentes e inconsistências**;
+4. **Investigação de possíveis erros nos dados**;
+5. **Limpeza e padronização das variáveis**;
+6. **Conversão dos tipos de dados**;
+7. **Exploração dos dados com `dplyr`**;
+8. **Criação e transformação de variáveis com `mutate()`**;
+9. **Análise de dados agrupados**;
+10. **Seleção e reorganização de variáveis**;
+11. **Tratamento de textos e categorias com `stringr`**;
+12. **Visualização dos dados com `ggplot2`**;
+13. **Investigação de relações relevantes para a Engenharia Civil**;
+14. **Elaboração de informações para apoio à tomada de decisão do engenheiro**.
+
+As atividades foram desenvolvidas progressivamente ao longo das **38 questões propostas**, além do desafio final, permitindo aplicar as ferramentas do tidyverse em diferentes etapas do tratamento e da análise da base de dados.
+
+
+## 📋 Etapas de desenvolvimento
+
+**Questão 01 — Importação dos dados**
+
+**Importe** a base de dados para o R e armazene-a no objeto `dados`. Em seguida, **utilize** funções da família tidyverse para verificar a correta importação e visualizar as primeiras e últimas observações da base.
+
+**Questão 02 — Dimensões da base**
+
+**Determine** as dimensões da base, identificando a quantidade de observações e variáveis existentes. Para isso, **utilize** funções compatíveis com o fluxo de trabalho do tidyverse.
+
+**Questão 03 — Estrutura da base**
+
+**Analise** a estrutura da base utilizando a função `glimpse()`, verificando os nomes das variáveis, seus tipos e uma amostra dos valores armazenados.
+
+**Questão 04 — Resumo das variáveis**
+
+**Realize** um resumo das variáveis da base, buscando identificar características relevantes, como valores mínimos e máximos, distribuição dos dados, categorias existentes e possíveis inconsistências.
+
+**Questão 05 — Classificação das variáveis**
+
+**Analise** as variáveis quanto aos seus tipos, diferenciando aquelas de natureza **quantitativa** das **qualitativas**, com base na estrutura identificada pelo R.
+
+**Questão 06 — Valores ausentes**
+
+**Investigue** a existência de valores ausentes na base, identificando sua quantidade, as variáveis afetadas e as respectivas observações. Para tornar a verificação sistemática, **utilize** a função `across()`.
+
+**Questão 07 — Valores incompatíveis**
+
+**Investigue** valores potencialmente incompatíveis com o contexto da Engenharia Civil, considerando variáveis como idade, resistência, abatimento, densidade, relação água/cimento e absorção. **Utilize** a função `filter()` para localizar os registros suspeitos.
+
+**Questão 08 — Possíveis erros de digitação**
+
+**Identifique** registros que apresentem características de possíveis erros de digitação. Para isso, **utilize** funções como `filter()` e `select()`, permitindo localizar e visualizar os registros completos.
+
+**Questão 09 — Padronização da variável `obra`**
+
+**Verifique** as categorias da variável `obra` utilizando `count()` e `distinct()`, buscando identificar diferenças de grafia, espaços ou outras inconsistências entre categorias que deveriam representar o mesmo bloco.
+
+**Questão 10 — Padronização da variável `tipo_concreto`**
+
+**Analise** as categorias da variável `tipo_concreto` para verificar se existem diferentes formas de representar uma mesma classe de concreto.
+
+**Questão 11 — Verificação dos tipos após o diagnóstico**
+
+Após identificar os problemas, **verifique** novamente a estrutura da base utilizando `glimpse()` e outras funções apropriadas, avaliando como os erros encontrados podem influenciar a interpretação dos tipos das variáveis.
+
+**Questão 12 — Criação da base limpa**
+
+**Crie** uma cópia da base original denominada `dados_limpos`, preservando a base `dados` para garantir a possibilidade de comparação e recuperação das informações originais durante o processo de tratamento.
+
+**Questão 13 — Limpeza das variáveis qualitativas**
+
+**Padronize** as variáveis qualitativas utilizando funções do pacote `stringr`, como `str_trim()`, `str_to_upper()`, `str_replace()` e `str_replace_all()`. **Elimine** espaços indevidos e **uniformize** as categorias.
+
+**Questão 14 — Conversão das variáveis quantitativas**
+
+**Converta** as variáveis que deveriam ser quantitativas para seus tipos adequados. **Considere** problemas relacionados à utilização de vírgula decimal, caracteres indevidos e registros armazenados como texto, utilizando recursos do pacote `readr` quando apropriado.
+
+**Questão 15 — Tratamento dos valores ausentes**
+
+**Identifique** e **analise** individualmente os valores ausentes. **Considere** as possibilidades de exclusão da observação, substituição do valor, manutenção do `NA` ou consulta à fonte original, e **adote** a alternativa considerada mais adequada diante das informações disponíveis.
+
+**Questão 16 — Verificação após a limpeza**
+
+Após realizar o processo de limpeza, **verifique** novamente a estrutura e o resumo da base. **Confirme** as alterações realizadas e quais inconsistências foram corrigidas.
+
+**Questão 17 — Resistência média**
+
+**Calcule** a resistência média à compressão dos corpos de prova e, posteriormente, **determine** as médias considerando diferentes agrupamentos, como bloco da obra, tipo de concreto e idade do corpo de prova.
+
+**Questão 18 — Comparação entre obras**
+
+**Compare** as resistências médias entre os diferentes blocos da obra. **Organize** os resultados em ordem crescente ou decrescente utilizando `arrange()`, permitindo identificar os blocos com maior e menor resistência média.
+
+**Questão 19 — Resistência por classe de concreto**
+
+**Calcule** a resistência média para cada classe de concreto, considerando C25, C30, C35 e C40. **Organize** os resultados da maior para a menor resistência média.
+
+**Questão 20 — Estatísticas por grupo**
+
+**Calcule**, para cada tipo de concreto, as médias da resistência, consumo de cimento, relação água/cimento, abatimento e densidade. **Utilize** a combinação `group_by()` e `summarise()` para realizar as análises agrupadas.
+
+**Questão 21 — Resistência relativa**
+
+**Crie** a variável `resistencia_relativa`, representando a razão entre a resistência observada e uma resistência de referência associada à classe do concreto. Para estabelecer os valores de referência e realizar a classificação, **utilize** as funções `mutate()` e `case_when()`.
+
+**Questão 22 — Classificação dos corpos de prova**
+
+**Crie** a variável `classificacao`, destinada a classificar os corpos de prova segundo critérios relacionados à resistência. **Defina** e **justifique** os limites adotados considerando o objetivo da análise.
+
+**Questão 23 — Resistência acima da média**
+
+**Crie** a variável `acima_media`, assumindo os valores `TRUE` ou `FALSE`, indicando se a resistência de cada corpo de prova está acima da média de seu respectivo tipo de concreto. **Utilize** `group_by()` em conjunto com `mutate()`.
+
+**Questão 24 — Quantidade de observações por grupo**
+
+**Determine** a quantidade de observações existente em cada categoria de `tipo_concreto`, utilizando `group_by()` e `summarise()` para produzir uma tabela organizada.
+
+**Questão 25 — Média por tipo de concreto**
+
+**Calcule** a resistência média para cada tipo de concreto e, posteriormente, **ordene** os resultados utilizando `arrange()`, facilitando a comparação entre os grupos.
+
+**Questão 26 — Estatísticas descritivas por grupo**
+
+**Calcule** diferentes estatísticas da resistência à compressão para cada tipo de concreto, incluindo número de observações, média, mediana, desvio-padrão, mínimo e máximo. **Utilize** essas medidas para realizar uma análise mais completa do comportamento dos dados.
+
+**Questão 27 — Seleção das variáveis quantitativas**
+
+**Selecione** as variáveis quantitativas relacionadas às propriedades do concreto utilizando `select()`, podendo combiná-la com `where()` ou `all_of()`. **Crie** uma tabela contendo somente as informações relevantes para as análises quantitativas.
+
+**Questão 28 — Cálculo de médias com `across()`**
+
+**Utilize** a função `across()` para calcular simultaneamente as médias das variáveis quantitativas selecionadas. **Compare** o resultado com a realização individual das mesmas operações, avaliando a facilidade de manutenção do código.
+
+**Questão 29 — Transformação simultânea de variáveis**
+
+**Realize** uma transformação simultânea em um conjunto de variáveis quantitativas utilizando `mutate()` e `across()`. **Escolha** a transformação de acordo com o objetivo da análise e sua utilidade no tratamento dos dados.
+
+**Questão 30 — Estatísticas múltiplas com `across()`**
+
+**Utilize** a combinação de `across()` e `summarise()` para calcular diferentes estatísticas das variáveis quantitativas, agrupadas por tipo de concreto. **Reduza** a repetição de comandos e **organize** o código.
+
+**Questão 31 — Padronização de textos**
+
+**Investigue** e **padronize** a variável `obra` utilizando funções do pacote `stringr`. **Verifique** situações envolvendo espaços, diferenças entre letras maiúsculas e minúsculas e diferentes grafias para uma mesma categoria.
+
+**Questão 32 — Identificação de padrões textuais**
+
+**Utilize** a função `str_detect()` para localizar registros contendo determinados padrões textuais nas variáveis `tipo_concreto` ou `obra`. **Utilize** essa abordagem como ferramenta auxiliar para identificar inconsistências na base.
+
+**Questão 33 — Distribuição da resistência**
+
+**Elabore** um gráfico utilizando `ggplot2` e `geom_boxplot()` para comparar a distribuição da resistência à compressão entre os diferentes tipos de concreto. **Avalie** diferenças de tendência central, dispersão e possíveis valores discrepantes.
+
+**Questão 34 — Consumo de cimento e resistência**
+
+**Elabore** um gráfico de dispersão utilizando `geom_point()` para investigar a relação entre o consumo de cimento e a resistência à compressão. Quando apropriado, **adicione** uma linha de tendência para auxiliar na identificação do comportamento dos dados.
+
+**Questão 35 — Relação água/cimento e resistência**
+
+**Elabore** um gráfico utilizando `ggplot2` para investigar a relação entre a relação água/cimento e a resistência à compressão. **Analise** o comportamento observado, buscando identificar tendências relevantes para o controle tecnológico do concreto.
+
+**Questão 36 — Comparação entre obras**
+
+**Investigue**, de forma descritiva, a afirmação de que os concretos utilizados no Bloco C apresentam desempenho superior aos demais blocos. **Combine** ferramentas do `dplyr` e `ggplot2` para comparar os resultados entre as obras.
+
+**Questão 37 — Idade e resistência**
+
+**Analise** a resistência média dos corpos de prova em diferentes idades utilizando `group_by()` e `summarise()`. Em seguida, **represente** os resultados graficamente para investigar o comportamento da resistência em função do aumento da idade.
+
+**Questão 38 — Resumo para o engenheiro**
+
+**Elabore** uma tabela-resumo contendo informações estatísticas consideradas relevantes para o acompanhamento da qualidade do concreto. **Justifique** as informações selecionadas de acordo com sua utilidade para a interpretação dos resultados e apoio à tomada de decisão do engenheiro.
+
+## 🏗️ Desafio final — O engenheiro responsável pelos dados
+
+Como etapa final, **desenvolva** um **script organizado em R**, utilizando prioritariamente ferramentas da família **tidyverse**, capaz de reproduzir as principais etapas realizadas ao longo do relatório.
+
+
+O script deverá contemplar:
+
+1. **Inspeção inicial da base**;
+2. **Identificação de possíveis problemas**;
+3. **Verificação de valores ausentes**;
+4. **Identificação de inconsistências**;
+5. **Produção de uma versão limpa dos dados**;
+6. **Geração de estatísticas descritivas**;
+7. **Criação de variáveis derivadas**;
+8. **Produção de representações gráficas**;
+9. **Geração de informações úteis ao engenheiro responsável pela obra**.
+
+O código deverá ser organizado de maneira sequencial e documentada, permitindo que outro profissional consiga compreender as etapas realizadas, as transformações aplicadas e as decisões tomadas durante o tratamento da base.
+
+
+# 📚 Fundamentação teórica
+
+A **Estatística Descritiva** compreende métodos utilizados para resumir e interpretar dados por meio de medidas de posição, dispersão e representação gráfica [@batista2024estatistica]. Esses recursos permitem identificar padrões, variações e diferenças entre os dados analisados.
+
+Na análise de dados da **Engenharia Civil**, essas ferramentas contribuem para a interpretação de resultados experimentais e para a identificação de comportamentos que possam auxiliar na avaliação dos materiais e processos construtivos.
+
+O **R**, por meio de ferramentas do **tidyverse**, possibilita organizar, tratar, transformar e analisar os dados de forma sistemática [@batista2023rbasico]. Sua aplicação facilita a realização das análises estatísticas e a representação dos resultados.
+
+Assim, os conceitos estatísticos e as ferramentas computacionais empregados neste relatório fornecem suporte para a análise e interpretação dos dados de controle tecnológico do concreto.
+
+# 🔍 Resultados e Discussão
+
+## Questão 1
+
+A base de dados foi importada para o R e atribuída ao objeto `dados` utilizando a função `read_csv2()`. Essa função foi adequada ao formato do arquivo, que utilizou o ponto e vírgula (`;`) como separador das colunas. Por padrão, a primeira linha é interpretada como o nome das variáveis, não sendo necessário nenhum outro comando adicional.
+
+Para verificar a importação, foram utilizadas as funções `head()` e `tail()`. A função `head()` apresentou as primeiras observações da base, enquanto `tail()` apresentou as últimas. O argumento `width = Inf`, utilizado em `print()`, permitiu visualizar todas as colunas sem que fossem ocultadas pela largura da tela.
+
+```{r}
+library(tidyverse)
+
+dados <- read_csv2("base_de_dados.csv")
+
+print(head(dados), width = Inf)
+print(tail(dados), width = Inf)
+```
+
+A visualização das primeiras e últimas observações permitiu confirmar a correta importação dos dados, incluindo os nomes das variáveis e seus respectivos valores.
+
+## Questão 2
+
+As dimensões da base foram verificadas por meio das funções `nrow()` e `ncol()`. A função `nrow()` retornou o número de linhas, correspondente às **observações**, enquanto `ncol()` retornou o número de colunas, correspondente às **variáveis**.
+
+```{r}
+nrow(dados)
+ncol(dados)
+```
+
+A base apresentou **100 observações e 10 variáveis**. Dessa forma, cada linha representou uma observação e cada coluna correspondeu a uma variável utilizada na análise.
+
+## Questão 3
+
+A estrutura da base foi apresentada por meio da função `glimpse()`, pertencente ao **tidyverse**. Essa função permite visualizar de forma resumida o número de observações, as variáveis existentes, os tipos atribuídos pelo R e alguns dos valores armazenados.
+
+```{r}
+glimpse(dados)
+```
+
+A análise da estrutura permitiu verificar que a base possui **100 observações e 10 variáveis**, além de identificar como cada variável havia sido reconhecida inicialmente pelo R. As variáveis foram apresentadas com seus respectivos tipos (`<chr>` e `<dbl>`) e alguns dos valores armazenados, sendo essa informação importante para verificar se os tipos atribuídos estão de acordo com a natureza dos dados.
+
+
+## Questão 4
+
+Para apresentar um resumo das variáveis da base, foi realizada inicialmente uma separação entre as variáveis **quantitativas e qualitativas**, considerando a classificação atribuída pelo R.
+
+```{r}
+quantitativas <- dados %>%
+  select(where(is.numeric)) %>%
+  print(width = Inf)
+
+qualitativas <- dados %>%
+  select(where(is.character)) %>%
+  print(width = Inf)
+```
+
+A função `select()` permite selecionar variáveis da base, enquanto `where()` aplica uma condição às colunas. Assim, `is.numeric()` identifica as variáveis armazenadas como numéricas e `is.character()` identifica aquelas armazenadas como texto.
+
+### Resumo das variáveis quantitativas
+
+```{r}
+quantitativas %>%
+  summarise(
+    across(
+      everything(),
+      list(
+        mínimo = ~min(.x, na.rm = TRUE),
+        média = ~mean(.x, na.rm = TRUE),
+        mediana = ~median(.x, na.rm = TRUE),
+        máximo = ~max(.x, na.rm = TRUE)
+      )
+    )
+  ) %>%
+  print(width = Inf)
+```
+
+Como o objeto `quantitativas` já contém somente as variáveis numéricas, `everything()` indica que as operações devem ser aplicadas a **todas as colunas desse objeto**. A função `summarise()` produz o resumo estatístico e `across()` permite realizar as mesmas operações simultaneamente em diferentes variáveis.
+
+O `list()` possibilita calcular **várias estatísticas para cada variável**, neste caso, mínimo, média, mediana e máximo. O `.x` representa a variável que está sendo processada pelo `across()`, permitindo que a mesma função seja aplicada a cada coluna. Já `na.rm = TRUE` determina que os valores ausentes (`NA`) sejam desconsiderados nos cálculos.
+
+### Resumo das variáveis qualitativas
+
+Para as variáveis qualitativas, foi verificada a quantidade de valores distintos presentes em cada variável:
+
+```{r}
+qualitativas %>%
+  summarise(
+    across(
+      everything(),
+      ~n_distinct(.x)
+    )
+  ) %>%
+  print(width = Inf)
+```
+
+Nesse caso, `n_distinct(.x)` contabiliza a quantidade de valores diferentes em cada coluna. Essa informação permite verificar as categorias existentes e identificar possíveis inconsistências de preenchimento, como diferenças de grafia ou formas distintas de representar uma mesma categoria.
+
+### Informações que chamam atenção
+
+O resumo evidencia que `id_corpo_prova`, `obra` e `tipo_concreto` são variáveis qualitativas, enquanto `idade_dias`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct` foram reconhecidas pelo R como quantitativas.
+
+Entretanto, `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` são **quantitativas pela natureza da informação**, mas foram reconhecidas pelo R como `character`. Essa inconsistência pode estar relacionada à presença de vírgulas decimais, caracteres indevidos ou outras diferenças no preenchimento dos dados.
+
+Em comparação com o Relatório 02, observa-se que a função `summary()` apresenta uma forma mais prática e direta de obter um resumo geral das variáveis. Por outro lado, os recursos do `tidyverse` oferecem maior flexibilidade para selecionar, organizar e aplicar operações específicas às variáveis, sendo mais adequados quando se deseja um diagnóstico ou tratamento mais detalhado dos dados.
+
+
+## Questão 5
+
+A classificação das variáveis foi realizada considerando tanto a **natureza da informação** quanto o tipo inicialmente atribuído pelo R.
+
+```{r}
+dados %>%
+  summarise(
+    across(
+      everything(),
+      ~class(.x)[1]
+    )
+  ) %>%
+  print(width = Inf)
+```
+
+A função `everything()` seleciona todas as colunas da base e `across()` aplica `class()` a cada uma delas, permitindo verificar como o R classificou cada variável.
+
+Inicialmente, as variáveis podem ser interpretadas da seguinte forma:
+
+| Natureza                                                       | Variáveis                                                                 |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **Qualitativas**                                               | `id_corpo_prova`, `obra`, `tipo_concreto`                                 |
+| **Quantitativas reconhecidas como numéricas**                  | `idade_dias`, `abatimento_mm`, `densidade_kg_m3`, `absorção_agregado_pct` |
+| **Quantitativas reconhecidas incorretamente como `character`** | `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`                         |
+
+Assim, as variáveis `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` constituem um ponto importante do diagnóstico. Apesar de possuírem natureza quantitativa, seu armazenamento como texto impede que sejam tratadas corretamente em cálculos estatísticos.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 🧠 Considerações finais
+
+
+
+
+
+# 📖 Referências
+
+::: {#refs}
