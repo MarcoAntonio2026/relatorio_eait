@@ -1566,7 +1566,7 @@ Observa-se uma **tendência negativa**, indicando que maiores valores da relaç�
 
 A presença de pontos que se afastam do padrão geral merece investigação, pois pode indicar **valores discrepantes, variações nas características dos materiais ou diferenças nas condições de produção e ensaio**.
 
-## Questão 36 — Comparação entre obras
+## Questão 36
 
 Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no Bloco C apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.
 
@@ -1616,9 +1616,9 @@ A comparação dos resultados mostra que o **Bloco C não apresenta o maior dese
 
 Portanto, **os dados analisados não dão suporte, em termos descritivos, à afirmação de que os concretos do Bloco C apresentam desempenho superior aos demais blocos**. Essa conclusão se restringe aos resultados observados na base e não envolve teste de hipótese.
 
-## Questão 37 — Idade e resistência
+## Questão 37
 
-Para analisar a relação entre a idade dos corpos de prova e a resistência à compressão, foram calculadas as médias de resistência para cada idade. O valor de `280 dias` foi desconsiderado nesta análise por apresentar comportamento discrepante em relação às demais idades.
+Para analisar a relação entre a idade dos corpos de prova e a resistência à compressão, foram calculadas as médias de resistência para cada idade. O valor de `280 dias` foi desconsiderado por apresentar comportamento discrepante em relação às demais observações.
 
 ```{r}
 resistencia_idade <- dados_limpos %>%
@@ -1633,7 +1633,7 @@ resistencia_idade <- dados_limpos %>%
 resistencia_idade
 ```
 
-A relação entre idade e resistência média foi representada graficamente:
+A relação entre idade e resistência média foi representada por meio de um gráfico de linhas:
 
 ```{r}
 ggplot(
@@ -1645,17 +1645,28 @@ ggplot(
 ) +
   geom_line() +
   geom_point(size = 3) +
+  scale_y_continuous(
+    limits = c(20, 50),
+    breaks = seq(20, 50, by = 5)
+  ) +
   labs(
     title = "Resistência média à compressão em função da idade",
     x = "Idade do corpo de prova (dias)",
     y = "Resistência média (MPa)"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
 ```
 
-Após a retirada do valor discrepante, observa-se uma **tendência de aumento da resistência média com o avanço da idade**. Os resultados indicam, portanto, que os corpos de prova tendem a apresentar maior resistência à compressão nas idades mais avançadas, embora esse crescimento não ocorra necessariamente de forma uniforme.
+Observa-se que a resistência média **não apresenta crescimento contínuo com o aumento da idade**. Há um aumento entre 7 e 14 dias, seguido de redução nas idades posteriores.
 
-Assim, os dados apresentam **evidência descritiva de uma relação positiva entre idade e resistência à compressão**.
+Esse comportamento pode ser explicado pelo fato de que a resistência do concreto é influenciada conjuntamente por diversos fatores, como a **relação água/cimento, o consumo de cimento, as características dos materiais e as condições de produção e cura**. Dessa forma, a idade, isoladamente, não explica toda a variação observada.
+
+Assim, os dados indicam um **ganho inicial de resistência**, mas não permitem estabelecer uma relação crescente contínua entre idade e resistência para esta base.
+
 
 
 
