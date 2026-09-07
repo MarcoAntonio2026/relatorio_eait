@@ -1668,19 +1668,428 @@ Esse comportamento pode ser explicado pelo fato de que a resistência do concret
 Assim, os dados indicam um **ganho inicial de resistência**, mas não permitem estabelecer uma relação crescente contínua entre idade e resistência para esta base.
 
 
+## Questão 38
+
+Para auxiliar o engenheiro no acompanhamento da qualidade do concreto, foi construída uma tabela-resumo com a quantidade de corpos de prova, média, mediana, desvio-padrão, resistência mínima e máxima para cada tipo de concreto.
+
+```{r}
+resumo_engenheiro <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    quantidade = n(),
+    média = mean(resistencia_mpa),
+    mediana = median(resistencia_mpa),
+    desvio_padrao = sd(resistencia_mpa),
+    mínimo = min(resistencia_mpa),
+    máximo = max(resistencia_mpa),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  resumo_engenheiro,
+  digits = 2,
+  col.names = c(
+    "Tipo de concreto",
+    "Nº de observações",
+    "Média (MPa)",
+    "Mediana (MPa)",
+    "Desvio-padrão (MPa)",
+    "Mínimo (MPa)",
+    "Máximo (MPa)"
+  ),
+  caption = "Resumo estatístico da resistência à compressão por tipo de concreto."
+)
+```
+
+A **quantidade de observações** indica o número de corpos de prova analisados. A **média e a mediana** permitem avaliar a tendência central da resistência, enquanto o **desvio-padrão** indica sua variabilidade. Os valores **mínimo e máximo** mostram a amplitude dos resultados e podem indicar valores que mereçam investigação.
+
+Essas informações, em conjunto, fornecem uma visão objetiva do comportamento e da uniformidade da resistência dos diferentes tipos de concreto.
 
 
+## 🏆 Desafio Final
+
+Nesta etapa final, foi desenvolvido um **script integrado em R** para simular a atuação de um engenheiro responsável pelo controle e tratamento de uma base de dados produzida por diferentes profissionais. Como os possíveis erros não são conhecidos previamente, o código foi organizado de forma sequencial, contemplando as etapas de **inspeção, identificação de problemas, limpeza, tratamento e análise dos dados**.
+
+O objetivo é transformar a base inicialmente bruta em uma estrutura mais confiável para a realização de análises estatísticas e para a **tomada de decisão na Engenharia Civil**, utilizando prioritariamente ferramentas da família **tidyverse**.
+
+### Script final
+
+O código abaixo reúne as principais etapas desenvolvidas ao longo da atividade, utilizando funções da família **tidyverse** para organizar, limpar, transformar e analisar os dados de forma sistemática.
+
+```r
+
+# ============================================================
+# DESAFIO FINAL — O ENGENHEIRO RESPONSÁVEL PELOS DADOS
+# Controle tecnológico do concreto
+# ============================================================
 
 
+# ------------------------------------------------------------
+# 1. CARREGAMENTO DOS PACOTES E IMPORTAÇÃO DA BASE
+# ------------------------------------------------------------
+
+library(tidyverse)
+
+# Importando a base de dados.
+dados <- read_csv2("base_de_dados.csv", trim_ws = FALSE)
+
+# Inspeção inicial da base.
+head(dados)
+tail(dados)
+glimpse(dados)
+
+# Verificando as dimensões da base.
+dim(dados)
 
 
+# ------------------------------------------------------------
+# 2. IDENTIFICAÇÃO DE POSSÍVEIS PROBLEMAS
+# ------------------------------------------------------------
+
+# Verificando os valores distintos das variáveis qualitativas.
+dados |>
+  select(id_corpo_prova, obra, tipo_concreto) |>
+  map(unique)
+
+# Procurando possíveis caracteres que indiquem erros de
+# digitação ou formatação.
+dados |>
+  filter(
+    if_any(
+      everything(),
+      ~ str_detect(as.character(.x), regex("O|,", ignore_case = TRUE))
+    )
+  )
 
 
+# ------------------------------------------------------------
+# 3. VERIFICAÇÃO DOS VALORES AUSENTES
+# ------------------------------------------------------------
 
+# Contando a quantidade de valores ausentes em cada variável.
+dados |>
+  summarise(
+    across(
+      everything(),
+      ~ sum(is.na(.x))
+    )
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variável",
+    values_to = "quantidade_na"
+  ) |>
+  arrange(desc(quantidade_na))
+
+
+# ------------------------------------------------------------
+# 4. CRIAÇÃO DA BASE PARA LIMPEZA
+# ------------------------------------------------------------
+
+# Criando uma cópia para preservar os dados originais.
+dados_limpos <- dados
+
+
+# ------------------------------------------------------------
+# 5. PADRONIZAÇÃO DAS VARIÁVEIS QUALITATIVAS
+# ------------------------------------------------------------
+
+# Removendo espaços desnecessários e padronizando a escrita.
+dados_limpos <- dados_limpos |>
+  mutate(
+    obra = obra |>
+      str_trim() |>
+      str_to_upper(),
+
+    tipo_concreto = tipo_concreto |>
+      str_trim() |>
+      str_to_upper()
+  )
+
+
+# ------------------------------------------------------------
+# 6. TRATAMENTO DAS VARIÁVEIS QUANTITATIVAS
+# ------------------------------------------------------------
+
+# Corrigindo erros de digitação, separadores decimais e
+# convertendo as variáveis para formato numérico.
+dados_limpos <- dados_limpos |>
+  mutate(
+    idade_dias = parse_number(as.character(idade_dias)),
+
+    resistencia_mpa = as.character(resistencia_mpa) |>
+      str_replace_all(",", ".") |>
+      str_replace_all("O", "0") |>
+      parse_number(),
+
+    cimento_kg_m3 = as.character(cimento_kg_m3) |>
+      str_replace_all("O", "0") |>
+      parse_number(),
+
+    relacao_a_c = as.character(relacao_a_c) |>
+      str_replace_all(",", ".") |>
+      parse_number(),
+
+    abatimento_mm = parse_number(as.character(abatimento_mm)),
+
+    densidade_kg_m3 = parse_number(as.character(densidade_kg_m3)),
+
+    absorção_agregado_pct =
+      parse_number(as.character(absorção_agregado_pct))
+  )
+
+
+# ------------------------------------------------------------
+# 7. PADRONIZAÇÃO E TRATAMENTO DOS VALORES AUSENTES
+# ------------------------------------------------------------
+
+# Transformando diferentes representações de ausência em NA.
+dados_ausentes <- dados_limpos |>
+  mutate(
+    across(
+      everything(),
+      ~ na_if(str_trim(as.character(.x)), "")
+    )
+  ) |>
+  mutate(
+    across(
+      everything(),
+      ~ case_when(
+        .x %in% c("NA", "N/A", "NULL", "null", "-") ~ NA_character_,
+        TRUE ~ .x
+      )
+    )
+  )
+
+# Identificando as observações que possuem valores ausentes.
+dados_excluidos <- dados_ausentes |>
+  filter(if_any(everything(), is.na))
+
+# Mantendo somente as observações completas.
+dados_limpos <- dados_ausentes |>
+  filter(if_all(everything(), ~ !is.na(.)))
+
+
+# ------------------------------------------------------------
+# 8. RECONVERSÃO DAS VARIÁVEIS QUANTITATIVAS
+# ------------------------------------------------------------
+
+# Garantindo que as variáveis quantitativas estejam em formato
+# numérico após o tratamento dos valores ausentes.
+dados_limpos <- dados_limpos |>
+  mutate(
+    idade_dias = parse_number(idade_dias),
+    resistencia_mpa = parse_number(resistencia_mpa),
+    cimento_kg_m3 = parse_number(cimento_kg_m3),
+    relacao_a_c = parse_number(relacao_a_c),
+    abatimento_mm = parse_number(abatimento_mm),
+    densidade_kg_m3 = parse_number(densidade_kg_m3),
+    absorção_agregado_pct = parse_number(absorção_agregado_pct)
+  )
+
+
+# ------------------------------------------------------------
+# 9. VERIFICAÇÃO DA BASE APÓS A LIMPEZA
+# ------------------------------------------------------------
+
+# Conferindo a estrutura dos dados limpos.
+glimpse(dados_limpos)
+
+# Obtendo um resumo das variáveis.
+summary(dados_limpos)
+
+
+# ------------------------------------------------------------
+# 10. ESTATÍSTICAS DESCRITIVAS
+# ------------------------------------------------------------
+
+# Calculando estatísticas da resistência por tipo de concreto.
+resumo_resistencia <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    quantidade = n(),
+    média = mean(resistencia_mpa),
+    mediana = median(resistencia_mpa),
+    desvio_padrao = sd(resistencia_mpa),
+    mínimo = min(resistencia_mpa),
+    máximo = max(resistencia_mpa),
+    .groups = "drop"
+  ) |>
+  arrange(tipo_concreto)
+
+# Apresentando os resultados em uma tabela.
+knitr::kable(
+  resumo_resistencia,
+  digits = 2,
+  caption = "Estatísticas descritivas da resistência à compressão por tipo de concreto."
+)
+
+
+# ------------------------------------------------------------
+# 11. CRIAÇÃO DE VARIÁVEIS DERIVADAS
+# ------------------------------------------------------------
+
+# Criando uma variável com a resistência de referência de cada
+# classe de concreto e calculando a resistência relativa.
+dados_limpos <- dados_limpos |>
+  mutate(
+    resistência_referência = case_when(
+      tipo_concreto == "C25" ~ 25,
+      tipo_concreto == "C30" ~ 30,
+      tipo_concreto == "C35" ~ 35,
+      tipo_concreto == "C40" ~ 40,
+      TRUE ~ NA_real_
+    ),
+
+    resistencia_relativa =
+      resistencia_mpa / resistência_referência,
+
+    classificação = case_when(
+      resistencia_relativa >= 1.00 ~
+        "Igual ou superior à referência",
+      resistencia_relativa >= 0.90 ~
+        "Próxima da referência",
+      TRUE ~
+        "Abaixo da referência"
+    ),
+
+    acima_media =
+      resistencia_mpa > mean(resistencia_mpa)
+  )
+
+
+# ------------------------------------------------------------
+# 12. INFORMAÇÕES PARA O ENGENHEIRO
+# ------------------------------------------------------------
+
+# Resumo final por tipo de concreto.
+resumo_engenheiro <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    quantidade = n(),
+    média_resistencia = mean(resistencia_mpa),
+    desvio_padrao = sd(resistencia_mpa),
+    menor_resistencia = min(resistencia_mpa),
+    maior_resistencia = max(resistencia_mpa),
+    .groups = "drop"
+  ) |>
+  arrange(tipo_concreto)
+
+knitr::kable(
+  resumo_engenheiro,
+  digits = 2,
+  caption = "Informações para acompanhamento da qualidade do concreto."
+)
+
+
+# ------------------------------------------------------------
+# 13. GRÁFICO 1 — RESISTÊNCIA POR TIPO DE CONCRETO
+# ------------------------------------------------------------
+
+ggplot(
+  dados_limpos,
+  aes(
+    x = tipo_concreto,
+    y = resistencia_mpa
+  )
+) +
+  geom_boxplot() +
+  labs(
+    title = "Distribuição da resistência por tipo de concreto",
+    x = "Tipo de concreto",
+    y = "Resistência à compressão (MPa)"
+  ) +
+  theme_minimal()
+
+
+# ------------------------------------------------------------
+# 14. GRÁFICO 2 — CIMENTO X RESISTÊNCIA
+# ------------------------------------------------------------
+
+# O filtro evita que um valor muito elevado de cimento distorça
+# a visualização da relação entre as variáveis.
+ggplot(
+  dados_limpos |>
+    filter(cimento_kg_m3 < 1000),
+  aes(
+    x = cimento_kg_m3,
+    y = resistencia_mpa
+  )
+) +
+  geom_point() +
+  geom_smooth(
+    method = "lm",
+    se = FALSE
+  ) +
+  labs(
+    title = "Relação entre consumo de cimento e resistência",
+    x = "Cimento (kg/m³)",
+    y = "Resistência à compressão (MPa)"
+  ) +
+  theme_minimal()
+
+
+# ------------------------------------------------------------
+# 15. RESULTADO FINAL
+# ------------------------------------------------------------
+
+# Visualizando as principais informações geradas para apoiar
+# o acompanhamento da qualidade do concreto.
+dados_limpos |>
+  count(tipo_concreto, classificação) |>
+  arrange(tipo_concreto, classificação)
+  
+```
+O script realiza o processamento dos dados de forma sequencial. Inicialmente, a base é importada e inspecionada para verificar suas **dimensões, estrutura, tipos de variáveis e estatísticas descritivas**. Em seguida, são identificados valores ausentes, erros de preenchimento, categorias despadronizadas e possíveis inconsistências nos dados.
+
+Na etapa de limpeza, a base original é preservada no objeto `dados`, enquanto uma cópia chamada `dados_limpos` é utilizada para as correções. As variáveis qualitativas são padronizadas com `str_trim()` e `str_to_upper()`, enquanto as variáveis quantitativas são corrigidas e convertidas para o formato numérico utilizando funções como `str_replace_all()` e `parse_number()`.
+
+Após o tratamento dos valores ausentes, as observações incompletas são excluídas das análises, resultando em uma base final com dados completos. Essa etapa permite realizar os cálculos estatísticos sem a interferência de valores ausentes.
+
+Também foram criadas variáveis derivadas para ampliar a interpretação dos dados. A variável `resistencia_relativa` compara a resistência observada com a resistência de referência da classe do concreto. A variável `classificacao` permite identificar o desempenho em relação a essa referência. Além disso, `acima_media` indica se a resistência de cada corpo de prova está acima da média de sua respectiva classe.
+
+As funções do **tidyverse**, como `filter()`, `mutate()`, `group_by()`, `summarise()`, `across()`, `case_when()`, `if_any()`, `if_all()`, `str_trim()`, `str_to_upper()`, `str_replace_all()`, `parse_number()` e `ggplot()`, foram utilizadas para organizar, transformar e analisar os dados de forma sistemática.
+
+### Informações geradas para o engenheiro
+
+A partir do script, foram obtidas informações relevantes para o acompanhamento do controle tecnológico, como:
+
+* **número de corpos de prova analisados** após o tratamento;
+* **resistência média global**;
+* **resistência mínima e máxima**;
+* **resistência média por obra**;
+* **resistência média por tipo de concreto**;
+* **resistência média por idade**;
+* **quantidade de corpos de prova por classe**;
+* **variabilidade da resistência** por meio do desvio-padrão;
+* **resistência relativa à classe do concreto**;
+* **classificação dos resultados em relação à referência**;
+* **relação entre as propriedades do concreto**, observada por meio dos gráficos.
+
+Essas informações permitem ao engenheiro acompanhar o comportamento da resistência, comparar diferentes tipos de concreto e obras e identificar resultados que possam exigir uma análise mais detalhada.
+
+### Principal problema identificado
+
+O principal problema encontrado na base foi a presença de **inconsistências de preenchimento nas variáveis quantitativas**. Alguns valores que deveriam ser numéricos foram armazenados como texto devido à utilização de vírgulas como separador decimal e à presença da letra `O` no lugar do número `0`.
+
+Um exemplo foi o registro `3O,4`, identificado na variável `resistencia_mpa`, que representa um provável erro de digitação. Também foi identificado o valor `390O` na variável `cimento_kg_m3`.
+
+Além disso, foram encontradas inconsistências nas variáveis qualitativas, como espaços desnecessários em `obra` e diferenças na forma de escrita das classes de concreto, como `C30` e `c30`.
+
+A decisão adotada foi **corrigir os erros de formatação e padronização identificados**, converter as variáveis quantitativas para o formato numérico e excluir as observações que apresentaram valores ausentes após o tratamento. A base original foi preservada no objeto `dados`, permitindo manter os dados originais e realizar as alterações somente na cópia destinada à análise.
 
 
 # 🧠 Considerações finais
 
+A principal diferença entre utilizar **Base R** e as ferramentas da família **tidyverse** para o processamento de dados está na forma de organizar e executar as operações. O Base R possui funções capazes de realizar as mesmas tarefas, porém o `tidyverse` oferece uma abordagem mais integrada e estruturada, permitindo encadear diferentes operações de forma mais clara e próxima da sequência lógica do processo de análise.
+
+No desenvolvimento desta atividade, funções como `filter()`, `mutate()`, `group_by()`, `summarise()`, `across()` e `case_when()` permitiram realizar etapas de **inspeção, limpeza, transformação e análise** de maneira organizada. Além disso, funções do `stringr` e do `ggplot2` facilitaram, respectivamente, o tratamento das informações textuais e a construção das visualizações.
+
+Assim, embora o **Base R e o tidyverse possam solucionar problemas semelhantes**, o tidyverse apresenta vantagens na organização do código, principalmente quando são necessárias várias etapas de transformação dos dados. Essa característica torna o processamento mais **legível, sistemático e fácil de reproduzir**, o que é importante quando o script precisa ser compreendido e utilizado por outro profissional.
+
+No contexto da Engenharia Civil, essa organização é especialmente relevante, pois os dados utilizados em análises de controle tecnológico podem apresentar erros de digitação, valores ausentes e diferentes formas de preenchimento. Antes de aplicar métodos estatísticos, é necessário garantir que os dados estejam adequadamente estruturados e tratados.
+
+Dessa forma, o principal aprendizado desta atividade foi compreender que a escolha da ferramenta de processamento não está apenas relacionada à obtenção do resultado, mas também à **forma como o processo é estruturado e documentado**. O uso do tidyverse contribui para construir um fluxo de análise mais organizado, facilitando a transformação dos dados brutos em informações confiáveis para auxiliar a tomada de decisão na Engenharia Civil.
 
 
 
