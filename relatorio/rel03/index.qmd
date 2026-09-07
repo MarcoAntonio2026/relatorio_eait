@@ -290,7 +290,7 @@ Para verificar a importação, foram utilizadas as funções `head()` e `tail()`
 ```{r}
 library(tidyverse)
 
-dados <- read_csv2("base_de_dados.csv")
+dados <- read_csv2("base_de_dados.csv", trim_ws = FALSE)
 
 print(head(dados), width = Inf)
 print(tail(dados), width = Inf)
@@ -411,24 +411,1085 @@ Inicialmente, as variáveis podem ser interpretadas da seguinte forma:
 
 Assim, as variáveis `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` constituem um ponto importante do diagnóstico. Apesar de possuírem natureza quantitativa, seu armazenamento como texto impede que sejam tratadas corretamente em cálculos estatísticos.
 
+## Questão 6
+
+A existência de valores ausentes na base foi investigada utilizando `across()` em conjunto com `is.na()`. Essa abordagem permite realizar uma verificação sistemática de todas as variáveis da base, identificando **quantos valores ausentes existem, em quais variáveis eles aparecem e em quais observações estão localizados**.
+
+### Quantidade de valores ausentes por variável
+
+Inicialmente, foi calculada a quantidade de valores ausentes em cada variável da base. Para isso, utilizou-se `across()` para aplicar a função `is.na()` a todas as variáveis e, posteriormente, `pivot_longer()` para organizar os resultados em formato de tabela.
+
+```{r}
+ausentes_variaveis <- dados %>%
+  summarise(
+    across(
+      everything(),
+      ~sum(is.na(.x))
+    )
+  ) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "variavel",
+    values_to = "quantidade_ausentes"
+  )
+
+variaveis_com_ausentes <- ausentes_variaveis %>%
+  filter(quantidade_ausentes > 0) %>%
+  arrange(desc(quantidade_ausentes))
+
+knitr::kable(
+  variaveis_com_ausentes,
+  col.names = c(
+    "Variável",
+    "Quantidade de valores ausentes"
+  ),
+  caption = "Variáveis que apresentam valores ausentes"
+)
+```
+
+A tabela apresenta somente as variáveis que possuem valores ausentes, permitindo identificar quais campos da base foram afetados e a quantidade de `NA` encontrada em cada um deles.
+
+### Quantidade total de valores ausentes
+
+Em seguida, foi determinada a quantidade total de valores ausentes existentes na base. Esse valor foi obtido pela soma dos `NA` encontrados em todas as variáveis.
+
+```{r}
+total_ausentes <- dados %>%
+  summarise(
+    quantidade_total = sum(
+      across(
+        everything(),
+        ~sum(is.na(.x))
+      )
+    )
+  )
+
+knitr::kable(
+  total_ausentes,
+  col.names = "Quantidade total de valores ausentes",
+  caption = "Quantidade total de valores ausentes na base"
+)
+```
+
+O resultado apresenta a quantidade total de valores ausentes identificados na base de dados.
+
+### Localização dos valores ausentes
+
+Após identificar a quantidade e as variáveis afetadas, foi realizada a localização das observações que apresentam valores ausentes.
+
+
+```{r}
+localizacao_ausentes <- dados %>%
+  mutate(
+    observacao = row_number()
+  ) %>%
+  pivot_longer(
+    cols = -c(observacao, id_corpo_prova),
+    names_to = "variavel",
+    values_to = "valor",
+    values_transform = list(valor = as.character)
+  ) %>%
+  filter(
+    is.na(valor)
+  ) %>%
+  select(
+    observacao,
+    id_corpo_prova,
+    variavel
+  ) %>%
+  arrange(observacao)
+
+knitr::kable(
+  localizacao_ausentes,
+  col.names = c(
+    "Observação",
+    "Corpo de prova",
+    "Variável afetada"
+  ),
+  caption = "Localização dos valores ausentes"
+)
+```
+
+A tabela permite identificar diretamente **em qual observação, em qual corpo de prova e em qual variável** cada valor ausente está localizado.
+
+## Questão 07
 
 
 
 
 
+## Questão 08
+
+A existência de possíveis erros de preenchimento foi investigada considerando principalmente as variáveis quantitativas que apresentaram valores armazenados como texto. Para isso, foram utilizadas funções do **tidyverse**, especialmente `filter()`, `select()` e `str_detect()`, permitindo identificar registros que apresentam caracteres ou padrões incompatíveis com o preenchimento esperado para variáveis quantitativas.
+
+Foi realizada uma verificação nas variáveis `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct`, procurando tanto a presença de letras quanto o uso de vírgula nos valores. A presença de letras pode indicar erros de digitação, enquanto a utilização de vírgula como separador decimal indica uma inconsistência no padrão de preenchimento dos dados.
+
+```{r}
+registros_suspeitos <- dados %>%
+  filter(
+    if_any(
+      c(
+        idade_dias,
+        resistencia_mpa,
+        cimento_kg_m3,
+        relacao_a_c,
+        abatimento_mm,
+        densidade_kg_m3,
+        absorção_agregado_pct
+      ),
+      ~str_detect(as.character(.x), "[A-Za-z]") |
+       str_detect(as.character(.x), ",")
+    )
+  ) %>%
+  select(
+    id_corpo_prova,
+    obra,
+    tipo_concreto,
+    idade_dias,
+    resistencia_mpa,
+    cimento_kg_m3,
+    relacao_a_c,
+    abatimento_mm,
+    densidade_kg_m3,
+    absorção_agregado_pct
+  )
+
+print(registros_suspeitos, width = Inf)
+```
+
+A função `if_any()` permite verificar simultaneamente diversas variáveis, enquanto `str_detect()` identifica a ocorrência de padrões específicos dentro dos valores. A conversão por meio de `as.character()` possibilita realizar essa verificação independentemente do tipo de dado inicialmente atribuído pelo R.
+
+Para facilitar a identificação dos diferentes tipos de inconsistência, também podem ser realizadas verificações específicas para letras e para vírgulas:
+
+```{r}
+erros_letras <- dados %>%
+  filter(
+    if_any(
+      c(
+        idade_dias,
+        resistencia_mpa,
+        cimento_kg_m3,
+        relacao_a_c,
+        abatimento_mm,
+        densidade_kg_m3,
+        absorção_agregado_pct
+      ),
+      ~str_detect(as.character(.x), "[A-Za-z]")
+    )
+  )
+
+erros_virgula <- dados %>%
+  filter(
+    if_any(
+      c(
+        idade_dias,
+        resistencia_mpa,
+        cimento_kg_m3,
+        relacao_a_c,
+        abatimento_mm,
+        densidade_kg_m3,
+        absorção_agregado_pct
+      ),
+      ~str_detect(as.character(.x), ",")
+    )
+  )
+
+knitr::kable(
+  erros_letras,
+  caption = "Registros com presença de letras em variáveis quantitativas"
+)
+
+knitr::kable(
+  erros_virgula,
+  caption = "Registros com uso de vírgula em valores quantitativos"
+)
+```
+
+A partir dessa verificação, foram identificados dois tipos principais de inconsistências. O primeiro corresponde à utilização de letras no lugar de algarismos, como ocorre no **CP-019**, que apresenta o valor `3O,4` na variável `resistencia_mpa`. Nesse caso, a letra **O** foi utilizada no lugar do algarismo **0**, caracterizando um possível erro de digitação.
+
+Também foi identificado o **CP-064**, que apresenta o valor `390O` na variável `cimento_kg_m3`. Novamente, a letra **O** foi utilizada no lugar do algarismo **0**, indicando um possível erro de preenchimento.
+
+O segundo tipo de inconsistência está relacionado ao uso da **vírgula como separador decimal**, como nos valores `38,7`, `0,55` e novamente o `3O,4`, respectivamente os corpos de prova **CP-008**, **CP-045** e **CP-019**. Embora esses valores representem números válidos no padrão utilizado no Brasil, esse formato pode fazer com que o R interprete a informação como `character`, principalmente quando a base utiliza o ponto como separador decimal em outros registros. Dessa forma, a inconsistência de formatação contribui para que variáveis que deveriam ser quantitativas sejam inicialmente reconhecidas como texto.
+
+## Questão 9
+
+A variável `obra` foi analisada para verificar se todas as categorias estão escritas de forma padronizada. Para isso, foram utilizadas as funções `count()` e `distinct()`, que permitem identificar as categorias existentes e a quantidade de ocorrências de cada uma.
+
+Inicialmente, foi realizada a contagem das categorias presentes na variável `obra`:
+
+```{r}
+dados %>%
+  count(obra) %>%
+  arrange(obra)
+```
+
+Em seguida, as categorias distintas foram verificadas utilizando `distinct()`:
+
+```{r}
+dados %>%
+  distinct(obra) %>%
+  arrange(obra)
+```
+
+A análise mostrou que existe uma inconsistência na variável `obra`: a categoria **"Bloco B "** apresenta um espaço adicional ao final do texto, enquanto **"Bloco B"** representa a mesma categoria sem esse espaço.
+
+Para identificar especificamente essa diferença de preenchimento, foi utilizada a função `str_length()`:
+
+```{r}
+dados %>%
+  distinct(obra) %>%
+  mutate(
+    quantidade_caracteres = str_length(obra)
+  ) %>%
+  arrange(obra)
+```
+
+A diferença no número de caracteres confirma que os dois registros possuem uma diferença de formatação, embora representem a mesma obra.
+
+Portanto, a variável `obra` **não está totalmente padronizada**. A inconsistência identificada é o espaço adicional presente em **"Bloco B "**.
+
+
+## Questão 10
+
+A variável `tipo_concreto` foi analisada para verificar se todas as categorias estão padronizadas quanto à forma de escrita. Para isso, foram utilizadas funções do **tidyverse**, como `count()` e `distinct()`, permitindo identificar as diferentes categorias presentes na base e a quantidade de observações pertencentes a cada uma.
+
+Inicialmente, foi realizada a contagem das categorias existentes:
+
+```{r}
+dados %>%
+  count(tipo_concreto) %>%
+  arrange(tipo_concreto)
+```
+
+Em seguida, foram identificadas as categorias distintas da variável:
+
+```{r}
+dados %>%
+  distinct(tipo_concreto) %>%
+  arrange(tipo_concreto)
+```
+
+A análise das categorias mostrou que existe uma inconsistência de padronização entre **`C30`** e **`c30`**. Apesar de apresentarem grafias diferentes, ambas representam o mesmo tipo de concreto, sendo a diferença causada apenas pela utilização de letras maiúsculas e minúsculas.
+
+Para evidenciar essa diferença de forma mais clara, foi utilizada a função `str_to_upper()`, pertencente ao pacote `stringr`, criando uma representação padronizada das categorias:
+
+```{r}
+dados %>%
+  distinct(tipo_concreto) %>%
+  mutate(
+    categoria_padronizada = str_to_upper(tipo_concreto)
+  ) %>%
+  arrange(categoria_padronizada)
+```
+
+Após a transformação, `C30` e `c30` passam a apresentar a mesma representação, confirmando que se trata da mesma categoria escrita de maneiras diferentes.
+
+Portanto, a variável `tipo_concreto` **não está totalmente padronizada**. A inconsistência identificada é a utilização de **`C30` e `c30` para representar o mesmo tipo de concreto**. Essa diferença deverá ser corrigida posteriormente na etapa de limpeza da base, de modo que todas as observações da mesma classe sejam representadas de forma uniforme.
+
+## Questão 11
+
+Após a identificação dos problemas existentes na base, foi realizada uma nova verificação dos tipos das variáveis. Essa etapa é importante para confirmar como o R está interpretando cada coluna e avaliar se os tipos atribuídos são compatíveis com a natureza das informações armazenadas.
+
+Para isso, foi utilizada a função `glimpse()`, que apresenta de forma resumida a estrutura da base, incluindo os nomes das variáveis, seus tipos e alguns dos valores armazenados.
+
+```{r} 
+glimpse(dados)
+```
+
+Também foi realizada uma verificação específica dos tipos de todas as variáveis utilizando `summarise()` e `across()`:
+
+```{r} 
+dados %>%
+  summarise(
+    across(
+      everything(),
+      ~class(.x)[1]
+    )
+  ) %>%
+  print(width = Inf)
+```
+
+A análise permite verificar que as variáveis `id_corpo_prova`, `obra` e `tipo_concreto` estão armazenadas como texto, o que é adequado para variáveis qualitativas.
+
+As variáveis `idade_dias`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct` estão armazenadas como variáveis numéricas, sendo compatíveis com sua natureza quantitativa.
+
+Por outro lado, `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` continuam sendo reconhecidas como `character`, embora sejam variáveis quantitativas. Essa situação está relacionada aos problemas identificados anteriormente, como a utilização de vírgula decimal e a presença de possíveis caracteres indevidos em alguns registros.
+
+Portanto, a verificação confirma que **nem todas as variáveis apresentam tipos adequados para as análises estatísticas**. 
+
+### Questão para reflexão
+
+Um único valor digitado incorretamente pode alterar a maneira como o R interpreta uma variável inteira porque o programa utiliza os valores armazenados na coluna para determinar automaticamente seu tipo de dado.
+
+Por exemplo, se uma variável deveria conter somente números, mas uma das observações apresentar uma letra, como `3O,4`, o R pode interpretar toda a coluna como `character`, mesmo que os demais valores sejam numéricos. Dessa forma, um único registro incompatível pode impedir que a variável seja reconhecida diretamente como quantitativa.
+
+Isso é importante porque uma variável armazenada como texto não pode ser utilizada normalmente em operações matemáticas e estatísticas, como cálculo de média, mediana ou desvio-padrão.
+
+Portanto, *um único erro de preenchimento pode afetar a interpretação de toda a variável*, sendo fundamental realizar a inspeção e a limpeza dos dados antes das análises estatísticas.
+
+
+## Questão 12
+
+Para preservar os dados originais durante as etapas de tratamento, foi criada uma cópia da base denominada `dados_limpos`:
+
+```{r}
+dados_limpos <- dados
+```
+
+A partir deste momento, as alterações necessárias para limpeza, padronização e conversão dos dados serão realizadas na base `dados_limpos`, mantendo o objeto `dados` inalterado.
+
+É recomendável preservar a base original porque ela funciona como uma **referência dos dados inicialmente coletados**. Dessa forma, caso ocorra algum erro durante o tratamento, é possível comparar os resultados com os valores originais e recuperar as informações sem precisar importar novamente a base.
+
+Além disso, manter a base original permite **rastrear e justificar as alterações realizadas**, tornando o processo de tratamento mais seguro, transparente e reprodutível.
+
+## Questão 13
+
+Após a identificação das inconsistências nas variáveis qualitativas, foi realizada a padronização das categorias na base `dados_limpos`. Para isso, foram utilizadas funções do pacote `stringr`, como `str_trim()`, `str_to_upper()` e `str_replace_all()`.
+
+A transformação foi aplicada de forma sistemática às variáveis `obra` e `tipo_concreto`:
+
+```{r}
+dados_limpos <- dados_limpos %>%
+  mutate(
+    obra = obra %>%
+      str_trim() %>%
+      str_to_upper() %>%
+      str_replace_all("BLOCO B", "BLOCO B"),
+    
+    tipo_concreto = tipo_concreto %>%
+      str_trim() %>%
+      str_to_upper() %>%
+      str_replace_all("C30", "C30")
+  )
+```
+
+A função `str_trim()` remove espaços desnecessários no início e no final dos textos, enquanto `str_to_upper()` uniformiza todas as categorias utilizando letras maiúsculas.
+
+A função `str_replace_all()` foi utilizada para realizar substituições explícitas nas categorias. Dessa forma, caso existam diferentes formas de preenchimento que devam representar a mesma categoria, elas podem ser direcionadas para uma única representação padronizada.
+
+Para verificar o resultado da transformação, foram novamente contabilizadas as categorias:
+
+```{r}
+dados_limpos %>%
+  count(obra) %>%
+  arrange(obra)
+
+dados_limpos %>%
+  count(tipo_concreto) %>%
+  arrange(tipo_concreto)
+```
+
+Com a aplicação das transformações, a categoria **"Bloco B "**, que apresentava um espaço adicional, passa a ser representada de forma uniforme como **"BLOCO B"**. Da mesma maneira, as categorias **"C30"** e **"c30"** passam a ser representadas como **"C30"**.
+
+Assim, as variáveis qualitativas foram padronizadas de maneira **consistente e reprodutível**, evitando a necessidade de corrigir manualmente cada observação e garantindo que categorias que representam a mesma informação sejam reconhecidas como uma única categoria nas análises posteriores.
+
+
+## Questão 14
+
+
+As variáveis `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct` deveriam ser quantitativas. Entretanto, algumas delas foram identificadas como texto devido à presença de vírgula decimal, caracteres indevidos e valores ausentes.
+
+Para realizar a conversão, os valores ausentes foram padronizados, os caracteres indevidos identificados foram corrigidos e as vírgulas decimais foram substituídas por pontos. Em seguida, foi utilizada a função `parse_number()` do pacote `readr` para realizar a conversão para o tipo numérico.
+
+```{r}
+dados_limpos <- dados_limpos %>%
+  mutate(
+    idade_dias = readr::parse_number(as.character(idade_dias)),
+    
+    resistencia_mpa = as.character(resistencia_mpa) %>%
+      str_replace_all(",", ".") %>%
+      str_replace_all("O", "0") %>%
+      readr::parse_number(),
+    
+    cimento_kg_m3 = as.character(cimento_kg_m3) %>%
+      str_replace_all("O", "0") %>%
+      readr::parse_number(),
+    
+    relacao_a_c = as.character(relacao_a_c) %>%
+      str_replace_all(",", ".") %>%
+      readr::parse_number(),
+    
+    abatimento_mm = readr::parse_number(as.character(abatimento_mm)),
+    
+    densidade_kg_m3 = readr::parse_number(as.character(densidade_kg_m3)),
+    
+    absorção_agregado_pct = readr::parse_number(
+      as.character(absorção_agregado_pct)
+    )
+  )
+
+# Verificação dos tipos das variáveis
+glimpse(dados_limpos)
+```
+
+A função `str_replace_all()` foi utilizada para substituir a vírgula decimal pelo ponto e corrigir os caracteres indevidos encontrados nos valores numéricos. Posteriormente, `readr::parse_number()` realizou a conversão dos valores registrados como texto para o formato numérico.
+
+A verificação com `glimpse()` permite confirmar que as variáveis quantitativas passaram a ser reconhecidas como `numeric`, enquanto as variáveis qualitativas permanecem como texto. Dessa forma, a base fica adequada para a realização dos cálculos e análises estatísticas posteriores.
+
+## Questão 15
+
+Para identificar os valores ausentes, foram considerados não apenas os valores `NA`, mas também registros que representam ausência de informação, como `N/A`, `NULL`, `null`, `-` e células vazias. A investigação foi realizada utilizando funções do pacote `dplyr`.
+
+```{r}
+# Identificação e padronização dos diferentes registros de ausência
+dados_ausentes <- dados_limpos %>%
+  mutate(across(
+    everything(),
+    ~na_if(str_trim(as.character(.x)), "")
+  )) %>%
+  mutate(across(
+    everything(),
+    ~case_when(
+      .x %in% c("NA", "N/A", "NULL", "null", "-") ~ NA_character_,
+      TRUE ~ .x
+    )
+  ))
+
+# Quantidade de valores ausentes por variável
+dados_ausentes %>%
+  summarise(across(everything(), ~sum(is.na(.)))) %>%
+  tidyr::pivot_longer(
+    cols = everything(),
+    names_to = "variavel",
+    values_to = "quantidade_NA"
+  ) %>%
+  filter(quantidade_NA > 0)
+```
+
+Também foi verificada a quantidade de observações que apresentam pelo menos um valor ausente:
+
+```{r}
+dados_ausentes %>%
+  filter(if_any(everything(), is.na)) %>%
+  summarise(
+    observacoes_com_ausentes = n()
+  )
+```
+
+Após a identificação, foi criada uma nova base contendo exclusivamente as observações que apresentam valores ausentes:
+
+```{r}
+# Base contendo as observações que possuem pelo menos um valor ausente
+dados_excluidos <- dados_ausentes %>%
+  filter(if_any(everything(), is.na))
+
+# Base final sem observações com valores ausentes
+dados_limpos <- dados_ausentes %>%
+  filter(if_all(everything(), ~!is.na(.)))
+```
+
+A base `dados_excluidos` preserva os registros retirados da análise, enquanto `dados_limpos` passa a conter somente as observações completas.
+
+### Justificativa
+
+A presença de valores ausentes deve ser analisada de acordo com a importância da variável e com a quantidade de informações disponíveis. Neste conjunto de dados, as variáveis representam características relacionadas ao controle tecnológico do concreto, como resistência à compressão, abatimento, densidade e relação água/cimento. A substituição arbitrária de um valor ausente poderia criar uma informação que não foi efetivamente medida e, consequentemente, alterar os resultados das análises.
+
+Por esse motivo, optou-se pela **exclusão das observações que apresentam pelo menos um valor ausente**, principalmente porque a quantidade de registros disponíveis é suficiente para manter uma base representativa após a remoção. Essa decisão evita a introdução de valores artificialmente estimados e mantém apenas observações completas para as análises posteriores.
+
+A substituição dos valores seria mais adequada caso a quantidade de dados ausentes fosse elevada ou caso a perda das observações comprometesse significativamente a análise. A manutenção do `NA` também poderia ser utilizada quando a ausência da informação tivesse significado próprio ou quando determinada análise permitisse trabalhar diretamente com dados faltantes. Já a consulta à fonte original seria a alternativa mais adequada quando houvesse possibilidade de recuperar o valor real medido.
+
+Neste caso, como os valores ausentes não podem ser considerados medições válidas e não há justificativa para estimá-los arbitrariamente, a exclusão das observações foi considerada a alternativa mais adequada. Entretanto, os registros excluídos foram preservados na base `dados_excluidos`, garantindo a rastreabilidade do tratamento realizado e permitindo que essas observações sejam posteriormente consultadas caso a fonte original dos dados seja disponibilizada.
+
+
+## Questão 16
+
+Após a realização das etapas de limpeza, foi verificada novamente a estrutura e o resumo estatístico da base `dados_limpos`. Essa etapa permite confirmar se as variáveis estão nos tipos adequados e se os problemas identificados anteriormente foram corrigidos.
+
+```{r}
+dados_limpos <- dados_limpos %>%
+  mutate(
+    idade_dias = readr::parse_number(as.character(idade_dias)),
+    
+    resistencia_mpa = as.character(resistencia_mpa) %>%
+      str_replace_all(",", ".") %>%
+      str_replace_all("O", "0") %>%
+      readr::parse_number(),
+    
+    cimento_kg_m3 = as.character(cimento_kg_m3) %>%
+      str_replace_all("O", "0") %>%
+      readr::parse_number(),
+    
+    relacao_a_c = as.character(relacao_a_c) %>%
+      str_replace_all(",", ".") %>%
+      readr::parse_number(),
+    
+    abatimento_mm = readr::parse_number(as.character(abatimento_mm)),
+    
+    densidade_kg_m3 = readr::parse_number(as.character(densidade_kg_m3)),
+    
+    absorção_agregado_pct = readr::parse_number(
+      as.character(absorção_agregado_pct)
+    )
+  )
+
+# Verificação dos tipos das variáveis
+glimpse(dados_limpos)
+```
+
+A comparação com a base original mostra que a estrutura dos dados foi aprimorada após o processo de limpeza. As variáveis quantitativas passaram a ser reconhecidas como numéricas, permitindo a realização adequada de operações estatísticas. Além disso, os registros que apresentavam valores ausentes, como `NA`, `N/A`, `NULL`, `null`, `-` ou células vazias, foram retirados da base utilizada nas análises.
+
+Os principais problemas efetivamente corrigidos foram:
+
+* conversão das variáveis quantitativas que estavam registradas como texto;
+* padronização das vírgulas utilizadas como separadores decimais;
+* correção de caracteres indevidos encontrados em valores numéricos;
+* tratamento dos diferentes formatos utilizados para representar valores ausentes;
+* exclusão das observações que apresentavam valores ausentes;
+* padronização das variáveis qualitativas realizada nas etapas anteriores.
+
+Dessa forma, `dados_limpos` apresenta uma estrutura mais consistente e adequada para as análises estatísticas seguintes. As observações excluídas não foram perdidas, pois foram armazenadas anteriormente na base `dados_excluidos`, enquanto a base `dados` original permanece preservada para comparação e rastreabilidade.
+
+Portanto, a principal diferença em relação à base original é que a base limpa possui **somente observações completas e variáveis quantitativas corretamente reconhecidas pelo R**, reduzindo os problemas que poderiam interferir nos resultados das análises posteriores.
+
+
+## Questão 17 
+
+A resistência média à compressão dos corpos de prova foi calculada inicialmente considerando toda a base de dados. Em seguida, a média foi calculada separadamente de acordo com o bloco da obra, o tipo de concreto e a idade do corpo de prova.
+
+```{r} 
+# Resistência média de todos os corpos de prova
+dados_limpos |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa)
+  )
+```
+
+A resistência média também foi calculada para cada bloco da obra:
+
+```{r}
+# Resistência média por bloco da obra
+dados_limpos |>
+  group_by(obra) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa)
+  )
+```
+
+Em seguida, foi calculada a resistência média para cada tipo de concreto:
+
+```{r} 
+# Resistência média por tipo de concreto
+dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa)
+  )
+```
+
+Por fim, foi calculada a resistência média para cada idade dos corpos de prova:
+
+```{r} 
+# Resistência média por idade do corpo de prova
+dados_limpos |>
+  group_by(idade_dias) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa)
+  )
+```
+
+A função `group_by()` foi utilizada para dividir os dados de acordo com a variável de interesse, enquanto `summarise()` calculou a média da resistência à compressão em cada grupo. Dessa forma, é possível comparar o comportamento da resistência entre diferentes blocos da obra, tipos de concreto e idades dos corpos de prova.
+
+Os resultados permitem observar como a resistência média varia conforme as características dos corpos de prova, possibilitando uma análise mais detalhada do comportamento do concreto na base estudada.
+
+## Questão 18 
+
+Para comparar os blocos da obra, foi calculada a resistência média à compressão para cada bloco. Em seguida, os resultados foram ordenados de forma crescente, permitindo identificar diretamente o bloco com menor e maior resistência média.
+
+```{r} 
+comparacao_obras <- dados_limpos |>
+  group_by(obra) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa)
+  ) |>
+  arrange(resistencia_media)
+
+comparacao_obras
+```
+
+O resultado apresenta os blocos organizados da **menor para a maior resistência média**. Assim, o primeiro bloco da tabela corresponde ao bloco que apresentou a menor resistência média, enquanto o último corresponde ao bloco que apresentou a maior resistência média.
+
+Dessa forma, a utilização conjunta de `group_by()`, `summarise()` e `arrange()` permite realizar a comparação entre as obras de maneira simples e objetiva, facilitando a identificação dos blocos com os maiores e menores valores médios de resistência à compressão.
+
+## Questão 19 
+
+Para comparar as classes de concreto, foram consideradas as classes C25, C30, C35 e C40. A resistência média foi calculada para cada classe e os resultados foram organizados em ordem decrescente.
+
+```{r}
+resultado_tipo <- dados_limpos |>
+  filter(tipo_concreto %in% c("C25", "C30", "C35", "C40")) |>
+  group_by(tipo_concreto) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa),
+    .groups = "drop"
+  ) |>
+  arrange(desc(resistencia_media))
+
+resultado_tipo
+```
+
+A função `filter()` seleciona apenas as quatro classes solicitadas. Em seguida, `group_by()` agrupa os corpos de prova de acordo com a classe do concreto, enquanto `summarise()` calcula a resistência média de cada grupo. Por fim, `arrange(desc())` organiza os resultados da maior para a menor resistência média.
+
+A **primeira linha do resultado corresponde à classe que apresentou a maior resistência média**, permitindo identificar diretamente a classe de concreto com melhor desempenho médio entre as classes analisadas.
+
+
+## Questão 20 
+
+Para comparar as diferentes classes de concreto, foram calculadas as médias da resistência à compressão, do consumo de cimento, da relação água/cimento, do abatimento e da densidade para cada tipo de concreto.
+
+```{r}
+estatisticas_concreto <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa),
+    cimento_medio = mean(cimento_kg_m3),
+    relacao_a_c_media = mean(relacao_a_c),
+    abatimento_medio = mean(abatimento_mm),
+    densidade_media = mean(densidade_kg_m3),
+    .groups = "drop"
+  ) %>%
+  
+  print(width = Inf)
+```
+
+A utilização de `group_by()` permite separar os corpos de prova de acordo com o tipo de concreto. Em seguida, `summarise()` calcula a média de cada variável dentro de cada grupo. O argumento `.groups = "drop"` é utilizado para que o resultado final não permaneça agrupado.
+
+Os resultados permitem comparar o comportamento médio das principais características do concreto entre as diferentes classes. De modo geral, espera-se que as classes de maior resistência apresentem valores médios de resistência à compressão superiores. A relação água/cimento também é uma variável importante, pois relações menores tendem a estar associadas a maiores resistências, desde que os demais fatores de dosagem e cura sejam adequados.
+
+O consumo médio de cimento, o abatimento e a densidade permitem complementar essa avaliação. Diferenças no abatimento podem indicar diferentes características de trabalhabilidade das misturas, enquanto a densidade permite verificar se existem diferenças significativas entre os concretos analisados.
+
+Assim, a tabela obtida possibilita avaliar conjuntamente as principais características dos diferentes tipos de concreto, identificando diferenças entre as classes e permitindo relacioná-las com o desempenho mecânico observado.
+
+## Questão 21
+
+Foi criada a variável `resistencia_relativa`, representando a razão entre a resistência observada e a resistência de referência correspondente à classe do concreto.
+
+Como critério, foi considerada a resistência nominal indicada pela classe do concreto: **25 MPa para C25, 30 MPa para C30, 35 MPa para C35 e 40 MPa para C40**.
+
+```{r}
+dados_limpos <- dados_limpos |>
+  mutate(
+    resistencia_relativa = resistencia_mpa /
+      case_when(
+        tipo_concreto == "C25" ~ 25,
+        tipo_concreto == "C30" ~ 30,
+        tipo_concreto == "C35" ~ 35,
+        tipo_concreto == "C40" ~ 40,
+        TRUE ~ NA_real_
+      )
+  )
+
+# Apresentação de apenas algumas observações para facilitar a visualização
+dados_limpos |>
+  select(
+    id_corpo_prova,
+    tipo_concreto,
+    resistencia_mpa,
+    resistencia_relativa
+  ) |>
+  slice_head(n = 10)
+```
+
+Foi apresentada somente uma amostra das observações no relatório para **evitar excesso de informações e poluição visual**, facilitando a compreensão do procedimento e da nova variável criada. Entretanto, o cálculo de `resistencia_relativa` foi realizado para **todas as observações da base `dados_limpos`**.
+
+A função `case_when()` associa cada classe de concreto ao seu respectivo valor de referência. Em seguida, `mutate()` calcula a razão entre a resistência observada e a resistência de referência.
+
+A interpretação é feita da seguinte forma: um valor de `resistencia_relativa` igual a **1,00** indica que a resistência observada corresponde à resistência de referência da classe. Valores **maiores que 1,00** indicam resistência observada superior à referência, enquanto valores **menores que 1,00** indicam resistência inferior à referência.
+
+Por exemplo, um corpo de prova C35 com resistência de 36,3 MPa apresenta resistência relativa de aproximadamente **1,04**, indicando que sua resistência corresponde a aproximadamente 104% da resistência de referência de 35 MPa.
+
+A resistência nominal da classe foi utilizada como referência por representar o valor associado à classificação do concreto, permitindo avaliar o desempenho observado de cada corpo de prova em relação à sua própria classe.
+
+## Questão 22
+
+[Para classificar os corpos de prova, foi utilizada a variável `resistencia_relativa`, criada na questão anterior. Dessa forma, cada resistência observada é comparada com a resistência de referência correspondente à sua classe de concreto.
+
+Foram adotados os seguintes critérios:
+
+* **Igual ou superior à referência:** `resistencia_relativa >= 1,00`;
+* **Próxima da referência:** `0,90 <= resistencia_relativa < 1,00`;
+* **Abaixo da referência:** `resistencia_relativa < 0,90`.
+
+```{r} 
+dados_limpos <- dados_limpos |>
+  mutate(
+    classificacao = case_when(
+      resistencia_relativa >= 1.00 ~ "Igual ou superior à referência",
+      resistencia_relativa >= 0.90 ~ "Próxima da referência",
+      resistencia_relativa < 0.90 ~ "Abaixo da referência",
+      TRUE ~ NA_character_
+    )
+  )
+
+# Tabela para apresentação dos resultados
+tabela_classificacao <- dados_limpos |>
+  select(
+    id_corpo_prova,
+    tipo_concreto,
+    resistencia_mpa,
+    resistencia_relativa,
+    classificacao
+  )
+
+knitr::kable(
+  head(tabela_classificacao, 95),
+  digits = 3,
+  col.names = c(
+    "Corpo de prova",
+    "Tipo de concreto",
+    "Resistência (MPa)",
+    "Resistência relativa",
+    "Classificação"
+  ),
+  caption = "Classificação dos corpos de prova segundo a resistência relativa."
+)
+```
+
+A função `mutate()` foi utilizada para criar a variável `classificacao`, enquanto `case_when()` permite aplicar diferentes critérios de acordo com o valor de `resistencia_relativa`.
+
+O valor **1,00** representa 100% da resistência de referência da classe. Portanto, valores iguais ou superiores a 1,00 indicam resistência observada igual ou superior à referência. Valores entre 0,90 e 1,00 foram considerados próximos da referência, enquanto valores inferiores a 0,90 foram classificados como abaixo da referência.
+
+O limite de 10% foi adotado como **critério analítico para esta atividade**, permitindo diferenciar resultados próximos da referência daqueles que apresentam uma redução mais significativa. Esse critério não deve ser interpretado como um critério normativo de aceitação do concreto, mas como uma forma de organizar e interpretar os resultados da base de dados.
+
+
+## Questão 23
+
+Foi criada a variável `acima_media`, indicando se a resistência à compressão de cada corpo de prova está acima da resistência média de seu respectivo tipo de concreto.
+
+Para isso, os dados foram agrupados por `tipo_concreto` e a média de resistência foi calculada automaticamente dentro de cada grupo.
+
+```{r}
+dados_limpos <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  mutate(
+    acima_media = resistencia_mpa > mean(resistencia_mpa)
+  ) |>
+  ungroup()
+
+# Apresentação dos resultados
+dados_limpos |>
+  select(
+    id_corpo_prova,
+    tipo_concreto,
+    resistencia_mpa,
+    acima_media
+  ) |>
+  head(95) |>
+  knitr::kable(
+    digits = 2,
+    col.names = c(
+      "Corpo de prova",
+      "Tipo de concreto",
+      "Resistência (MPa)",
+      "Acima da média"
+    ),
+    caption = "Classificação da resistência em relação à média do tipo de concreto."
+  )
+```
+
+A função `group_by()` foi utilizada para separar os corpos de prova de acordo com o `tipo_concreto`. Em seguida, `mutate()` calcula a média da resistência dentro de cada grupo e compara cada valor observado com essa média.
+
+A expressão `resistencia_mpa > mean(resistencia_mpa)` retorna diretamente um valor lógico: **`TRUE`** quando a resistência do corpo de prova está acima da média de seu tipo de concreto e **`FALSE`** quando está igual ou abaixo da média.
+
+O procedimento atende ao desafio proposto, pois as médias de cada classe **não foram calculadas manualmente**. O próprio `group_by()` faz a separação dos grupos e `mean()` calcula automaticamente a média correspondente a cada tipo de concreto.
 
 
 
+## Questão 24
+
+Para determinar a quantidade de corpos de prova em cada tipo de concreto, os dados foram agrupados pela variável `tipo_concreto`. Em seguida, foi utilizada a função `summarise()` com `n()` para contar o número de observações pertencentes a cada grupo.
+
+```{r}
+observacoes_tipo <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    quantidade = n(),
+    .groups = "drop"
+  )
+
+knitr::kable(
+  observacoes_tipo,
+  col.names = c("Tipo de concreto", "Quantidade de observações"),
+  caption = "Quantidade de observações por tipo de concreto."
+)
+```
+
+A função `group_by()` organiza as observações de acordo com o tipo de concreto, enquanto `summarise()` permite calcular a quantidade de registros de cada grupo. A função `n()` realiza a contagem das observações.
+
+O resultado é apresentado em uma tabela para facilitar a visualização e comparação da quantidade de corpos de prova existentes em cada classe de concreto.
+
+## Questão 25
+
+Calculando a resistência média de cada tipo de concreto. Group_by() agrupa as observações de acordo com o tipo de concreto. Summarise() calcula a resistência média de cada grupo. Arrange() ordena os resultados da menor para a maior resistência média.
+
+```{r}
+resistencia_media_tipo <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    resistencia_media = mean(resistencia_mpa),
+    .groups = "drop"
+  ) |>
+  arrange(resistencia_media)
+
+# Apresentando os resultados em uma tabela organizada.
+knitr::kable(
+  resistencia_media_tipo,
+  digits = 2,
+  col.names = c(
+    "Tipo de concreto",
+    "Resistência média (MPa)"
+  ),
+  caption = "Resistência média por tipo de concreto."
+)
+```
+
+O resultado apresenta a resistência média de cada tipo de concreto.
+A função arrange() organiza os tipos de concreto em ordem crescente, permitindo identificar aquele que apresenta a menor e a maior resistência média na base analisada.
 
 
+## Questão 26
+
+Calcule diferentes estatísticas da resistência à compressão para cada tipo de concreto. Serão utilizadas a média, mediana, desvio-padrão, mínimo e máximo, permitindo uma análise mais completa dos resultados.
+
+```{r}
+# Calculando diferentes estatísticas da resistência à compressão para cada tipo de concreto.
+# group_by() agrupa as observações de acordo com o tipo de concreto.
+# summarise() calcula várias estatísticas para cada grupo.
+
+estatisticas_resistencia <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    quantidade = n(),
+    media = mean(resistencia_mpa),
+    mediana = median(resistencia_mpa),
+    desvio_padrao = sd(resistencia_mpa),
+    minimo = min(resistencia_mpa),
+    maximo = max(resistencia_mpa),
+    .groups = "drop"
+  )
+
+# Apresentando os resultados em uma tabela organizada.
+knitr::kable(
+  estatisticas_resistencia,
+  digits = 2,
+  col.names = c(
+    "Tipo de concreto",
+    "Quantidade de observações",
+    "Média (MPa)",
+    "Mediana (MPa)",
+    "Desvio-padrão (MPa)",
+    "Mínimo (MPa)",
+    "Máximo (MPa)"
+  ),
+  caption = "Estatísticas da resistência à compressão por tipo de concreto."
+)
+```
+
+## Questão 27
+
+Selecionando somente as variáveis quantitativas relacionadas às propriedades do concreto. A função `select()` permite escolher as variáveis que serão mantidas na tabela.
 
 
+```{r}
+# Selecionando somente as variáveis quantitativas.
+# select() seleciona as variáveis que serão mantidas.
+# where(is.numeric) seleciona automaticamente as variáveis numéricas.
+
+propriedades_concreto <- dados_limpos |>
+  select(where(is.numeric))
+
+# Apresentando a nova tabela.
+knitr::kable(
+  propriedades_concreto,
+  digits = 2,
+  caption = "Variáveis quantitativas relacionadas às propriedades do concreto."
+)
+```
+
+A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como id_corpo_prova, obra e tipo_concreto. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.
 
 
+## Questão 28
+
+Utilize `across()` para calcular a média das variáveis quantitativas selecionadas. A função `across()` permite aplicar a mesma operação a várias variáveis simultaneamente. Em comparação, utilizando `summarise()` individualmente, cada variável precisa ser indicada separadamente.
+
+```{r}
+# Calculando a média das variáveis quantitativas utilizando across().
+# summarise() cria um resumo dos dados.
+# across() aplica a função mean() a todas as variáveis numéricas.
+
+medias_across <- dados_limpos |>
+  summarise(
+    across(
+      where(is.numeric),
+      ~mean(.x)
+    )
+  )
+
+# Calculando as médias individualmente utilizando summarise().
+# Cada variável é indicada separadamente.
+
+medias_individuais <- dados_limpos |>
+  summarise(
+    idade_dias = mean(idade_dias),
+    resistencia_mpa = mean(resistencia_mpa),
+    cimento_kg_m3 = mean(cimento_kg_m3),
+    relacao_a_c = mean(relacao_a_c),
+    abatimento_mm = mean(abatimento_mm),
+    densidade_kg_m3 = mean(densidade_kg_m3),
+    absorção_agregado_pct = mean(absorção_agregado_pct)
+  )
+
+# Apresentando os resultados de across().
+knitr::kable(
+  medias_across,
+  digits = 2,
+  caption = "Média das variáveis quantitativas utilizando across()."
+)
+
+# Apresentando os resultados de summarise() individualmente.
+knitr::kable(
+  medias_individuais,
+  digits = 2,
+  caption = "Média das variáveis quantitativas utilizando summarise()."
+)
+```
+Os dois métodos apresentam os mesmos resultados. Entretanto, across() apresenta maior facilidade de manutenção quando o número de variáveis aumenta, pois permite aplicar a mesma função a várias variáveis de forma automática, evitando a necessidade de escrever cada variável individualmente.
 
 
+## Questão 29
+
+Utilize `mutate()` e `across()` para realizar uma transformação simultânea nas variáveis quantitativas. Neste caso, será realizada a **padronização** das variáveis, subtraindo a média e dividindo pelo desvio-padrão. Essa transformação coloca as variáveis em uma escala comum, facilitando a comparação entre medidas que possuem unidades diferentes.
+
+```{r}
+# Padronizando simultaneamente as variáveis quantitativas.
+# mutate() cria ou modifica variáveis na base de dados.
+# across() aplica a mesma transformação a várias variáveis.
+# A padronização transforma os valores para uma escala baseada na média e no desvio-padrão.
+
+dados_padronizados <- dados_limpos |>
+  mutate(
+    across(
+      where(is.numeric),
+      ~(.x - mean(.x)) / sd(.x)
+    )
+  )
+
+# Apresentando as variáveis após a transformação.
+knitr::kable(
+  head(dados_padronizados),
+  digits = 2,
+  caption = "Variáveis quantitativas após a padronização."
+)
+```
+
+A padronização permite comparar variáveis quantitativas que possuem diferentes unidades e escalas. Após a transformação, os valores passam a representar a distância em relação à média em termos de desvios-padrão. O uso conjunto de mutate() e across() torna a operação mais prática, pois a mesma transformação é aplicada simultaneamente a todas as variáveis numéricas.
+
+## Questão 30
+
+Utilize `across()` em conjunto com `summarise()` para calcular, por tipo de concreto, a média e o desvio-padrão das variáveis quantitativas. Essa abordagem permite aplicar as mesmas estatísticas a várias variáveis de forma simultânea e organizada.
+
+```{r}
+# Calculando duas estatísticas para cada variável quantitativa por tipo de concreto.
+# group_by() agrupa as observações de acordo com o tipo de concreto.
+# summarise() calcula as estatísticas dentro de cada grupo.
+# across() aplica as funções média e desvio-padrão a todas as variáveis numéricas.
+
+estatisticas_tipo <- dados_limpos |>
+  group_by(tipo_concreto) |>
+  summarise(
+    across(
+      where(is.numeric),
+      list(
+        media = ~mean(.x),
+        desvio_padrao = ~sd(.x)
+      )
+    ),
+    .groups = "drop"
+  )
+
+# Apresentando os resultados de forma organizada.
+knitr::kable(
+  estatisticas_tipo,
+  digits = 2,
+  caption = "Média e desvio-padrão das variáveis quantitativas por tipo de concreto."
+)
+```
+
+A utilização de across() em conjunto com summarise() torna o código mais compacto e organizado, pois permite calcular as mesmas estatísticas para várias variáveis simultaneamente. Na utilização de vários comandos separados, seria necessário escrever cada cálculo individualmente para cada variável e tipo de concreto. Portanto, across() apresenta maior facilidade de manutenção quando a quantidade de variáveis aumenta.
 
 
+## Questão 31
+
+Utilize funções do pacote `stringr` para verificar e padronizar os valores da variável `obra`. Serão investigados espaços no início ou no final dos textos, diferenças entre letras maiúsculas e minúsculas e possíveis grafias diferentes para uma mesma categoria.
+
+```{r}
+# Verificando os valores da variável obra antes da padronização.
+# distinct() apresenta as categorias diferentes existentes.
+# str_length() permite identificar diferenças no comprimento dos textos.
+# str_trim() remove espaços no início e no final.
+# str_to_upper() padroniza as letras para maiúsculas.
+
+obra_antes <- dados_limpos |>
+  distinct(obra) |>
+  mutate(
+    comprimento = str_length(obra)
+  )
+
+# Padronizando os valores da variável obra.
+obra_depois <- dados_limpos |>
+  mutate(
+    obra = obra |>
+      str_trim() |>
+      str_to_upper()
+  ) |>
+  distinct(obra) |>
+  mutate(
+    comprimento = str_length(obra)
+  )
+
+# Apresentando os valores antes da padronização.
+knitr::kable(
+  obra_antes,
+  caption = "Valores da variável obra antes da padronização."
+)
+
+# Apresentando os valores depois da padronização.
+knitr::kable(
+  obra_depois,
+  caption = "Valores da variável obra depois da padronização."
+)
+```
+
+Antes da padronização, a variável obra é analisada para identificar diferenças de espaços, letras maiúsculas e minúsculas e possíveis variações nas categorias. Após a aplicação de str_trim() e str_to_upper(), os valores passam a seguir um mesmo padrão, evitando que categorias iguais sejam consideradas diferentes durante as análises.
+
+## Questão 32
+
+Utilize `str_detect()` para localizar registros que contenham determinado padrão textual em `tipo_concreto` ou `obra`. Neste caso, será realizada uma busca por registros que contenham a categoria `C30` ou a expressão `Bloco B`, permitindo identificar essas ocorrências na base de dados.
+
+```{r}
+# Localizando registros que contenham padrões específicos de texto.
+# str_detect() verifica se determinado padrão está presente no texto.
+# filter() seleciona somente os registros que atendem à condição.
+
+registros_padrao <- dados_limpos |>
+  filter(
+    str_detect(tipo_concreto, regex("C30", ignore_case = TRUE)) |
+    str_detect(obra, regex("Bloco B", ignore_case = TRUE))
+  ) |>
+  select(
+    id_corpo_prova,
+    obra,
+    tipo_concreto
+  )
+
+# Apresentando os registros encontrados.
+knitr::kable(
+  registros_padrao,
+  caption = "Registros contendo os padrões textuais pesquisados."
+)
+```
+
+A utilização de str_detect() permite localizar padrões textuais mesmo quando existem diferenças entre letras maiúsculas e minúsculas. Esse recurso auxilia no diagnóstico de bases de dados porque permite identificar categorias, grafias diferentes, informações inconsistentes ou registros que precisam de padronização antes das análises.
 
 
 
