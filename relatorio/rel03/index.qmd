@@ -1442,8 +1442,6 @@ A utilização dos dados originais permite identificar as inconsistências de pr
 Dessa forma, a padronização contribui para melhorar a consistência da variável `obra` e torna sua utilização nas análises posteriores mais adequada.
 
 
-
-
 ## Questão 32
 
 Para localizar registros que contenham determinados padrões textuais nas variáveis `tipo_concreto` e `obra`, foi utilizada a função `str_detect()` do pacote `stringr`. A busca foi realizada para identificar ocorrências de `C30` em `tipo_concreto` ou de `Bloco B` em `obra`.
@@ -1475,6 +1473,152 @@ knitr::kable(
 ```
 
 A função `str_detect()` permite localizar registros a partir de padrões específicos dentro de variáveis textuais. Nesse caso, a utilização de `ignore_case = TRUE` faz com que a busca não seja afetada por diferenças entre letras maiúsculas e minúsculas. Esse recurso facilita a identificação de **categorias específicas e possíveis variações no preenchimento**, contribuindo para o diagnóstico e a padronização da base de dados.
+
+## Questão 33
+
+Para comparar a distribuição da resistência à compressão entre os diferentes tipos de concreto, foi utilizado um gráfico de caixa com a função `geom_boxplot()`.
+
+```{r}
+ggplot(
+  dados_limpos,
+  aes(
+    x = tipo_concreto,
+    y = resistencia_mpa,
+    fill = tipo_concreto
+  )
+) +
+  geom_boxplot(alpha = 0.8) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(
+    title = "Distribuição da resistência à compressão por tipo de concreto",
+    x = "Tipo de concreto",
+    y = "Resistência à compressão (MPa)",
+    fill = "Tipo de concreto"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+```
+
+O gráfico permite comparar a **mediana, a dispersão e possíveis valores discrepantes** da resistência entre os diferentes tipos de concreto. A linha central representa a mediana, enquanto a caixa representa a distribuição dos valores centrais.
+
+Observa-se que as classes apresentam diferentes distribuições de resistência, sendo esperado que concretos de maior classe apresentem valores mais elevados. A variação no tamanho das caixas também permite comparar a dispersão dos resultados entre as classes.
+
+Dessa forma, o `boxplot` complementa a análise das médias, permitindo avaliar conjuntamente a **tendência central e a variabilidade** da resistência à compressão.
+
+## Questão 34
+
+Para investigar a relação entre o consumo de cimento e a resistência à compressão, foi elaborado um gráfico de dispersão. Como foi identificado um valor de consumo de cimento próximo de `4000 kg/m³`, muito distante dos demais valores, esse registro foi desconsiderado apenas na representação gráfica, pois prejudicava a visualização da relação entre as variáveis.
+
+```{r}
+dados_grafico <- dados_limpos %>%
+  filter(cimento_kg_m3 < 1000)
+
+ggplot(
+  dados_grafico,
+  aes(
+    x = cimento_kg_m3,
+    y = resistencia_mpa
+  )
+) +
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relação entre consumo de cimento e resistência à compressão",
+    x = "Consumo de cimento (kg/m³)",
+    y = "Resistência à compressão (MPa)"
+  ) +
+  theme_minimal()
+```
+
+Com a retirada do valor discrepante apenas para fins de visualização, o gráfico permite observar melhor a relação entre as duas variáveis. A linha de tendência apresenta a direção geral dos dados, permitindo avaliar se maiores consumos de cimento tendem a estar associados a maiores resistências.
+
+A tendência observada fornece **evidência visual de uma relação positiva**, embora a dispersão dos pontos indique que a resistência não depende exclusivamente do consumo de cimento.
+
+## Questão 35
+
+Para investigar a relação entre a relação água/cimento e a resistência à compressão, foi elaborado um gráfico de dispersão utilizando `ggplot2`, com uma linha de tendência para facilitar a identificação do comportamento dos dados.
+
+```{r}
+ggplot(
+  dados_limpos,
+  aes(
+    x = relacao_a_c,
+    y = resistencia_mpa
+  )
+) +
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relação entre água/cimento e resistência à compressão",
+    x = "Relação água/cimento",
+    y = "Resistência à compressão (MPa)"
+  ) +
+  theme_minimal()
+```
+
+O gráfico permite observar a relação entre a quantidade de água em relação ao cimento e a resistência à compressão. A linha de tendência auxilia na identificação da direção geral dos dados.
+
+Observa-se uma **tendência negativa**, indicando que maiores valores da relação água/cimento tendem a estar associados a menores valores de resistência à compressão. Esse comportamento é coerente com o esperado para o concreto, embora a dispersão dos pontos mostre que outros fatores também influenciam a resistência.
+
+A presença de pontos que se afastam do padrão geral merece investigação, pois pode indicar **valores discrepantes, variações nas características dos materiais ou diferenças nas condições de produção e ensaio**.
+
+## Questão 36 — Comparação entre obras
+
+Para verificar, em termos descritivos, se os concretos utilizados no Bloco C apresentam desempenho superior aos demais blocos, foram calculadas medidas de posição e dispersão da resistência à compressão por obra.
+
+```{r}
+resistencia_obras <- dados_limpos %>%
+  group_by(obra) %>%
+  summarise(
+    n = n(),
+    média = mean(resistencia_mpa, na.rm = TRUE),
+    mediana = median(resistencia_mpa, na.rm = TRUE),
+    desvio_padrao = sd(resistencia_mpa, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(média))
+
+resistencia_obras
+```
+
+Para complementar a comparação, foi utilizado um gráfico de caixa:
+
+```{r}
+ggplot(
+  dados_limpos,
+  aes(
+    x = obra,
+    y = resistencia_mpa,
+    fill = obra
+  )
+) +
+  geom_boxplot(alpha = 0.8) +
+  labs(
+    title = "Distribuição da resistência à compressão por obra",
+    x = "Obra",
+    y = "Resistência à compressão (MPa)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold"),
+    axis.title = element_text(face = "bold")
+  )
+```
+
+A comparação das médias e medianas permite identificar qual obra apresenta os maiores valores típicos de resistência, enquanto o `boxplot` permite avaliar também a dispersão dos resultados e possíveis valores discrepantes.
+
+Assim, **se o Bloco C apresentar média e mediana superiores às demais obras, com distribuição dos resultados também predominantemente mais elevada, os dados fornecem suporte descritivo à afirmação do engenheiro**. Caso exista grande sobreposição entre as distribuições ou elevada variabilidade, a afirmação deve ser considerada com cautela.
+
+Essa análise é **descritiva**, portanto permite comparar o desempenho observado na amostra, mas não permite afirmar que o Bloco C possui desempenho estatisticamente superior aos demais.
+
+
+
+
 
 
 
