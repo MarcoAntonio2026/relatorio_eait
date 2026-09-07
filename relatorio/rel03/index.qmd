@@ -1717,7 +1717,6 @@ O objetivo é transformar a base inicialmente bruta em uma estrutura mais confi�
 O código abaixo reúne as principais etapas desenvolvidas ao longo da atividade, utilizando funções da família **tidyverse** para organizar, limpar, transformar e analisar os dados de forma sistemática.
 
 ```r
-
 # ============================================================
 # DESAFIO FINAL — O ENGENHEIRO RESPONSÁVEL PELOS DADOS
 # Controle tecnológico do concreto
@@ -1800,7 +1799,7 @@ dados_limpos <- dados_limpos |>
     obra = obra |>
       str_trim() |>
       str_to_upper(),
-
+    
     tipo_concreto = tipo_concreto |>
       str_trim() |>
       str_to_upper()
@@ -1816,24 +1815,24 @@ dados_limpos <- dados_limpos |>
 dados_limpos <- dados_limpos |>
   mutate(
     idade_dias = parse_number(as.character(idade_dias)),
-
+    
     resistencia_mpa = as.character(resistencia_mpa) |>
       str_replace_all(",", ".") |>
       str_replace_all("O", "0") |>
       parse_number(),
-
+    
     cimento_kg_m3 = as.character(cimento_kg_m3) |>
       str_replace_all("O", "0") |>
       parse_number(),
-
+    
     relacao_a_c = as.character(relacao_a_c) |>
       str_replace_all(",", ".") |>
       parse_number(),
-
+    
     abatimento_mm = parse_number(as.character(abatimento_mm)),
-
+    
     densidade_kg_m3 = parse_number(as.character(densidade_kg_m3)),
-
+    
     absorção_agregado_pct =
       parse_number(as.character(absorção_agregado_pct))
   )
@@ -1940,10 +1939,10 @@ dados_limpos <- dados_limpos |>
       tipo_concreto == "C40" ~ 40,
       TRUE ~ NA_real_
     ),
-
+    
     resistencia_relativa =
       resistencia_mpa / resistência_referência,
-
+    
     classificação = case_when(
       resistencia_relativa >= 1.00 ~
         "Igual ou superior à referência",
@@ -1952,7 +1951,7 @@ dados_limpos <- dados_limpos |>
       TRUE ~
         "Abaixo da referência"
     ),
-
+    
     acima_media =
       resistencia_mpa > mean(resistencia_mpa)
   )
