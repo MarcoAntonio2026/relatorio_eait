@@ -290,7 +290,7 @@ Para verificar a importação, foram utilizadas as funções `head()` e `tail()`
 ```{r}
 library(tidyverse)
 
-dados <- read_csv2("base_de_dados.csv", trim_ws = FALSE)
+dados <- read_csv2("base_de_dados.csv")
 
 print(head(dados), width = Inf)
 print(tail(dados), width = Inf)
@@ -514,15 +514,11 @@ A tabela permite identificar diretamente **em qual observação, em qual corpo d
 
 ## Questão 07
 
-
-
-
-
 ## Questão 08
 
-A existência de possíveis erros de preenchimento foi investigada considerando principalmente as variáveis quantitativas que apresentaram valores armazenados como texto. Para isso, foram utilizadas funções do **tidyverse**, especialmente `filter()`, `select()` e `str_detect()`, permitindo identificar registros que apresentam caracteres ou padrões incompatíveis com o preenchimento esperado para variáveis quantitativas.
+A existência de possíveis erros de digitação foi investigada considerando principalmente as variáveis quantitativas que apresentaram valores armazenados como texto. Para isso, foram utilizadas funções do **tidyverse**, especialmente `filter()`, `select()` e `str_detect()`, permitindo identificar registros que apresentam caracteres incompatíveis com o preenchimento esperado de uma variável numérica.
 
-Foi realizada uma verificação nas variáveis `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct`, procurando tanto a presença de letras quanto o uso de vírgula nos valores. A presença de letras pode indicar erros de digitação, enquanto a utilização de vírgula como separador decimal indica uma inconsistência no padrão de preenchimento dos dados.
+Foi realizada uma verificação nas variáveis `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct`, procurando valores que contenham letras ou outros caracteres que não sejam esperados em uma variável quantitativa.
 
 ```{r}
 registros_suspeitos <- dados %>%
@@ -537,8 +533,7 @@ registros_suspeitos <- dados %>%
         densidade_kg_m3,
         absorção_agregado_pct
       ),
-      ~str_detect(as.character(.x), "[A-Za-z]") |
-       str_detect(as.character(.x), ",")
+      ~str_detect(as.character(.x), "[A-Za-z]")
     )
   ) %>%
   select(
@@ -557,59 +552,22 @@ registros_suspeitos <- dados %>%
 print(registros_suspeitos, width = Inf)
 ```
 
-A função `if_any()` permite verificar simultaneamente diversas variáveis, enquanto `str_detect()` identifica a ocorrência de padrões específicos dentro dos valores. A conversão por meio de `as.character()` possibilita realizar essa verificação independentemente do tipo de dado inicialmente atribuído pelo R.
+A função `if_any()` permite verificar simultaneamente várias variáveis, enquanto `str_detect()` identifica a presença de letras nos valores. A conversão para `character` por meio de `as.character()` permite realizar a busca independentemente do tipo inicialmente atribuído pelo R.
 
-Para facilitar a identificação dos diferentes tipos de inconsistência, também podem ser realizadas verificações específicas para letras e para vírgulas:
+Após a filtragem, foram identificados registros que apresentam possíveis erros de digitação em variáveis que deveriam conter somente valores quantitativos.
+
+Para apresentar os registros completos, foi utilizada a função `kable()`:
 
 ```{r}
-erros_letras <- dados %>%
-  filter(
-    if_any(
-      c(
-        idade_dias,
-        resistencia_mpa,
-        cimento_kg_m3,
-        relacao_a_c,
-        abatimento_mm,
-        densidade_kg_m3,
-        absorção_agregado_pct
-      ),
-      ~str_detect(as.character(.x), "[A-Za-z]")
-    )
-  )
-
-erros_virgula <- dados %>%
-  filter(
-    if_any(
-      c(
-        idade_dias,
-        resistencia_mpa,
-        cimento_kg_m3,
-        relacao_a_c,
-        abatimento_mm,
-        densidade_kg_m3,
-        absorção_agregado_pct
-      ),
-      ~str_detect(as.character(.x), ",")
-    )
-  )
-
 knitr::kable(
-  erros_letras,
-  caption = "Registros com presença de letras em variáveis quantitativas"
-)
-
-knitr::kable(
-  erros_virgula,
-  caption = "Registros com uso de vírgula em valores quantitativos"
+  registros_suspeitos,
+  caption = "Registros com possíveis erros de digitação"
 )
 ```
 
-A partir dessa verificação, foram identificados dois tipos principais de inconsistências. O primeiro corresponde à utilização de letras no lugar de algarismos, como ocorre no **CP-019**, que apresenta o valor `3O,4` na variável `resistencia_mpa`. Nesse caso, a letra **O** foi utilizada no lugar do algarismo **0**, caracterizando um possível erro de digitação.
+Entre os registros identificados, destaca-se o **CP-019**, que apresenta o valor `3O,4` na variável `resistencia_mpa`. Nesse caso, a presença da letra **O** no lugar do algarismo **0** caracteriza um possível erro de digitação.
 
-Também foi identificado o **CP-064**, que apresenta o valor `390O` na variável `cimento_kg_m3`. Novamente, a letra **O** foi utilizada no lugar do algarismo **0**, indicando um possível erro de preenchimento.
-
-O segundo tipo de inconsistência está relacionado ao uso da **vírgula como separador decimal**, como nos valores `38,7`, `0,55` e novamente o `3O,4`, respectivamente os corpos de prova **CP-008**, **CP-045** e **CP-019**. Embora esses valores representem números válidos no padrão utilizado no Brasil, esse formato pode fazer com que o R interprete a informação como `character`, principalmente quando a base utiliza o ponto como separador decimal em outros registros. Dessa forma, a inconsistência de formatação contribui para que variáveis que deveriam ser quantitativas sejam inicialmente reconhecidas como texto.
+Também foi identificado o **CP-037**, que apresenta o valor `390O` na variável `cimento_kg_m3`. Novamente, a presença da letra **O** em uma variável quantitativa indica um possível erro de preenchimento.
 
 ## Questão 9
 
@@ -646,8 +604,7 @@ dados %>%
 
 A diferença no número de caracteres confirma que os dois registros possuem uma diferença de formatação, embora representem a mesma obra.
 
-Portanto, a variável `obra` **não está totalmente padronizada**. A inconsistência identificada é o espaço adicional presente em **"Bloco B "**.
-
+Portanto, a variável `obra` **não está totalmente padronizada**. A inconsistência identificada é o espaço adicional presente em **"Bloco B "**. Esse problema será corrigido posteriormente na etapa de limpeza e padronização da base, utilizando funções do pacote `stringr`.
 
 ## Questão 10
 
@@ -717,7 +674,7 @@ Por outro lado, `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` continuam sen
 
 Portanto, a verificação confirma que **nem todas as variáveis apresentam tipos adequados para as análises estatísticas**. 
 
-### Questão para reflexão
+**Questão para reflexão**
 
 Um único valor digitado incorretamente pode alterar a maneira como o R interpreta uma variável inteira porque o programa utiliza os valores armazenados na coluna para determinar automaticamente seu tipo de dado.
 
@@ -1046,9 +1003,9 @@ estatisticas_concreto <- dados_limpos |>
     abatimento_medio = mean(abatimento_mm),
     densidade_media = mean(densidade_kg_m3),
     .groups = "drop"
-  ) %>%
-  
-  print(width = Inf)
+  )
+
+estatisticas_concreto
 ```
 
 A utilização de `group_by()` permite separar os corpos de prova de acordo com o tipo de concreto. Em seguida, `summarise()` calcula a média de cada variável dentro de cada grupo. O argumento `.groups = "drop"` é utilizado para que o resultado final não permaneça agrupado.
@@ -1191,7 +1148,6 @@ A função `group_by()` foi utilizada para separar os corpos de prova de acordo 
 A expressão `resistencia_mpa > mean(resistencia_mpa)` retorna diretamente um valor lógico: **`TRUE`** quando a resistência do corpo de prova está acima da média de seu tipo de concreto e **`FALSE`** quando está igual ou abaixo da média.
 
 O procedimento atende ao desafio proposto, pois as médias de cada classe **não foram calculadas manualmente**. O próprio `group_by()` faz a separação dos grupos e `mean()` calcula automaticamente a média correspondente a cada tipo de concreto.
-
 
 
 ## Questão 24
