@@ -201,7 +201,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">07/09/2026, 14:27</p>
+      <p class="date">07/09/2026, 15:07</p>
     </div>
   </div>
   
@@ -378,7 +378,7 @@ div.csl-indent {
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"base_de_dados.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"base_de_dados.csv"</span>, <span class="at">trim_ws =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(dados), <span class="at">width =</span> <span class="cn">Inf</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -592,7 +592,7 @@ $ absorção_agregado_pct &lt;chr&gt; "2.3", "1.85", "1.89", "1.97", "2.31", "0.
 <pre><code># A tibble: 1 × 7
   id_corpo_prova  obra tipo_concreto resistencia_mpa cimento_kg_m3 relacao_a_c
            &lt;int&gt; &lt;int&gt;         &lt;int&gt;           &lt;int&gt;         &lt;int&gt;       &lt;int&gt;
-1            100     4             5              84            68          25
+1            100     5             5              84            68          25
   absorção_agregado_pct
                   &lt;int&gt;
 1                    82</code></pre>
@@ -988,13 +988,14 @@ $ absorção_agregado_pct &lt;chr&gt; "2.3", "1.85", "1.89", "1.97", "2.31", "0.
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(obra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  obra        n
-  &lt;chr&gt;   &lt;int&gt;
-1 Bloco A    28
-2 Bloco B    29
-3 Bloco C    28
-4 Bloco D    15</code></pre>
+<pre><code># A tibble: 5 × 2
+  obra           n
+  &lt;chr&gt;      &lt;int&gt;
+1 "Bloco A"     28
+2 "Bloco B"     28
+3 "Bloco B "     1
+4 "Bloco C"     28
+5 "Bloco D"     15</code></pre>
 </div>
 </div>
 <p>Em seguida, as categorias distintas foram verificadas utilizando <code>distinct()</code>:</p>
@@ -1006,13 +1007,14 @@ $ absorção_agregado_pct &lt;chr&gt; "2.3", "1.85", "1.89", "1.97", "2.31", "0.
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(obra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 1
-  obra   
-  &lt;chr&gt;  
-1 Bloco A
-2 Bloco B
-3 Bloco C
-4 Bloco D</code></pre>
+<pre><code># A tibble: 5 × 1
+  obra      
+  &lt;chr&gt;     
+1 "Bloco A" 
+2 "Bloco B" 
+3 "Bloco B "
+4 "Bloco C" 
+5 "Bloco D" </code></pre>
 </div>
 </div>
 <p>A análise mostrou que existe uma inconsistência na variável <code>obra</code>: a categoria <strong>“Bloco B”</strong> apresenta um espaço adicional ao final do texto, enquanto <strong>“Bloco B”</strong> representa a mesma categoria sem esse espaço.</p>
@@ -1028,13 +1030,14 @@ $ absorção_agregado_pct &lt;chr&gt; "2.3", "1.85", "1.89", "1.97", "2.31", "0.
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(obra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  obra    quantidade_caracteres
-  &lt;chr&gt;                   &lt;int&gt;
-1 Bloco A                     7
-2 Bloco B                     7
-3 Bloco C                     7
-4 Bloco D                     7</code></pre>
+<pre><code># A tibble: 5 × 2
+  obra       quantidade_caracteres
+  &lt;chr&gt;                      &lt;int&gt;
+1 "Bloco A"                      7
+2 "Bloco B"                      7
+3 "Bloco B "                     8
+4 "Bloco C"                      7
+5 "Bloco D"                      7</code></pre>
 </div>
 </div>
 <p>A diferença no número de caracteres confirma que os dois registros possuem uma diferença de formatação, embora representem a mesma obra.</p>
@@ -4234,46 +4237,33 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </table>
 </div>
 </div>
-<p>A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como id_corpo_prova, obra e tipo_concreto. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.</p>
+<p>A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como <code>id_corpo_prova</code>, <code>obra</code> e <code>tipo_concreto</code>. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.</p>
 </section>
 <section id="questão-28" class="level2" data-number="5.28">
 <h2 data-number="5.28" class="anchored" data-anchor-id="questão-28"><span class="header-section-number">5.28</span> Questão 28</h2>
-<p>Utilize <code>across()</code> para calcular a média das variáveis quantitativas selecionadas. A função <code>across()</code> permite aplicar a mesma operação a várias variáveis simultaneamente. Em comparação, utilizando <code>summarise()</code> individualmente, cada variável precisa ser indicada separadamente.</p>
+<p>Para calcular simultaneamente a média das variáveis quantitativas da base, foi utilizada a função <code>across()</code> em conjunto com <code>summarise()</code>. Dessa forma, a mesma operação é aplicada automaticamente a todas as variáveis reconhecidas pelo R como numéricas.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a média das variáveis quantitativas utilizando across().</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise() cria um resumo dos dados.</span></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica a função mean() a todas as variáveis numéricas.</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co"># where(is.numeric) seleciona automaticamente as variáveis numéricas.</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co"># mean() calcula a média de cada variável selecionada.</span></span>
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>medias_across <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
 <span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
 <span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
-<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">mean</span>(.x)</span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando as médias individualmente utilizando summarise().</span></span>
-<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada variável é indicada separadamente.</span></span>
-<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a>medias_individuais <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb80-17"><a href="#cb80-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb80-18"><a href="#cb80-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">idade_dias =</span> <span class="fu">mean</span>(idade_dias),</span>
-<span id="cb80-19"><a href="#cb80-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">resistencia_mpa =</span> <span class="fu">mean</span>(resistencia_mpa),</span>
-<span id="cb80-20"><a href="#cb80-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">cimento_kg_m3 =</span> <span class="fu">mean</span>(cimento_kg_m3),</span>
-<span id="cb80-21"><a href="#cb80-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">relacao_a_c =</span> <span class="fu">mean</span>(relacao_a_c),</span>
-<span id="cb80-22"><a href="#cb80-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">abatimento_mm =</span> <span class="fu">mean</span>(abatimento_mm),</span>
-<span id="cb80-23"><a href="#cb80-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">densidade_kg_m3 =</span> <span class="fu">mean</span>(densidade_kg_m3),</span>
-<span id="cb80-24"><a href="#cb80-24" aria-hidden="true" tabindex="-1"></a>    absorção<span class="at">_agregado_pct =</span> <span class="fu">mean</span>(absorção_agregado_pct)</span>
-<span id="cb80-25"><a href="#cb80-25" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb80-26"><a href="#cb80-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-27"><a href="#cb80-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados de across().</span></span>
-<span id="cb80-28"><a href="#cb80-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb80-29"><a href="#cb80-29" aria-hidden="true" tabindex="-1"></a>  medias_across,</span>
-<span id="cb80-30"><a href="#cb80-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb80-31"><a href="#cb80-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando across()."</span></span>
-<span id="cb80-32"><a href="#cb80-32" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados.</span></span>
+<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a>  medias_across,</span>
+<span id="cb80-17"><a href="#cb80-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb80-18"><a href="#cb80-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando across()."</span></span>
+<span id="cb80-19"><a href="#cb80-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -4314,26 +4304,41 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </tbody>
 </table>
 </div>
+</div>
+<p>Para comparação, as médias também podem ser calculadas individualmente com <code>summarise()</code>, sendo necessário indicar cada variável separadamente:</p>
+<div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados de summarise() individualmente.</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>  medias_individuais,</span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando summarise()."</span></span>
-<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>medias_individuais <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">idade_dias =</span> <span class="fu">mean</span>(idade_dias, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">resistencia_mpa =</span> <span class="fu">mean</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cimento_kg_m3 =</span> <span class="fu">mean</span>(cimento_kg_m3, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">relacao_a_c =</span> <span class="fu">mean</span>(relacao_a_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">abatimento_mm =</span> <span class="fu">mean</span>(abatimento_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">densidade_kg_m3 =</span> <span class="fu">mean</span>(densidade_kg_m3, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>    absorção<span class="at">_agregado_pct =</span> <span class="fu">mean</span>(absorção_agregado_pct, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">resistencia_relativa =</span> <span class="fu">mean</span>(resistencia_relativa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a>  medias_individuais,</span>
+<span id="cb81-15"><a href="#cb81-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb81-16"><a href="#cb81-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando summarise()."</span></span>
+<span id="cb81-17"><a href="#cb81-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Média das variáveis quantitativas utilizando summarise().</caption>
 <colgroup>
-<col style="width: 10%">
-<col style="width: 15%">
-<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 12%">
 <col style="width: 11%">
-<col style="width: 13%">
-<col style="width: 15%">
-<col style="width: 20%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -4344,6 +4349,7 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 <th style="text-align: right;">abatimento_mm</th>
 <th style="text-align: right;">densidade_kg_m3</th>
 <th style="text-align: right;">absorção_agregado_pct</th>
+<th style="text-align: right;">resistencia_relativa</th>
 </tr>
 </thead>
 <tbody>
@@ -4355,38 +4361,40 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 <td style="text-align: right;">1215.79</td>
 <td style="text-align: right;">23503.37</td>
 <td style="text-align: right;">1.95</td>
+<td style="text-align: right;">1.08</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Os dois métodos apresentam os mesmos resultados. Entretanto, across() apresenta maior facilidade de manutenção quando o número de variáveis aumenta, pois permite aplicar a mesma função a várias variáveis de forma automática, evitando a necessidade de escrever cada variável individualmente.</p>
+<p>Os dois procedimentos permitem obter as médias das variáveis quantitativas. Entretanto, <code>across()</code> torna o código mais prático e reduz a repetição, pois aplica automaticamente a mesma função a todas as variáveis numéricas da base. Dessa forma, caso novas variáveis quantitativas sejam adicionadas, elas também poderão ser incluídas no cálculo sem a necessidade de especificá-las individualmente.</p>
 </section>
 <section id="questão-29" class="level2" data-number="5.29">
 <h2 data-number="5.29" class="anchored" data-anchor-id="questão-29"><span class="header-section-number">5.29</span> Questão 29</h2>
-<p>Utilize <code>mutate()</code> e <code>across()</code> para realizar uma transformação simultânea nas variáveis quantitativas. Neste caso, será realizada a <strong>padronização</strong> das variáveis, subtraindo a média e dividindo pelo desvio-padrão. Essa transformação coloca as variáveis em uma escala comum, facilitando a comparação entre medidas que possuem unidades diferentes.</p>
+<p>Para realizar uma transformação simultânea nas variáveis quantitativas, foi utilizada a combinação das funções <code>mutate()</code> e <code>across()</code>. Nesse caso, foi realizada a <strong>padronização</strong> dos valores, subtraindo a média da variável e dividindo o resultado pelo seu desvio-padrão.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando simultaneamente as variáveis quantitativas.</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate() cria ou modifica variáveis na base de dados.</span></span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica a mesma transformação a várias variáveis.</span></span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A padronização transforma os valores para uma escala baseada na média e no desvio-padrão.</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica a mesma transformação a todas as variáveis numéricas.</span></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="co"># A padronização transforma os valores para uma escala comum.</span></span>
 <span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>dados_padronizados <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
 <span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
 <span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
-<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>(.x <span class="sc">-</span> <span class="fu">mean</span>(.x)) <span class="sc">/</span> <span class="fu">sd</span>(.x)</span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>(.x <span class="sc">-</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando as variáveis após a transformação.</span></span>
-<span id="cb82-15"><a href="#cb82-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb82-16"><a href="#cb82-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(dados_padronizados),</span>
-<span id="cb82-17"><a href="#cb82-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb82-18"><a href="#cb82-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Variáveis quantitativas após a padronização."</span></span>
-<span id="cb82-19"><a href="#cb82-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os primeiros registros após a transformação.</span></span>
+<span id="cb82-15"><a href="#cb82-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-16"><a href="#cb82-16" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb82-17"><a href="#cb82-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(dados_padronizados),</span>
+<span id="cb82-18"><a href="#cb82-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb82-19"><a href="#cb82-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Variáveis quantitativas após a padronização."</span></span>
+<span id="cb82-20"><a href="#cb82-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -4518,38 +4526,41 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </table>
 </div>
 </div>
-<p>A padronização permite comparar variáveis quantitativas que possuem diferentes unidades e escalas. Após a transformação, os valores passam a representar a distância em relação à média em termos de desvios-padrão. O uso conjunto de mutate() e across() torna a operação mais prática, pois a mesma transformação é aplicada simultaneamente a todas as variáveis numéricas.</p>
+<p>A padronização transforma as variáveis para uma escala comum, na qual a média passa a ser aproximadamente <strong>0</strong> e o desvio-padrão aproximadamente <strong>1</strong>. Assim, os valores indicam quantos desvios-padrão cada observação está acima ou abaixo da média.</p>
+<p>Essa transformação é útil para comparar variáveis que apresentam <strong>unidades e escalas diferentes</strong>, evitando que uma variável com valores numericamente maiores tenha maior influência apenas por sua escala. O uso conjunto de <code>mutate()</code> e <code>across()</code> torna o procedimento mais prático, pois permite aplicar a mesma transformação simultaneamente a todas as variáveis quantitativas.</p>
 </section>
 <section id="questão-30" class="level2" data-number="5.30">
 <h2 data-number="5.30" class="anchored" data-anchor-id="questão-30"><span class="header-section-number">5.30</span> Questão 30</h2>
-<p>Utilize <code>across()</code> em conjunto com <code>summarise()</code> para calcular, por tipo de concreto, a média e o desvio-padrão das variáveis quantitativas. Essa abordagem permite aplicar as mesmas estatísticas a várias variáveis de forma simultânea e organizada.</p>
+<p>Para comparar as variáveis quantitativas entre os diferentes tipos de concreto, foram calculadas a <strong>média e o desvio-padrão</strong> de cada variável dentro de cada grupo. Para isso, foi utilizada a combinação das funções <code>group_by()</code>, <code>summarise()</code> e <code>across()</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando duas estatísticas para cada variável quantitativa por tipo de concreto.</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># group_by() agrupa as observações de acordo com o tipo de concreto.</span></span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise() calcula as estatísticas dentro de cada grupo.</span></span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica as funções média e desvio-padrão a todas as variáveis numéricas.</span></span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>estatisticas_tipo <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_concreto) <span class="sc">|&gt;</span></span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">media =</span> <span class="sc">~</span><span class="fu">mean</span>(.x),</span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">desvio_padrao =</span> <span class="sc">~</span><span class="fu">sd</span>(.x)</span>
-<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb83-15"><a href="#cb83-15" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb83-16"><a href="#cb83-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb83-17"><a href="#cb83-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb83-18"><a href="#cb83-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-19"><a href="#cb83-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados de forma organizada.</span></span>
-<span id="cb83-20"><a href="#cb83-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb83-21"><a href="#cb83-21" aria-hidden="true" tabindex="-1"></a>  estatisticas_tipo,</span>
-<span id="cb83-22"><a href="#cb83-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb83-23"><a href="#cb83-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média e desvio-padrão das variáveis quantitativas por tipo de concreto."</span></span>
-<span id="cb83-24"><a href="#cb83-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a média e o desvio-padrão das variáveis quantitativas</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># para cada tipo de concreto.</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># group_by() separa as observações por tipo de concreto.</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise() calcula as estatísticas para cada grupo.</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica as mesmas funções a todas as variáveis numéricas.</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>estatisticas_tipo <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_concreto) <span class="sc">|&gt;</span></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">media =</span> <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">desvio_padrao =</span> <span class="sc">~</span><span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb83-15"><a href="#cb83-15" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb83-16"><a href="#cb83-16" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb83-17"><a href="#cb83-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb83-18"><a href="#cb83-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb83-19"><a href="#cb83-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-20"><a href="#cb83-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados em uma tabela.</span></span>
+<span id="cb83-21"><a href="#cb83-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-22"><a href="#cb83-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb83-23"><a href="#cb83-23" aria-hidden="true" tabindex="-1"></a>  estatisticas_tipo,</span>
+<span id="cb83-24"><a href="#cb83-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb83-25"><a href="#cb83-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média e desvio-padrão das variáveis quantitativas por tipo de concreto."</span></span>
+<span id="cb83-26"><a href="#cb83-26" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -4675,43 +4686,30 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </table>
 </div>
 </div>
-<p>A utilização de across() em conjunto com summarise() torna o código mais compacto e organizado, pois permite calcular as mesmas estatísticas para várias variáveis simultaneamente. Na utilização de vários comandos separados, seria necessário escrever cada cálculo individualmente para cada variável e tipo de concreto. Portanto, across() apresenta maior facilidade de manutenção quando a quantidade de variáveis aumenta.</p>
+<p>A utilização de <code>across()</code> permite aplicar simultaneamente as funções de média e desvio-padrão a todas as variáveis quantitativas, enquanto <code>group_by()</code> possibilita realizar os cálculos separadamente para cada tipo de concreto. Dessa forma, é possível comparar tanto os <strong>valores médios</strong> quanto a <strong>variabilidade</strong> das variáveis entre os diferentes grupos.</p>
+<p>Essa abordagem torna o código mais compacto e facilita sua manutenção, principalmente quando a base possui um número maior de variáveis quantitativas.</p>
 </section>
 <section id="questão-31" class="level2" data-number="5.31">
 <h2 data-number="5.31" class="anchored" data-anchor-id="questão-31"><span class="header-section-number">5.31</span> Questão 31</h2>
-<p>Utilize funções do pacote <code>stringr</code> para verificar e padronizar os valores da variável <code>obra</code>. Serão investigados espaços no início ou no final dos textos, diferenças entre letras maiúsculas e minúsculas e possíveis grafias diferentes para uma mesma categoria.</p>
+<p>Para verificar e padronizar os valores da variável <code>obra</code>, foram utilizados os dados originais da base, antes da etapa de limpeza. Essa análise permite identificar possíveis diferenças de preenchimento, como espaços adicionais e variações entre letras maiúsculas e minúsculas.</p>
+<p>Inicialmente, foram apresentadas as categorias distintas e o comprimento de cada texto. Em seguida, foram aplicadas as funções <code>str_trim()</code> e <code>str_to_upper()</code> para padronizar os valores.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando os valores da variável obra antes da padronização.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando os valores originais da variável obra.</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="co"># distinct() apresenta as categorias diferentes existentes.</span></span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co"># str_length() permite identificar diferenças no comprimento dos textos.</span></span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co"># str_trim() remove espaços no início e no final.</span></span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="co"># str_to_upper() padroniza as letras para maiúsculas.</span></span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>obra_antes <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
-<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
-<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando os valores da variável obra.</span></span>
-<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a>obra_depois <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb84-15"><a href="#cb84-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb84-16"><a href="#cb84-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">obra =</span> obra <span class="sc">|&gt;</span></span>
-<span id="cb84-17"><a href="#cb84-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_trim</span>() <span class="sc">|&gt;</span></span>
-<span id="cb84-18"><a href="#cb84-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_upper</span>()</span>
-<span id="cb84-19"><a href="#cb84-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb84-20"><a href="#cb84-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
-<span id="cb84-21"><a href="#cb84-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb84-22"><a href="#cb84-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
-<span id="cb84-23"><a href="#cb84-23" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb84-24"><a href="#cb84-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-25"><a href="#cb84-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os valores antes da padronização.</span></span>
-<span id="cb84-26"><a href="#cb84-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb84-27"><a href="#cb84-27" aria-hidden="true" tabindex="-1"></a>  obra_antes,</span>
-<span id="cb84-28"><a href="#cb84-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra antes da padronização."</span></span>
-<span id="cb84-29"><a href="#cb84-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co"># str_length() permite verificar o comprimento dos textos.</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>obra_antes <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a>  obra_antes,</span>
+<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra antes da padronização."</span></span>
+<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -4724,35 +4722,60 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">BLOCO A</td>
+<td style="text-align: left;">Bloco A</td>
 <td style="text-align: right;">7</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">BLOCO C</td>
+<td style="text-align: left;">Bloco C</td>
 <td style="text-align: right;">7</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">BLOCO B</td>
+<td style="text-align: left;">Bloco B</td>
 <td style="text-align: right;">7</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">BLOCO D</td>
+<td style="text-align: left;">Bloco D</td>
 <td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bloco B</td>
+<td style="text-align: right;">8</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+<p>Após a identificação dos valores originais, foi realizada a padronização da variável:</p>
+<div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os valores depois da padronização.</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  obra_depois,</span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra depois da padronização."</span></span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando os valores da variável obra.</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str_trim() remove espaços no início e no final dos textos.</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co"># str_to_upper() converte todos os caracteres para letras maiúsculas.</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>dados_padronizados <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">obra =</span> obra <span class="sc">|&gt;</span></span>
+<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_trim</span>() <span class="sc">|&gt;</span></span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_upper</span>()</span>
+<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-12"><a href="#cb85-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando as categorias após a padronização.</span></span>
+<span id="cb85-13"><a href="#cb85-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-14"><a href="#cb85-14" aria-hidden="true" tabindex="-1"></a>obra_depois <span class="ot">&lt;-</span> dados_padronizados <span class="sc">|&gt;</span></span>
+<span id="cb85-15"><a href="#cb85-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
+<span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb85-17"><a href="#cb85-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
+<span id="cb85-18"><a href="#cb85-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb85-19"><a href="#cb85-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-20"><a href="#cb85-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb85-21"><a href="#cb85-21" aria-hidden="true" tabindex="-1"></a>  obra_depois,</span>
+<span id="cb85-22"><a href="#cb85-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra após a padronização."</span></span>
+<span id="cb85-23"><a href="#cb85-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Valores da variável obra depois da padronização.</caption>
+<caption>Valores da variável obra após a padronização.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">obra</th>
@@ -4780,34 +4803,38 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </table>
 </div>
 </div>
-<p>Antes da padronização, a variável obra é analisada para identificar diferenças de espaços, letras maiúsculas e minúsculas e possíveis variações nas categorias. Após a aplicação de str_trim() e str_to_upper(), os valores passam a seguir um mesmo padrão, evitando que categorias iguais sejam consideradas diferentes durante as análises.</p>
+<p>A utilização dos dados originais permite identificar as inconsistências de preenchimento antes que elas sejam alteradas durante a limpeza. As funções <code>str_trim()</code> e <code>str_to_upper()</code> uniformizam a apresentação dos valores, evitando que diferenças de espaços ou de capitalização façam com que uma mesma categoria seja interpretada como categorias distintas.</p>
+<p>Dessa forma, a padronização contribui para melhorar a consistência da variável <code>obra</code> e torna sua utilização nas análises posteriores mais adequada.</p>
 </section>
 <section id="questão-32" class="level2" data-number="5.32">
 <h2 data-number="5.32" class="anchored" data-anchor-id="questão-32"><span class="header-section-number">5.32</span> Questão 32</h2>
-<p>Utilize <code>str_detect()</code> para localizar registros que contenham determinado padrão textual em <code>tipo_concreto</code> ou <code>obra</code>. Neste caso, será realizada uma busca por registros que contenham a categoria <code>C30</code> ou a expressão <code>Bloco B</code>, permitindo identificar essas ocorrências na base de dados.</p>
+<p>Para localizar registros que contenham determinados padrões textuais nas variáveis <code>tipo_concreto</code> e <code>obra</code>, foi utilizada a função <code>str_detect()</code> do pacote <code>stringr</code>. A busca foi realizada para identificar ocorrências de <code>C30</code> em <code>tipo_concreto</code> ou de <code>Bloco B</code> em <code>obra</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Localizando registros que contenham padrões específicos de texto.</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str_detect() verifica se determinado padrão está presente no texto.</span></span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="co"># filter() seleciona somente os registros que atendem à condição.</span></span>
-<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>registros_padrao <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(tipo_concreto, <span class="fu">regex</span>(<span class="st">"C30"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)) <span class="sc">|</span></span>
-<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(obra, <span class="fu">regex</span>(<span class="st">"Bloco B"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>    id_corpo_prova,</span>
-<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>    obra,</span>
-<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>    tipo_concreto</span>
-<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os registros encontrados.</span></span>
-<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a>  registros_padrao,</span>
-<span id="cb86-19"><a href="#cb86-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Registros contendo os padrões textuais pesquisados."</span></span>
-<span id="cb86-20"><a href="#cb86-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Localizando registros que contenham os padrões textuais especificados.</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="co"># str_detect() verifica a presença de determinado padrão no texto.</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="co"># regex() permite realizar a busca sem diferenciar letras maiúsculas</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="co"># e minúsculas.</span></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="co"># filter() seleciona os registros que atendem a pelo menos uma condição.</span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>registros_padrao <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(tipo_concreto, <span class="fu">regex</span>(<span class="st">"C30"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)) <span class="sc">|</span></span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(obra, <span class="fu">regex</span>(<span class="st">"Bloco B"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>    id_corpo_prova,</span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>    obra,</span>
+<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a>    tipo_concreto</span>
+<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os registros encontrados.</span></span>
+<span id="cb86-19"><a href="#cb86-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-20"><a href="#cb86-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb86-21"><a href="#cb86-21" aria-hidden="true" tabindex="-1"></a>  registros_padrao,</span>
+<span id="cb86-22"><a href="#cb86-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Registros contendo os padrões textuais pesquisados."</span></span>
+<span id="cb86-23"><a href="#cb86-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -5074,7 +5101,7 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </table>
 </div>
 </div>
-<p>A utilização de str_detect() permite localizar padrões textuais mesmo quando existem diferenças entre letras maiúsculas e minúsculas. Esse recurso auxilia no diagnóstico de bases de dados porque permite identificar categorias, grafias diferentes, informações inconsistentes ou registros que precisam de padronização antes das análises.</p>
+<p>A função <code>str_detect()</code> permite localizar registros a partir de padrões específicos dentro de variáveis textuais. Nesse caso, a utilização de <code>ignore_case = TRUE</code> faz com que a busca não seja afetada por diferenças entre letras maiúsculas e minúsculas. Esse recurso facilita a identificação de <strong>categorias específicas e possíveis variações no preenchimento</strong>, contribuindo para o diagnóstico e a padronização da base de dados.</p>
 </section>
 </section>
 <section id="considerações-finais" class="level1" data-number="6">
@@ -5839,7 +5866,7 @@ BATISTA, B. D. DE O.; ARTHUR, D. <strong><a href="https://bendeivide.github.io/b
 <span id="cb87-292"><a href="#cb87-292" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb87-293"><a href="#cb87-293" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb87-294"><a href="#cb87-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-295"><a href="#cb87-295" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"base_de_dados.csv"</span>)</span>
+<span id="cb87-295"><a href="#cb87-295" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"base_de_dados.csv"</span>, <span class="at">trim_ws =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb87-296"><a href="#cb87-296" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-297"><a href="#cb87-297" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(dados), <span class="at">width =</span> <span class="cn">Inf</span>)</span>
 <span id="cb87-298"><a href="#cb87-298" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">tail</span>(dados), <span class="at">width =</span> <span class="cn">Inf</span>)</span>
@@ -6811,206 +6838,235 @@ BATISTA, B. D. DE O.; ARTHUR, D. <strong><a href="https://bendeivide.github.io/b
 <span id="cb87-1346"><a href="#cb87-1346" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb87-1347"><a href="#cb87-1347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb87-1348"><a href="#cb87-1348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1349"><a href="#cb87-1349" aria-hidden="true" tabindex="-1"></a>A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como id_corpo_prova, obra e tipo_concreto. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.</span>
+<span id="cb87-1349"><a href="#cb87-1349" aria-hidden="true" tabindex="-1"></a>A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como <span class="in">`id_corpo_prova`</span>, <span class="in">`obra`</span> e <span class="in">`tipo_concreto`</span>. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.</span>
 <span id="cb87-1350"><a href="#cb87-1350" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1351"><a href="#cb87-1351" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1352"><a href="#cb87-1352" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 28</span></span>
 <span id="cb87-1353"><a href="#cb87-1353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1354"><a href="#cb87-1354" aria-hidden="true" tabindex="-1"></a>Utilize <span class="in">`across()`</span> para calcular a média das variáveis quantitativas selecionadas. A função <span class="in">`across()`</span> permite aplicar a mesma operação a várias variáveis simultaneamente. Em comparação, utilizando <span class="in">`summarise()`</span> individualmente, cada variável precisa ser indicada separadamente.</span>
+<span id="cb87-1354"><a href="#cb87-1354" aria-hidden="true" tabindex="-1"></a>Para calcular simultaneamente a média das variáveis quantitativas da base, foi utilizada a função <span class="in">`across()`</span> em conjunto com <span class="in">`summarise()`</span>. Dessa forma, a mesma operação é aplicada automaticamente a todas as variáveis reconhecidas pelo R como numéricas.</span>
 <span id="cb87-1355"><a href="#cb87-1355" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1358"><a href="#cb87-1358" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb87-1359"><a href="#cb87-1359" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a média das variáveis quantitativas utilizando across().</span></span>
-<span id="cb87-1360"><a href="#cb87-1360" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise() cria um resumo dos dados.</span></span>
-<span id="cb87-1361"><a href="#cb87-1361" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica a função mean() a todas as variáveis numéricas.</span></span>
+<span id="cb87-1360"><a href="#cb87-1360" aria-hidden="true" tabindex="-1"></a><span class="co"># where(is.numeric) seleciona automaticamente as variáveis numéricas.</span></span>
+<span id="cb87-1361"><a href="#cb87-1361" aria-hidden="true" tabindex="-1"></a><span class="co"># mean() calcula a média de cada variável selecionada.</span></span>
 <span id="cb87-1362"><a href="#cb87-1362" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1363"><a href="#cb87-1363" aria-hidden="true" tabindex="-1"></a>medias_across <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
 <span id="cb87-1364"><a href="#cb87-1364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb87-1365"><a href="#cb87-1365" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
 <span id="cb87-1366"><a href="#cb87-1366" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
-<span id="cb87-1367"><a href="#cb87-1367" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">mean</span>(.x)</span>
+<span id="cb87-1367"><a href="#cb87-1367" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb87-1368"><a href="#cb87-1368" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb87-1369"><a href="#cb87-1369" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb87-1370"><a href="#cb87-1370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1371"><a href="#cb87-1371" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando as médias individualmente utilizando summarise().</span></span>
-<span id="cb87-1372"><a href="#cb87-1372" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada variável é indicada separadamente.</span></span>
-<span id="cb87-1373"><a href="#cb87-1373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1374"><a href="#cb87-1374" aria-hidden="true" tabindex="-1"></a>medias_individuais <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb87-1375"><a href="#cb87-1375" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb87-1376"><a href="#cb87-1376" aria-hidden="true" tabindex="-1"></a>    <span class="at">idade_dias =</span> <span class="fu">mean</span>(idade_dias),</span>
-<span id="cb87-1377"><a href="#cb87-1377" aria-hidden="true" tabindex="-1"></a>    <span class="at">resistencia_mpa =</span> <span class="fu">mean</span>(resistencia_mpa),</span>
-<span id="cb87-1378"><a href="#cb87-1378" aria-hidden="true" tabindex="-1"></a>    <span class="at">cimento_kg_m3 =</span> <span class="fu">mean</span>(cimento_kg_m3),</span>
-<span id="cb87-1379"><a href="#cb87-1379" aria-hidden="true" tabindex="-1"></a>    <span class="at">relacao_a_c =</span> <span class="fu">mean</span>(relacao_a_c),</span>
-<span id="cb87-1380"><a href="#cb87-1380" aria-hidden="true" tabindex="-1"></a>    <span class="at">abatimento_mm =</span> <span class="fu">mean</span>(abatimento_mm),</span>
-<span id="cb87-1381"><a href="#cb87-1381" aria-hidden="true" tabindex="-1"></a>    <span class="at">densidade_kg_m3 =</span> <span class="fu">mean</span>(densidade_kg_m3),</span>
-<span id="cb87-1382"><a href="#cb87-1382" aria-hidden="true" tabindex="-1"></a>    absorção<span class="at">_agregado_pct =</span> <span class="fu">mean</span>(absorção_agregado_pct)</span>
-<span id="cb87-1383"><a href="#cb87-1383" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb87-1384"><a href="#cb87-1384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1385"><a href="#cb87-1385" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados de across().</span></span>
-<span id="cb87-1386"><a href="#cb87-1386" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb87-1387"><a href="#cb87-1387" aria-hidden="true" tabindex="-1"></a>  medias_across,</span>
-<span id="cb87-1388"><a href="#cb87-1388" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb87-1389"><a href="#cb87-1389" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando across()."</span></span>
-<span id="cb87-1390"><a href="#cb87-1390" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1391"><a href="#cb87-1391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1392"><a href="#cb87-1392" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados de summarise() individualmente.</span></span>
-<span id="cb87-1393"><a href="#cb87-1393" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb87-1394"><a href="#cb87-1394" aria-hidden="true" tabindex="-1"></a>  medias_individuais,</span>
-<span id="cb87-1395"><a href="#cb87-1395" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb87-1396"><a href="#cb87-1396" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando summarise()."</span></span>
-<span id="cb87-1397"><a href="#cb87-1397" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1398"><a href="#cb87-1398" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb87-1399"><a href="#cb87-1399" aria-hidden="true" tabindex="-1"></a>Os dois métodos apresentam os mesmos resultados. Entretanto, across() apresenta maior facilidade de manutenção quando o número de variáveis aumenta, pois permite aplicar a mesma função a várias variáveis de forma automática, evitando a necessidade de escrever cada variável individualmente.</span>
-<span id="cb87-1400"><a href="#cb87-1400" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1401"><a href="#cb87-1401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1402"><a href="#cb87-1402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 29</span></span>
+<span id="cb87-1371"><a href="#cb87-1371" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados.</span></span>
+<span id="cb87-1372"><a href="#cb87-1372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1373"><a href="#cb87-1373" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-1374"><a href="#cb87-1374" aria-hidden="true" tabindex="-1"></a>  medias_across,</span>
+<span id="cb87-1375"><a href="#cb87-1375" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb87-1376"><a href="#cb87-1376" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando across()."</span></span>
+<span id="cb87-1377"><a href="#cb87-1377" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-1378"><a href="#cb87-1378" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb87-1379"><a href="#cb87-1379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1380"><a href="#cb87-1380" aria-hidden="true" tabindex="-1"></a>Para comparação, as médias também podem ser calculadas individualmente com <span class="in">`summarise()`</span>, sendo necessário indicar cada variável separadamente:</span>
+<span id="cb87-1381"><a href="#cb87-1381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1384"><a href="#cb87-1384" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb87-1385"><a href="#cb87-1385" aria-hidden="true" tabindex="-1"></a>medias_individuais <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb87-1386"><a href="#cb87-1386" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb87-1387"><a href="#cb87-1387" aria-hidden="true" tabindex="-1"></a>    <span class="at">idade_dias =</span> <span class="fu">mean</span>(idade_dias, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1388"><a href="#cb87-1388" aria-hidden="true" tabindex="-1"></a>    <span class="at">resistencia_mpa =</span> <span class="fu">mean</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1389"><a href="#cb87-1389" aria-hidden="true" tabindex="-1"></a>    <span class="at">cimento_kg_m3 =</span> <span class="fu">mean</span>(cimento_kg_m3, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1390"><a href="#cb87-1390" aria-hidden="true" tabindex="-1"></a>    <span class="at">relacao_a_c =</span> <span class="fu">mean</span>(relacao_a_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1391"><a href="#cb87-1391" aria-hidden="true" tabindex="-1"></a>    <span class="at">abatimento_mm =</span> <span class="fu">mean</span>(abatimento_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1392"><a href="#cb87-1392" aria-hidden="true" tabindex="-1"></a>    <span class="at">densidade_kg_m3 =</span> <span class="fu">mean</span>(densidade_kg_m3, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1393"><a href="#cb87-1393" aria-hidden="true" tabindex="-1"></a>    absorção<span class="at">_agregado_pct =</span> <span class="fu">mean</span>(absorção_agregado_pct, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1394"><a href="#cb87-1394" aria-hidden="true" tabindex="-1"></a>    <span class="at">resistencia_relativa =</span> <span class="fu">mean</span>(resistencia_relativa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-1395"><a href="#cb87-1395" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1396"><a href="#cb87-1396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1397"><a href="#cb87-1397" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-1398"><a href="#cb87-1398" aria-hidden="true" tabindex="-1"></a>  medias_individuais,</span>
+<span id="cb87-1399"><a href="#cb87-1399" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb87-1400"><a href="#cb87-1400" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média das variáveis quantitativas utilizando summarise()."</span></span>
+<span id="cb87-1401"><a href="#cb87-1401" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-1402"><a href="#cb87-1402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb87-1403"><a href="#cb87-1403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1404"><a href="#cb87-1404" aria-hidden="true" tabindex="-1"></a>Utilize <span class="in">`mutate()`</span> e <span class="in">`across()`</span> para realizar uma transformação simultânea nas variáveis quantitativas. Neste caso, será realizada a **padronização** das variáveis, subtraindo a média e dividindo pelo desvio-padrão. Essa transformação coloca as variáveis em uma escala comum, facilitando a comparação entre medidas que possuem unidades diferentes.</span>
+<span id="cb87-1404"><a href="#cb87-1404" aria-hidden="true" tabindex="-1"></a>Os dois procedimentos permitem obter as médias das variáveis quantitativas. Entretanto, <span class="in">`across()`</span> torna o código mais prático e reduz a repetição, pois aplica automaticamente a mesma função a todas as variáveis numéricas da base. Dessa forma, caso novas variáveis quantitativas sejam adicionadas, elas também poderão ser incluídas no cálculo sem a necessidade de especificá-las individualmente.</span>
 <span id="cb87-1405"><a href="#cb87-1405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1408"><a href="#cb87-1408" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb87-1409"><a href="#cb87-1409" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando simultaneamente as variáveis quantitativas.</span></span>
-<span id="cb87-1410"><a href="#cb87-1410" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate() cria ou modifica variáveis na base de dados.</span></span>
-<span id="cb87-1411"><a href="#cb87-1411" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica a mesma transformação a várias variáveis.</span></span>
-<span id="cb87-1412"><a href="#cb87-1412" aria-hidden="true" tabindex="-1"></a><span class="co"># A padronização transforma os valores para uma escala baseada na média e no desvio-padrão.</span></span>
-<span id="cb87-1413"><a href="#cb87-1413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1414"><a href="#cb87-1414" aria-hidden="true" tabindex="-1"></a>dados_padronizados <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb87-1415"><a href="#cb87-1415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb87-1416"><a href="#cb87-1416" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
-<span id="cb87-1417"><a href="#cb87-1417" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
-<span id="cb87-1418"><a href="#cb87-1418" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>(.x <span class="sc">-</span> <span class="fu">mean</span>(.x)) <span class="sc">/</span> <span class="fu">sd</span>(.x)</span>
-<span id="cb87-1419"><a href="#cb87-1419" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb87-1420"><a href="#cb87-1420" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb87-1421"><a href="#cb87-1421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1422"><a href="#cb87-1422" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando as variáveis após a transformação.</span></span>
-<span id="cb87-1423"><a href="#cb87-1423" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb87-1424"><a href="#cb87-1424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(dados_padronizados),</span>
-<span id="cb87-1425"><a href="#cb87-1425" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb87-1426"><a href="#cb87-1426" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Variáveis quantitativas após a padronização."</span></span>
-<span id="cb87-1427"><a href="#cb87-1427" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1428"><a href="#cb87-1428" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb87-1429"><a href="#cb87-1429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1430"><a href="#cb87-1430" aria-hidden="true" tabindex="-1"></a>A padronização permite comparar variáveis quantitativas que possuem diferentes unidades e escalas. Após a transformação, os valores passam a representar a distância em relação à média em termos de desvios-padrão. O uso conjunto de mutate() e across() torna a operação mais prática, pois a mesma transformação é aplicada simultaneamente a todas as variáveis numéricas.</span>
-<span id="cb87-1431"><a href="#cb87-1431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1432"><a href="#cb87-1432" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 30</span></span>
-<span id="cb87-1433"><a href="#cb87-1433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1434"><a href="#cb87-1434" aria-hidden="true" tabindex="-1"></a>Utilize <span class="in">`across()`</span> em conjunto com <span class="in">`summarise()`</span> para calcular, por tipo de concreto, a média e o desvio-padrão das variáveis quantitativas. Essa abordagem permite aplicar as mesmas estatísticas a várias variáveis de forma simultânea e organizada.</span>
+<span id="cb87-1406"><a href="#cb87-1406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1407"><a href="#cb87-1407" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 29</span></span>
+<span id="cb87-1408"><a href="#cb87-1408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1409"><a href="#cb87-1409" aria-hidden="true" tabindex="-1"></a>Para realizar uma transformação simultânea nas variáveis quantitativas, foi utilizada a combinação das funções <span class="in">`mutate()`</span> e <span class="in">`across()`</span>. Nesse caso, foi realizada a **padronização** dos valores, subtraindo a média da variável e dividindo o resultado pelo seu desvio-padrão.</span>
+<span id="cb87-1410"><a href="#cb87-1410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1413"><a href="#cb87-1413" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb87-1414"><a href="#cb87-1414" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando simultaneamente as variáveis quantitativas.</span></span>
+<span id="cb87-1415"><a href="#cb87-1415" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate() cria ou modifica variáveis na base de dados.</span></span>
+<span id="cb87-1416"><a href="#cb87-1416" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica a mesma transformação a todas as variáveis numéricas.</span></span>
+<span id="cb87-1417"><a href="#cb87-1417" aria-hidden="true" tabindex="-1"></a><span class="co"># A padronização transforma os valores para uma escala comum.</span></span>
+<span id="cb87-1418"><a href="#cb87-1418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1419"><a href="#cb87-1419" aria-hidden="true" tabindex="-1"></a>dados_padronizados <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb87-1420"><a href="#cb87-1420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb87-1421"><a href="#cb87-1421" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb87-1422"><a href="#cb87-1422" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
+<span id="cb87-1423"><a href="#cb87-1423" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>(.x <span class="sc">-</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> <span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-1424"><a href="#cb87-1424" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb87-1425"><a href="#cb87-1425" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1426"><a href="#cb87-1426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1427"><a href="#cb87-1427" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os primeiros registros após a transformação.</span></span>
+<span id="cb87-1428"><a href="#cb87-1428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1429"><a href="#cb87-1429" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-1430"><a href="#cb87-1430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(dados_padronizados),</span>
+<span id="cb87-1431"><a href="#cb87-1431" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb87-1432"><a href="#cb87-1432" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Variáveis quantitativas após a padronização."</span></span>
+<span id="cb87-1433"><a href="#cb87-1433" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-1434"><a href="#cb87-1434" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb87-1435"><a href="#cb87-1435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1438"><a href="#cb87-1438" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb87-1439"><a href="#cb87-1439" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando duas estatísticas para cada variável quantitativa por tipo de concreto.</span></span>
-<span id="cb87-1440"><a href="#cb87-1440" aria-hidden="true" tabindex="-1"></a><span class="co"># group_by() agrupa as observações de acordo com o tipo de concreto.</span></span>
-<span id="cb87-1441"><a href="#cb87-1441" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise() calcula as estatísticas dentro de cada grupo.</span></span>
-<span id="cb87-1442"><a href="#cb87-1442" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica as funções média e desvio-padrão a todas as variáveis numéricas.</span></span>
-<span id="cb87-1443"><a href="#cb87-1443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1444"><a href="#cb87-1444" aria-hidden="true" tabindex="-1"></a>estatisticas_tipo <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb87-1445"><a href="#cb87-1445" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_concreto) <span class="sc">|&gt;</span></span>
-<span id="cb87-1446"><a href="#cb87-1446" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb87-1447"><a href="#cb87-1447" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
-<span id="cb87-1448"><a href="#cb87-1448" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
-<span id="cb87-1449"><a href="#cb87-1449" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
-<span id="cb87-1450"><a href="#cb87-1450" aria-hidden="true" tabindex="-1"></a>        <span class="at">media =</span> <span class="sc">~</span><span class="fu">mean</span>(.x),</span>
-<span id="cb87-1451"><a href="#cb87-1451" aria-hidden="true" tabindex="-1"></a>        <span class="at">desvio_padrao =</span> <span class="sc">~</span><span class="fu">sd</span>(.x)</span>
-<span id="cb87-1452"><a href="#cb87-1452" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb87-1453"><a href="#cb87-1453" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb87-1454"><a href="#cb87-1454" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb87-1455"><a href="#cb87-1455" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb87-1456"><a href="#cb87-1456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1457"><a href="#cb87-1457" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados de forma organizada.</span></span>
-<span id="cb87-1458"><a href="#cb87-1458" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb87-1459"><a href="#cb87-1459" aria-hidden="true" tabindex="-1"></a>  estatisticas_tipo,</span>
-<span id="cb87-1460"><a href="#cb87-1460" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb87-1461"><a href="#cb87-1461" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média e desvio-padrão das variáveis quantitativas por tipo de concreto."</span></span>
-<span id="cb87-1462"><a href="#cb87-1462" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1463"><a href="#cb87-1463" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb87-1464"><a href="#cb87-1464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1465"><a href="#cb87-1465" aria-hidden="true" tabindex="-1"></a>A utilização de across() em conjunto com summarise() torna o código mais compacto e organizado, pois permite calcular as mesmas estatísticas para várias variáveis simultaneamente. Na utilização de vários comandos separados, seria necessário escrever cada cálculo individualmente para cada variável e tipo de concreto. Portanto, across() apresenta maior facilidade de manutenção quando a quantidade de variáveis aumenta.</span>
+<span id="cb87-1436"><a href="#cb87-1436" aria-hidden="true" tabindex="-1"></a>A padronização transforma as variáveis para uma escala comum, na qual a média passa a ser aproximadamente **0** e o desvio-padrão aproximadamente **1**. Assim, os valores indicam quantos desvios-padrão cada observação está acima ou abaixo da média.</span>
+<span id="cb87-1437"><a href="#cb87-1437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1438"><a href="#cb87-1438" aria-hidden="true" tabindex="-1"></a>Essa transformação é útil para comparar variáveis que apresentam **unidades e escalas diferentes**, evitando que uma variável com valores numericamente maiores tenha maior influência apenas por sua escala. O uso conjunto de <span class="in">`mutate()`</span> e <span class="in">`across()`</span> torna o procedimento mais prático, pois permite aplicar a mesma transformação simultaneamente a todas as variáveis quantitativas.</span>
+<span id="cb87-1439"><a href="#cb87-1439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1440"><a href="#cb87-1440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1441"><a href="#cb87-1441" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 30</span></span>
+<span id="cb87-1442"><a href="#cb87-1442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1443"><a href="#cb87-1443" aria-hidden="true" tabindex="-1"></a>Para comparar as variáveis quantitativas entre os diferentes tipos de concreto, foram calculadas a **média e o desvio-padrão** de cada variável dentro de cada grupo. Para isso, foi utilizada a combinação das funções <span class="in">`group_by()`</span>, <span class="in">`summarise()`</span> e <span class="in">`across()`</span>.</span>
+<span id="cb87-1444"><a href="#cb87-1444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1447"><a href="#cb87-1447" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb87-1448"><a href="#cb87-1448" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a média e o desvio-padrão das variáveis quantitativas</span></span>
+<span id="cb87-1449"><a href="#cb87-1449" aria-hidden="true" tabindex="-1"></a><span class="co"># para cada tipo de concreto.</span></span>
+<span id="cb87-1450"><a href="#cb87-1450" aria-hidden="true" tabindex="-1"></a><span class="co"># group_by() separa as observações por tipo de concreto.</span></span>
+<span id="cb87-1451"><a href="#cb87-1451" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise() calcula as estatísticas para cada grupo.</span></span>
+<span id="cb87-1452"><a href="#cb87-1452" aria-hidden="true" tabindex="-1"></a><span class="co"># across() aplica as mesmas funções a todas as variáveis numéricas.</span></span>
+<span id="cb87-1453"><a href="#cb87-1453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1454"><a href="#cb87-1454" aria-hidden="true" tabindex="-1"></a>estatisticas_tipo <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb87-1455"><a href="#cb87-1455" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tipo_concreto) <span class="sc">|&gt;</span></span>
+<span id="cb87-1456"><a href="#cb87-1456" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb87-1457"><a href="#cb87-1457" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb87-1458"><a href="#cb87-1458" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
+<span id="cb87-1459"><a href="#cb87-1459" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
+<span id="cb87-1460"><a href="#cb87-1460" aria-hidden="true" tabindex="-1"></a>        <span class="at">media =</span> <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-1461"><a href="#cb87-1461" aria-hidden="true" tabindex="-1"></a>        <span class="at">desvio_padrao =</span> <span class="sc">~</span><span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-1462"><a href="#cb87-1462" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb87-1463"><a href="#cb87-1463" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb87-1464"><a href="#cb87-1464" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb87-1465"><a href="#cb87-1465" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb87-1466"><a href="#cb87-1466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1467"><a href="#cb87-1467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1468"><a href="#cb87-1468" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 31</span></span>
-<span id="cb87-1469"><a href="#cb87-1469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1470"><a href="#cb87-1470" aria-hidden="true" tabindex="-1"></a>Utilize funções do pacote <span class="in">`stringr`</span> para verificar e padronizar os valores da variável <span class="in">`obra`</span>. Serão investigados espaços no início ou no final dos textos, diferenças entre letras maiúsculas e minúsculas e possíveis grafias diferentes para uma mesma categoria.</span>
-<span id="cb87-1471"><a href="#cb87-1471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1474"><a href="#cb87-1474" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb87-1475"><a href="#cb87-1475" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando os valores da variável obra antes da padronização.</span></span>
-<span id="cb87-1476"><a href="#cb87-1476" aria-hidden="true" tabindex="-1"></a><span class="co"># distinct() apresenta as categorias diferentes existentes.</span></span>
-<span id="cb87-1477"><a href="#cb87-1477" aria-hidden="true" tabindex="-1"></a><span class="co"># str_length() permite identificar diferenças no comprimento dos textos.</span></span>
-<span id="cb87-1478"><a href="#cb87-1478" aria-hidden="true" tabindex="-1"></a><span class="co"># str_trim() remove espaços no início e no final.</span></span>
-<span id="cb87-1479"><a href="#cb87-1479" aria-hidden="true" tabindex="-1"></a><span class="co"># str_to_upper() padroniza as letras para maiúsculas.</span></span>
+<span id="cb87-1467"><a href="#cb87-1467" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os resultados em uma tabela.</span></span>
+<span id="cb87-1468"><a href="#cb87-1468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1469"><a href="#cb87-1469" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-1470"><a href="#cb87-1470" aria-hidden="true" tabindex="-1"></a>  estatisticas_tipo,</span>
+<span id="cb87-1471"><a href="#cb87-1471" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb87-1472"><a href="#cb87-1472" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Média e desvio-padrão das variáveis quantitativas por tipo de concreto."</span></span>
+<span id="cb87-1473"><a href="#cb87-1473" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-1474"><a href="#cb87-1474" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb87-1475"><a href="#cb87-1475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1476"><a href="#cb87-1476" aria-hidden="true" tabindex="-1"></a>A utilização de <span class="in">`across()`</span> permite aplicar simultaneamente as funções de média e desvio-padrão a todas as variáveis quantitativas, enquanto <span class="in">`group_by()`</span> possibilita realizar os cálculos separadamente para cada tipo de concreto. Dessa forma, é possível comparar tanto os **valores médios** quanto a **variabilidade** das variáveis entre os diferentes grupos.</span>
+<span id="cb87-1477"><a href="#cb87-1477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1478"><a href="#cb87-1478" aria-hidden="true" tabindex="-1"></a>Essa abordagem torna o código mais compacto e facilita sua manutenção, principalmente quando a base possui um número maior de variáveis quantitativas.</span>
+<span id="cb87-1479"><a href="#cb87-1479" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1480"><a href="#cb87-1480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1481"><a href="#cb87-1481" aria-hidden="true" tabindex="-1"></a>obra_antes <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb87-1482"><a href="#cb87-1482" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
-<span id="cb87-1483"><a href="#cb87-1483" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb87-1484"><a href="#cb87-1484" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
-<span id="cb87-1485"><a href="#cb87-1485" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1481"><a href="#cb87-1481" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 31</span></span>
+<span id="cb87-1482"><a href="#cb87-1482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1483"><a href="#cb87-1483" aria-hidden="true" tabindex="-1"></a>Para verificar e padronizar os valores da variável <span class="in">`obra`</span>, foram utilizados os dados originais da base, antes da etapa de limpeza. Essa análise permite identificar possíveis diferenças de preenchimento, como espaços adicionais e variações entre letras maiúsculas e minúsculas.</span>
+<span id="cb87-1484"><a href="#cb87-1484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1485"><a href="#cb87-1485" aria-hidden="true" tabindex="-1"></a>Inicialmente, foram apresentadas as categorias distintas e o comprimento de cada texto. Em seguida, foram aplicadas as funções <span class="in">`str_trim()`</span> e <span class="in">`str_to_upper()`</span> para padronizar os valores.</span>
 <span id="cb87-1486"><a href="#cb87-1486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1487"><a href="#cb87-1487" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando os valores da variável obra.</span></span>
-<span id="cb87-1488"><a href="#cb87-1488" aria-hidden="true" tabindex="-1"></a>obra_depois <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb87-1489"><a href="#cb87-1489" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb87-1490"><a href="#cb87-1490" aria-hidden="true" tabindex="-1"></a>    <span class="at">obra =</span> obra <span class="sc">|&gt;</span></span>
-<span id="cb87-1491"><a href="#cb87-1491" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_trim</span>() <span class="sc">|&gt;</span></span>
-<span id="cb87-1492"><a href="#cb87-1492" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_upper</span>()</span>
-<span id="cb87-1493"><a href="#cb87-1493" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb87-1494"><a href="#cb87-1494" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
-<span id="cb87-1495"><a href="#cb87-1495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb87-1496"><a href="#cb87-1496" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
-<span id="cb87-1497"><a href="#cb87-1497" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb87-1498"><a href="#cb87-1498" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1499"><a href="#cb87-1499" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os valores antes da padronização.</span></span>
+<span id="cb87-1489"><a href="#cb87-1489" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb87-1490"><a href="#cb87-1490" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando os valores originais da variável obra.</span></span>
+<span id="cb87-1491"><a href="#cb87-1491" aria-hidden="true" tabindex="-1"></a><span class="co"># distinct() apresenta as categorias diferentes existentes.</span></span>
+<span id="cb87-1492"><a href="#cb87-1492" aria-hidden="true" tabindex="-1"></a><span class="co"># str_length() permite verificar o comprimento dos textos.</span></span>
+<span id="cb87-1493"><a href="#cb87-1493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1494"><a href="#cb87-1494" aria-hidden="true" tabindex="-1"></a>obra_antes <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb87-1495"><a href="#cb87-1495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
+<span id="cb87-1496"><a href="#cb87-1496" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb87-1497"><a href="#cb87-1497" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
+<span id="cb87-1498"><a href="#cb87-1498" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1499"><a href="#cb87-1499" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1500"><a href="#cb87-1500" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
 <span id="cb87-1501"><a href="#cb87-1501" aria-hidden="true" tabindex="-1"></a>  obra_antes,</span>
 <span id="cb87-1502"><a href="#cb87-1502" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra antes da padronização."</span></span>
 <span id="cb87-1503"><a href="#cb87-1503" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1504"><a href="#cb87-1504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1505"><a href="#cb87-1505" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os valores depois da padronização.</span></span>
-<span id="cb87-1506"><a href="#cb87-1506" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb87-1507"><a href="#cb87-1507" aria-hidden="true" tabindex="-1"></a>  obra_depois,</span>
-<span id="cb87-1508"><a href="#cb87-1508" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra depois da padronização."</span></span>
-<span id="cb87-1509"><a href="#cb87-1509" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1510"><a href="#cb87-1510" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb87-1511"><a href="#cb87-1511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1512"><a href="#cb87-1512" aria-hidden="true" tabindex="-1"></a>Antes da padronização, a variável obra é analisada para identificar diferenças de espaços, letras maiúsculas e minúsculas e possíveis variações nas categorias. Após a aplicação de str_trim() e str_to_upper(), os valores passam a seguir um mesmo padrão, evitando que categorias iguais sejam consideradas diferentes durante as análises.</span>
-<span id="cb87-1513"><a href="#cb87-1513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1514"><a href="#cb87-1514" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 32</span></span>
-<span id="cb87-1515"><a href="#cb87-1515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1516"><a href="#cb87-1516" aria-hidden="true" tabindex="-1"></a>Utilize <span class="in">`str_detect()`</span> para localizar registros que contenham determinado padrão textual em <span class="in">`tipo_concreto`</span> ou <span class="in">`obra`</span>. Neste caso, será realizada uma busca por registros que contenham a categoria <span class="in">`C30`</span> ou a expressão <span class="in">`Bloco B`</span>, permitindo identificar essas ocorrências na base de dados.</span>
-<span id="cb87-1517"><a href="#cb87-1517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1520"><a href="#cb87-1520" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb87-1521"><a href="#cb87-1521" aria-hidden="true" tabindex="-1"></a><span class="co"># Localizando registros que contenham padrões específicos de texto.</span></span>
-<span id="cb87-1522"><a href="#cb87-1522" aria-hidden="true" tabindex="-1"></a><span class="co"># str_detect() verifica se determinado padrão está presente no texto.</span></span>
-<span id="cb87-1523"><a href="#cb87-1523" aria-hidden="true" tabindex="-1"></a><span class="co"># filter() seleciona somente os registros que atendem à condição.</span></span>
-<span id="cb87-1524"><a href="#cb87-1524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1525"><a href="#cb87-1525" aria-hidden="true" tabindex="-1"></a>registros_padrao <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
-<span id="cb87-1526"><a href="#cb87-1526" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb87-1527"><a href="#cb87-1527" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(tipo_concreto, <span class="fu">regex</span>(<span class="st">"C30"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)) <span class="sc">|</span></span>
-<span id="cb87-1528"><a href="#cb87-1528" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(obra, <span class="fu">regex</span>(<span class="st">"Bloco B"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb87-1529"><a href="#cb87-1529" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb87-1530"><a href="#cb87-1530" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb87-1531"><a href="#cb87-1531" aria-hidden="true" tabindex="-1"></a>    id_corpo_prova,</span>
-<span id="cb87-1532"><a href="#cb87-1532" aria-hidden="true" tabindex="-1"></a>    obra,</span>
-<span id="cb87-1533"><a href="#cb87-1533" aria-hidden="true" tabindex="-1"></a>    tipo_concreto</span>
-<span id="cb87-1534"><a href="#cb87-1534" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1504"><a href="#cb87-1504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb87-1505"><a href="#cb87-1505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1506"><a href="#cb87-1506" aria-hidden="true" tabindex="-1"></a>Após a identificação dos valores originais, foi realizada a padronização da variável:</span>
+<span id="cb87-1507"><a href="#cb87-1507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1510"><a href="#cb87-1510" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb87-1511"><a href="#cb87-1511" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizando os valores da variável obra.</span></span>
+<span id="cb87-1512"><a href="#cb87-1512" aria-hidden="true" tabindex="-1"></a><span class="co"># str_trim() remove espaços no início e no final dos textos.</span></span>
+<span id="cb87-1513"><a href="#cb87-1513" aria-hidden="true" tabindex="-1"></a><span class="co"># str_to_upper() converte todos os caracteres para letras maiúsculas.</span></span>
+<span id="cb87-1514"><a href="#cb87-1514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1515"><a href="#cb87-1515" aria-hidden="true" tabindex="-1"></a>dados_padronizados <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb87-1516"><a href="#cb87-1516" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb87-1517"><a href="#cb87-1517" aria-hidden="true" tabindex="-1"></a>    <span class="at">obra =</span> obra <span class="sc">|&gt;</span></span>
+<span id="cb87-1518"><a href="#cb87-1518" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_trim</span>() <span class="sc">|&gt;</span></span>
+<span id="cb87-1519"><a href="#cb87-1519" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_upper</span>()</span>
+<span id="cb87-1520"><a href="#cb87-1520" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1521"><a href="#cb87-1521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1522"><a href="#cb87-1522" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificando as categorias após a padronização.</span></span>
+<span id="cb87-1523"><a href="#cb87-1523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1524"><a href="#cb87-1524" aria-hidden="true" tabindex="-1"></a>obra_depois <span class="ot">&lt;-</span> dados_padronizados <span class="sc">|&gt;</span></span>
+<span id="cb87-1525"><a href="#cb87-1525" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(obra) <span class="sc">|&gt;</span></span>
+<span id="cb87-1526"><a href="#cb87-1526" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb87-1527"><a href="#cb87-1527" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">str_length</span>(obra)</span>
+<span id="cb87-1528"><a href="#cb87-1528" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1529"><a href="#cb87-1529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1530"><a href="#cb87-1530" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-1531"><a href="#cb87-1531" aria-hidden="true" tabindex="-1"></a>  obra_depois,</span>
+<span id="cb87-1532"><a href="#cb87-1532" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Valores da variável obra após a padronização."</span></span>
+<span id="cb87-1533"><a href="#cb87-1533" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-1534"><a href="#cb87-1534" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb87-1535"><a href="#cb87-1535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1536"><a href="#cb87-1536" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os registros encontrados.</span></span>
-<span id="cb87-1537"><a href="#cb87-1537" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb87-1538"><a href="#cb87-1538" aria-hidden="true" tabindex="-1"></a>  registros_padrao,</span>
-<span id="cb87-1539"><a href="#cb87-1539" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Registros contendo os padrões textuais pesquisados."</span></span>
-<span id="cb87-1540"><a href="#cb87-1540" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb87-1541"><a href="#cb87-1541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb87-1536"><a href="#cb87-1536" aria-hidden="true" tabindex="-1"></a>A utilização dos dados originais permite identificar as inconsistências de preenchimento antes que elas sejam alteradas durante a limpeza. As funções <span class="in">`str_trim()`</span> e <span class="in">`str_to_upper()`</span> uniformizam a apresentação dos valores, evitando que diferenças de espaços ou de capitalização façam com que uma mesma categoria seja interpretada como categorias distintas.</span>
+<span id="cb87-1537"><a href="#cb87-1537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1538"><a href="#cb87-1538" aria-hidden="true" tabindex="-1"></a>Dessa forma, a padronização contribui para melhorar a consistência da variável <span class="in">`obra`</span> e torna sua utilização nas análises posteriores mais adequada.</span>
+<span id="cb87-1539"><a href="#cb87-1539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1540"><a href="#cb87-1540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1541"><a href="#cb87-1541" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-1542"><a href="#cb87-1542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1543"><a href="#cb87-1543" aria-hidden="true" tabindex="-1"></a>A utilização de str_detect() permite localizar padrões textuais mesmo quando existem diferenças entre letras maiúsculas e minúsculas. Esse recurso auxilia no diagnóstico de bases de dados porque permite identificar categorias, grafias diferentes, informações inconsistentes ou registros que precisam de padronização antes das análises.</span>
+<span id="cb87-1543"><a href="#cb87-1543" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 32</span></span>
 <span id="cb87-1544"><a href="#cb87-1544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1545"><a href="#cb87-1545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1545"><a href="#cb87-1545" aria-hidden="true" tabindex="-1"></a>Para localizar registros que contenham determinados padrões textuais nas variáveis <span class="in">`tipo_concreto`</span> e <span class="in">`obra`</span>, foi utilizada a função <span class="in">`str_detect()`</span> do pacote <span class="in">`stringr`</span>. A busca foi realizada para identificar ocorrências de <span class="in">`C30`</span> em <span class="in">`tipo_concreto`</span> ou de <span class="in">`Bloco B`</span> em <span class="in">`obra`</span>.</span>
 <span id="cb87-1546"><a href="#cb87-1546" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1547"><a href="#cb87-1547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1548"><a href="#cb87-1548" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1549"><a href="#cb87-1549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1550"><a href="#cb87-1550" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Considerações finais</span></span>
-<span id="cb87-1551"><a href="#cb87-1551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1552"><a href="#cb87-1552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1553"><a href="#cb87-1553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1554"><a href="#cb87-1554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1549"><a href="#cb87-1549" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb87-1550"><a href="#cb87-1550" aria-hidden="true" tabindex="-1"></a><span class="co"># Localizando registros que contenham os padrões textuais especificados.</span></span>
+<span id="cb87-1551"><a href="#cb87-1551" aria-hidden="true" tabindex="-1"></a><span class="co"># str_detect() verifica a presença de determinado padrão no texto.</span></span>
+<span id="cb87-1552"><a href="#cb87-1552" aria-hidden="true" tabindex="-1"></a><span class="co"># regex() permite realizar a busca sem diferenciar letras maiúsculas</span></span>
+<span id="cb87-1553"><a href="#cb87-1553" aria-hidden="true" tabindex="-1"></a><span class="co"># e minúsculas.</span></span>
+<span id="cb87-1554"><a href="#cb87-1554" aria-hidden="true" tabindex="-1"></a><span class="co"># filter() seleciona os registros que atendem a pelo menos uma condição.</span></span>
 <span id="cb87-1555"><a href="#cb87-1555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1556"><a href="#cb87-1556" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📖 Referências</span></span>
-<span id="cb87-1557"><a href="#cb87-1557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-1558"><a href="#cb87-1558" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb87-1556"><a href="#cb87-1556" aria-hidden="true" tabindex="-1"></a>registros_padrao <span class="ot">&lt;-</span> dados_limpos <span class="sc">|&gt;</span></span>
+<span id="cb87-1557"><a href="#cb87-1557" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb87-1558"><a href="#cb87-1558" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(tipo_concreto, <span class="fu">regex</span>(<span class="st">"C30"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)) <span class="sc">|</span></span>
+<span id="cb87-1559"><a href="#cb87-1559" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(obra, <span class="fu">regex</span>(<span class="st">"Bloco B"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb87-1560"><a href="#cb87-1560" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb87-1561"><a href="#cb87-1561" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb87-1562"><a href="#cb87-1562" aria-hidden="true" tabindex="-1"></a>    id_corpo_prova,</span>
+<span id="cb87-1563"><a href="#cb87-1563" aria-hidden="true" tabindex="-1"></a>    obra,</span>
+<span id="cb87-1564"><a href="#cb87-1564" aria-hidden="true" tabindex="-1"></a>    tipo_concreto</span>
+<span id="cb87-1565"><a href="#cb87-1565" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb87-1566"><a href="#cb87-1566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1567"><a href="#cb87-1567" aria-hidden="true" tabindex="-1"></a><span class="co"># Apresentando os registros encontrados.</span></span>
+<span id="cb87-1568"><a href="#cb87-1568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1569"><a href="#cb87-1569" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-1570"><a href="#cb87-1570" aria-hidden="true" tabindex="-1"></a>  registros_padrao,</span>
+<span id="cb87-1571"><a href="#cb87-1571" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Registros contendo os padrões textuais pesquisados."</span></span>
+<span id="cb87-1572"><a href="#cb87-1572" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-1573"><a href="#cb87-1573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb87-1574"><a href="#cb87-1574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1575"><a href="#cb87-1575" aria-hidden="true" tabindex="-1"></a>A função <span class="in">`str_detect()`</span> permite localizar registros a partir de padrões específicos dentro de variáveis textuais. Nesse caso, a utilização de <span class="in">`ignore_case = TRUE`</span> faz com que a busca não seja afetada por diferenças entre letras maiúsculas e minúsculas. Esse recurso facilita a identificação de **categorias específicas e possíveis variações no preenchimento**, contribuindo para o diagnóstico e a padronização da base de dados.</span>
+<span id="cb87-1576"><a href="#cb87-1576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1577"><a href="#cb87-1577" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1578"><a href="#cb87-1578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1579"><a href="#cb87-1579" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1580"><a href="#cb87-1580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1581"><a href="#cb87-1581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1582"><a href="#cb87-1582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1583"><a href="#cb87-1583" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Considerações finais</span></span>
+<span id="cb87-1584"><a href="#cb87-1584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1585"><a href="#cb87-1585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1586"><a href="#cb87-1586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1587"><a href="#cb87-1587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1588"><a href="#cb87-1588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1589"><a href="#cb87-1589" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📖 Referências</span></span>
+<span id="cb87-1590"><a href="#cb87-1590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-1591"><a href="#cb87-1591" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -290,7 +290,7 @@ Para verificar a importação, foram utilizadas as funções `head()` e `tail()`
 ```{r}
 library(tidyverse)
 
-dados <- read_csv2("base_de_dados.csv")
+dados <- read_csv2("base_de_dados.csv", trim_ws = FALSE)
 
 print(head(dados), width = Inf)
 print(tail(dados), width = Inf)
@@ -1262,76 +1262,80 @@ knitr::kable(
 )
 ```
 
-A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como id_corpo_prova, obra e tipo_concreto. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.
+A nova tabela contém somente as variáveis quantitativas relacionadas às propriedades do concreto, excluindo as variáveis de identificação e classificação, como `id_corpo_prova`, `obra` e `tipo_concreto`. Dessa forma, os dados ficam organizados para as próximas análises quantitativas.
 
 
 ## Questão 28
 
-Utilize `across()` para calcular a média das variáveis quantitativas selecionadas. A função `across()` permite aplicar a mesma operação a várias variáveis simultaneamente. Em comparação, utilizando `summarise()` individualmente, cada variável precisa ser indicada separadamente.
+Para calcular simultaneamente a média das variáveis quantitativas da base, foi utilizada a função `across()` em conjunto com `summarise()`. Dessa forma, a mesma operação é aplicada automaticamente a todas as variáveis reconhecidas pelo R como numéricas.
 
 ```{r}
 # Calculando a média das variáveis quantitativas utilizando across().
-# summarise() cria um resumo dos dados.
-# across() aplica a função mean() a todas as variáveis numéricas.
+# where(is.numeric) seleciona automaticamente as variáveis numéricas.
+# mean() calcula a média de cada variável selecionada.
 
 medias_across <- dados_limpos |>
   summarise(
     across(
       where(is.numeric),
-      ~mean(.x)
+      ~mean(.x, na.rm = TRUE)
     )
   )
 
-# Calculando as médias individualmente utilizando summarise().
-# Cada variável é indicada separadamente.
+# Apresentando os resultados.
 
-medias_individuais <- dados_limpos |>
-  summarise(
-    idade_dias = mean(idade_dias),
-    resistencia_mpa = mean(resistencia_mpa),
-    cimento_kg_m3 = mean(cimento_kg_m3),
-    relacao_a_c = mean(relacao_a_c),
-    abatimento_mm = mean(abatimento_mm),
-    densidade_kg_m3 = mean(densidade_kg_m3),
-    absorção_agregado_pct = mean(absorção_agregado_pct)
-  )
-
-# Apresentando os resultados de across().
 knitr::kable(
   medias_across,
   digits = 2,
   caption = "Média das variáveis quantitativas utilizando across()."
 )
+```
 
-# Apresentando os resultados de summarise() individualmente.
+Para comparação, as médias também podem ser calculadas individualmente com `summarise()`, sendo necessário indicar cada variável separadamente:
+
+```{r}
+medias_individuais <- dados_limpos |>
+  summarise(
+    idade_dias = mean(idade_dias, na.rm = TRUE),
+    resistencia_mpa = mean(resistencia_mpa, na.rm = TRUE),
+    cimento_kg_m3 = mean(cimento_kg_m3, na.rm = TRUE),
+    relacao_a_c = mean(relacao_a_c, na.rm = TRUE),
+    abatimento_mm = mean(abatimento_mm, na.rm = TRUE),
+    densidade_kg_m3 = mean(densidade_kg_m3, na.rm = TRUE),
+    absorção_agregado_pct = mean(absorção_agregado_pct, na.rm = TRUE),
+    resistencia_relativa = mean(resistencia_relativa, na.rm = TRUE)
+  )
+
 knitr::kable(
   medias_individuais,
   digits = 2,
   caption = "Média das variáveis quantitativas utilizando summarise()."
 )
 ```
-Os dois métodos apresentam os mesmos resultados. Entretanto, across() apresenta maior facilidade de manutenção quando o número de variáveis aumenta, pois permite aplicar a mesma função a várias variáveis de forma automática, evitando a necessidade de escrever cada variável individualmente.
+
+Os dois procedimentos permitem obter as médias das variáveis quantitativas. Entretanto, `across()` torna o código mais prático e reduz a repetição, pois aplica automaticamente a mesma função a todas as variáveis numéricas da base. Dessa forma, caso novas variáveis quantitativas sejam adicionadas, elas também poderão ser incluídas no cálculo sem a necessidade de especificá-las individualmente.
 
 
 ## Questão 29
 
-Utilize `mutate()` e `across()` para realizar uma transformação simultânea nas variáveis quantitativas. Neste caso, será realizada a **padronização** das variáveis, subtraindo a média e dividindo pelo desvio-padrão. Essa transformação coloca as variáveis em uma escala comum, facilitando a comparação entre medidas que possuem unidades diferentes.
+Para realizar uma transformação simultânea nas variáveis quantitativas, foi utilizada a combinação das funções `mutate()` e `across()`. Nesse caso, foi realizada a **padronização** dos valores, subtraindo a média da variável e dividindo o resultado pelo seu desvio-padrão.
 
 ```{r}
 # Padronizando simultaneamente as variáveis quantitativas.
 # mutate() cria ou modifica variáveis na base de dados.
-# across() aplica a mesma transformação a várias variáveis.
-# A padronização transforma os valores para uma escala baseada na média e no desvio-padrão.
+# across() aplica a mesma transformação a todas as variáveis numéricas.
+# A padronização transforma os valores para uma escala comum.
 
 dados_padronizados <- dados_limpos |>
   mutate(
     across(
       where(is.numeric),
-      ~(.x - mean(.x)) / sd(.x)
+      ~(.x - mean(.x, na.rm = TRUE)) / sd(.x, na.rm = TRUE)
     )
   )
 
-# Apresentando as variáveis após a transformação.
+# Apresentando os primeiros registros após a transformação.
+
 knitr::kable(
   head(dados_padronizados),
   digits = 2,
@@ -1339,17 +1343,21 @@ knitr::kable(
 )
 ```
 
-A padronização permite comparar variáveis quantitativas que possuem diferentes unidades e escalas. Após a transformação, os valores passam a representar a distância em relação à média em termos de desvios-padrão. O uso conjunto de mutate() e across() torna a operação mais prática, pois a mesma transformação é aplicada simultaneamente a todas as variáveis numéricas.
+A padronização transforma as variáveis para uma escala comum, na qual a média passa a ser aproximadamente **0** e o desvio-padrão aproximadamente **1**. Assim, os valores indicam quantos desvios-padrão cada observação está acima ou abaixo da média.
+
+Essa transformação é útil para comparar variáveis que apresentam **unidades e escalas diferentes**, evitando que uma variável com valores numericamente maiores tenha maior influência apenas por sua escala. O uso conjunto de `mutate()` e `across()` torna o procedimento mais prático, pois permite aplicar a mesma transformação simultaneamente a todas as variáveis quantitativas.
+
 
 ## Questão 30
 
-Utilize `across()` em conjunto com `summarise()` para calcular, por tipo de concreto, a média e o desvio-padrão das variáveis quantitativas. Essa abordagem permite aplicar as mesmas estatísticas a várias variáveis de forma simultânea e organizada.
+Para comparar as variáveis quantitativas entre os diferentes tipos de concreto, foram calculadas a **média e o desvio-padrão** de cada variável dentro de cada grupo. Para isso, foi utilizada a combinação das funções `group_by()`, `summarise()` e `across()`.
 
 ```{r}
-# Calculando duas estatísticas para cada variável quantitativa por tipo de concreto.
-# group_by() agrupa as observações de acordo com o tipo de concreto.
-# summarise() calcula as estatísticas dentro de cada grupo.
-# across() aplica as funções média e desvio-padrão a todas as variáveis numéricas.
+# Calculando a média e o desvio-padrão das variáveis quantitativas
+# para cada tipo de concreto.
+# group_by() separa as observações por tipo de concreto.
+# summarise() calcula as estatísticas para cada grupo.
+# across() aplica as mesmas funções a todas as variáveis numéricas.
 
 estatisticas_tipo <- dados_limpos |>
   group_by(tipo_concreto) |>
@@ -1357,14 +1365,15 @@ estatisticas_tipo <- dados_limpos |>
     across(
       where(is.numeric),
       list(
-        media = ~mean(.x),
-        desvio_padrao = ~sd(.x)
+        media = ~mean(.x, na.rm = TRUE),
+        desvio_padrao = ~sd(.x, na.rm = TRUE)
       )
     ),
     .groups = "drop"
   )
 
-# Apresentando os resultados de forma organizada.
+# Apresentando os resultados em uma tabela.
+
 knitr::kable(
   estatisticas_tipo,
   digits = 2,
@@ -1372,61 +1381,79 @@ knitr::kable(
 )
 ```
 
-A utilização de across() em conjunto com summarise() torna o código mais compacto e organizado, pois permite calcular as mesmas estatísticas para várias variáveis simultaneamente. Na utilização de vários comandos separados, seria necessário escrever cada cálculo individualmente para cada variável e tipo de concreto. Portanto, across() apresenta maior facilidade de manutenção quando a quantidade de variáveis aumenta.
+A utilização de `across()` permite aplicar simultaneamente as funções de média e desvio-padrão a todas as variáveis quantitativas, enquanto `group_by()` possibilita realizar os cálculos separadamente para cada tipo de concreto. Dessa forma, é possível comparar tanto os **valores médios** quanto a **variabilidade** das variáveis entre os diferentes grupos.
+
+Essa abordagem torna o código mais compacto e facilita sua manutenção, principalmente quando a base possui um número maior de variáveis quantitativas.
 
 
 ## Questão 31
 
-Utilize funções do pacote `stringr` para verificar e padronizar os valores da variável `obra`. Serão investigados espaços no início ou no final dos textos, diferenças entre letras maiúsculas e minúsculas e possíveis grafias diferentes para uma mesma categoria.
+Para verificar e padronizar os valores da variável `obra`, foram utilizados os dados originais da base, antes da etapa de limpeza. Essa análise permite identificar possíveis diferenças de preenchimento, como espaços adicionais e variações entre letras maiúsculas e minúsculas.
+
+Inicialmente, foram apresentadas as categorias distintas e o comprimento de cada texto. Em seguida, foram aplicadas as funções `str_trim()` e `str_to_upper()` para padronizar os valores.
 
 ```{r}
-# Verificando os valores da variável obra antes da padronização.
+# Verificando os valores originais da variável obra.
 # distinct() apresenta as categorias diferentes existentes.
-# str_length() permite identificar diferenças no comprimento dos textos.
-# str_trim() remove espaços no início e no final.
-# str_to_upper() padroniza as letras para maiúsculas.
+# str_length() permite verificar o comprimento dos textos.
 
-obra_antes <- dados_limpos |>
+obra_antes <- dados |>
   distinct(obra) |>
   mutate(
     comprimento = str_length(obra)
   )
 
-# Padronizando os valores da variável obra.
-obra_depois <- dados_limpos |>
-  mutate(
-    obra = obra |>
-      str_trim() |>
-      str_to_upper()
-  ) |>
-  distinct(obra) |>
-  mutate(
-    comprimento = str_length(obra)
-  )
-
-# Apresentando os valores antes da padronização.
 knitr::kable(
   obra_antes,
   caption = "Valores da variável obra antes da padronização."
 )
+```
 
-# Apresentando os valores depois da padronização.
+Após a identificação dos valores originais, foi realizada a padronização da variável:
+
+```{r}
+# Padronizando os valores da variável obra.
+# str_trim() remove espaços no início e no final dos textos.
+# str_to_upper() converte todos os caracteres para letras maiúsculas.
+
+dados_padronizados <- dados |>
+  mutate(
+    obra = obra |>
+      str_trim() |>
+      str_to_upper()
+  )
+
+# Verificando as categorias após a padronização.
+
+obra_depois <- dados_padronizados |>
+  distinct(obra) |>
+  mutate(
+    comprimento = str_length(obra)
+  )
+
 knitr::kable(
   obra_depois,
-  caption = "Valores da variável obra depois da padronização."
+  caption = "Valores da variável obra após a padronização."
 )
 ```
 
-Antes da padronização, a variável obra é analisada para identificar diferenças de espaços, letras maiúsculas e minúsculas e possíveis variações nas categorias. Após a aplicação de str_trim() e str_to_upper(), os valores passam a seguir um mesmo padrão, evitando que categorias iguais sejam consideradas diferentes durante as análises.
+A utilização dos dados originais permite identificar as inconsistências de preenchimento antes que elas sejam alteradas durante a limpeza. As funções `str_trim()` e `str_to_upper()` uniformizam a apresentação dos valores, evitando que diferenças de espaços ou de capitalização façam com que uma mesma categoria seja interpretada como categorias distintas.
+
+Dessa forma, a padronização contribui para melhorar a consistência da variável `obra` e torna sua utilização nas análises posteriores mais adequada.
+
+
+
 
 ## Questão 32
 
-Utilize `str_detect()` para localizar registros que contenham determinado padrão textual em `tipo_concreto` ou `obra`. Neste caso, será realizada uma busca por registros que contenham a categoria `C30` ou a expressão `Bloco B`, permitindo identificar essas ocorrências na base de dados.
+Para localizar registros que contenham determinados padrões textuais nas variáveis `tipo_concreto` e `obra`, foi utilizada a função `str_detect()` do pacote `stringr`. A busca foi realizada para identificar ocorrências de `C30` em `tipo_concreto` ou de `Bloco B` em `obra`.
 
 ```{r}
-# Localizando registros que contenham padrões específicos de texto.
-# str_detect() verifica se determinado padrão está presente no texto.
-# filter() seleciona somente os registros que atendem à condição.
+# Localizando registros que contenham os padrões textuais especificados.
+# str_detect() verifica a presença de determinado padrão no texto.
+# regex() permite realizar a busca sem diferenciar letras maiúsculas
+# e minúsculas.
+# filter() seleciona os registros que atendem a pelo menos uma condição.
 
 registros_padrao <- dados_limpos |>
   filter(
@@ -1440,13 +1467,15 @@ registros_padrao <- dados_limpos |>
   )
 
 # Apresentando os registros encontrados.
+
 knitr::kable(
   registros_padrao,
   caption = "Registros contendo os padrões textuais pesquisados."
 )
 ```
 
-A utilização de str_detect() permite localizar padrões textuais mesmo quando existem diferenças entre letras maiúsculas e minúsculas. Esse recurso auxilia no diagnóstico de bases de dados porque permite identificar categorias, grafias diferentes, informações inconsistentes ou registros que precisam de padronização antes das análises.
+A função `str_detect()` permite localizar registros a partir de padrões específicos dentro de variáveis textuais. Nesse caso, a utilização de `ignore_case = TRUE` faz com que a busca não seja afetada por diferenças entre letras maiúsculas e minúsculas. Esse recurso facilita a identificação de **categorias específicas e possíveis variações no preenchimento**, contribuindo para o diagnóstico e a padronização da base de dados.
+
 
 
 
