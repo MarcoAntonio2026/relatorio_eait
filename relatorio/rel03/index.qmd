@@ -1204,13 +1204,9 @@ A função arrange() organiza os tipos de concreto em ordem crescente, permitind
 
 ## Questão 26
 
-Calcule diferentes estatísticas da resistência à compressão para cada tipo de concreto. Serão utilizadas a média, mediana, desvio-padrão, mínimo e máximo, permitindo uma análise mais completa dos resultados.
+Para cada tipo de concreto, foram calculadas simultaneamente diferentes estatísticas da variável `resistencia_mpa`, utilizando `group_by()` para separar os grupos e `summarise()` para obter o número de observações, a média, a mediana, o desvio-padrão, o valor mínimo e o valor máximo.
 
 ```{r}
-# Calculando diferentes estatísticas da resistência à compressão para cada tipo de concreto.
-# group_by() agrupa as observações de acordo com o tipo de concreto.
-# summarise() calcula várias estatísticas para cada grupo.
-
 estatisticas_resistencia <- dados_limpos |>
   group_by(tipo_concreto) |>
   summarise(
@@ -1223,13 +1219,12 @@ estatisticas_resistencia <- dados_limpos |>
     .groups = "drop"
   )
 
-# Apresentando os resultados em uma tabela organizada.
 knitr::kable(
   estatisticas_resistencia,
   digits = 2,
   col.names = c(
     "Tipo de concreto",
-    "Quantidade de observações",
+    "Nº de observações",
     "Média (MPa)",
     "Mediana (MPa)",
     "Desvio-padrão (MPa)",
@@ -1239,6 +1234,12 @@ knitr::kable(
   caption = "Estatísticas da resistência à compressão por tipo de concreto."
 )
 ```
+
+A tabela permite uma análise mais completa da resistência à compressão, pois a **média** representa o valor central dos resultados, enquanto a **mediana** permite verificar o comportamento do valor central sem sofrer tanta influência de valores extremos. O **desvio-padrão** informa a variabilidade dos resultados, e os valores **mínimo e máximo** mostram a amplitude das resistências observadas. Além disso, o número de observações indica a quantidade de dados utilizada em cada grupo.
+
+Assim, apresentar várias estatísticas é mais informativo do que utilizar apenas a média, pois permite avaliar simultaneamente **tendência central, dispersão e amplitude dos resultados**, proporcionando uma caracterização mais adequada da resistência de cada tipo de concreto.
+
+
 
 ## Questão 27
 
