@@ -1566,10 +1566,9 @@ Observa-se uma **tendência negativa**, indicando que maiores valores da relaç�
 
 A presença de pontos que se afastam do padrão geral merece investigação, pois pode indicar **valores discrepantes, variações nas características dos materiais ou diferenças nas condições de produção e ensaio**.
 
-
 ## Questão 36 — Comparação entre obras
 
-Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no **Bloco C** apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.
+Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no Bloco C apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.
 
 Inicialmente, foram calculadas a média, a mediana e o desvio-padrão da resistência para cada obra:
 

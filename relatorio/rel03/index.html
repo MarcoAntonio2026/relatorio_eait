@@ -206,7 +206,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">07/09/2026, 15:57</p>
+      <p class="date">07/09/2026, 16:17</p>
     </div>
   </div>
   
@@ -5221,7 +5221,7 @@ $ absorção_agregado_pct &lt;dbl&gt; 2.30, 1.85, 1.89, 1.97, 2.31, 0.80, 1.18, 
 </section>
 <section id="questão-36-comparação-entre-obras" class="level2" data-number="5.36">
 <h2 data-number="5.36" class="anchored" data-anchor-id="questão-36-comparação-entre-obras"><span class="header-section-number">5.36</span> Questão 36 — Comparação entre obras</h2>
-<p>Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no <strong>Bloco C</strong> apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.</p>
+<p>Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no Bloco C apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.</p>
 <p>Inicialmente, foram calculadas a média, a mediana e o desvio-padrão da resistência para cada obra:</p>
 <div class="cell">
 <details class="code-fold">
@@ -7382,97 +7382,97 @@ BATISTA, B. D. DE O.; ARTHUR, D. <strong><a href="https://bendeivide.github.io/b
 <span id="cb96-1670"><a href="#cb96-1670" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1671"><a href="#cb96-1671" aria-hidden="true" tabindex="-1"></a>A presença de pontos que se afastam do padrão geral merece investigação, pois pode indicar **valores discrepantes, variações nas características dos materiais ou diferenças nas condições de produção e ensaio**.</span>
 <span id="cb96-1672"><a href="#cb96-1672" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1673"><a href="#cb96-1673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1674"><a href="#cb96-1674" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 36 — Comparação entre obras</span></span>
-<span id="cb96-1675"><a href="#cb96-1675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1676"><a href="#cb96-1676" aria-hidden="true" tabindex="-1"></a>Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no **Bloco C** apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.</span>
-<span id="cb96-1677"><a href="#cb96-1677" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1678"><a href="#cb96-1678" aria-hidden="true" tabindex="-1"></a>Inicialmente, foram calculadas a média, a mediana e o desvio-padrão da resistência para cada obra:</span>
-<span id="cb96-1679"><a href="#cb96-1679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1682"><a href="#cb96-1682" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb96-1683"><a href="#cb96-1683" aria-hidden="true" tabindex="-1"></a>resistencia_obras <span class="ot">&lt;-</span> dados_limpos <span class="sc">%&gt;%</span></span>
-<span id="cb96-1684"><a href="#cb96-1684" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(obra) <span class="sc">%&gt;%</span></span>
-<span id="cb96-1685"><a href="#cb96-1685" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb96-1686"><a href="#cb96-1686" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb96-1687"><a href="#cb96-1687" aria-hidden="true" tabindex="-1"></a>    média <span class="ot">=</span> <span class="fu">mean</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb96-1688"><a href="#cb96-1688" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb96-1689"><a href="#cb96-1689" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio_padrao =</span> <span class="fu">sd</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb96-1690"><a href="#cb96-1690" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb96-1691"><a href="#cb96-1691" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb96-1692"><a href="#cb96-1692" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(média))</span>
-<span id="cb96-1693"><a href="#cb96-1693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1694"><a href="#cb96-1694" aria-hidden="true" tabindex="-1"></a>resistencia_obras</span>
-<span id="cb96-1695"><a href="#cb96-1695" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb96-1696"><a href="#cb96-1696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1697"><a href="#cb96-1697" aria-hidden="true" tabindex="-1"></a>A distribuição dos resultados foi complementada por meio de um gráfico de caixa:</span>
-<span id="cb96-1698"><a href="#cb96-1698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1701"><a href="#cb96-1701" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb96-1702"><a href="#cb96-1702" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb96-1703"><a href="#cb96-1703" aria-hidden="true" tabindex="-1"></a>  dados_limpos,</span>
-<span id="cb96-1704"><a href="#cb96-1704" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb96-1705"><a href="#cb96-1705" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> obra,</span>
-<span id="cb96-1706"><a href="#cb96-1706" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> resistencia_mpa,</span>
-<span id="cb96-1707"><a href="#cb96-1707" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> obra</span>
-<span id="cb96-1708"><a href="#cb96-1708" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb96-1709"><a href="#cb96-1709" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb96-1710"><a href="#cb96-1710" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb96-1711"><a href="#cb96-1711" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb96-1712"><a href="#cb96-1712" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição da resistência à compressão por obra"</span>,</span>
-<span id="cb96-1713"><a href="#cb96-1713" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Obra"</span>,</span>
-<span id="cb96-1714"><a href="#cb96-1714" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resistência à compressão (MPa)"</span></span>
-<span id="cb96-1715"><a href="#cb96-1715" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb96-1716"><a href="#cb96-1716" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb96-1717"><a href="#cb96-1717" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb96-1718"><a href="#cb96-1718" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb96-1719"><a href="#cb96-1719" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb96-1720"><a href="#cb96-1720" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
-<span id="cb96-1721"><a href="#cb96-1721" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb96-1722"><a href="#cb96-1722" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb96-1723"><a href="#cb96-1723" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1724"><a href="#cb96-1724" aria-hidden="true" tabindex="-1"></a>A comparação dos resultados mostra que o **Bloco C não apresenta o maior desempenho em resistência à compressão**. Sua mediana é inferior às observadas nos Blocos B e D, enquanto sua distribuição apresenta também considerável variabilidade.</span>
-<span id="cb96-1725"><a href="#cb96-1725" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1726"><a href="#cb96-1726" aria-hidden="true" tabindex="-1"></a>Portanto, **os dados analisados não dão suporte, em termos descritivos, à afirmação de que os concretos do Bloco C apresentam desempenho superior aos demais blocos**. Essa conclusão se restringe aos resultados observados na base e não envolve teste de hipótese.</span>
-<span id="cb96-1727"><a href="#cb96-1727" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1728"><a href="#cb96-1728" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 37 — Idade e resistência</span></span>
-<span id="cb96-1729"><a href="#cb96-1729" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1730"><a href="#cb96-1730" aria-hidden="true" tabindex="-1"></a>Para analisar a relação entre a idade dos corpos de prova e a resistência à compressão, foram calculadas as médias de resistência para cada idade. O valor de <span class="in">`280 dias`</span> foi desconsiderado nesta análise por apresentar comportamento discrepante em relação às demais idades.</span>
-<span id="cb96-1731"><a href="#cb96-1731" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1734"><a href="#cb96-1734" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb96-1735"><a href="#cb96-1735" aria-hidden="true" tabindex="-1"></a>resistencia_idade <span class="ot">&lt;-</span> dados_limpos <span class="sc">%&gt;%</span></span>
-<span id="cb96-1736"><a href="#cb96-1736" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(idade_dias <span class="sc">!=</span> <span class="dv">280</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb96-1737"><a href="#cb96-1737" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(idade_dias) <span class="sc">%&gt;%</span></span>
-<span id="cb96-1738"><a href="#cb96-1738" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb96-1739"><a href="#cb96-1739" aria-hidden="true" tabindex="-1"></a>    média<span class="at">_resistencia =</span> <span class="fu">mean</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb96-1740"><a href="#cb96-1740" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb96-1741"><a href="#cb96-1741" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb96-1742"><a href="#cb96-1742" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(idade_dias)</span>
-<span id="cb96-1743"><a href="#cb96-1743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1744"><a href="#cb96-1744" aria-hidden="true" tabindex="-1"></a>resistencia_idade</span>
-<span id="cb96-1745"><a href="#cb96-1745" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb96-1746"><a href="#cb96-1746" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1747"><a href="#cb96-1747" aria-hidden="true" tabindex="-1"></a>A relação entre idade e resistência média foi representada graficamente:</span>
-<span id="cb96-1748"><a href="#cb96-1748" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1751"><a href="#cb96-1751" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb96-1752"><a href="#cb96-1752" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb96-1753"><a href="#cb96-1753" aria-hidden="true" tabindex="-1"></a>  resistencia_idade,</span>
-<span id="cb96-1754"><a href="#cb96-1754" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb96-1755"><a href="#cb96-1755" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> idade_dias,</span>
-<span id="cb96-1756"><a href="#cb96-1756" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> média_resistencia</span>
-<span id="cb96-1757"><a href="#cb96-1757" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb96-1758"><a href="#cb96-1758" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb96-1759"><a href="#cb96-1759" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb96-1760"><a href="#cb96-1760" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb96-1761"><a href="#cb96-1761" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb96-1762"><a href="#cb96-1762" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Resistência média à compressão em função da idade"</span>,</span>
-<span id="cb96-1763"><a href="#cb96-1763" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Idade do corpo de prova (dias)"</span>,</span>
-<span id="cb96-1764"><a href="#cb96-1764" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resistência média (MPa)"</span></span>
-<span id="cb96-1765"><a href="#cb96-1765" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb96-1766"><a href="#cb96-1766" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb96-1767"><a href="#cb96-1767" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb96-1768"><a href="#cb96-1768" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1769"><a href="#cb96-1769" aria-hidden="true" tabindex="-1"></a>Após a retirada do valor discrepante, observa-se uma **tendência de aumento da resistência média com o avanço da idade**. Os resultados indicam, portanto, que os corpos de prova tendem a apresentar maior resistência à compressão nas idades mais avançadas, embora esse crescimento não ocorra necessariamente de forma uniforme.</span>
-<span id="cb96-1770"><a href="#cb96-1770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1771"><a href="#cb96-1771" aria-hidden="true" tabindex="-1"></a>Assim, os dados apresentam **evidência descritiva de uma relação positiva entre idade e resistência à compressão**.</span>
+<span id="cb96-1673"><a href="#cb96-1673" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 36 — Comparação entre obras</span></span>
+<span id="cb96-1674"><a href="#cb96-1674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1675"><a href="#cb96-1675" aria-hidden="true" tabindex="-1"></a>Para verificar, em termos descritivos, a afirmação de que os concretos utilizados no Bloco C apresentam desempenho superior aos demais blocos, foram comparadas as medidas de resistência à compressão entre as obras.</span>
+<span id="cb96-1676"><a href="#cb96-1676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1677"><a href="#cb96-1677" aria-hidden="true" tabindex="-1"></a>Inicialmente, foram calculadas a média, a mediana e o desvio-padrão da resistência para cada obra:</span>
+<span id="cb96-1678"><a href="#cb96-1678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1681"><a href="#cb96-1681" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb96-1682"><a href="#cb96-1682" aria-hidden="true" tabindex="-1"></a>resistencia_obras <span class="ot">&lt;-</span> dados_limpos <span class="sc">%&gt;%</span></span>
+<span id="cb96-1683"><a href="#cb96-1683" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(obra) <span class="sc">%&gt;%</span></span>
+<span id="cb96-1684"><a href="#cb96-1684" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb96-1685"><a href="#cb96-1685" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb96-1686"><a href="#cb96-1686" aria-hidden="true" tabindex="-1"></a>    média <span class="ot">=</span> <span class="fu">mean</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb96-1687"><a href="#cb96-1687" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">median</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb96-1688"><a href="#cb96-1688" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio_padrao =</span> <span class="fu">sd</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb96-1689"><a href="#cb96-1689" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb96-1690"><a href="#cb96-1690" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb96-1691"><a href="#cb96-1691" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(média))</span>
+<span id="cb96-1692"><a href="#cb96-1692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1693"><a href="#cb96-1693" aria-hidden="true" tabindex="-1"></a>resistencia_obras</span>
+<span id="cb96-1694"><a href="#cb96-1694" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb96-1695"><a href="#cb96-1695" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1696"><a href="#cb96-1696" aria-hidden="true" tabindex="-1"></a>A distribuição dos resultados foi complementada por meio de um gráfico de caixa:</span>
+<span id="cb96-1697"><a href="#cb96-1697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1700"><a href="#cb96-1700" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb96-1701"><a href="#cb96-1701" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb96-1702"><a href="#cb96-1702" aria-hidden="true" tabindex="-1"></a>  dados_limpos,</span>
+<span id="cb96-1703"><a href="#cb96-1703" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb96-1704"><a href="#cb96-1704" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> obra,</span>
+<span id="cb96-1705"><a href="#cb96-1705" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> resistencia_mpa,</span>
+<span id="cb96-1706"><a href="#cb96-1706" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> obra</span>
+<span id="cb96-1707"><a href="#cb96-1707" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb96-1708"><a href="#cb96-1708" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb96-1709"><a href="#cb96-1709" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb96-1710"><a href="#cb96-1710" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb96-1711"><a href="#cb96-1711" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição da resistência à compressão por obra"</span>,</span>
+<span id="cb96-1712"><a href="#cb96-1712" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Obra"</span>,</span>
+<span id="cb96-1713"><a href="#cb96-1713" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resistência à compressão (MPa)"</span></span>
+<span id="cb96-1714"><a href="#cb96-1714" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb96-1715"><a href="#cb96-1715" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb96-1716"><a href="#cb96-1716" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb96-1717"><a href="#cb96-1717" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb96-1718"><a href="#cb96-1718" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb96-1719"><a href="#cb96-1719" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb96-1720"><a href="#cb96-1720" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb96-1721"><a href="#cb96-1721" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb96-1722"><a href="#cb96-1722" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1723"><a href="#cb96-1723" aria-hidden="true" tabindex="-1"></a>A comparação dos resultados mostra que o **Bloco C não apresenta o maior desempenho em resistência à compressão**. Sua mediana é inferior às observadas nos Blocos B e D, enquanto sua distribuição apresenta também considerável variabilidade.</span>
+<span id="cb96-1724"><a href="#cb96-1724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1725"><a href="#cb96-1725" aria-hidden="true" tabindex="-1"></a>Portanto, **os dados analisados não dão suporte, em termos descritivos, à afirmação de que os concretos do Bloco C apresentam desempenho superior aos demais blocos**. Essa conclusão se restringe aos resultados observados na base e não envolve teste de hipótese.</span>
+<span id="cb96-1726"><a href="#cb96-1726" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1727"><a href="#cb96-1727" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questão 37 — Idade e resistência</span></span>
+<span id="cb96-1728"><a href="#cb96-1728" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1729"><a href="#cb96-1729" aria-hidden="true" tabindex="-1"></a>Para analisar a relação entre a idade dos corpos de prova e a resistência à compressão, foram calculadas as médias de resistência para cada idade. O valor de <span class="in">`280 dias`</span> foi desconsiderado nesta análise por apresentar comportamento discrepante em relação às demais idades.</span>
+<span id="cb96-1730"><a href="#cb96-1730" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1733"><a href="#cb96-1733" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb96-1734"><a href="#cb96-1734" aria-hidden="true" tabindex="-1"></a>resistencia_idade <span class="ot">&lt;-</span> dados_limpos <span class="sc">%&gt;%</span></span>
+<span id="cb96-1735"><a href="#cb96-1735" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(idade_dias <span class="sc">!=</span> <span class="dv">280</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb96-1736"><a href="#cb96-1736" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(idade_dias) <span class="sc">%&gt;%</span></span>
+<span id="cb96-1737"><a href="#cb96-1737" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb96-1738"><a href="#cb96-1738" aria-hidden="true" tabindex="-1"></a>    média<span class="at">_resistencia =</span> <span class="fu">mean</span>(resistencia_mpa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb96-1739"><a href="#cb96-1739" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb96-1740"><a href="#cb96-1740" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb96-1741"><a href="#cb96-1741" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(idade_dias)</span>
+<span id="cb96-1742"><a href="#cb96-1742" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1743"><a href="#cb96-1743" aria-hidden="true" tabindex="-1"></a>resistencia_idade</span>
+<span id="cb96-1744"><a href="#cb96-1744" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb96-1745"><a href="#cb96-1745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1746"><a href="#cb96-1746" aria-hidden="true" tabindex="-1"></a>A relação entre idade e resistência média foi representada graficamente:</span>
+<span id="cb96-1747"><a href="#cb96-1747" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1750"><a href="#cb96-1750" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb96-1751"><a href="#cb96-1751" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb96-1752"><a href="#cb96-1752" aria-hidden="true" tabindex="-1"></a>  resistencia_idade,</span>
+<span id="cb96-1753"><a href="#cb96-1753" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb96-1754"><a href="#cb96-1754" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> idade_dias,</span>
+<span id="cb96-1755"><a href="#cb96-1755" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> média_resistencia</span>
+<span id="cb96-1756"><a href="#cb96-1756" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb96-1757"><a href="#cb96-1757" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb96-1758"><a href="#cb96-1758" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb96-1759"><a href="#cb96-1759" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb96-1760"><a href="#cb96-1760" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb96-1761"><a href="#cb96-1761" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Resistência média à compressão em função da idade"</span>,</span>
+<span id="cb96-1762"><a href="#cb96-1762" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Idade do corpo de prova (dias)"</span>,</span>
+<span id="cb96-1763"><a href="#cb96-1763" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Resistência média (MPa)"</span></span>
+<span id="cb96-1764"><a href="#cb96-1764" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb96-1765"><a href="#cb96-1765" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb96-1766"><a href="#cb96-1766" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb96-1767"><a href="#cb96-1767" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1768"><a href="#cb96-1768" aria-hidden="true" tabindex="-1"></a>Após a retirada do valor discrepante, observa-se uma **tendência de aumento da resistência média com o avanço da idade**. Os resultados indicam, portanto, que os corpos de prova tendem a apresentar maior resistência à compressão nas idades mais avançadas, embora esse crescimento não ocorra necessariamente de forma uniforme.</span>
+<span id="cb96-1769"><a href="#cb96-1769" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1770"><a href="#cb96-1770" aria-hidden="true" tabindex="-1"></a>Assim, os dados apresentam **evidência descritiva de uma relação positiva entre idade e resistência à compressão**.</span>
+<span id="cb96-1771"><a href="#cb96-1771" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1772"><a href="#cb96-1772" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1773"><a href="#cb96-1773" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1774"><a href="#cb96-1774" aria-hidden="true" tabindex="-1"></a></span>
@@ -7484,16 +7484,15 @@ BATISTA, B. D. DE O.; ARTHUR, D. <strong><a href="https://bendeivide.github.io/b
 <span id="cb96-1780"><a href="#cb96-1780" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1781"><a href="#cb96-1781" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1782"><a href="#cb96-1782" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1783"><a href="#cb96-1783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1784"><a href="#cb96-1784" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Considerações finais</span></span>
+<span id="cb96-1783"><a href="#cb96-1783" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Considerações finais</span></span>
+<span id="cb96-1784"><a href="#cb96-1784" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1785"><a href="#cb96-1785" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1786"><a href="#cb96-1786" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1787"><a href="#cb96-1787" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb96-1788"><a href="#cb96-1788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1789"><a href="#cb96-1789" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1790"><a href="#cb96-1790" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📖 Referências</span></span>
-<span id="cb96-1791"><a href="#cb96-1791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-1792"><a href="#cb96-1792" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb96-1789"><a href="#cb96-1789" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📖 Referências</span></span>
+<span id="cb96-1790"><a href="#cb96-1790" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-1791"><a href="#cb96-1791" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
