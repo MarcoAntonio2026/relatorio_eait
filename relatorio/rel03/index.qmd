@@ -283,31 +283,34 @@ Assim, os conceitos estatísticos e as ferramentas computacionais empregados nes
 
 ## Questão 1
 
-A base de dados foi importada para o R e atribuída ao objeto `dados` utilizando a função `read_csv2()`. Essa função foi adequada ao formato do arquivo, que utilizou o ponto e vírgula (`;`) como separador das colunas. Por padrão, a primeira linha é interpretada como o nome das variáveis, não sendo necessário nenhum outro comando adicional.
-
-Para verificar a importação, foram utilizadas as funções `head()` e `tail()`. A função `head()` apresentou as primeiras observações da base, enquanto `tail()` apresentou as últimas. O argumento `width = Inf`, utilizado em `print()`, permitiu visualizar todas as colunas sem que fossem ocultadas pela largura da tela.
+A base de dados foi importada para o R utilizando a função `read_csv2()`, que é adequada ao arquivo por utilizar o ponto e vírgula (`;`) como separador. Optou-se por importar inicialmente todas as variáveis como texto, preservando os valores originais e evitando conversões automáticas antes da etapa de limpeza. O argumento `trim_ws = FALSE` foi mantido para preservar os espaços presentes nos dados.
 
 ```{r}
 library(tidyverse)
 
-dados <- read_csv2("base_de_dados.csv", trim_ws = FALSE)
+dados <- read_csv2(
+  "base_de_dados.csv",
+  col_types = cols(.default = col_character()),
+  trim_ws = FALSE
+)
 
 print(head(dados), width = Inf)
 print(tail(dados), width = Inf)
 ```
 
-A visualização das primeiras e últimas observações permitiu confirmar a correta importação dos dados, incluindo os nomes das variáveis e seus respectivos valores.
+As funções `head()` e `tail()` foram utilizadas para verificar as primeiras e últimas observações da base. A importação como texto permite identificar e corrigir as inconsistências existentes antes da conversão das variáveis para seus respectivos tipos.
+
 
 ## Questão 2
 
-As dimensões da base foram verificadas por meio das funções `nrow()` e `ncol()`. A função `nrow()` retornou o número de linhas, correspondente às **observações**, enquanto `ncol()` retornou o número de colunas, correspondente às **variáveis**.
+As dimensões da base foram verificadas por meio das funções `nrow()` e `ncol()`. A função `nrow()` retorna o número de linhas, correspondente às **observações**, enquanto `ncol()` retorna o número de colunas, correspondente às **variáveis**.
 
 ```{r}
 nrow(dados)
 ncol(dados)
 ```
 
-A base apresentou **100 observações e 10 variáveis**. Dessa forma, cada linha representou uma observação e cada coluna correspondeu a uma variável utilizada na análise.
+A base apresentou **100 observações e 10 variáveis**. Dessa forma, cada linha representa uma observação e cada coluna corresponde a uma variável utilizada na análise.
 
 ## Questão 3
 
@@ -317,53 +320,16 @@ A estrutura da base foi apresentada por meio da função `glimpse()`, pertencent
 glimpse(dados)
 ```
 
-A análise da estrutura permitiu verificar que a base possui **100 observações e 10 variáveis**, além de identificar como cada variável havia sido reconhecida inicialmente pelo R. As variáveis foram apresentadas com seus respectivos tipos (`<chr>` e `<dbl>`) e alguns dos valores armazenados, sendo essa informação importante para verificar se os tipos atribuídos estão de acordo com a natureza dos dados.
+A análise da estrutura permitiu verificar que a base possui **100 observações e 10 variáveis**. Como todas as colunas foram importadas inicialmente como texto, as variáveis foram apresentadas pelo R com o tipo `<chr>`.
 
+Essa escolha foi realizada para preservar os valores originais da base e evitar conversões automáticas antes da identificação dos problemas existentes. Dessa forma, a classificação das variáveis quanto à sua natureza será realizada considerando o significado das informações armazenadas.
 
 ## Questão 4
 
-Para apresentar um resumo das variáveis da base, foi realizada inicialmente uma separação entre as variáveis **quantitativas e qualitativas**, considerando a classificação atribuída pelo R.
+Para apresentar um resumo inicial das variáveis, foi verificada a quantidade de valores distintos presentes em cada coluna. Como todas as variáveis foram importadas como texto, essa abordagem permite investigar a diversidade dos valores sem realizar conversões antecipadas.
 
 ```{r}
-quantitativas <- dados %>%
-  select(where(is.numeric)) %>%
-  print(width = Inf)
-
-qualitativas <- dados %>%
-  select(where(is.character)) %>%
-  print(width = Inf)
-```
-
-A função `select()` permite selecionar variáveis da base, enquanto `where()` aplica uma condição às colunas. Assim, `is.numeric()` identifica as variáveis armazenadas como numéricas e `is.character()` identifica aquelas armazenadas como texto.
-
-### Resumo das variáveis quantitativas
-
-```{r}
-quantitativas %>%
-  summarise(
-    across(
-      everything(),
-      list(
-        mínimo = ~min(.x, na.rm = TRUE),
-        média = ~mean(.x, na.rm = TRUE),
-        mediana = ~median(.x, na.rm = TRUE),
-        máximo = ~max(.x, na.rm = TRUE)
-      )
-    )
-  ) %>%
-  print(width = Inf)
-```
-
-Como o objeto `quantitativas` já contém somente as variáveis numéricas, `everything()` indica que as operações devem ser aplicadas a **todas as colunas desse objeto**. A função `summarise()` produz o resumo estatístico e `across()` permite realizar as mesmas operações simultaneamente em diferentes variáveis.
-
-O `list()` possibilita calcular **várias estatísticas para cada variável**, neste caso, mínimo, média, mediana e máximo. O `.x` representa a variável que está sendo processada pelo `across()`, permitindo que a mesma função seja aplicada a cada coluna. Já `na.rm = TRUE` determina que os valores ausentes (`NA`) sejam desconsiderados nos cálculos.
-
-### Resumo das variáveis qualitativas
-
-Para as variáveis qualitativas, foi verificada a quantidade de valores distintos presentes em cada variável:
-
-```{r}
-qualitativas %>%
+dados %>%
   summarise(
     across(
       everything(),
@@ -373,20 +339,17 @@ qualitativas %>%
   print(width = Inf)
 ```
 
-Nesse caso, `n_distinct(.x)` contabiliza a quantidade de valores diferentes em cada coluna. Essa informação permite verificar as categorias existentes e identificar possíveis inconsistências de preenchimento, como diferenças de grafia ou formas distintas de representar uma mesma categoria.
+A função `across()` permite aplicar a mesma operação a todas as variáveis da base, enquanto `n_distinct()` contabiliza a quantidade de valores diferentes presentes em cada coluna.
 
-### Informações que chamam atenção
+O resultado permite identificar características iniciais da base, como a existência de diferentes categorias nas variáveis qualitativas e a quantidade de valores distintos nas variáveis que possuem natureza quantitativa.
 
-O resumo evidencia que `id_corpo_prova`, `obra` e `tipo_concreto` são variáveis qualitativas, enquanto `idade_dias`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct` foram reconhecidas pelo R como quantitativas.
+Algumas variáveis apresentam valores com diferentes formas de preenchimento, como o uso de vírgula decimal, espaços adicionais e caracteres indevidos. Essas situações serão investigadas nas etapas seguintes.
 
-Entretanto, `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` são **quantitativas pela natureza da informação**, mas foram reconhecidas pelo R como `character`. Essa inconsistência pode estar relacionada à presença de vírgulas decimais, caracteres indevidos ou outras diferenças no preenchimento dos dados.
-
-Em comparação com o Relatório 02, observa-se que a função `summary()` apresenta uma forma mais prática e direta de obter um resumo geral das variáveis. Por outro lado, os recursos do `tidyverse` oferecem maior flexibilidade para selecionar, organizar e aplicar operações específicas às variáveis, sendo mais adequados quando se deseja um diagnóstico ou tratamento mais detalhado dos dados.
-
+Em comparação com o Relatório 02, a função `summary()` apresenta um resumo mais direto dos dados. Neste relatório, os recursos do `tidyverse` permitem realizar uma investigação mais direcionada, selecionando e transformando as informações conforme a necessidade da análise.
 
 ## Questão 5
 
-A classificação das variáveis foi realizada considerando tanto a **natureza da informação** quanto o tipo inicialmente atribuído pelo R.
+Como todas as variáveis foram importadas inicialmente como texto, o tipo atribuído pelo R foi verificado utilizando `across()` em conjunto com `class()`.
 
 ```{r}
 dados %>%
@@ -399,25 +362,24 @@ dados %>%
   print(width = Inf)
 ```
 
-A função `everything()` seleciona todas as colunas da base e `across()` aplica `class()` a cada uma delas, permitindo verificar como o R classificou cada variável.
+A função `everything()` seleciona todas as colunas da base, enquanto `across()` aplica a função `class()` a cada variável.
 
-Inicialmente, as variáveis podem ser interpretadas da seguinte forma:
+Como resultado, todas as variáveis foram reconhecidas inicialmente pelo R como `character`. Entretanto, o tipo de armazenamento não determina, por si só, a natureza estatística da variável.
 
-| Natureza                                                       | Variáveis                                                                 |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| **Qualitativas**                                               | `id_corpo_prova`, `obra`, `tipo_concreto`                                 |
-| **Quantitativas reconhecidas como numéricas**                  | `idade_dias`, `abatimento_mm`, `densidade_kg_m3`, `absorção_agregado_pct` |
-| **Quantitativas reconhecidas incorretamente como `character`** | `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`                         |
+Considerando a natureza das informações, as variáveis podem ser classificadas da seguinte forma:
 
-Assim, as variáveis `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` constituem um ponto importante do diagnóstico. Apesar de possuírem natureza quantitativa, seu armazenamento como texto impede que sejam tratadas corretamente em cálculos estatísticos.
+| Natureza          | Variáveis                                                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Qualitativas**  | `id_corpo_prova`, `obra`, `tipo_concreto`                                                                                    |
+| **Quantitativas** | `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3`, `absorção_agregado_pct` |
+
+Assim, as sete últimas variáveis possuem natureza quantitativa, embora estejam temporariamente armazenadas como texto. Essa conversão será realizada após a identificação e correção das inconsistências presentes na base.
 
 ## Questão 6
 
-A existência de valores ausentes na base foi investigada utilizando `across()` em conjunto com `is.na()`. Essa abordagem permite realizar uma verificação sistemática de todas as variáveis da base, identificando **quantos valores ausentes existem, em quais variáveis eles aparecem e em quais observações estão localizados**.
+A existência de valores ausentes na base foi investigada utilizando `across()` em conjunto com `is.na()`. Essa abordagem permite realizar uma verificação sistemática de todas as variáveis.
 
-### Quantidade de valores ausentes por variável
-
-Inicialmente, foi calculada a quantidade de valores ausentes em cada variável da base. Para isso, utilizou-se `across()` para aplicar a função `is.na()` a todas as variáveis e, posteriormente, `pivot_longer()` para organizar os resultados em formato de tabela.
+Inicialmente, foi calculada a quantidade de valores ausentes em cada variável:
 
 ```{r}
 ausentes_variaveis <- dados %>%
@@ -431,14 +393,11 @@ ausentes_variaveis <- dados %>%
     cols = everything(),
     names_to = "variavel",
     values_to = "quantidade_ausentes"
-  )
-
-variaveis_com_ausentes <- ausentes_variaveis %>%
-  filter(quantidade_ausentes > 0) %>%
-  arrange(desc(quantidade_ausentes))
+  ) %>%
+  filter(quantidade_ausentes > 0)
 
 knitr::kable(
-  variaveis_com_ausentes,
+  ausentes_variaveis,
   col.names = c(
     "Variável",
     "Quantidade de valores ausentes"
@@ -447,365 +406,263 @@ knitr::kable(
 )
 ```
 
-A tabela apresenta somente as variáveis que possuem valores ausentes, permitindo identificar quais campos da base foram afetados e a quantidade de `NA` encontrada em cada um deles.
+Foram identificados **5 valores ausentes**, distribuídos entre as variáveis `resistencia_mpa`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct`.
 
-### Quantidade total de valores ausentes
-
-Em seguida, foi determinada a quantidade total de valores ausentes existentes na base. Esse valor foi obtido pela soma dos `NA` encontrados em todas as variáveis.
+Para localizar as respectivas observações, foi utilizado:
 
 ```{r}
-total_ausentes <- dados %>%
-  summarise(
-    quantidade_total = sum(
-      across(
-        everything(),
-        ~sum(is.na(.x))
-      )
-    )
-  )
-
-knitr::kable(
-  total_ausentes,
-  col.names = "Quantidade total de valores ausentes",
-  caption = "Quantidade total de valores ausentes na base"
-)
-```
-
-O resultado apresenta a quantidade total de valores ausentes identificados na base de dados.
-
-### Localização dos valores ausentes
-
-Após identificar a quantidade e as variáveis afetadas, foi realizada a localização das observações que apresentam valores ausentes.
-
-
-```{r}
-localizacao_ausentes <- dados %>%
-  mutate(
-    observacao = row_number()
-  ) %>%
+dados %>%
+  mutate(observacao = row_number()) %>%
   pivot_longer(
     cols = -c(observacao, id_corpo_prova),
     names_to = "variavel",
-    values_to = "valor",
-    values_transform = list(valor = as.character)
+    values_to = "valor"
   ) %>%
-  filter(
-    is.na(valor)
-  ) %>%
-  select(
-    observacao,
-    id_corpo_prova,
-    variavel
-  ) %>%
-  arrange(observacao)
-
-knitr::kable(
-  localizacao_ausentes,
-  col.names = c(
-    "Observação",
-    "Corpo de prova",
-    "Variável afetada"
-  ),
-  caption = "Localização dos valores ausentes"
-)
+  filter(is.na(valor)) %>%
+  select(observacao, id_corpo_prova, variavel)
 ```
 
-A tabela permite identificar diretamente **em qual observação, em qual corpo de prova e em qual variável** cada valor ausente está localizado.
+Os valores ausentes foram localizados nas observações **15, 38, 77, 92 e 97**, correspondentes aos corpos de prova `CP-015`, `CP-038`, `CP-077`, `CP-092` e `CP-097`, respectivamente.
 
-## Questão 07
 
-## Questão 08
+## Questão 7
 
-A existência de possíveis erros de digitação foi investigada considerando principalmente as variáveis quantitativas que apresentaram valores armazenados como texto. Para isso, foram utilizadas funções do **tidyverse**, especialmente `filter()`, `select()` e `str_detect()`, permitindo identificar registros que apresentam caracteres incompatíveis com o preenchimento esperado de uma variável numérica.
+A verificação dos valores potencialmente incompatíveis com o contexto da Engenharia Civil será realizada após a etapa de limpeza e conversão dos tipos das variáveis. Essa ordem permite que as variáveis inicialmente armazenadas como `character` sejam transformadas em valores numéricos antes da aplicação dos critérios de intervalo.
 
-Foi realizada uma verificação nas variáveis `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct`, procurando valores que contenham letras ou outros caracteres que não sejam esperados em uma variável quantitativa.
+Dessa forma, após a correção das inconsistências de preenchimento e a conversão das variáveis quantitativas, será possível avaliar os valores de forma adequada, utilizando intervalos de referência para identificar observações que merecem investigação.
+
+
+## Questão 8
+
+Os registros foram investigados em busca de possíveis erros de digitação ou problemas de preenchimento. Para isso, foram utilizadas as funções `filter()`, `select()` e recursos do `stringr`.
 
 ```{r}
-registros_suspeitos <- dados %>%
+dados %>%
   filter(
-    if_any(
-      c(
-        idade_dias,
-        resistencia_mpa,
-        cimento_kg_m3,
-        relacao_a_c,
-        abatimento_mm,
-        densidade_kg_m3,
-        absorção_agregado_pct
-      ),
-      ~str_detect(as.character(.x), "[A-Za-z]")
-    )
+    str_detect(resistencia_mpa, "[^0-9.]") |
+    str_detect(cimento_kg_m3, "[^0-9.]") |
+    str_detect(relacao_a_c, ",")
   ) %>%
   select(
     id_corpo_prova,
     obra,
     tipo_concreto,
-    idade_dias,
     resistencia_mpa,
     cimento_kg_m3,
-    relacao_a_c,
-    abatimento_mm,
-    densidade_kg_m3,
-    absorção_agregado_pct
-  )
-
-print(registros_suspeitos, width = Inf)
-```
-
-A função `if_any()` permite verificar simultaneamente várias variáveis, enquanto `str_detect()` identifica a presença de letras nos valores. A conversão para `character` por meio de `as.character()` permite realizar a busca independentemente do tipo inicialmente atribuído pelo R.
-
-Após a filtragem, foram identificados registros que apresentam possíveis erros de digitação em variáveis que deveriam conter somente valores quantitativos.
-
-Para apresentar os registros completos, foi utilizada a função `kable()`:
-
-```{r}
-knitr::kable(
-  registros_suspeitos,
-  caption = "Registros com possíveis erros de digitação"
-)
-```
-
-Entre os registros identificados, destaca-se o **CP-019**, que apresenta o valor `3O,4` na variável `resistencia_mpa`. Nesse caso, a presença da letra **O** no lugar do algarismo **0** caracteriza um possível erro de digitação.
-
-Também foi identificado o **CP-037**, que apresenta o valor `390O` na variável `cimento_kg_m3`. Novamente, a presença da letra **O** em uma variável quantitativa indica um possível erro de preenchimento.
-
-## Questão 9
-
-A variável `obra` foi analisada para verificar se todas as categorias estão escritas de forma padronizada. Para isso, foram utilizadas as funções `count()` e `distinct()`, que permitem identificar as categorias existentes e a quantidade de ocorrências de cada uma.
-
-Inicialmente, foi realizada a contagem das categorias presentes na variável `obra`:
-
-```{r}
-dados %>%
-  count(obra) %>%
-  arrange(obra)
-```
-
-Em seguida, as categorias distintas foram verificadas utilizando `distinct()`:
-
-```{r}
-dados %>%
-  distinct(obra) %>%
-  arrange(obra)
-```
-
-A análise mostrou que existe uma inconsistência na variável `obra`: a categoria **"Bloco B "** apresenta um espaço adicional ao final do texto, enquanto **"Bloco B"** representa a mesma categoria sem esse espaço.
-
-Para identificar especificamente essa diferença de preenchimento, foi utilizada a função `str_length()`:
-
-```{r}
-dados %>%
-  distinct(obra) %>%
-  mutate(
-    quantidade_caracteres = str_length(obra)
-  ) %>%
-  arrange(obra)
-```
-
-A diferença no número de caracteres confirma que os dois registros possuem uma diferença de formatação, embora representem a mesma obra.
-
-Portanto, a variável `obra` **não está totalmente padronizada**. A inconsistência identificada é o espaço adicional presente em **"Bloco B "**. Esse problema será corrigido posteriormente na etapa de limpeza e padronização da base, utilizando funções do pacote `stringr`.
-
-## Questão 10
-
-A variável `tipo_concreto` foi analisada para verificar se todas as categorias estão padronizadas quanto à forma de escrita. Para isso, foram utilizadas funções do **tidyverse**, como `count()` e `distinct()`, permitindo identificar as diferentes categorias presentes na base e a quantidade de observações pertencentes a cada uma.
-
-Inicialmente, foi realizada a contagem das categorias existentes:
-
-```{r}
-dados %>%
-  count(tipo_concreto) %>%
-  arrange(tipo_concreto)
-```
-
-Em seguida, foram identificadas as categorias distintas da variável:
-
-```{r}
-dados %>%
-  distinct(tipo_concreto) %>%
-  arrange(tipo_concreto)
-```
-
-A análise das categorias mostrou que existe uma inconsistência de padronização entre **`C30`** e **`c30`**. Apesar de apresentarem grafias diferentes, ambas representam o mesmo tipo de concreto, sendo a diferença causada apenas pela utilização de letras maiúsculas e minúsculas.
-
-Para evidenciar essa diferença de forma mais clara, foi utilizada a função `str_to_upper()`, pertencente ao pacote `stringr`, criando uma representação padronizada das categorias:
-
-```{r}
-dados %>%
-  distinct(tipo_concreto) %>%
-  mutate(
-    categoria_padronizada = str_to_upper(tipo_concreto)
-  ) %>%
-  arrange(categoria_padronizada)
-```
-
-Após a transformação, `C30` e `c30` passam a apresentar a mesma representação, confirmando que se trata da mesma categoria escrita de maneiras diferentes.
-
-Portanto, a variável `tipo_concreto` **não está totalmente padronizada**. A inconsistência identificada é a utilização de **`C30` e `c30` para representar o mesmo tipo de concreto**. Essa diferença deverá ser corrigida posteriormente na etapa de limpeza da base, de modo que todas as observações da mesma classe sejam representadas de forma uniforme.
-
-## Questão 11
-
-Após a identificação dos problemas existentes na base, foi realizada uma nova verificação dos tipos das variáveis. Essa etapa é importante para confirmar como o R está interpretando cada coluna e avaliar se os tipos atribuídos são compatíveis com a natureza das informações armazenadas.
-
-Para isso, foi utilizada a função `glimpse()`, que apresenta de forma resumida a estrutura da base, incluindo os nomes das variáveis, seus tipos e alguns dos valores armazenados.
-
-```{r} 
-glimpse(dados)
-```
-
-Também foi realizada uma verificação específica dos tipos de todas as variáveis utilizando `summarise()` e `across()`:
-
-```{r} 
-dados %>%
-  summarise(
-    across(
-      everything(),
-      ~class(.x)[1]
-    )
+    relacao_a_c
   ) %>%
   print(width = Inf)
 ```
 
-A análise permite verificar que as variáveis `id_corpo_prova`, `obra` e `tipo_concreto` estão armazenadas como texto, o que é adequado para variáveis qualitativas.
+A investigação permitiu identificar registros que apresentam caracteres ou formatos diferentes do padrão predominante da base. Entre eles, destacam-se `38,7`, `3O,4`, `0,55` e `390O`.
 
-As variáveis `idade_dias`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct` estão armazenadas como variáveis numéricas, sendo compatíveis com sua natureza quantitativa.
+Os registros que apresentam a letra **O** no lugar do algarismo **0**, como `3O,4` e `390O`, caracterizam possíveis erros de digitação. Já os valores `38,7` e `0,55` apresentam apenas uma diferença no separador decimal em relação ao padrão utilizado na maior parte da base.
 
-Por outro lado, `resistencia_mpa`, `cimento_kg_m3` e `relacao_a_c` continuam sendo reconhecidas como `character`, embora sejam variáveis quantitativas. Essa situação está relacionada aos problemas identificados anteriormente, como a utilização de vírgula decimal e a presença de possíveis caracteres indevidos em alguns registros.
+Essas inconsistências devem ser corrigidas antes da conversão das variáveis para o tipo numérico.
 
-Portanto, a verificação confirma que **nem todas as variáveis apresentam tipos adequados para as análises estatísticas**. 
+## Questão 9
 
-**Questão para reflexão**
+As categorias da variável `obra` foram verificadas utilizando `count()` e `distinct()`, buscando identificar diferenças de grafia, espaços ou outras inconsistências.
 
-Um único valor digitado incorretamente pode alterar a maneira como o R interpreta uma variável inteira porque o programa utiliza os valores armazenados na coluna para determinar automaticamente seu tipo de dado.
+```{r}
+dados %>%
+  count(obra)
+```
 
-Por exemplo, se uma variável deveria conter somente números, mas uma das observações apresentar uma letra, como `3O,4`, o R pode interpretar toda a coluna como `character`, mesmo que os demais valores sejam numéricos. Dessa forma, um único registro incompatível pode impedir que a variável seja reconhecida diretamente como quantitativa.
+Em seguida, foram apresentadas as categorias existentes:
 
-Isso é importante porque uma variável armazenada como texto não pode ser utilizada normalmente em operações matemáticas e estatísticas, como cálculo de média, mediana ou desvio-padrão.
+```{r}
+dados %>%
+  distinct(obra)
+```
 
-Portanto, *um único erro de preenchimento pode afetar a interpretação de toda a variável*, sendo fundamental realizar a inspeção e a limpeza dos dados antes das análises estatísticas.
+A análise permitiu identificar as categorias utilizadas na variável `obra` e verificar possíveis diferenças de preenchimento. Foi identificada uma ocorrência de `Bloco B` com espaço adicional ao final do texto, que representa a mesma categoria das demais ocorrências de `Bloco B`.
+
+Essa inconsistência de preenchimento deverá ser corrigida durante a etapa de padronização das variáveis qualitativas.
+
+## Questão 10
+
+As categorias da variável `tipo_concreto` foram verificadas utilizando `count()` e `distinct()`.
+
+```{r}
+dados %>%
+  count(tipo_concreto)
+```
+
+```{r}
+dados %>%
+  distinct(tipo_concreto)
+```
+
+A análise das categorias permitiu identificar as diferentes formas de preenchimento da variável. Foi encontrada a categoria `c30`, que representa o mesmo tipo de concreto que `C30`, mas apresenta diferença entre letras maiúsculas e minúsculas.
+
+Dessa forma, a categoria `c30` deverá ser padronizada para `C30` durante a etapa de limpeza dos dados.
+
+## Questão 11
+
+Após a identificação dos problemas presentes na base, os tipos das variáveis foram novamente verificados por meio da função `glimpse()`.
+
+```{r}
+glimpse(dados)
+```
+
+Como todas as variáveis foram importadas inicialmente como texto, elas permanecem classificadas como `<chr>` neste momento. Entretanto, a análise realizada nas questões anteriores mostrou que várias dessas variáveis possuem natureza quantitativa.
+
+Um dos motivos para uma variável quantitativa ser armazenada como texto é a presença de valores que fogem ao padrão esperado, como vírgulas decimais, caracteres indevidos ou diferentes formas de preenchimento.
+
+Um único valor digitado incorretamente pode alterar a maneira como o R interpreta uma variável inteira quando a importação depende da identificação automática dos tipos. Por esse motivo, a importação inicial como texto permite preservar os registros originais e realizar o tratamento dos problemas antes da conversão.
 
 
 ## Questão 12
 
-Para preservar os dados originais durante as etapas de tratamento, foi criada uma cópia da base denominada `dados_limpos`:
+Foi criada uma cópia da base original chamada `dados_limpos`.
 
 ```{r}
 dados_limpos <- dados
 ```
 
-A partir deste momento, as alterações necessárias para limpeza, padronização e conversão dos dados serão realizadas na base `dados_limpos`, mantendo o objeto `dados` inalterado.
+A preservação da base original é importante porque permite comparar os dados antes e depois das alterações, além de possibilitar a recuperação das informações originais caso alguma transformação seja realizada de forma inadequada.
 
-É recomendável preservar a base original porque ela funciona como uma **referência dos dados inicialmente coletados**. Dessa forma, caso ocorra algum erro durante o tratamento, é possível comparar os resultados com os valores originais e recuperar as informações sem precisar importar novamente a base.
-
-Além disso, manter a base original permite **rastrear e justificar as alterações realizadas**, tornando o processo de tratamento mais seguro, transparente e reprodutível.
+Dessa forma, as alterações necessárias serão realizadas somente no objeto `dados_limpos`, mantendo `dados` como referência da base originalmente importada.
 
 ## Questão 13
 
-Após a identificação das inconsistências nas variáveis qualitativas, foi realizada a padronização das categorias na base `dados_limpos`. Para isso, foram utilizadas funções do pacote `stringr`, como `str_trim()`, `str_to_upper()` e `str_replace_all()`.
-
-A transformação foi aplicada de forma sistemática às variáveis `obra` e `tipo_concreto`:
+As variáveis qualitativas foram padronizadas utilizando funções do pacote `stringr`. Inicialmente, foram removidos espaços adicionais e uniformizadas as letras das categorias.
 
 ```{r}
 dados_limpos <- dados_limpos %>%
   mutate(
-    obra = obra %>%
-      str_trim() %>%
-      str_to_upper() %>%
-      str_replace_all("BLOCO B", "BLOCO B"),
-    
-    tipo_concreto = tipo_concreto %>%
-      str_trim() %>%
-      str_to_upper() %>%
-      str_replace_all("C30", "C30")
+    obra = str_trim(obra),
+    obra = str_squish(obra),
+    tipo_concreto = str_to_upper(str_trim(tipo_concreto))
   )
 ```
 
-A função `str_trim()` remove espaços desnecessários no início e no final dos textos, enquanto `str_to_upper()` uniformiza todas as categorias utilizando letras maiúsculas.
-
-A função `str_replace_all()` foi utilizada para realizar substituições explícitas nas categorias. Dessa forma, caso existam diferentes formas de preenchimento que devam representar a mesma categoria, elas podem ser direcionadas para uma única representação padronizada.
-
-Para verificar o resultado da transformação, foram novamente contabilizadas as categorias:
+Após a transformação, as categorias podem ser verificadas novamente:
 
 ```{r}
 dados_limpos %>%
-  count(obra) %>%
-  arrange(obra)
+  count(obra)
 
 dados_limpos %>%
-  count(tipo_concreto) %>%
-  arrange(tipo_concreto)
+  count(tipo_concreto)
 ```
 
-Com a aplicação das transformações, a categoria **"Bloco B "**, que apresentava um espaço adicional, passa a ser representada de forma uniforme como **"BLOCO B"**. Da mesma maneira, as categorias **"C30"** e **"c30"** passam a ser representadas como **"C30"**.
+A utilização de `str_trim()` permite remover espaços no início e no final dos textos, enquanto `str_squish()` elimina espaços adicionais entre as palavras. A função `str_to_upper()` foi utilizada para uniformizar as letras da variável `tipo_concreto`.
 
-Assim, as variáveis qualitativas foram padronizadas de maneira **consistente e reprodutível**, evitando a necessidade de corrigir manualmente cada observação e garantindo que categorias que representam a mesma informação sejam reconhecidas como uma única categoria nas análises posteriores.
-
+Com essas transformações, categorias que representavam a mesma informação, mas apresentavam diferenças de preenchimento, passam a seguir um padrão único.
 
 ## Questão 14
 
+Após a identificação e correção das inconsistências, as variáveis que possuem natureza quantitativa foram convertidas para o tipo numérico. Para isso, foram utilizados recursos do pacote `readr`.
 
-As variáveis `idade_dias`, `resistencia_mpa`, `cimento_kg_m3`, `relacao_a_c`, `abatimento_mm`, `densidade_kg_m3` e `absorção_agregado_pct` deveriam ser quantitativas. Entretanto, algumas delas foram identificadas como texto devido à presença de vírgula decimal, caracteres indevidos e valores ausentes.
-
-Para realizar a conversão, os valores ausentes foram padronizados, os caracteres indevidos identificados foram corrigidos e as vírgulas decimais foram substituídas por pontos. Em seguida, foi utilizada a função `parse_number()` do pacote `readr` para realizar a conversão para o tipo numérico.
+Antes da conversão, os valores que apresentam vírgula decimal ou caracteres indevidos foram corrigidos:
 
 ```{r}
 dados_limpos <- dados_limpos %>%
   mutate(
-    idade_dias = readr::parse_number(as.character(idade_dias)),
-    
-    resistencia_mpa = as.character(resistencia_mpa) %>%
-      str_replace_all(",", ".") %>%
-      str_replace_all("O", "0") %>%
-      readr::parse_number(),
-    
-    cimento_kg_m3 = as.character(cimento_kg_m3) %>%
-      str_replace_all("O", "0") %>%
-      readr::parse_number(),
-    
-    relacao_a_c = as.character(relacao_a_c) %>%
-      str_replace_all(",", ".") %>%
-      readr::parse_number(),
-    
-    abatimento_mm = readr::parse_number(as.character(abatimento_mm)),
-    
-    densidade_kg_m3 = readr::parse_number(as.character(densidade_kg_m3)),
-    
-    absorção_agregado_pct = readr::parse_number(
-      as.character(absorção_agregado_pct)
-    )
+    resistencia_mpa = str_replace_all(resistencia_mpa, "O", "0"),
+    resistencia_mpa = str_replace_all(resistencia_mpa, ",", "."),
+    cimento_kg_m3 = str_replace_all(cimento_kg_m3, "O", "0"),
+    relacao_a_c = str_replace_all(relacao_a_c, ",", ".")
   )
+```
 
-# Verificação dos tipos das variáveis
+Em seguida, as variáveis foram convertidas para o tipo numérico:
+
+```{r}
+dados_limpos <- dados_limpos %>%
+  mutate(
+    idade_dias = parse_integer(idade_dias),
+    resistencia_mpa = parse_double(resistencia_mpa),
+    cimento_kg_m3 = parse_double(cimento_kg_m3),
+    relacao_a_c = parse_double(relacao_a_c),
+    abatimento_mm = parse_double(abatimento_mm),
+    densidade_kg_m3 = parse_double(densidade_kg_m3),
+    absorção_agregado_pct = parse_double(absorção_agregado_pct)
+  )
+```
+
+A estrutura da base foi verificada novamente para confirmar a conversão:
+
+```{r}
 glimpse(dados_limpos)
 ```
 
-A função `str_replace_all()` foi utilizada para substituir a vírgula decimal pelo ponto e corrigir os caracteres indevidos encontrados nos valores numéricos. Posteriormente, `readr::parse_number()` realizou a conversão dos valores registrados como texto para o formato numérico.
+A conversão permitiu que as variáveis quantitativas passassem a ser armazenadas como valores numéricos, possibilitando a realização das análises estatísticas nas etapas seguintes. Os valores ausentes permaneceram como `NA`, sendo tratados posteriormente de acordo com a estratégia definida para a base.
 
-A verificação com `glimpse()` permite confirmar que as variáveis quantitativas passaram a ser reconhecidas como `numeric`, enquanto as variáveis qualitativas permanecem como texto. Dessa forma, a base fica adequada para a realização dos cálculos e análises estatísticas posteriores.
+
+### Verificação dos intervalos dos valores
+
+Após a padronização e conversão das variáveis quantitativas, foram verificados valores potencialmente incompatíveis com o contexto do controle tecnológico do concreto.
+
+Para essa análise, foram utilizados como referência os intervalos adotados no Relatório 02. Esses limites representam uma **triagem inicial** dos dados, permitindo identificar observações que merecem investigação, mas não determinam, isoladamente, que um valor esteja incorreto.
+
+Os intervalos considerados foram:
+
+| Variável                | Intervalo de referência |
+| ----------------------- | ----------------------: |
+| `idade_dias`            |             1 a 56 dias |
+| `resistencia_mpa`       |             20 a 60 MPa |
+| `abatimento_mm`         |             10 a 220 mm |
+| `densidade_kg_m3`       |       2000 a 2600 kg/m³ |
+| `relacao_a_c`           |             0,40 a 0,70 |
+| `absorção_agregado_pct` |                 0 a 10% |
+
+A verificação foi realizada utilizando `filter()`:
+
+```{r}
+dados_limpos %>%
+  filter(
+    idade_dias <= 0 | idade_dias > 56 |
+    resistencia_mpa < 20 | resistencia_mpa > 60 |
+    abatimento_mm < 10 | abatimento_mm > 220 |
+    densidade_kg_m3 < 2000 | densidade_kg_m3 > 2600 |
+    relacao_a_c < 0.40 | relacao_a_c > 0.70 |
+    absorção_agregado_pct < 0 | absorção_agregado_pct > 10
+  ) %>%
+  print(width = Inf)
+```
+
+O código permite localizar as observações que apresentam pelo menos uma variável fora dos intervalos estabelecidos. Entre os valores identificados na base estão a idade de **280 dias**, o abatimento de **1250 mm**, a densidade de **238 kg/m³** e a absorção de **18,4%**, que apresentam grande afastamento em relação aos demais registros.
+
+Esses valores devem ser investigados antes da utilização da base nas análises estatísticas. Entretanto, sua identificação como valores fora do intervalo não implica que sejam automaticamente erros, sendo necessário considerar o contexto do ensaio e as características da base.
+
 
 ## Questão 15
 
-Para identificar os valores ausentes, foram considerados não apenas os valores `NA`, mas também registros que representam ausência de informação, como `N/A`, `NULL`, `null`, `-` e células vazias. A investigação foi realizada utilizando funções do pacote `dplyr`.
+Após a conversão das variáveis quantitativas, foi realizada uma investigação dos valores ausentes. Além dos valores `NA`, foram considerados registros como `N/A`, `NULL`, `null`, `-` e células vazias.
+
+Para identificar esses registros sem alterar os tipos das variáveis em `dados_limpos`, foi criada uma base auxiliar:
 
 ```{r}
-# Identificação e padronização dos diferentes registros de ausência
 dados_ausentes <- dados_limpos %>%
-  mutate(across(
-    everything(),
-    ~na_if(str_trim(as.character(.x)), "")
-  )) %>%
-  mutate(across(
-    everything(),
-    ~case_when(
-      .x %in% c("NA", "N/A", "NULL", "null", "-") ~ NA_character_,
-      TRUE ~ .x
+  mutate(
+    across(
+      everything(),
+      ~str_trim(as.character(.x))
     )
-  ))
+  ) %>%
+  mutate(
+    across(
+      everything(),
+      ~na_if(.x, "")
+    )
+  ) %>%
+  mutate(
+    across(
+      everything(),
+      ~ifelse(.x %in% c("NA", "N/A", "NULL", "null", "-"), NA, .x)
+    )
+  )
+```
 
-# Quantidade de valores ausentes por variável
+A quantidade de valores ausentes por variável foi verificada por:
+
+```{r}
 dados_ausentes %>%
-  summarise(across(everything(), ~sum(is.na(.)))) %>%
-  tidyr::pivot_longer(
+  summarise(across(everything(), ~sum(is.na(.x)))) %>%
+  pivot_longer(
     cols = everything(),
     names_to = "variavel",
     values_to = "quantidade_NA"
@@ -813,90 +670,58 @@ dados_ausentes %>%
   filter(quantidade_NA > 0)
 ```
 
-Também foi verificada a quantidade de observações que apresentam pelo menos um valor ausente:
+Também foram identificadas as observações que apresentam pelo menos um valor ausente:
 
 ```{r}
 dados_ausentes %>%
   filter(if_any(everything(), is.na)) %>%
-  summarise(
-    observacoes_com_ausentes = n()
-  )
+  summarise(observacoes_com_ausentes = n())
 ```
 
-Após a identificação, foi criada uma nova base contendo exclusivamente as observações que apresentam valores ausentes:
+Após a identificação, foram separadas as observações que apresentam valores ausentes:
 
 ```{r}
-# Base contendo as observações que possuem pelo menos um valor ausente
-dados_excluidos <- dados_ausentes %>%
-  filter(if_any(everything(), is.na))
+dados_excluidos <- dados_limpos %>%
+  filter(if_any(everything(), is.na)) %>%
+  print(width = Inf)
 
-# Base final sem observações com valores ausentes
-dados_limpos <- dados_ausentes %>%
-  filter(if_all(everything(), ~!is.na(.)))
+dados_limpos <- dados_limpos %>%
+  filter(if_all(everything(), ~!is.na(.x)))
 ```
 
-A base `dados_excluidos` preserva os registros retirados da análise, enquanto `dados_limpos` passa a conter somente as observações completas.
+A base `dados_excluidos` preserva os registros retirados da análise, enquanto `dados_limpos` contém somente as observações completas.
 
 ### Justificativa
 
-A presença de valores ausentes deve ser analisada de acordo com a importância da variável e com a quantidade de informações disponíveis. Neste conjunto de dados, as variáveis representam características relacionadas ao controle tecnológico do concreto, como resistência à compressão, abatimento, densidade e relação água/cimento. A substituição arbitrária de um valor ausente poderia criar uma informação que não foi efetivamente medida e, consequentemente, alterar os resultados das análises.
+Optou-se pela **exclusão das observações que apresentam pelo menos um valor ausente**, evitando a criação de informações que não foram efetivamente medidas. Essa decisão é adequada à quantidade de dados disponíveis e mantém apenas observações completas para as análises posteriores.
 
-Por esse motivo, optou-se pela **exclusão das observações que apresentam pelo menos um valor ausente**, principalmente porque a quantidade de registros disponíveis é suficiente para manter uma base representativa após a remoção. Essa decisão evita a introdução de valores artificialmente estimados e mantém apenas observações completas para as análises posteriores.
+Os registros excluídos foram preservados em `dados_excluidos`, garantindo a rastreabilidade do tratamento realizado. A base original `dados` também permanece preservada.
 
-A substituição dos valores seria mais adequada caso a quantidade de dados ausentes fosse elevada ou caso a perda das observações comprometesse significativamente a análise. A manutenção do `NA` também poderia ser utilizada quando a ausência da informação tivesse significado próprio ou quando determinada análise permitisse trabalhar diretamente com dados faltantes. Já a consulta à fonte original seria a alternativa mais adequada quando houvesse possibilidade de recuperar o valor real medido.
-
-Neste caso, como os valores ausentes não podem ser considerados medições válidas e não há justificativa para estimá-los arbitrariamente, a exclusão das observações foi considerada a alternativa mais adequada. Entretanto, os registros excluídos foram preservados na base `dados_excluidos`, garantindo a rastreabilidade do tratamento realizado e permitindo que essas observações sejam posteriormente consultadas caso a fonte original dos dados seja disponibilizada.
+A utilização de uma base auxiliar para identificar os diferentes formatos de ausência evita que as variáveis numéricas de `dados_limpos` sejam novamente convertidas para `character`.
 
 
 ## Questão 16
 
-Após a realização das etapas de limpeza, foi verificada novamente a estrutura e o resumo estatístico da base `dados_limpos`. Essa etapa permite confirmar se as variáveis estão nos tipos adequados e se os problemas identificados anteriormente foram corrigidos.
+Após a realização das etapas de limpeza e transformação, foi verificada novamente a estrutura da base `dados_limpos`. Essa etapa permite confirmar se as variáveis foram convertidas para os tipos adequados e se as principais inconsistências identificadas anteriormente foram tratadas.
 
 ```{r}
-dados_limpos <- dados_limpos %>%
-  mutate(
-    idade_dias = readr::parse_number(as.character(idade_dias)),
-    
-    resistencia_mpa = as.character(resistencia_mpa) %>%
-      str_replace_all(",", ".") %>%
-      str_replace_all("O", "0") %>%
-      readr::parse_number(),
-    
-    cimento_kg_m3 = as.character(cimento_kg_m3) %>%
-      str_replace_all("O", "0") %>%
-      readr::parse_number(),
-    
-    relacao_a_c = as.character(relacao_a_c) %>%
-      str_replace_all(",", ".") %>%
-      readr::parse_number(),
-    
-    abatimento_mm = readr::parse_number(as.character(abatimento_mm)),
-    
-    densidade_kg_m3 = readr::parse_number(as.character(densidade_kg_m3)),
-    
-    absorção_agregado_pct = readr::parse_number(
-      as.character(absorção_agregado_pct)
-    )
-  )
-
-# Verificação dos tipos das variáveis
 glimpse(dados_limpos)
 ```
 
-A comparação com a base original mostra que a estrutura dos dados foi aprimorada após o processo de limpeza. As variáveis quantitativas passaram a ser reconhecidas como numéricas, permitindo a realização adequada de operações estatísticas. Além disso, os registros que apresentavam valores ausentes, como `NA`, `N/A`, `NULL`, `null`, `-` ou células vazias, foram retirados da base utilizada nas análises.
+A análise da estrutura permite verificar que as variáveis qualitativas permanecem como texto, enquanto as variáveis quantitativas passaram a ser reconhecidas pelo R como numéricas. Dessa forma, a base apresenta uma estrutura adequada para a realização das análises estatísticas posteriores.
 
-Os principais problemas efetivamente corrigidos foram:
+Entre os principais tratamentos realizados estão:
 
-* conversão das variáveis quantitativas que estavam registradas como texto;
-* padronização das vírgulas utilizadas como separadores decimais;
-* correção de caracteres indevidos encontrados em valores numéricos;
-* tratamento dos diferentes formatos utilizados para representar valores ausentes;
-* exclusão das observações que apresentavam valores ausentes;
-* padronização das variáveis qualitativas realizada nas etapas anteriores.
+* padronização das variáveis qualitativas;
+* correção de diferenças de preenchimento;
+* substituição de caracteres indevidos nos valores numéricos;
+* padronização dos separadores decimais;
+* conversão das variáveis quantitativas para o tipo numérico;
+* manutenção dos valores ausentes como `NA`, para que sejam tratados de acordo com a estratégia definida para a análise.
 
-Dessa forma, `dados_limpos` apresenta uma estrutura mais consistente e adequada para as análises estatísticas seguintes. As observações excluídas não foram perdidas, pois foram armazenadas anteriormente na base `dados_excluidos`, enquanto a base `dados` original permanece preservada para comparação e rastreabilidade.
+A base original `dados` permanece preservada, enquanto `dados_limpos` contém as transformações realizadas durante o processo de tratamento. Essa separação permite manter a rastreabilidade das alterações e comparar os dados antes e depois da limpeza.
 
-Portanto, a principal diferença em relação à base original é que a base limpa possui **somente observações completas e variáveis quantitativas corretamente reconhecidas pelo R**, reduzindo os problemas que poderiam interferir nos resultados das análises posteriores.
+Portanto, após as etapas realizadas, `dados_limpos` apresenta uma estrutura mais consistente e adequada para as análises estatísticas seguintes.
 
 
 ## Questão 17 
@@ -1003,9 +828,9 @@ estatisticas_concreto <- dados_limpos |>
     abatimento_medio = mean(abatimento_mm),
     densidade_media = mean(densidade_kg_m3),
     .groups = "drop"
-  )
+  ) %>%
+  print(width = Inf)
 
-estatisticas_concreto
 ```
 
 A utilização de `group_by()` permite separar os corpos de prova de acordo com o tipo de concreto. Em seguida, `summarise()` calcula a média de cada variável dentro de cada grupo. O argumento `.groups = "drop"` é utilizado para que o resultado final não permaneça agrupado.
