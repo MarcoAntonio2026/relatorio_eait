@@ -1,7 +1,7 @@
 --- 
 # Só mude aqui!!!! 
 author: "Marco Antônio e Matheus Villela" 
-title: "Relatório 004 - Aula prática 004" 
+title: "Relatório 04 - Aula prática 04" 
 bibliography: referencias.bib 
 # A partir daqui nao faca alteracoes!!!!! 
 link-citations: true 
@@ -29,902 +29,687 @@ execute:
 
 # 📌 Introdução
 
-A teoria das probabilidades é uma área da Matemática dedicada ao estudo de fenômenos que envolvem incerteza. Embora muitas situações do cotidiano não permitam prever exatamente o que acontecerá, frequentemente é possível identificar os resultados possíveis, estabelecer relações entre eles e quantificar a chance de ocorrência de determinados acontecimentos.
+A análise de dados tem adquirido papel cada vez mais relevante na Engenharia Civil, especialmente diante da necessidade de transformar informações provenientes de obras, ensaios, controles tecnológicos e indicadores de desempenho em subsídios para a tomada de decisões. Nesse contexto, a visualização de dados constitui uma importante ferramenta para representar informações de maneira clara e objetiva, permitindo identificar padrões, tendências, diferenças, relações entre variáveis e possíveis comportamentos atípicos que podem não ser facilmente percebidos por meio de tabelas ou valores numéricos isolados.
 
-O estudo da probabilidade está diretamente relacionado à tomada de decisões em situações de incerteza. Exemplos podem ser encontrados em jogos, pesquisas estatísticas, previsão de fenômenos naturais, controle de qualidade, medicina, economia e também em situações presentes na Educação Básica.
+Na área de controle tecnológico do concreto e gerenciamento de empreendimentos, por exemplo, variáveis como resistência à compressão, consumo de cimento, custo, prazo, área construída e índice de falhas podem apresentar diferentes comportamentos de acordo com o tipo de obra e a região em que o empreendimento está localizado. A representação gráfica dessas informações permite ao engenheiro analisar o desempenho dos empreendimentos de forma mais abrangente e comunicar resultados técnicos de maneira acessível a diferentes públicos, como equipes de obra, gestores, clientes e demais profissionais envolvidos no empreendimento.
 
-Este relatório organiza e relaciona os principais conceitos estudados na aula de teoria das probabilidades. O objetivo não é apenas apresentar definições, mas compreender como os conceitos se conectam, demonstrar propriedades e teoremas e utilizá-los na resolução de uma situação-problema.
+Neste trabalho, será realizada uma análise gráfica de uma base de dados composta por informações referentes a 300 obras de Engenharia Civil, contemplando características dos empreendimentos, indicadores de custo e prazo, propriedades relacionadas ao concreto, ocorrência de falhas, satisfação dos clientes e adoção de práticas sustentáveis. A análise será desenvolvida utilizando diferentes sistemas gráficos disponíveis na linguagem R, possibilitando explorar distintas formas de representação e interação com os dados.
 
-Ao final, os conceitos são aplicados ao problema **"O teste da Doença Rara na Escola"**, no qual será determinada a probabilidade de um estudante realmente possuir a doença após receber um resultado positivo.
+Serão empregados recursos do Base R, por meio de funções gráficas nativas, do ggplot2, utilizando os princípios da gramática dos gráficos, além de ferramentas interativas como plotly e highcharter. Também será utilizado o leaflet para a representação espacial das informações em mapas interativos. Sempre que pertinente, serão utilizadas operações de transformação e organização dos dados com recursos do tidyverse, especialmente por meio do operador |>, permitindo estruturar os dados antes de sua representação visual.
+
+A atividade está organizada em 28 questões, que abordam diferentes situações de exploração e visualização dos dados. Ao longo delas, busca-se não apenas construir gráficos, mas também compreender a finalidade de cada sistema gráfico, selecionar representações adequadas às características das variáveis e interpretar os resultados obtidos sob a perspectiva da Engenharia Civil. Dessa forma, o trabalho procura desenvolver uma abordagem integrada entre programação em R, análise exploratória de dados, comunicação visual e interpretação técnica, evidenciando como ferramentas computacionais podem auxiliar o engenheiro na compreensão e na comunicação de informações relacionadas ao desempenho de obras.
 
 
 # 🎯 Objetivo geral
 
-Compreender a estrutura matemática da probabilidade e utilizá-la para interpretar situações de incerteza de maneira fundamentada.
+Demonstrar o uso prático da linguagem R como ferramenta de análise, visualização e interpretação de dados na Engenharia Civil, aplicando diferentes sistemas gráficos para transformar informações de empreendimentos em representações visuais que permitam identificar padrões, tendências, relações entre variáveis e comportamentos atípicos, contribuindo para a análise técnica, tomada de decisões e comunicação de resultados no contexto profissional da Engenharia Civil.
 
-# 📊 Conceitos básicos de conjuntos no contexto probabilístico
+## Objetivos específicos
 
-## Espaço amostral
+- **Explorar e compreender** a estrutura da base de dados de empreendimentos da Engenharia Civil, identificando os tipos de variáveis e suas características;
 
-Para estudar um fenômeno aleatório, inicialmente é necessário identificar todos os resultados que podem ocorrer. O conjunto formado por esses resultados é denominado **espaço amostral**, representado por $\Omega$.
+- **Aplicar a linguagem R** na organização, transformação e análise de dados, utilizando funções e recursos adequados para o tratamento das informações;
 
-Formalmente, o espaço amostral é o conjunto de todos os resultados possíveis de um experimento aleatório.
+- **Utilizar os principais sistemas gráficos do R**, incluindo Base R, ggplot2, plotly, highcharter e leaflet, reconhecendo as características e possibilidades de cada ferramenta;
 
-Por exemplo, no lançamento de um dado:
+- **Construir diferentes tipos de gráficos** para representar variáveis quantitativas e qualitativas, considerando a finalidade da análise e a natureza dos dados;
 
-$$\Omega = \{1,2,3,4,5,6\}$$
+- **Aplicar os princípios da gramática dos gráficos** por meio do ggplot2, utilizando elementos como aes(), geom_*(), escalas, temas e facetas;
 
-No lançamento de uma moeda:
+- **Explorar recursos de visualização interativa**, permitindo uma análise mais dinâmica dos dados e a obtenção de informações adicionais por meio da interação com os gráficos;
 
-$$\Omega = \{\text{cara},\text{coroa}\}$$
+- **Representar informações geográficas** relacionadas aos empreendimentos por meio de mapas interativos, utilizando o leaflet;
 
-A definição do espaço amostral depende daquilo que está sendo observado no experimento.
+- **Identificar padrões, tendências, relações e possíveis valores atípicos** presentes nos dados por meio da análise gráfica;
 
-## Eventos
+- **Interpretar os resultados obtidos** relacionando as informações apresentadas nos gráficos com situações práticas do contexto da Engenharia Civil;
 
-Um **evento** é um subconjunto do espaço amostral. Portanto, um evento reúne resultados que possuem alguma característica de interesse.
+- **Desenvolver a capacidade de comunicação visual de informações técnicas**, utilizando gráficos adequados, organizados e de fácil interpretação;
 
-No lançamento de um dado, considere:
+- **Compreender a importância da visualização de dados como ferramenta de apoio à tomada de decisões**, demonstrando aplicações práticas da linguagem R no contexto profissional da Engenharia Civil.
 
-$$A = \{2,4,6\}$$
 
-O evento $A$ representa a ocorrência de um número par.
+# ⚙️ Metodologia
 
-Podemos também definir:
+O presente trabalho foi desenvolvido por meio de uma abordagem quantitativa e exploratória, utilizando a linguagem de programação R como ferramenta para organização, análise e visualização de dados relacionados a empreendimentos da Engenharia Civil. A metodologia foi estruturada de forma a permitir a exploração progressiva da base de dados, partindo da inspeção das informações até a construção e interpretação de diferentes representações gráficas.
 
-$$B = \{1,2,3\}$$
+Inicialmente, foi utilizada a base de dados dados_engenharia_civil.csv, composta por informações referentes a 300 obras, contemplando variáveis relacionadas às características dos empreendimentos, localização, área construída, custos, prazos, resistência do concreto, consumo de cimento, índice de falhas, satisfação dos clientes e adoção de práticas sustentáveis.
 
-representando a ocorrência de um número menor que 4.
+A primeira etapa consistiu na importação e inspeção da base de dados, utilizando funções da linguagem R para verificar sua estrutura, dimensão, tipos das variáveis e características gerais dos dados. Foram utilizados comandos como head(), str(), summary() e dim(), permitindo identificar previamente as informações que seriam utilizadas nas análises e visualizações.
 
-## Operações entre eventos
+Em seguida, foram realizadas operações de organização e transformação dos dados, utilizando principalmente funções do pacote dplyr e o operador |>. Essas operações permitiram agrupar informações, calcular medidas estatísticas, selecionar variáveis e preparar conjuntos de dados específicos para cada representação gráfica.
 
-Como os eventos são conjuntos, as operações da teoria dos conjuntos podem ser utilizadas diretamente.
+A etapa de visualização foi desenvolvida utilizando diferentes sistemas gráficos disponíveis na linguagem R. Inicialmente, foram empregadas funções do Base R, como plot(), hist(), boxplot() e barplot(), possibilitando a construção de representações gráficas por meio das ferramentas nativas da linguagem. Posteriormente, foi utilizado o pacote ggplot2, aplicando os princípios da gramática dos gráficos por meio da combinação entre dados, mapeamentos estéticos (aes()), geometrias (geom_*()), escalas, facetas e temas.
 
-### União
+Também foram explorados recursos de visualização interativa, utilizando os pacotes plotly e highcharter, permitindo a construção de gráficos nos quais o usuário pode interagir com os elementos apresentados e obter informações adicionais. Para a representação espacial dos empreendimentos, foi utilizado o pacote leaflet, possibilitando a construção de mapas interativos.
 
-A união de $A$ e $B$, representada por $A\cup B$, corresponde à ocorrência de **A ou B**, incluindo a possibilidade de ambos ocorrerem.
+Ao longo das 28 questões propostas, os diferentes sistemas gráficos foram aplicados de acordo com a natureza das variáveis e com as perguntas de análise apresentadas. Para cada situação, buscou-se selecionar uma representação visual adequada, considerando aspectos como comparação entre categorias, distribuição de variáveis, relação entre medidas quantitativas, identificação de valores atípicos, evolução dos indicadores e distribuição espacial das informações.
 
-$$A\cup B$$
+Por fim, os resultados obtidos por meio dos gráficos foram interpretados sob a perspectiva da Engenharia Civil, relacionando os padrões observados aos possíveis significados técnicos das variáveis analisadas. Dessa forma, a metodologia não se limitou à construção dos gráficos, mas buscou demonstrar a utilização do R como uma ferramenta prática para análise exploratória, comunicação de informações técnicas e apoio à tomada de decisões no contexto da Engenharia Civil.
 
-No exemplo:
 
-$$A\cup B = \{1,2,3,4,6\}$$
+## 📋 Etapas de desenvolvimento
 
-### Interseção
+### Etapa 1 — Conhecendo a base
 
-A interseção, representada por $A\cap B$, reúne os resultados que pertencem simultaneamente aos dois eventos.
+**Questão 1:** Importar a base no R e verificar se os dados foram carregados corretamente.
 
-$$A\cap B = \{2\}$$
+**Questão 2:** Identificar a quantidade de observações e variáveis da base.
 
-### Complementar
+**Questão 3:** Analisar a estrutura da base e classificar as variáveis em quantitativas e qualitativas.
 
-O complementar de $A$, representado por $A^c$, reúne todos os resultados do espaço amostral que não pertencem a $A$.
+**Questão 4:** Obter um resumo estatístico das variáveis e identificar valores potencialmente incompatíveis.
 
-Se:
+**Questão 5:** Verificar a existência e a localização de valores ausentes na base.
 
-$$\Omega=\{1,2,3,4,5,6\}$$
+### Etapa 2 — Gráficos no Base R
 
-e:
+**Questão 6:** Relacionar área construída e custo total por meio de um gráfico de dispersão.
 
-$$A=\{2,4,6\}$$
+**Questão 7:** Analisar a distribuição da resistência do concreto por meio de um histograma.
 
-então:
+**Questão 8:** Comparar a distribuição dos custos entre os diferentes tipos de obra utilizando boxplot.
 
-$$A^c=\{1,3,5\}$$
-## Eventos mutuamente exclusivos
+**Questão 9:** Representar a quantidade de obras por região em um gráfico de barras.
 
-Dois eventos são **mutuamente exclusivos**, ou disjuntos, quando não podem ocorrer simultaneamente.
+### Etapa 3 — Gráficos com ggplot2
 
-Formalmente:
+**Questão 10:** Analisar a relação entre área e custo, diferenciando os tipos de obra por cores.
 
-$$A\cap B=\varnothing$$
+**Questão 11:** Comparar os custos dos diferentes tipos de obra utilizando boxplot.
 
-Por exemplo:
+**Questão 12:** Analisar a distribuição da resistência utilizando histograma e curva de densidade.
 
-$$A=\{1,2\}$$
+**Questão 13:** Comparar a adoção de práticas sustentáveis entre os tipos de obra.
 
-e:
+**Questão 14:** Analisar a relação entre área e custo nas diferentes regiões brasileiras.
 
-$$B=\{5,6\}$$
+**Questão 15:** Desenvolver um gráfico autoral utilizando múltiplas camadas, facetas e personalizações.
 
-são mutuamente exclusivos no lançamento de um dado.
+### Etapa 4 — Gráficos interativos com plotly
 
-Essa característica será importante para compreender o terceiro axioma de Kolmogorov e o Teorema da Probabilidade Total.
+**Questão 16:** Transformar um gráfico do ggplot2 em uma visualização interativa.
 
-# Axiomas de Kolmogorov
+**Questão 17:** Criar diretamente no plotly um gráfico interativo com dados agregados.
 
-Considere um espaço amostral finito ou enumerável $\Omega$. A probabilidade é uma função $P$ que associa um número real a cada evento e satisfaz três axiomas fundamentais.
+### Etapa 5 — Gráficos com highcharter
 
-## Axioma 1 — Não negatividade
+**Questão 18:** Comparar o custo médio entre os tipos de obra.
 
-Para qualquer evento $A$:
+**Questão 19:** Comparar o prazo médio das obras entre as regiões.
 
-$$P(A)\geq 0$$
+**Questão 20:** Representar a participação dos tipos de obra por meio de gráfico de pizza.
 
-Uma probabilidade nunca pode ser negativa.
+**Questão 21:** Personalizar um gráfico do highcharter com recursos interativos e visuais.
 
-## Axioma 2 — Probabilidade do espaço amostral
+### Etapa 6 — Mapas interativos com leaflet
 
-A probabilidade de ocorrer algum resultado pertencente ao espaço amostral é:
+**Questão 22:** Criar um mapa interativo utilizando uma base cartográfica.
 
-$$P(\Omega)=1$$
+**Questão 23:** Representar a quantidade de obras por região em um mapa com marcadores.
 
-O valor 1 representa a certeza de que algum resultado pertencente ao espaço amostral ocorrerá.
+**Questão 24:** Destacar a região com maior quantidade de obras utilizando círculos.
 
-## Axioma 3 — Aditividade
+### Etapa 7 — Aplicações na prática profissional
 
-Se $A_1,A_2,\ldots$ são eventos mutuamente exclusivos, então:
+**Questão 25:** Verificar, de forma descritiva, a relação entre o tipo de obra e o custo médio.
 
-$$P\left(\bigcup_i A_i\right)=\sum_iP(A_i)$$
+**Questão 26:** Comparar os custos de obras sustentáveis e não sustentáveis.
 
-Para dois eventos disjuntos:
+**Questão 27:** Analisar visualmente a relação entre o número de falhas e a satisfação dos clientes.
 
-$$A\cap B=\varnothing$$
+**Questão 28:** Desenvolver um painel gráfico com informações sobre perfil das obras, custos, prazos, consumo de cimento e resistência.
 
-temos:
+### 🏗️ Desafio final  —Comunicação visual dos dados
 
-$$P(A\cup B)=P(A)+P(B)$$
-### Exemplo
+**Desafio Final:** Desenvolver um script em R que integre os cinco sistemas gráficos estudados — Base R, ggplot2, plotly, highcharter e leaflet — para realizar a inspeção da base, criar visualizações estáticas e interativas, elaborar um gráfico autoral e um mapa interativo, além de apresentar interpretações técnicas e justificar as decisões visuais adotadas.
 
-No lançamento de um dado:
+# 📚 Fundamentação teórica
 
-$$A=\{1\},\qquad B=\{6\}$$
+A **visualização de dados** é uma ferramenta importante para a análise de informações na Engenharia Civil, pois permite representar dados de forma gráfica, facilitando a identificação de padrões, tendências, diferenças e possíveis valores atípicos. Dessa forma, informações como custos, prazos, resistência do concreto e características das obras podem ser analisadas de maneira mais clara.
 
-Como $A$ e $B$ são disjuntos:
+A linguagem **R** é utilizada neste trabalho como ferramenta para organização, análise e visualização dos dados. O operador `|>` permite construir sequências de operações, facilitando o fluxo entre preparação dos dados e elaboração dos gráficos.
 
-$$P(A\cup B)=\frac16+\frac16=\frac13$$
+Os dados podem ser classificados em **quantitativos**, quando representam valores numéricos, e **qualitativos**, quando representam categorias. Essa classificação é fundamental para definir as formas adequadas de análise e representação.
 
-Os três axiomas formam a base formal sobre a qual são construídas as demais propriedades da teoria das probabilidades.
+A exploração inicial da base é realizada com funções como `head()`, `tail()`, `dim()`, `str()`, `glimpse()` e `summary()`. Também é importante verificar a existência de **valores ausentes**, pois eles podem interferir na análise e na interpretação dos resultados.
 
-# Propriedades da probabilidade
+## Sistemas Gráficos
 
-## Probabilidade do evento impossível
+O **Base R** disponibiliza funções gráficas nativas, como `plot()`, `hist()`, `boxplot()` e `barplot()`. O gráfico de dispersão permite analisar relações entre variáveis quantitativas; o histograma representa a distribuição dos dados; o boxplot possibilita comparar distribuições e identificar possíveis valores atípicos; e o gráfico de barras permite comparar categorias.
 
-O evento impossível é representado por $\varnothing$.
+O **ggplot2** utiliza a chamada **gramática dos gráficos**, combinando dados, `aes()`, geometrias (`geom_*()`), escalas, temas e facetas. Essa estrutura permite produzir gráficos mais flexíveis e personalizados.
 
-A partir dos axiomas:
+O **plotly** acrescenta interatividade às visualizações, permitindo recursos como `hover`, zoom e informações adicionais. Pode ser utilizado diretamente com `plot_ly()` ou a partir de gráficos do ggplot2 com `ggplotly()`.
 
-$$P(\varnothing)=0$$
+O **highcharter** permite produzir gráficos interativos com recursos de personalização, como títulos, tooltips, zoom e múltiplas séries.
 
-### Demonstração
+O **leaflet** é utilizado para a criação de **mapas interativos**, permitindo adicionar mapas-base, marcadores, círculos e informações por meio de popups.
 
-Como:
+Por fim, a utilização conjunta desses recursos permite demonstrar como a linguagem R pode ser aplicada à **exploração visual e à comunicação de dados na Engenharia Civil**, auxiliando na interpretação de informações e no apoio à tomada de decisões técnicas.
 
-$$\Omega=\Omega\cup\varnothing$$
 
-e os conjuntos são disjuntos:
+# 🔍 Resultados e Discussão
 
-$$P(\Omega)=P(\Omega)+P(\varnothing)$$
+## Questão 1 — Importação e verificação da base
 
-Como $P(\Omega)=1$:
+A base de dados foi importada para o objeto `dados` utilizando a função `read.csv()`. Em seguida, foram utilizadas as funções `head()`, `tail()` e `dim()` para verificar se a importação foi realizada corretamente.
 
-$$1=1+P(\varnothing)$$
+```{r}
+# Importação da base de dados
+dados <- read.csv("dados_engenharia_civil.csv")
 
-Logo:
+# Visualização das primeiras observações
+head(dados)
 
-$$\boxed{P(\varnothing)=0}$$
+# Visualização das últimas observações
+tail(dados)
 
-## Probabilidade do complementar
+# Verificação das dimensões da base
+dim(dados)
+```
 
-Para qualquer evento $A$:
+A função `head()` permite visualizar as primeiras observações da base, enquanto `tail()` apresenta as últimas observações. Já a função `dim()` informa a quantidade de linhas e colunas do conjunto de dados.
 
-$$\boxed{P(A^c)=1-P(A)}$$
+O resultado de `dim(dados)` foi:
 
-### Demonstração
+```{r}
+dim(dados)
+```
 
-Como:
+O resultado obtido foi `300 11`, indicando que a base possui **300 observações e 11 variáveis**.
 
-$$A\cup A^c=\Omega$$
+Dessa forma, a importação foi realizada corretamente e a estrutura inicial da base está de acordo com a descrição apresentada no enunciado.
 
-e:
+## Questão 2 — Quantidade de observações e variáveis
 
-$$A\cap A^c=\varnothing$$
+Para identificar a quantidade de observações e variáveis existentes na base de dados, foi utilizada a função `dim()`, que retorna o número de linhas e colunas do objeto `dados`, respectivamente.
 
-temos:
+```{r}
+# Verificação da quantidade de observações e variáveis
+dim(dados)
+```
 
-$$1=P(A)+P(A^c)$$
+O resultado obtido foi:
 
-Portanto:
+```{r}
+dim(dados)
+```
 
-$$P(A^c)=1-P(A)$$
+```text
+[1] 300  11
+```
 
-## Probabilidade limitada entre 0 e 1
+Portanto, a base de dados possui **300 observações e 11 variáveis**.
 
-Para qualquer evento:
+## Questão 3 — Estrutura e classificação das variáveis
 
-$$\boxed{0\leq P(A)\leq1}$$
+A estrutura da base de dados foi apresentada utilizando as funções `str()` e `glimpse()`. A função `str()` pertence ao R base, enquanto `glimpse()` é disponibilizada pelo pacote `dplyr`.
 
-A primeira desigualdade vem diretamente do axioma da não negatividade. A segunda decorre do fato de que $A\subseteq\Omega$ e, portanto, pela monotonicidade:
+```{r}
+# Carregamento do pacote necessário para utilizar glimpse()
+library(dplyr)
 
-$$P(A)\leq P(\Omega)=1$$
+# Estrutura da base utilizando Base R
+str(dados)
 
-## Monotonicidade
+# Estrutura da base utilizando dplyr
+dplyr::glimpse(dados)
+```
 
-Se:
+A partir da estrutura apresentada, as variáveis podem ser classificadas em **quantitativas** e **qualitativas**.
 
-$$A\subseteq B$$
+### Variáveis quantitativas
 
-então:
+As variáveis quantitativas são:
 
-$$\boxed{P(A)\leq P(B)}$$
+- `id_obra`
+- `area_construida`
+- `custo_total`
+- `prazo_meses`
+- `resistencia_mpa`
+- `consumo_cimento`
+- `indice_falhas`
+- `satisfacao`
 
-### Demonstração
+Essas variáveis foram reconhecidas pelo R como numéricas e representam valores que podem ser utilizados em operações matemáticas e análises quantitativas.
 
-Podemos escrever:
+### Variáveis qualitativas
 
-$$B=A\cup(B\setminus A)$$
+As variáveis qualitativas são:
 
-Como os conjuntos são disjuntos:
+- `tipo_obra`
+- `regiao`
+- `sustentavel`
 
-$$P(B)=P(A)+P(B\setminus A)$$
+Essas variáveis representam categorias utilizadas para classificar as obras.
 
-Como uma probabilidade é não negativa:
+A classificação é justificada pela natureza dos dados: as variáveis quantitativas representam medidas ou contagens numéricas, enquanto as variáveis qualitativas representam categorias ou características das obras. Essa distinção é importante para definir os procedimentos de análise e as representações gráficas mais adequadas nas questões seguintes.
 
-$$P(B\setminus A)\geq0$$
+## Questão 4 — Resumo das variáveis
 
-logo:
+Para obter um resumo das variáveis da base, foi utilizada a função `summary()`, que apresenta informações como valores mínimo e máximo, quartis, mediana e média para as variáveis numéricas, além da frequência das categorias para as variáveis qualitativas.
 
-$$P(B)\geq P(A)$$
+```{r}
+# Resumo das variáveis da base
+summary(dados)
+```
 
-## Aditividade para eventos não disjuntos
+O resumo obtido indica que a base possui **300 observações** e não apresenta valores ausentes nas variáveis analisadas.
 
-Quando dois eventos podem ocorrer simultaneamente, a soma direta das probabilidades conta a interseção duas vezes.
+Entre as variáveis quantitativas, destacam-se os seguintes valores:
 
-Por isso:
+- A `area_construida` varia de **45,9 m² a 1.855,9 m²**.
+- O `custo_total` varia de aproximadamente **R$ 112.442,60 a R$ 6.526.477,00**.
+- O `prazo_meses` varia de **6 a 36 meses**.
+- A `resistencia_mpa` varia de **17,82 MPa a 44,43 MPa**.
+- O `consumo_cimento` varia de **188,4 a 467,6 kg/m³**.
+- O `indice_falhas` varia de **0 a 7 falhas**.
+- A `satisfacao` varia de **1,0 a 10,0**.
 
-$$\boxed{
-P(A\cup B)=P(A)+P(B)-P(A\cap B)
-}$$
+Entre as variáveis qualitativas, a base apresenta **quatro tipos de obra**, **cinco regiões** e duas categorias para a variável `sustentavel`: **Sim** e **Não**.
 
-### Exemplo
+### Informações que chamam a atenção
 
-Considere:
+Os valores apresentam amplitudes consideráveis, principalmente para `area_construida`, `custo_total`, `resistencia_mpa` e `consumo_cimento`. Essa variação é esperada em uma base que reúne diferentes tipos de obras e regiões.
 
-$$P(A)=0,60$$
+Também chama atenção a variação da resistência do concreto, de **17,82 MPa a 44,43 MPa**, assim como o consumo de cimento, que varia de **188,4 a 467,6 kg/m³**.
 
-$$P(B)=0,50$$
+### Verificação de valores incompatíveis
 
-e:
+Considerando exclusivamente os valores apresentados pela base e o contexto definido no enunciado, **não é possível afirmar que exista algum valor mínimo ou máximo necessariamente incompatível com a Engenharia Civil**.
 
-$$P(A\cap B)=0,30$$
+Os valores representam diferentes obras, com áreas, custos, prazos e características de concreto distintas. Entretanto, alguns valores extremos, como a área de **45,9 m²**, a resistência de **17,82 MPa** ou o consumo de **467,6 kg/m³**, merecem atenção em análises gráficas posteriores, pois podem representar situações específicas ou valores extremos dentro da população analisada.
 
-Então:
+Portanto, nesta etapa, os valores extremos serão mantidos, conforme a orientação do enunciado, e sua influência poderá ser melhor avaliada por meio dos gráficos das questões seguintes.
 
-$$P(A\cup B)=0,60+0,50-0,30$$
+## Questão 5 — Verificação de valores ausentes
 
-$$\boxed{P(A\cup B)=0,80}$$
+Para verificar a existência de valores ausentes na base, foi utilizada a função `is.na()` em conjunto com `sum()` e `colSums()`. Dessa forma, foi possível identificar tanto a quantidade total de valores ausentes quanto a distribuição desses valores entre as variáveis.
 
-Assim, a probabilidade de ocorrer pelo menos um dos eventos é 80%.
+```{r}
+# Quantidade total de valores ausentes
+sum(is.na(dados))
 
-# Independência de eventos
+# Quantidade de valores ausentes por variável
+colSums(is.na(dados))
 
-Dois eventos $A$ e $B$ são independentes quando a ocorrência de um não altera a probabilidade de ocorrência do outro.
+# Identificação das observações que possuem valores ausentes
+dados[!complete.cases(dados), ]
+```
 
-Formalmente:
+O resultado da quantidade total de valores ausentes foi:
 
-$$
-\boxed{P(A\cap B)=P(A)P(B)}
-$$
+```{r}
+sum(is.na(dados))
+```
 
-Quando $P(B)>0$, essa definição também pode ser escrita como:
+```text
+[1] 0
+```
 
-$$
-P(A\mid B)=P(A)
-$$
+A verificação por variável também indicou zero valores ausentes em todas as variáveis:
 
-Isso significa que conhecer a ocorrência de $B$ não modifica a probabilidade de $A$.
+```{r}
+colSums(is.na(dados))
+```
 
-## Exemplo de independência
+Portanto, **não existem valores ausentes na base de dados**.
 
-Considere dois lançamentos de uma moeda equilibrada.
+**Respostas**
 
-Defina:
+- **Quantidade total de valores ausentes:** 0.
+- **Variáveis com valores ausentes:** nenhuma.
+- **Observações com valores ausentes:** nenhuma.
 
-- $A$: obter cara no primeiro lançamento;
-- $B$: obter cara no segundo lançamento.
+Assim, todas as **300 observações** possuem informações preenchidas nas **11 variáveis** da base. Portanto, não há registros que necessitem ser identificados ou tratados como valores ausentes nesta etapa da análise.
 
-Temos:
 
-$$
-P(A)=\frac12
-$$
+## Questão 6 — Dispersão
 
-e:
+Para analisar a relação entre a área construída e o custo total das obras, foi construído um gráfico de dispersão utilizando a função `plot()` do Base R. A variável `area_construida` foi definida no eixo X e `custo_total` no eixo Y.
 
-$$
-P(B)=\frac12
-$$
+```{r}
+# Gráfico de dispersão entre área construída e custo total
+plot(
+  dados$area_construida,
+  dados$custo_total,
+  main = "Relação entre Área Construída e Custo Total",
+  xlab = "Área construída (m²)",
+  ylab = "Custo total (R$)",
+  pch = 19,
+  col = "steelblue",
+  cex = 0.8
+)
+```
 
-Além disso:
+O gráfico apresenta uma **relação positiva** entre a área construída e o custo total das obras: de modo geral, à medida que a área construída aumenta, o custo total também tende a aumentar.
 
-$$
-P(A\cap B)=\frac14
-$$
+Essa tendência é consistente com o contexto da Engenharia Civil, uma vez que obras de maior dimensão normalmente envolvem maior quantidade de materiais, mão de obra e serviços.
 
-Como:
+Na base analisada, a associação linear entre as duas variáveis apresenta correlação de aproximadamente **0,81**, indicando uma relação positiva relativamente forte.
 
-$$
-P(A)P(B)=\frac12\cdot\frac12=\frac14
-$$
+Também podem ser observadas obras que se afastam do padrão geral. Um exemplo é a **obra 8**, que possui área construída de aproximadamente **1.380,9 m²** e custo total de **R$ 6.526.476,59**, apresentando um custo elevado em relação ao conjunto de dados. No outro extremo, a **obra 172** possui apenas **45,9 m²** e custo de **R$ 112.442,55**, representando uma das menores obras em área e custo da base.
 
-os eventos são independentes.
+Esses pontos extremos não devem ser considerados automaticamente como erros, pois podem estar relacionados às características específicas de cada empreendimento. O gráfico permite, portanto, identificar visualmente essas observações para análises posteriores.
 
-## Independência não é exclusão mútua
+## Questão 7 — Histograma
 
-Essa distinção é fundamental.
+Para analisar a distribuição da resistência à compressão do concreto, foi construído um histograma da variável `resistencia_mpa` utilizando a função `hist()`.
 
-Eventos mutuamente exclusivos satisfazem:
+```{r}
+# Histograma da resistência à compressão
+hist(
+  dados$resistencia_mpa,
+  breaks = 8,
+  col = "steelblue",
+  border = "white",
+  main = "Distribuição da Resistência à Compressão",
+  xlab = "Resistência à compressão (MPa)"
+)
 
-$$
-P(A\cap B)=0
-$$
+# Cálculo da média
+media_resistencia <- mean(dados$resistencia_mpa)
 
-Enquanto eventos independentes satisfazem:
+# Linha vertical indicando a média
+abline(
+  v = media_resistencia,
+  col = "red",
+  lwd = 2
+)
+```
 
-$$
-P(A\cap B)=P(A)P(B)
-$$
+A distribuição apresenta os valores de resistência concentrados principalmente em uma faixa intermediária, com alguma variação ao longo do intervalo observado. Visualmente, não apresenta uma simetria perfeita, embora também não indique uma assimetria muito acentuada.
 
-No lançamento de um dado, considere:
+Os valores de resistencia_mpa variam aproximadamente entre 17,82 MPa e 44,43 MPa. Os valores próximos aos extremos fogem da faixa de maior concentração dos dados e podem ser considerados observações que merecem atenção em uma análise de Engenharia Civil. Entretanto, apenas o histograma não permite afirmar que esses valores sejam inadequados para projeto, pois sua avaliação depende da classe de resistência especificada e das condições de utilização do concreto.
 
-$$
-A=\{1\}
-$$
-e:
+## Questão 8 — Boxplot
 
-$$
-B=\{2\}
-$$
+Para comparar a distribuição dos custos entre os diferentes tipos de obra, foi construído um boxplot da variável `custo_total` agrupada por `tipo_obra`, utilizando a função `boxplot()`.
 
-Eles são mutuamente exclusivos, pois não podem ocorrer simultaneamente.
+```{r}
+# Boxplot do custo total por tipo de obra
+boxplot(
+  custo_total ~ tipo_obra,
+  data = dados,
+  col = c("steelblue", "orange", "seagreen", "purple"),
+  main = "Distribuição do Custo Total por Tipo de Obra",
+  xlab = "Tipo de obra",
+  ylab = "Custo total (R$)"
+)
+```
 
-Entretanto:
+A categoria Infraestrutura apresenta a maior mediana de custo, aproximadamente R$ 3,87 milhões. Em seguida aparecem as obras Comerciais, com mediana de aproximadamente R$ 2,88 milhões, Residenciais, com R$ 2,48 milhões, e Industriais, com R$ 2,14 milhões.
 
-$$
-P(A\cap B)=0
-$$
+Quanto à dispersão, a categoria Infraestrutura apresenta a maior amplitude dos custos, variando aproximadamente de R$ 795 mil a R$ 6,53 milhões, indicando maior variação entre as obras desse tipo.
 
-enquanto:
+No boxplot, não são identificados outliers pelo critério padrão de 1,5 vezes o intervalo interquartil. Assim, apesar da existência de valores elevados, eles permanecem dentro dos limites considerados pelo boxplot para cada categoria.
 
-$$
-P(A)P(B)=\frac16\cdot\frac16=\frac1{36}
-$$
+## Questão 9 — Barplot
 
-Como:
+Para analisar a distribuição das obras entre as regiões brasileiras, foi construído um gráfico de barras utilizando `table()` para realizar a contagem e `barplot()` para representar os resultados graficamente.
 
-$$
-0\neq\frac1{36}
-$$
+```{r}
+# Contagem de obras por região
+obras_regiao <- table(dados$regiao)
 
-os eventos não são independentes.
+# Gráfico de barras
+barplot(
+  obras_regiao,
+  col = heat.colors(length(obras_regiao)),
+  main = "Quantidade de Obras por Região",
+  xlab = "Região",
+  ylab = "Quantidade de obras",
+  ylim = c(0, max(obras_regiao) + 15)
+)
+```
 
-> **Conclusão:** eventos mutuamente exclusivos e eventos independentes representam ideias diferentes. Se dois eventos têm probabilidades positivas, eles não podem ser simultaneamente mutuamente exclusivos e independentes.
+A região Sudeste concentra a maior quantidade de obras, com 101 obras, seguida pelo Nordeste, com 78, e pelo Sul, com 69. O Centro-Oeste apresenta 34 obras, enquanto a região Norte possui 18 obras.
 
-## Independência de múltiplos eventos
+Portanto, a maior concentração da base está nas regiões Sudeste, Nordeste e Sul. Esse resultado é compatível, de forma geral, com a forte concentração da atividade econômica e do setor da construção nessas regiões. Entretanto, como a base representa apenas as 300 obras analisadas, o gráfico descreve especificamente essa amostra e não permite concluir, isoladamente, sobre a distribuição de toda a construção civil brasileira.
 
-Para três eventos $A$, $B$ e $C$, a independência conjunta exige:
+## Questão 10 — Dispersão com cor por tipo de obra
 
-$$
-P(A\cap B)=P(A)P(B)
-$$
+Para aprofundar a análise da relação entre a área construída e o custo total, foi elaborado um gráfico de dispersão utilizando o `ggplot2`. A cor dos pontos foi definida de acordo com o `tipo_obra`, permitindo comparar visualmente os diferentes tipos de empreendimento.
 
-$$
-P(A\cap C)=P(A)P(C)
-$$
+```{r}
+library(ggplot2)
 
-$$
-P(B\cap C)=P(B)P(C)
-$$
+ggplot(dados, aes(x = area_construida, y = custo_total, color = tipo_obra)) +
+  geom_point(size = 2.5, alpha = 0.8) +
+  labs(
+    title = "Relação entre Área Construída e Custo Total",
+    subtitle = "Comparação dos custos segundo o tipo de obra",
+    x = "Área construída (m²)",
+    y = "Custo total (R$)",
+    color = "Tipo de obra"
+  ) +
+  theme_classic()
+```
 
-e também:
+Ao separar as observações por tipo_obra, o padrão observado na Questão 6 permanece: obras com maior área construída tendem a apresentar maior custo total.
 
-$$
-P(A\cap B\cap C)=P(A)P(B)P(C)
-$$
+A separação por cores permite observar que os diferentes tipos de obra ocupam faixas distintas de área e custo. As obras de Infraestrutura se destacam por apresentarem, de modo geral, valores de custo mais elevados, enquanto as demais categorias apresentam maior sobreposição entre si.
 
-Portanto, verificar apenas a independência entre pares não é suficiente para garantir a independência conjunta de todos os eventos.
+Assim, o uso da variável tipo_obra acrescenta uma nova dimensão à análise, permitindo identificar diferenças entre as categorias sem alterar a tendência geral de relação positiva entre área construída e custo total.
 
-# Teorema da Probabilidade Total
+## Questão 11 — Boxplot com preenchimento
 
-## Partição do espaço amostral
+Para comparar a distribuição do custo total entre os diferentes tipos de obra, foi construído um boxplot utilizando o `ggplot2`, com o preenchimento das caixas definido pela variável `tipo_obra`.
 
-Uma coleção de eventos:
+```{r}
+# Carregar o pacote ggplot2
+library(ggplot2)
 
-$$
-B_1,B_2,\ldots,B_n
-$$
+# Boxplot do custo total por tipo de obra
+ggplot(dados, aes(x = tipo_obra, y = custo_total, fill = tipo_obra)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribuição do Custo Total por Tipo de Obra",
+    x = "Tipo de obra",
+    y = "Custo total (R$)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none")
+```
 
-forma uma partição de $\Omega$ quando:
+O gráfico apresenta a mesma distribuição geral observada no boxplot construído com o Base R na Questão 8, permitindo comparar as medianas, a dispersão e os valores extremos de cada tipo de obra.
 
-$$
-B_i\cap B_j=\varnothing,\quad i\neq j
-$$
+Em relação ao Base R, o ggplot2 oferece maior flexibilidade e organização na construção dos gráficos, permitindo trabalhar com camadas, definir facilmente o preenchimento por categoria, personalizar títulos e rótulos e aplicar diferentes temas.
 
-e:
+Além disso, a utilização de aes() torna explícita a relação entre as variáveis e os elementos visuais do gráfico, facilitando a construção de visualizações mais elaboradas e consistentes.
 
-$$
-B_1\cup B_2\cup\cdots\cup B_n=\Omega
-$$
+## Questão 12 — Histograma com densidade
 
-Ou seja, os eventos são mutuamente exclusivos e, juntos, abrangem todo o espaço amostral.
+Para complementar a análise da distribuição da resistência à compressão, foi construído um histograma da variável `resistencia_mpa` com a escala de densidade, permitindo sobrepor a curva de densidade estimada dos dados.
 
-## Enunciado
+```{r}
+# Histograma com curva de densidade
+ggplot(dados, aes(x = resistencia_mpa)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 8,
+    fill = "steelblue",
+    color = "white",
+    alpha = 0.8
+  ) +
+  geom_density(
+    color = "red",
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Distribuição da Resistência à Compressão",
+    subtitle = "Histograma com curva de densidade",
+    x = "Resistência à compressão (MPa)",
+    y = "Densidade"
+  ) +
+  theme_classic()
+```
 
-Se $B_1,\ldots,B_n$ formam uma partição de $\Omega$, então:
+A curva de densidade reforça a leitura realizada no histograma da Questão 7, pois evidencia a concentração dos valores em uma faixa intermediária de resistência.
 
-$$
-\boxed{
-P(A)=\sum_{i=1}^{n}P(A\mid B_i)P(B_i)
-}
-$$
+A distribuição não apresenta uma simetria perfeita, mas também não demonstra uma assimetria muito acentuada. Os valores mais próximos dos extremos, entre aproximadamente 17,82 MPa e 44,43 MPa, aparecem com menor frequência em relação à região de maior concentração dos dados.
 
-## Demonstração
+Dessa forma, a curva de densidade facilita a visualização do formato geral da distribuição, complementando a interpretação obtida pelo histograma do Base R.
 
-Como os $B_i$ formam uma partição:
 
-$$
-\Omega=B_1\cup B_2\cup\cdots\cup B_n
-$$
+## Questão 13 — Barras com agrupamento
 
-Logo:
+Para analisar a frequência de práticas sustentáveis entre os diferentes tipos de obra, foi construído um gráfico de barras agrupadas. O preenchimento das barras representa a variável `sustentavel`, utilizando `position = "dodge"` para facilitar a comparação entre as categorias.
 
-$$
-A=A\cap\Omega
-$$
+```{r}
+# Carregar o pacote ggplot2
+library(ggplot2)
 
-e:
+# Gráfico de barras agrupadas
+ggplot(dados, aes(x = tipo_obra, fill = sustentavel)) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Adoção de Práticas Sustentáveis por Tipo de Obra",
+    x = "Tipo de obra",
+    y = "Número de obras",
+    fill = "Sustentável"
+  ) +
+  theme_classic()
+```
 
-$$
-A=(A\cap B_1)\cup(A\cap B_2)\cup\cdots\cup(A\cap B_n)
-$$
+A partir dos dados, observa-se que a adoção de práticas sustentáveis ocorre com maior frequência, em termos absolutos, nas obras Residenciais, com 50 obras sustentáveis, seguidas pelas Comerciais, com 39.
 
-Como as interseções são mutuamente exclusivas:
+Nas obras Industriais, foram identificadas 21 obras sustentáveis, enquanto as obras de Infraestrutura apresentam a menor frequência absoluta, com 13 obras.
 
-$$
-P(A)=\sum_{i=1}^{n}P(A\cap B_i)
-$$
+Portanto, em termos de quantidade de obras, a adoção de práticas sustentáveis é mais frequente nas obras Residenciais e menos frequente nas obras de Infraestrutura. Essa comparação considera valores absolutos; para comparar a proporção de obras sustentáveis dentro de cada tipo de obra, seria necessário analisar os percentuais.
 
-Pela definição de probabilidade condicional:
 
-$$
-P(A\mid B_i)=\frac{P(A\cap B_i)}{P(B_i)}
-$$
+## Questão 14 — Facetas
 
-portanto:
+Para verificar se a relação entre a área construída e o custo total apresenta o mesmo comportamento nas diferentes regiões do Brasil, foi construído um gráfico de dispersão com facetas por `regiao`. Em cada painel foi adicionada uma reta de tendência obtida por regressão linear.
 
-$$
-P(A\cap B_i)=P(A\mid B_i)P(B_i)
-$$
+```{r}
+# Gráfico de dispersão com facetas por região
+ggplot(
+  dados,
+  aes(
+    x = area_construida,
+    y = custo_total
+  )
+) +
+  geom_point(
+    color = "steelblue",
+    alpha = 0.7
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = "red",
+    linewidth = 1
+  ) +
+  facet_wrap(~regiao) +
+  labs(
+    title = "Relação entre Área Construída e Custo Total por Região",
+    x = "Área construída (m²)",
+    y = "Custo total (R$)"
+  ) +
+  theme_classic()
+```
 
-Substituindo:
 
-$$
-\boxed{
-P(A)=\sum_{i=1}^{n}P(A\mid B_i)P(B_i)
-}
-$$
+A relação entre área construída e custo total é positiva em todas as regiões, ou seja, obras com maior área tendem a apresentar custos maiores. Entretanto, a intensidade dessa relação não é exatamente igual entre as regiões.
 
-## Exemplo
+As correlações observadas são aproximadamente 0,83 no Sudeste, 0,82 no Nordeste, 0,79 no Centro-Oeste, 0,78 no Sul e 0,75 no Norte. Portanto, o Sudeste apresenta a relação linear mais forte, enquanto o Norte apresenta a mais fraca.
 
-Suponha que 60% dos estudantes estudem no período da manhã e 40% à tarde.
+Visualmente, algumas diferenças na dispersão dos pontos e na inclinação das retas podem ser observadas entre os painéis. A região Norte apresenta maior afastamento do padrão linear geral, embora não seja possível classificá-la isoladamente como uma região com comportamento anormal apenas com esse gráfico.
 
-A probabilidade de participar de uma atividade é:
+Assim, as facetas mostram que o comportamento geral é semelhante entre as regiões, mas existem diferenças na intensidade da associação entre área e custo, que podem estar relacionadas às características dos empreendimentos e às condições específicas de cada região.
 
-$$
-P(A\mid M)=0,70
-$$
+## Questão 15 — Gráfico autoral com múltiplas camadas
 
-para estudantes da manhã e:
+Para esta questão, foram escolhidas as variáveis numéricas `area_construida` e `custo_total`, pois a relação entre área e custo é relevante para o planejamento e o orçamento de obras. A variável categórica `tipo_obra` foi utilizada nas facetas para permitir a comparação do comportamento entre os diferentes tipos de empreendimento.
 
-$$
-P(A\mid T)=0,40
-$$
+```{r}
+# Gráfico autoral com múltiplas camadas
+ggplot(
+  dados,
+  aes(
+    x = area_construida,
+    y = custo_total
+  )
+) +
+  geom_point(
+    aes(
+      color = tipo_obra,
+      size = satisfacao
+    ),
+    alpha = 0.7
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = "black",
+    linewidth = 1
+  ) +
+  facet_wrap(~tipo_obra) +
+  scale_color_discrete(
+    name = "Tipo de obra"
+  ) +
+  scale_size_continuous(
+    name = "Satisfação",
+    range = c(2, 6)
+  ) +
+  labs(
+    title = "Área Construída × Custo Total por Tipo de Obra",
+    subtitle = "Tamanho dos pontos representa o nível de satisfação",
+    x = "Área construída (m²)",
+    y = "Custo total (R$)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 11),
+    strip.text = element_text(face = "bold"),
+    legend.position = "bottom"
+  )
+```
 
-para estudantes da tarde.
+A escolha de area_construida e custo_total permite analisar diretamente uma relação importante para a Engenharia Civil: como o aumento da área construída está associado ao aumento do custo da obra.
 
-Assim:
+O geom_point() permite observar individualmente as obras, enquanto o geom_smooth(method = "lm") acrescenta a tendência linear de cada tipo de obra. As facetas permitem comparar essas tendências separadamente entre Residencial, Comercial, Industrial e Infraestrutura.
 
-$$
-P(A)=P(A\mid M)P(M)+P(A\mid T)P(T)
-$$
+O uso do tamanho dos pontos para representar satisfacao acrescenta uma terceira dimensão à análise. Assim, além de observar a relação entre área e custo, é possível verificar visualmente como diferentes níveis de satisfação estão distribuídos entre as obras.
 
-$$
-P(A)=0,70(0,60)+0,40(0,40)
-$$
+Dessa forma, o gráfico revela diferenças no comportamento da relação área × custo entre os tipos de obra, algo que fica menos evidente em um único gráfico geral. A combinação de pontos, retas de tendência, facetas e tamanho dos pontos proporciona uma análise simultânea de custo, dimensão, tipo de empreendimento e satisfação.
 
-$$
-\boxed{P(A)=0,58}
-$$
 
-Portanto, a probabilidade geral de um estudante participar da atividade é 58%.
 
-# Teorema de Bayes
 
-O Teorema de Bayes permite inverter uma probabilidade condicional.
 
-Conhecer:
 
-$$
-P(A\mid B)
-$$
 
-não significa conhecer diretamente:
 
-$$
-P(B\mid A)
-$$
 
-## Enunciado
 
-Se $P(A)>0$, então:
 
-$$
-\boxed{
-P(B\mid A)=
-\frac{P(A\mid B)P(B)}
-{P(A)}
-}
-$$
 
-Se $B_1,\ldots,B_n$ formam uma partição:
 
-$$
-\boxed{
-P(B_j\mid A)=
-\frac{P(A\mid B_j)P(B_j)}
-{\sum_{i=1}^{n}P(A\mid B_i)P(B_i)}
-}
-$$
 
-## Demonstração
 
-Pela definição de probabilidade condicional:
 
-$$
-P(B\mid A)=\frac{P(A\cap B)}{P(A)}
-$$
 
-Também:
 
-$$
-P(A\mid B)=\frac{P(A\cap B)}{P(B)}
-$$
 
-Logo:
-
-$$
-P(A\cap B)=P(A\mid B)P(B)
-$$
-
-Substituindo:
-
-$$
-P(B\mid A)=
-\frac{P(A\mid B)P(B)}
-{P(A)}
-$$
-
-Portanto:
-
-$$
-\boxed{
-P(B\mid A)=
-\frac{P(A\mid B)P(B)}
-{P(A)}
-}
-$$
-
-## Interpretação
-
-O Teorema de Bayes pode ser interpretado como uma forma matemática de atualizar uma probabilidade diante de uma nova evidência.
-
-A probabilidade inicial de uma hipótese pode ser entendida como uma informação **a priori**. Depois que uma evidência é observada, a probabilidade pode ser atualizada, resultando em uma probabilidade **a posteriori**.
-
-Essa estrutura aparece em diagnósticos, controle de qualidade, classificação de dados, análise de risco e diversas outras situações.
-
-Um cuidado essencial é não confundir:
-
-$$
-P(A\mid B)
-$$
-
-com:
-
-$$
-P(B\mid A)
-$$
-
-Em geral, essas probabilidades são diferentes.
-
-# Aplicação na Educação Básica
-
-Os conceitos de probabilidade possuem grande potencial para o ensino da Matemática na Educação Básica porque permitem trabalhar simultaneamente cálculo, interpretação, argumentação e tomada de decisão.
-
-No Ensino Fundamental, situações envolvendo moedas, dados, sorteios e pesquisas podem introduzir espaço amostral, eventos, união, interseção e complementar.
-
-No Ensino Médio, esses conceitos podem ser aprofundados com probabilidade condicional, independência, Teorema da Probabilidade Total e Teorema de Bayes.
-
-Um aspecto especialmente relevante é trabalhar situações em que a intuição pode levar a uma conclusão incorreta. O problema de um teste diagnóstico é um exemplo significativo porque permite mostrar que:
-
-$$
-P(+\mid D)
-$$
-
-não é necessariamente igual a:
-
-$$
-P(D\mid +)
-$$
-
-Dessa maneira, o ensino de probabilidade pode contribuir para que os estudantes desenvolvam uma leitura mais crítica de porcentagens, pesquisas, resultados estatísticos e informações apresentadas no cotidiano.
-
-# Situação-problema — O teste da Doença Rara na Escola
-
-## Enunciado
-
-Uma escola pública decidiu realizar, em caráter experimental, um programa de triagem para uma doença infecciosa rara entre seus 1.200 estudantes.
-
-A doença afeta **1 em cada 100 estudantes** da população escolar.
-
-O teste apresenta:
-
-- **Sensibilidade:** se o estudante tem a doença, o teste é positivo em 90% dos casos;
-- **Especificidade:** se o estudante não tem a doença, o teste é negativo em 95% dos casos.
-
-Um estudante é sorteado ao acaso e submetido ao teste. O resultado foi **positivo**.
-
-A pergunta é:
-
-> Qual é a probabilidade de esse estudante realmente ter a doença?
-
-## Definição dos eventos
-
-Seja:
-
-- $D$: estudante tem a doença;
-- $D^c$: estudante não tem a doença;
-- $+$: teste positivo;
-- $-$: teste negativo.
-
-A prevalência da doença é:
-
-$$
-P(D)=\frac1{100}=0,01
-$$
-
-Logo:
-
-$$
-P(D^c)=1-0,01=0,99
-$$
-
-A sensibilidade fornece:
-
-$$
-P(+\mid D)=0,90
-$$
-
-A especificidade fornece:
-
-$$
-P(-\mid D^c)=0,95
-$$
-
-Portanto:
-
-$$
-P(+\mid D^c)=1-0,95=0,05
-$$
-
-Esse último valor representa a taxa de **falsos positivos**.
-
-## Aplicação do Teorema da Probabilidade Total
-
-O resultado positivo pode acontecer por dois caminhos:
-
-1. o estudante tem a doença e testa positivo;
-2. o estudante não tem a doença e testa positivo.
-
-Assim:
-
-$$
-P(+)=P(+\mid D)P(D)+P(+\mid D^c)P(D^c)
-$$
-
-Substituindo:
-
-$$
-P(+)=0,90(0,01)+0,05(0,99)
-$$
-
-$$
-P(+)=0,009+0,0495
-$$
-
-$$
-\boxed{P(+)=0,0585}
-$$
-
-Portanto, a probabilidade de um estudante escolhido ao acaso apresentar teste positivo é de:
-
-$$
-\boxed{5,85\%}
-$$
-
-## Aplicação do Teorema de Bayes
-
-A pergunta central é diferente: queremos saber a probabilidade de o estudante ter a doença **sabendo que o teste foi positivo**.
-
-Portanto, queremos calcular:
-
-$$
-P(D\mid +)
-$$
-
-Pelo Teorema de Bayes:
-
-$$
-P(D\mid +)=
-\frac{P(+\mid D)P(D)}
-{P(+)}
-$$
-
-Substituindo:
-
-$$
-P(D\mid +)=
-\frac{0,90(0,01)}
-{0,0585}
-$$
-
-$$
-P(D\mid +)=
-\frac{0,009}{0,0585}
-$$
-
-$$
-\boxed{P(D\mid +)\approx0,1538}
-$$
-
-Em porcentagem:
-
-$$
-\boxed{P(D\mid +)\approx15,38\%}
-$$
-
-# Interpretação utilizando os 1.200 estudantes
-
-A interpretação pode ficar mais clara utilizando o número de estudantes da escola.
-
-Como a doença afeta 1 em cada 100 estudantes:
-
-$$
-1200\times0,01=12
-$$
-
-Espera-se, portanto, que aproximadamente **12 estudantes** tenham a doença.
-
-Desses 12, a sensibilidade de 90% indica:
-
-$$
-12\times0,90=10,8
-$$
-
-aproximadamente 11 verdadeiros positivos.
-
-Os estudantes sem a doença são:
-
-$$
-1200-12=1188
-$$
-
-Como 5% dos estudantes sem a doença apresentam resultado positivo:
-
-$$
-1188\times0,05=59,4
-$$
-
-aproximadamente 59 falsos positivos.
-
-Assim, temos aproximadamente:
-
-$$
-10,8+59,4=70,2
-$$
-
-resultados positivos.
-
-A proporção de verdadeiros positivos entre os resultados positivos é:
-
-$$
-\frac{10,8}{70,2}\approx0,1538
-$$
-
-ou:
-
-$$
-\boxed{15,38\%}
-$$
-
-## Por que não é 90%?
-
-É comum que alguém observe a informação de que o teste possui **90% de sensibilidade** e conclua que um resultado positivo representa 90% de chance de a pessoa possuir a doença.
-
-Essa interpretação está incorreta.
-
-A sensibilidade representa:
-
-$$
-\boxed{P(+\mid D)=90\%}
-$$
-
-Isto significa:
-
-> Entre as pessoas que realmente têm a doença, 90% apresentam resultado positivo.
-
-Entretanto, a pergunta do problema é:
-
-$$
-\boxed{P(D\mid +)}
-$$
-
-isto é:
-
-> Entre as pessoas que apresentaram resultado positivo, qual é a proporção que realmente tem a doença?
-
-Neste problema:
-
-$$
-P(+\mid D)=90\%
-$$
-
-mas:
-
-$$
-P(D\mid +)\approx15,38\%
-$$
-
-A diferença ocorre principalmente porque a doença é rara. Existem muito mais estudantes sem a doença do que estudantes com a doença. Assim, mesmo uma taxa relativamente pequena de falsos positivos pode gerar muitos resultados positivos entre os estudantes saudáveis.
-
-# Conclusão
-
-A teoria das probabilidades fornece uma estrutura matemática para representar e analisar situações de incerteza.
-
-Os conceitos de espaço amostral, eventos e operações entre conjuntos formam a base da representação dos fenômenos aleatórios. Os axiomas de Kolmogorov estabelecem os fundamentos formais da medida de probabilidade e permitem demonstrar propriedades como a probabilidade do evento impossível, a regra do complementar, a monotonicidade e a aditividade para eventos não disjuntos.
-
-A independência permite representar situações nas quais a ocorrência de um evento não altera a probabilidade de outro, sendo importante diferenciá-la da exclusão mútua.
-
-O Teorema da Probabilidade Total permite decompor uma probabilidade em diferentes cenários que formam uma partição do espaço amostral. Já o Teorema de Bayes permite inverter uma probabilidade condicional e atualizar uma hipótese diante de uma nova evidência.
-
-Na situação da doença rara, a aplicação conjunta desses conceitos levou ao resultado:
-
-$$
-\boxed{P(D\mid +)\approx15,38\%}
-$$
-
-Portanto, embora o teste apresente sensibilidade de 90%, isso não significa que uma pessoa com resultado positivo tenha 90% de probabilidade de possuir a doença.
-
-O problema evidencia a importância de considerar a prevalência e os falsos positivos na interpretação de resultados. Também demonstra por que o ensino de probabilidade na Educação Básica deve ultrapassar a aplicação mecânica de fórmulas, valorizando a interpretação, a argumentação e a análise crítica de informações quantitativas.
-
-# Síntese das principais fórmulas
-
-| Conceito | Fórmula |
-|---|---|
-| Complementar | $P(A^c)=1-P(A)$ |
-| União de eventos | $P(A\cup B)=P(A)+P(B)-P(A\cap B)$ |
-| Eventos disjuntos | $P(A\cup B)=P(A)+P(B)$ |
-| Independência | $P(A\cap B)=P(A)P(B)$ |
-| Probabilidade condicional | $P(A\mid B)=\frac{P(A\cap B)}{P(B)}$ |
-| Probabilidade Total | $P(A)=\sum_iP(A\mid B_i)P(B_i)$ |
-| Bayes | $P(B\mid A)=\frac{P(A\mid B)P(B)}{P(A)}$ |
 
 # 🧠 Considerações finais
 
-A principal contribuição deste estudo está em perceber que os conceitos não aparecem de forma isolada. Eventos, probabilidade condicional, independência, Probabilidade Total e Bayes fazem parte de uma mesma estrutura lógica.
+A principal diferença entre utilizar **Base R** e as ferramentas da família **tidyverse** para o processamento de dados está na forma de organizar e executar as operações. O Base R possui funções capazes de realizar as mesmas tarefas, porém o `tidyverse` oferece uma abordagem mais integrada e estruturada, permitindo encadear diferentes operações de forma mais clara e próxima da sequência lógica do processo de análise.
 
-A situação-problema da doença rara sintetiza essa relação: a prevalência define a probabilidade inicial, a sensibilidade e a especificidade descrevem o comportamento do teste, a Probabilidade Total determina a frequência global de resultados positivos e Bayes permite responder à pergunta inversa sobre a verdadeira condição do estudante.
+No desenvolvimento desta atividade, funções como `filter()`, `mutate()`, `group_by()`, `summarise()`, `across()` e `case_when()` permitiram realizar etapas de **inspeção, limpeza, transformação e análise** de maneira organizada. Além disso, funções do `stringr` e do `ggplot2` facilitaram, respectivamente, o tratamento das informações textuais e a construção das visualizações.
 
-Essa conexão entre conceitos matemáticos e situações concretas torna o estudo das probabilidades particularmente relevante para a formação de estudantes capazes de interpretar informações e tomar decisões fundamentadas diante da incerteza.
+Assim, embora o **Base R e o tidyverse possam solucionar problemas semelhantes**, o tidyverse apresenta vantagens na organização do código, principalmente quando são necessárias várias etapas de transformação dos dados. Essa característica torna o processamento mais **legível, sistemático e fácil de reproduzir**, o que é importante quando o script precisa ser compreendido e utilizado por outro profissional.
+
+No contexto da Engenharia Civil, essa organização é especialmente relevante, pois os dados utilizados em análises de controle tecnológico podem apresentar erros de digitação, valores ausentes e diferentes formas de preenchimento. Antes de aplicar métodos estatísticos, é necessário garantir que os dados estejam adequadamente estruturados e tratados.
+
+Dessa forma, o principal aprendizado desta atividade foi compreender que a escolha da ferramenta de processamento não está apenas relacionada à obtenção do resultado, mas também à **forma como o processo é estruturado e documentado**. O uso do tidyverse contribui para construir um fluxo de análise mais organizado, facilitando a transformação dos dados brutos em informações confiáveis para auxiliar a tomada de decisão na Engenharia Civil.
+
+
 
 
 # 📖 Referências
