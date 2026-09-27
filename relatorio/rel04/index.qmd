@@ -29,165 +29,95 @@ execute:
 
 # 📌 Introdução
 
-A análise de dados tem adquirido papel cada vez mais relevante na Engenharia Civil, especialmente diante da necessidade de transformar informações provenientes de obras, ensaios, controles tecnológicos e indicadores de desempenho em subsídios para a tomada de decisões. Nesse contexto, a visualização de dados constitui uma importante ferramenta para representar informações de maneira clara e objetiva, permitindo identificar padrões, tendências, diferenças, relações entre variáveis e possíveis comportamentos atípicos que podem não ser facilmente percebidos por meio de tabelas ou valores numéricos isolados.
+A visualização de dados possui papel importante na Engenharia Civil porque permite transformar informações numéricas e categóricas em representações que facilitam a identificação de padrões, diferenças, tendências e possíveis comportamentos atípicos. Em situações relacionadas ao planejamento e ao acompanhamento de obras, informações como área construída, custo, prazo, resistência do concreto e ocorrência de falhas precisam ser analisadas de forma organizada para apoiar a interpretação dos resultados.
 
-Na área de controle tecnológico do concreto e gerenciamento de empreendimentos, por exemplo, variáveis como resistência à compressão, consumo de cimento, custo, prazo, área construída e índice de falhas podem apresentar diferentes comportamentos de acordo com o tipo de obra e a região em que o empreendimento está localizado. A representação gráfica dessas informações permite ao engenheiro analisar o desempenho dos empreendimentos de forma mais abrangente e comunicar resultados técnicos de maneira acessível a diferentes públicos, como equipes de obra, gestores, clientes e demais profissionais envolvidos no empreendimento.
+Nesta atividade, é analisada uma base de dados composta por **300 obras de Engenharia Civil e 11 variáveis**, incluindo características dos empreendimentos, localização, área construída, custo total, prazo, resistência do concreto, consumo de cimento, índice de falhas, satisfação dos clientes e adoção de práticas sustentáveis. A diversidade das variáveis permite utilizar diferentes formas de representação gráfica e comparar como cada sistema responde a uma determinada necessidade de análise.
 
-Neste trabalho, será realizada uma análise gráfica de uma base de dados composta por informações referentes a 300 obras de Engenharia Civil, contemplando características dos empreendimentos, indicadores de custo e prazo, propriedades relacionadas ao concreto, ocorrência de falhas, satisfação dos clientes e adoção de práticas sustentáveis. A análise será desenvolvida utilizando diferentes sistemas gráficos disponíveis na linguagem R, possibilitando explorar distintas formas de representação e interação com os dados.
+O trabalho utiliza cinco sistemas gráficos da linguagem R: **Base R, ggplot2, plotly, highcharter e leaflet**. O Base R é empregado para construções gráficas mais diretas; o ggplot2 permite trabalhar com camadas, escalas e facetas; o plotly e o highcharter acrescentam recursos de interatividade; e o leaflet é utilizado para representar informações de forma espacial.
 
-Serão empregados recursos do Base R, por meio de funções gráficas nativas, do ggplot2, utilizando os princípios da gramática dos gráficos, além de ferramentas interativas como plotly e highcharter. Também será utilizado o leaflet para a representação espacial das informações em mapas interativos. Sempre que pertinente, serão utilizadas operações de transformação e organização dos dados com recursos do tidyverse, especialmente por meio do operador |>, permitindo estruturar os dados antes de sua representação visual.
-
-A atividade está organizada em 28 questões, que abordam diferentes situações de exploração e visualização dos dados. Ao longo delas, busca-se não apenas construir gráficos, mas também compreender a finalidade de cada sistema gráfico, selecionar representações adequadas às características das variáveis e interpretar os resultados obtidos sob a perspectiva da Engenharia Civil. Dessa forma, o trabalho procura desenvolver uma abordagem integrada entre programação em R, análise exploratória de dados, comunicação visual e interpretação técnica, evidenciando como ferramentas computacionais podem auxiliar o engenheiro na compreensão e na comunicação de informações relacionadas ao desempenho de obras.
-
+Dessa forma, o objetivo não é apenas produzir gráficos, mas relacionar a **natureza da variável, a pergunta de análise e a escolha da representação visual**. A interpretação dos resultados é realizada considerando o conjunto de obras analisado, sem extrapolar os resultados da amostra para o setor da construção civil como um todo.
 
 # 🎯 Objetivo geral
 
-Demonstrar o uso prático da linguagem R como ferramenta de análise, visualização e interpretação de dados na Engenharia Civil, aplicando diferentes sistemas gráficos para transformar informações de empreendimentos em representações visuais que permitam identificar padrões, tendências, relações entre variáveis e comportamentos atípicos, contribuindo para a análise técnica, tomada de decisões e comunicação de resultados no contexto profissional da Engenharia Civil.
+Utilizar a linguagem R para **explorar, visualizar e comunicar dados de obras de Engenharia Civil**, aplicando diferentes sistemas gráficos para identificar relações, distribuições, diferenças entre categorias e informações espaciais relevantes para a interpretação técnica dos dados.
 
 ## Objetivos específicos
 
-- **Explorar e compreender** a estrutura da base de dados de empreendimentos da Engenharia Civil, identificando os tipos de variáveis e suas características;
+- **Inspecionar** a estrutura da base de dados, identificando suas dimensões, variáveis e tipos de informação;
 
-- **Aplicar a linguagem R** na organização, transformação e análise de dados, utilizando funções e recursos adequados para o tratamento das informações;
+- **Verificar** a existência de valores ausentes e possíveis valores extremos ou inconsistentes;
 
-- **Utilizar os principais sistemas gráficos do R**, incluindo Base R, ggplot2, plotly, highcharter e leaflet, reconhecendo as características e possibilidades de cada ferramenta;
+- **Aplicar o Base R** na construção de gráficos de dispersão, histogramas, boxplots e barras;
 
-- **Construir diferentes tipos de gráficos** para representar variáveis quantitativas e qualitativas, considerando a finalidade da análise e a natureza dos dados;
+- **Utilizar o ggplot2** para construir visualizações com camadas, escalas, preenchimentos, facetas e linhas de tendência;
 
-- **Aplicar os princípios da gramática dos gráficos** por meio do ggplot2, utilizando elementos como aes(), geom_*(), escalas, temas e facetas;
+- **Explorar gráficos interativos** com `plotly` e `highcharter`;
 
-- **Explorar recursos de visualização interativa**, permitindo uma análise mais dinâmica dos dados e a obtenção de informações adicionais por meio da interação com os gráficos;
+- **Representar informações espaciais** por meio de mapas interativos com `leaflet`;
 
-- **Representar informações geográficas** relacionadas aos empreendimentos por meio de mapas interativos, utilizando o leaflet;
+- **Relacionar diferentes variáveis** da base, como área e custo, falhas e satisfação, consumo de cimento e resistência;
 
-- **Identificar padrões, tendências, relações e possíveis valores atípicos** presentes nos dados por meio da análise gráfica;
+- **Interpretar os gráficos** considerando a natureza dos dados e o contexto da Engenharia Civil;
 
-- **Interpretar os resultados obtidos** relacionando as informações apresentadas nos gráficos com situações práticas do contexto da Engenharia Civil;
+- **Desenvolver visualizações autorais** que combinem mais de uma dimensão da base;
 
-- **Desenvolver a capacidade de comunicação visual de informações técnicas**, utilizando gráficos adequados, organizados e de fácil interpretação;
-
-- **Compreender a importância da visualização de dados como ferramenta de apoio à tomada de decisões**, demonstrando aplicações práticas da linguagem R no contexto profissional da Engenharia Civil.
-
+- **Comparar os sistemas gráficos** e discutir suas diferenças quanto à construção, interação e comunicação das informações.
 
 # ⚙️ Metodologia
 
-O presente trabalho foi desenvolvido por meio de uma abordagem quantitativa e exploratória, utilizando a linguagem de programação R como ferramenta para organização, análise e visualização de dados relacionados a empreendimentos da Engenharia Civil. A metodologia foi estruturada de forma a permitir a exploração progressiva da base de dados, partindo da inspeção das informações até a construção e interpretação de diferentes representações gráficas.
+O trabalho foi desenvolvido por meio de uma abordagem **quantitativa e exploratória**, utilizando a linguagem R para inspeção, organização e visualização dos dados. A metodologia segue uma sequência semelhante à adotada no Relatório 3, iniciando pela verificação da base e avançando para a exploração gráfica.
 
-Inicialmente, foi utilizada a base de dados dados_engenharia_civil.csv, composta por informações referentes a 300 obras, contemplando variáveis relacionadas às características dos empreendimentos, localização, área construída, custos, prazos, resistência do concreto, consumo de cimento, índice de falhas, satisfação dos clientes e adoção de práticas sustentáveis.
+Inicialmente, a base `dados_engenharia_civil.csv` foi importada e inspecionada por meio de funções como `head()`, `tail()`, `dim()`, `str()`, `glimpse()` e `summary()`. Essa etapa permitiu verificar as dimensões, a estrutura e as características gerais das variáveis antes da construção dos gráficos.
 
-A primeira etapa consistiu na importação e inspeção da base de dados, utilizando funções da linguagem R para verificar sua estrutura, dimensão, tipos das variáveis e características gerais dos dados. Foram utilizados comandos como head(), str(), summary() e dim(), permitindo identificar previamente as informações que seriam utilizadas nas análises e visualizações.
+Em seguida, foram utilizados recursos do `dplyr` e o operador `|>` para organizar os dados necessários às análises. Como a base não apresenta valores ausentes, não foi necessário realizar um processo de limpeza semelhante ao desenvolvido no Relatório 3. O foco desta atividade está, portanto, na **exploração visual e na comunicação dos resultados**.
 
-Em seguida, foram realizadas operações de organização e transformação dos dados, utilizando principalmente funções do pacote dplyr e o operador |>. Essas operações permitiram agrupar informações, calcular medidas estatísticas, selecionar variáveis e preparar conjuntos de dados específicos para cada representação gráfica.
+A análise gráfica foi dividida entre cinco sistemas. No **Base R**, foram utilizadas funções nativas para representar relações entre variáveis, distribuições e frequências. No **ggplot2**, foram exploradas camadas, mapeamentos estéticos, facetas e linhas de tendência. O **plotly** foi utilizado para acrescentar interatividade a gráficos construídos com `ggplot2` e também para criar uma visualização diretamente com `plot_ly()`. O **highcharter** foi aplicado na construção de gráficos interativos de síntese. Por fim, o **leaflet** foi utilizado para representar a distribuição regional das obras em um mapa interativo.
 
-A etapa de visualização foi desenvolvida utilizando diferentes sistemas gráficos disponíveis na linguagem R. Inicialmente, foram empregadas funções do Base R, como plot(), hist(), boxplot() e barplot(), possibilitando a construção de representações gráficas por meio das ferramentas nativas da linguagem. Posteriormente, foi utilizado o pacote ggplot2, aplicando os princípios da gramática dos gráficos por meio da combinação entre dados, mapeamentos estéticos (aes()), geometrias (geom_*()), escalas, facetas e temas.
-
-Também foram explorados recursos de visualização interativa, utilizando os pacotes plotly e highcharter, permitindo a construção de gráficos nos quais o usuário pode interagir com os elementos apresentados e obter informações adicionais. Para a representação espacial dos empreendimentos, foi utilizado o pacote leaflet, possibilitando a construção de mapas interativos.
-
-Ao longo das 28 questões propostas, os diferentes sistemas gráficos foram aplicados de acordo com a natureza das variáveis e com as perguntas de análise apresentadas. Para cada situação, buscou-se selecionar uma representação visual adequada, considerando aspectos como comparação entre categorias, distribuição de variáveis, relação entre medidas quantitativas, identificação de valores atípicos, evolução dos indicadores e distribuição espacial das informações.
-
-Por fim, os resultados obtidos por meio dos gráficos foram interpretados sob a perspectiva da Engenharia Civil, relacionando os padrões observados aos possíveis significados técnicos das variáveis analisadas. Dessa forma, a metodologia não se limitou à construção dos gráficos, mas buscou demonstrar a utilização do R como uma ferramenta prática para análise exploratória, comunicação de informações técnicas e apoio à tomada de decisões no contexto da Engenharia Civil.
-
+A interpretação dos resultados foi realizada de forma descritiva. Assim, as associações observadas nos gráficos são apresentadas como relações presentes na base analisada, sem estabelecer relações de causa e efeito ou generalizações para populações que não estejam representadas pelos dados.
 
 ## 📋 Etapas de desenvolvimento
 
 ### Etapa 1 — Conhecendo a base
 
-**Questão 1:** Importar a base no R e verificar se os dados foram carregados corretamente.
+**Questões 1 a 5:** importação, dimensões, estrutura, classificação das variáveis, resumo e verificação de valores ausentes.
 
-**Questão 2:** Identificar a quantidade de observações e variáveis da base.
+### Etapa 2 — Base R
 
-**Questão 3:** Analisar a estrutura da base e classificar as variáveis em quantitativas e qualitativas.
+**Questões 6 a 9:** construção de gráficos de dispersão, histograma, boxplot e barras utilizando funções gráficas nativas.
 
-**Questão 4:** Obter um resumo estatístico das variáveis e identificar valores potencialmente incompatíveis.
+### Etapa 3 — ggplot2
 
-**Questão 5:** Verificar a existência e a localização de valores ausentes na base.
+**Questões 10 a 15:** construção de gráficos com `ggplot2`, incluindo dispersão, boxplot, histograma com densidade, barras agrupadas, facetas e um gráfico autoral.
 
-### Etapa 2 — Gráficos no Base R
+### Etapa 4 — Visualização interativa
 
-**Questão 6:** Relacionar área construída e custo total por meio de um gráfico de dispersão.
+**Questões 16 a 21:** utilização de `plotly` e `highcharter` para transformar as análises em visualizações interativas e personalizadas.
 
-**Questão 7:** Analisar a distribuição da resistência do concreto por meio de um histograma.
+### Etapa 5 — Mapas
 
-**Questão 8:** Comparar a distribuição dos custos entre os diferentes tipos de obra utilizando boxplot.
+**Questões 22 a 24:** utilização do `leaflet` para representar as obras por região e destacar a região com maior frequência na base.
 
-**Questão 9:** Representar a quantidade de obras por região em um gráfico de barras.
+### Etapa 6 — Aplicações na prática profissional
 
-### Etapa 3 — Gráficos com ggplot2
+**Questões 25 a 28:** análise descritiva de custo, sustentabilidade, falhas, satisfação e elaboração de um conjunto de gráficos para comunicação dos principais resultados.
 
-**Questão 10:** Analisar a relação entre área e custo, diferenciando os tipos de obra por cores.
+### Desafio final — Comunicação visual
 
-**Questão 11:** Comparar os custos dos diferentes tipos de obra utilizando boxplot.
-
-**Questão 12:** Analisar a distribuição da resistência utilizando histograma e curva de densidade.
-
-**Questão 13:** Comparar a adoção de práticas sustentáveis entre os tipos de obra.
-
-**Questão 14:** Analisar a relação entre área e custo nas diferentes regiões brasileiras.
-
-**Questão 15:** Desenvolver um gráfico autoral utilizando múltiplas camadas, facetas e personalizações.
-
-### Etapa 4 — Gráficos interativos com plotly
-
-**Questão 16:** Transformar um gráfico do ggplot2 em uma visualização interativa.
-
-**Questão 17:** Criar diretamente no plotly um gráfico interativo com dados agregados.
-
-### Etapa 5 — Gráficos com highcharter
-
-**Questão 18:** Comparar o custo médio entre os tipos de obra.
-
-**Questão 19:** Comparar o prazo médio das obras entre as regiões.
-
-**Questão 20:** Representar a participação dos tipos de obra por meio de gráfico de pizza.
-
-**Questão 21:** Personalizar um gráfico do highcharter com recursos interativos e visuais.
-
-### Etapa 6 — Mapas interativos com leaflet
-
-**Questão 22:** Criar um mapa interativo utilizando uma base cartográfica.
-
-**Questão 23:** Representar a quantidade de obras por região em um mapa com marcadores.
-
-**Questão 24:** Destacar a região com maior quantidade de obras utilizando círculos.
-
-### Etapa 7 — Aplicações na prática profissional
-
-**Questão 25:** Verificar, de forma descritiva, a relação entre o tipo de obra e o custo médio.
-
-**Questão 26:** Comparar os custos de obras sustentáveis e não sustentáveis.
-
-**Questão 27:** Analisar visualmente a relação entre o número de falhas e a satisfação dos clientes.
-
-**Questão 28:** Desenvolver um painel gráfico com informações sobre perfil das obras, custos, prazos, consumo de cimento e resistência.
-
-### 🏗️ Desafio final  —Comunicação visual dos dados
-
-**Desafio Final:** Desenvolver um script em R que integre os cinco sistemas gráficos estudados — Base R, ggplot2, plotly, highcharter e leaflet — para realizar a inspeção da base, criar visualizações estáticas e interativas, elaborar um gráfico autoral e um mapa interativo, além de apresentar interpretações técnicas e justificar as decisões visuais adotadas.
+Integração dos cinco sistemas gráficos em um fluxo único de análise, destacando as decisões visuais adotadas e os resultados mais relevantes.
 
 # 📚 Fundamentação teórica
 
-A **visualização de dados** é uma ferramenta importante para a análise de informações na Engenharia Civil, pois permite representar dados de forma gráfica, facilitando a identificação de padrões, tendências, diferenças e possíveis valores atípicos. Dessa forma, informações como custos, prazos, resistência do concreto e características das obras podem ser analisadas de maneira mais clara.
+A **visualização de dados** constitui uma etapa importante da análise exploratória porque permite observar relações e padrões que podem ser difíceis de identificar apenas por meio de tabelas numéricas. Na Engenharia Civil, essa abordagem pode ser aplicada a indicadores de custo, prazo, produtividade, qualidade, consumo de materiais e desempenho de empreendimentos.
 
-A linguagem **R** é utilizada neste trabalho como ferramenta para organização, análise e visualização dos dados. O operador `|>` permite construir sequências de operações, facilitando o fluxo entre preparação dos dados e elaboração dos gráficos.
+A escolha da representação depende da natureza das variáveis e da pergunta que se pretende responder. Gráficos de dispersão são adequados para explorar relações entre variáveis quantitativas; histogramas permitem observar a distribuição de uma variável; boxplots facilitam a comparação entre grupos; gráficos de barras são apropriados para frequências ou valores agregados por categoria; e mapas permitem incorporar a dimensão espacial.
 
-Os dados podem ser classificados em **quantitativos**, quando representam valores numéricos, e **qualitativos**, quando representam categorias. Essa classificação é fundamental para definir as formas adequadas de análise e representação.
+O **Base R** disponibiliza funções gráficas nativas, como `plot()`, `hist()`, `boxplot()` e `barplot()`. Sua principal característica neste contexto é a construção direta dos gráficos a partir de funções específicas.
 
-A exploração inicial da base é realizada com funções como `head()`, `tail()`, `dim()`, `str()`, `glimpse()` e `summary()`. Também é importante verificar a existência de **valores ausentes**, pois eles podem interferir na análise e na interpretação dos resultados.
+O **ggplot2** utiliza uma estrutura baseada na chamada gramática dos gráficos, combinando dados, mapeamentos estéticos (`aes()`), geometrias (`geom_*()`), escalas, facetas e temas. Essa organização facilita a construção de gráficos em camadas e a padronização das visualizações.
 
-## Sistemas Gráficos
+O **plotly** permite transformar gráficos em visualizações interativas, com recursos como informações exibidas ao passar o cursor, zoom e seleção de elementos. O **highcharter** também oferece interatividade e recursos de personalização para gráficos de síntese. Já o **leaflet** é direcionado à representação cartográfica interativa, permitindo adicionar marcadores, círculos, popups e diferentes mapas-base.
 
-O **Base R** disponibiliza funções gráficas nativas, como `plot()`, `hist()`, `boxplot()` e `barplot()`. O gráfico de dispersão permite analisar relações entre variáveis quantitativas; o histograma representa a distribuição dos dados; o boxplot possibilita comparar distribuições e identificar possíveis valores atípicos; e o gráfico de barras permite comparar categorias.
-
-O **ggplot2** utiliza a chamada **gramática dos gráficos**, combinando dados, `aes()`, geometrias (`geom_*()`), escalas, temas e facetas. Essa estrutura permite produzir gráficos mais flexíveis e personalizados.
-
-O **plotly** acrescenta interatividade às visualizações, permitindo recursos como `hover`, zoom e informações adicionais. Pode ser utilizado diretamente com `plot_ly()` ou a partir de gráficos do ggplot2 com `ggplotly()`.
-
-O **highcharter** permite produzir gráficos interativos com recursos de personalização, como títulos, tooltips, zoom e múltiplas séries.
-
-O **leaflet** é utilizado para a criação de **mapas interativos**, permitindo adicionar mapas-base, marcadores, círculos e informações por meio de popups.
-
-Por fim, a utilização conjunta desses recursos permite demonstrar como a linguagem R pode ser aplicada à **exploração visual e à comunicação de dados na Engenharia Civil**, auxiliando na interpretação de informações e no apoio à tomada de decisões técnicas.
-
+A utilização conjunta desses sistemas permite comparar diferentes formas de comunicação visual e compreender que a escolha do gráfico deve estar relacionada ao objetivo da análise, e não apenas à disponibilidade de uma determinada ferramenta.
 
 # 🔍 Resultados e Discussão
 
@@ -196,20 +126,23 @@ Por fim, a utilização conjunta desses recursos permite demonstrar como a lingu
 A base de dados foi importada para o objeto `dados` utilizando a função `read.csv()`. Em seguida, foram utilizadas as funções `head()`, `tail()` e `dim()` para verificar se a importação foi realizada corretamente.
 
 ```{r}
+# Pacotes utilizados ao longo do relatório
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(highcharter)
+library(leaflet)
+library(scales)
+
 # Importação da base de dados
 dados <- read.csv("dados_engenharia_civil.csv")
 
-# Visualização das primeiras observações
+# Verificação inicial
 head(dados)
-
-# Visualização das últimas observações
 tail(dados)
-
-# Verificação das dimensões da base
-dim(dados)
 ```
 
-A função `head()` permite visualizar as primeiras observações da base, enquanto `tail()` apresenta as últimas observações. Já a função `dim()` informa a quantidade de linhas e colunas do conjunto de dados.
+A função `head()` permite visualizar as primeiras observações da base, enquanto `tail()` apresenta as últimas observações.
 
 O resultado de `dim(dados)` foi:
 
@@ -217,7 +150,7 @@ O resultado de `dim(dados)` foi:
 dim(dados)
 ```
 
-O resultado obtido foi `300 11`, indicando que a base possui **300 observações e 11 variáveis**.
+A função `dim()` informa a quantidade de linhas e colunas do conjunto de dados. O resultado obtido foi `300 11`, indicando que a base possui **300 observações e 11 variáveis**.
 
 Dessa forma, a importação foi realizada corretamente e a estrutura inicial da base está de acordo com a descrição apresentada no enunciado.
 
@@ -225,31 +158,21 @@ Dessa forma, a importação foi realizada corretamente e a estrutura inicial da 
 
 Para identificar a quantidade de observações e variáveis existentes na base de dados, foi utilizada a função `dim()`, que retorna o número de linhas e colunas do objeto `dados`, respectivamente.
 
+O resultado obtido foi:
+
 ```{r}
 # Verificação da quantidade de observações e variáveis
 dim(dados)
 ```
 
-O resultado obtido foi:
-
-```{r}
-dim(dados)
-```
-
-```text
-[1] 300  11
-```
-
 Portanto, a base de dados possui **300 observações e 11 variáveis**.
+
 
 ## Questão 3 — Estrutura e classificação das variáveis
 
 A estrutura da base de dados foi apresentada utilizando as funções `str()` e `glimpse()`. A função `str()` pertence ao R base, enquanto `glimpse()` é disponibilizada pelo pacote `dplyr`.
 
 ```{r}
-# Carregamento do pacote necessário para utilizar glimpse()
-library(dplyr)
-
 # Estrutura da base utilizando Base R
 str(dados)
 
@@ -261,9 +184,8 @@ A partir da estrutura apresentada, as variáveis podem ser classificadas em **qu
 
 ### Variáveis quantitativas
 
-As variáveis quantitativas são:
+As variáveis quantitativas de interesse são:
 
-- `id_obra`
 - `area_construida`
 - `custo_total`
 - `prazo_meses`
@@ -272,7 +194,7 @@ As variáveis quantitativas são:
 - `indice_falhas`
 - `satisfacao`
 
-Essas variáveis foram reconhecidas pelo R como numéricas e representam valores que podem ser utilizados em operações matemáticas e análises quantitativas.
+A variável `id_obra` é armazenada como numérica, mas funciona como **identificador** das obras. Portanto, não deve ser interpretada como uma medida quantitativa nas análises.
 
 ### Variáveis qualitativas
 
@@ -327,31 +249,21 @@ Portanto, nesta etapa, os valores extremos serão mantidos, conforme a orientaç
 
 Para verificar a existência de valores ausentes na base, foi utilizada a função `is.na()` em conjunto com `sum()` e `colSums()`. Dessa forma, foi possível identificar tanto a quantidade total de valores ausentes quanto a distribuição desses valores entre as variáveis.
 
-```{r}
-# Quantidade total de valores ausentes
-sum(is.na(dados))
-
-# Quantidade de valores ausentes por variável
-colSums(is.na(dados))
-
-# Identificação das observações que possuem valores ausentes
-dados[!complete.cases(dados), ]
-```
-
 O resultado da quantidade total de valores ausentes foi:
 
 ```{r}
+# Quantidade total de valores ausentes
 sum(is.na(dados))
-```
-
-```text
-[1] 0
 ```
 
 A verificação por variável também indicou zero valores ausentes em todas as variáveis:
 
 ```{r}
+# Quantidade de valores ausentes por variável
 colSums(is.na(dados))
+
+# Identificação das observações que possuem valores ausentes
+dados[!complete.cases(dados), ]
 ```
 
 Portanto, **não existem valores ausentes na base de dados**.
@@ -678,38 +590,581 @@ O uso do tamanho dos pontos para representar satisfacao acrescenta uma terceira 
 
 Dessa forma, o gráfico revela diferenças no comportamento da relação área × custo entre os tipos de obra, algo que fica menos evidente em um único gráfico geral. A combinação de pontos, retas de tendência, facetas e tamanho dos pontos proporciona uma análise simultânea de custo, dimensão, tipo de empreendimento e satisfação.
 
+## Questão 16 — Gráfico interativo com `ggplotly()`
 
+Para acrescentar interatividade ao gráfico de dispersão da relação entre área construída e custo total, foi utilizado o `ggplotly()`. A variável `id_obra` foi incluída nas informações exibidas ao passar o cursor sobre cada ponto, permitindo identificar individualmente as obras.
 
+```{r}
+grafico_area_custo <- ggplot(
+  dados,
+  aes(
+    x = area_construida,
+    y = custo_total,
+    color = tipo_obra,
+    text = paste(
+      "Obra:", id_obra,
+      "<br>Área:", round(area_construida, 1), "m²",
+      "<br>Custo: R$", format(round(custo_total, 2),
+                              big.mark = ".", decimal.mark = ","),
+      "<br>Tipo:", tipo_obra
+    )
+  )
+) +
+  geom_point(alpha = 0.75) +
+  labs(
+    title = "Área Construída × Custo Total",
+    x = "Área construída (m²)",
+    y = "Custo total (R$)",
+    color = "Tipo de obra"
+  ) +
+  theme_classic()
 
+ggplotly(grafico_area_custo, tooltip = "text")
+```
 
+A versão interativa mantém a relação observada no gráfico estático, mas permite consultar informações específicas de cada obra sem sobrecarregar a representação com rótulos. O recurso é particularmente útil quando existe grande quantidade de observações e o objetivo é explorar individualmente os pontos.
 
+## Questão 17 — Gráfico interativo com `plot_ly()`
 
+Para utilizar o `plot_ly()` diretamente, foi construído um gráfico de linhas e marcadores relacionando as obras à área construída, após a ordenação dos registros pelo tamanho da obra.
 
+```{r}
+dados_area <- dados |>
+  arrange(area_construida)
 
+plot_ly(
+  dados_area,
+  x = ~seq_len(nrow(dados_area)),
+  y = ~area_construida,
+  type = "scatter",
+  mode = "lines+markers",
+  text = ~paste(
+    "Obra:", id_obra,
+    "<br>Área:", round(area_construida, 1), "m²",
+    "<br>Tipo:", tipo_obra
+  ),
+  hoverinfo = "text"
+) |>
+  layout(
+    title = "Área Construída das Obras em Ordem Crescente",
+    xaxis = list(title = "Ordem das obras"),
+    yaxis = list(title = "Área construída (m²)")
+  )
+```
 
+A utilização de linhas e marcadores permite observar a variação da área ao longo das obras ordenadas. Os marcadores preservam a identificação individual das observações, enquanto a linha facilita a percepção da amplitude e das mudanças entre os registros.
 
+## Questão 18 — Custo médio por tipo de obra com `highcharter()`
 
+Para comparar os custos médios entre os tipos de obra, os dados foram agrupados por `tipo_obra` e a média de `custo_total` foi calculada.
 
+```{r}
+custo_tipo <- dados |>
+  group_by(tipo_obra) |>
+  summarise(
+    custo_medio = mean(custo_total),
+    .groups = "drop"
+  )
 
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_title(text = "Custo Médio por Tipo de Obra") |>
+  hc_xAxis(
+    categories = custo_tipo$tipo_obra,
+    title = list(text = "Tipo de obra")
+  ) |>
+  hc_yAxis(
+    title = list(text = "Custo médio (R$)")
+  ) |>
+  hc_add_series(
+    name = "Custo médio",
+    data = custo_tipo$custo_medio
+  ) |>
+  hc_tooltip(
+    pointFormat = "<b>R$ {point.y:,.2f}</b>"
+  )
+```
 
+O gráfico permite comparar diretamente o custo médio dos quatro tipos de obra. Como a análise utiliza médias, a interpretação deve ser feita em conjunto com a dispersão apresentada nos boxplots anteriores, evitando que um único valor médio seja utilizado para representar toda a distribuição.
 
+## Questão 19 — Prazo médio por região
 
+A mesma lógica foi utilizada para analisar o prazo médio das obras em cada região.
 
+```{r}
+prazo_regiao <- dados |>
+  group_by(regiao) |>
+  summarise(
+    prazo_medio = mean(prazo_meses),
+    .groups = "drop"
+  )
 
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_title(text = "Prazo Médio das Obras por Região") |>
+  hc_xAxis(
+    categories = prazo_regiao$regiao,
+    title = list(text = "Região")
+  ) |>
+  hc_yAxis(
+    title = list(text = "Prazo médio (meses)")
+  ) |>
+  hc_add_series(
+    name = "Prazo médio",
+    data = prazo_regiao$prazo_medio
+  ) |>
+  hc_tooltip(
+    valueDecimals = 1,
+    valueSuffix = " meses"
+  )
+```
+
+A visualização permite comparar os prazos médios entre as regiões representadas na base. As diferenças observadas devem ser interpretadas como características do conjunto de obras analisado, pois o número de registros não é igual entre todas as regiões.
+
+## Questão 20 — Participação dos tipos de obra
+
+Para representar a composição da base segundo o tipo de empreendimento, foi construído um gráfico de setores utilizando `highcharter`.
+
+```{r}
+contagem_tipo <- dados |>
+  count(tipo_obra)
+
+highchart() |>
+  hc_chart(type = "pie") |>
+  hc_title(text = "Distribuição das Obras por Tipo") |>
+  hc_add_series(
+    name = "Obras",
+    data = lapply(seq_len(nrow(contagem_tipo)), function(i) {
+      list(
+        name = contagem_tipo$tipo_obra[i],
+        y = contagem_tipo$n[i]
+      )
+    })
+  ) |>
+  hc_plotOptions(
+    pie = list(
+      dataLabels = list(
+        enabled = TRUE,
+        format = "{point.name}: {point.y}"
+      )
+    )
+  )
+```
+
+O gráfico apresenta a participação de cada tipo de obra na base. Como se trata de contagens, a leitura representa a composição da amostra e não a participação desses tipos no conjunto de obras existentes no Brasil.
+
+## Questão 21 — Personalização do `highcharter`
+
+Para demonstrar recursos de personalização, o gráfico de custo médio foi complementado com título, subtítulo, legenda e informações de tooltip.
+
+```{r}
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_title(text = "Custo Médio por Tipo de Obra") |>
+  hc_subtitle(
+    text = "Valores calculados a partir das 300 obras analisadas"
+  ) |>
+  hc_xAxis(
+    categories = custo_tipo$tipo_obra,
+    title = list(text = "Tipo de obra")
+  ) |>
+  hc_yAxis(
+    title = list(text = "Custo médio (R$)")
+  ) |>
+  hc_add_series(
+    name = "Custo médio",
+    data = custo_tipo$custo_medio
+  ) |>
+  hc_tooltip(
+    pointFormat = "<b>R$ {point.y:,.2f}</b>"
+  ) |>
+  hc_legend(enabled = FALSE) |>
+  hc_exporting(enabled = TRUE)
+```
+
+A personalização melhora a comunicação do gráfico porque reduz elementos desnecessários e mantém as informações principais disponíveis durante a interação. Nesse caso, o tooltip permite consultar o valor exato sem precisar inserir rótulos em todas as colunas.
+
+## Questão 22 — Mapa interativo com `leaflet`
+
+Para iniciar a análise espacial, foi criado um mapa-base utilizando o `leaflet`. Como a base fornecida contém a variável `regiao`, mas não apresenta coordenadas individuais das obras, a representação espacial das questões seguintes utiliza coordenadas aproximadas das capitais de cada região.
+
+```{r}
+leaflet() |>
+  addTiles() |>
+  setView(
+    lng = -51.9253,
+    lat = -14.2350,
+    zoom = 4
+  )
+```
+
+O mapa fornece a base cartográfica sobre a qual serão adicionadas as informações regionais. A ausência de coordenadas individuais impede a localização exata das obras, por isso os marcadores seguintes representam pontos de referência aproximados.
+
+## Questão 23 — Marcadores por região
+
+Foram definidas coordenadas aproximadas das capitais das cinco regiões brasileiras e associados a elas os números de obras existentes na base.
+
+```{r}
+contagem_regiao <- dados |>
+  count(regiao)
+
+capitais <- data.frame(
+  regiao = c(
+    "Norte",
+    "Nordeste",
+    "Centro-Oeste",
+    "Sudeste",
+    "Sul"
+  ),
+  cidade = c(
+    "Manaus",
+    "Salvador",
+    "Brasília",
+    "São Paulo",
+    "Curitiba"
+  ),
+  lat = c(
+    -3.1190,
+    -12.9730,
+    -15.7942,
+    -23.5505,
+    -25.4297
+  ),
+  lng = c(
+    -60.0217,
+    -38.5014,
+    -47.8825,
+    -46.6333,
+    -49.2719
+  )
+) |>
+  left_join(contagem_regiao, by = "regiao")
+
+leaflet(capitais) |>
+  addTiles() |>
+  addMarkers(
+    ~lng,
+    ~lat,
+    popup = ~paste0(
+      "<b>Região:</b> ", regiao,
+      "<br><b>Capital de referência:</b> ", cidade,
+      "<br><b>Número de obras:</b> ", n
+    )
+  )
+```
+
+Os marcadores permitem visualizar a distribuição regional das obras e consultar a quantidade de registros de cada região por meio dos popups. Como as coordenadas são aproximadas e estão associadas às capitais, o mapa não representa a localização real de cada empreendimento.
+
+## Questão 24 — Destaque da região com maior número de obras
+
+Para destacar a região com maior quantidade de registros, foi utilizada a função `which.max()` sobre a tabela de contagens. O círculo é desenhado sobre a capital utilizada como referência espacial.
+
+```{r}
+indice_maior <- which.max(capitais$n)
+regiao_maior <- capitais[indice_maior, ]
+
+leaflet(capitais) |>
+  addTiles() |>
+  addMarkers(
+    ~lng,
+    ~lat,
+    popup = ~paste0(
+      "<b>Região:</b> ", regiao,
+      "<br><b>Número de obras:</b> ", n
+    )
+  ) |>
+  addCircles(
+    data = regiao_maior,
+    lng = ~lng,
+    lat = ~lat,
+    radius = 300000,
+    color = "red",
+    fillColor = "red",
+    fillOpacity = 0.15,
+    popup = paste0(
+      "<b>Região com maior número de obras:</b> ",
+      regiao_maior$regiao,
+      "<br><b>Obras:</b> ",
+      regiao_maior$n
+    )
+  )
+```
+
+O círculo permite destacar visualmente a região que possui a maior frequência de obras na base. Essa informação é coerente com a análise de frequências realizada anteriormente, mas a representação espacial facilita a comunicação do resultado.
+
+## Questão 25 — Comparação entre tipos de obra
+
+Para verificar descritivamente a afirmação de que as obras de infraestrutura apresentam custo médio superior às demais, foi calculada a média do custo total para cada tipo de obra e, em seguida, construída uma representação gráfica.
+
+```{r}
+custo_por_tipo <- dados |>
+  group_by(tipo_obra) |>
+  summarise(
+    custo_medio = mean(custo_total),
+    .groups = "drop"
+  ) |>
+  arrange(desc(custo_medio))
+
+custo_por_tipo
+
+ggplot(
+  custo_por_tipo,
+  aes(
+    x = reorder(tipo_obra, custo_medio),
+    y = custo_medio
+  )
+) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Custo Médio por Tipo de Obra",
+    x = "Tipo de obra",
+    y = "Custo médio (R$)"
+  ) +
+  theme_classic()
+```
+
+A tabela e o gráfico permitem comparar diretamente as médias de custo dos quatro tipos de obra. A conclusão sobre a afirmação apresentada no enunciado deve ser feita observando a posição da categoria **Infraestrutura** na tabela de médias. Essa análise é exclusivamente descritiva e não considera testes de hipótese ou diferenças estatisticamente significativas.
+
+## Questão 26 — Sustentabilidade e custo
+
+A relação entre sustentabilidade e custo foi analisada por meio de dois gráficos, permitindo observar tanto a distribuição dos valores quanto a comparação das médias.
+
+### Boxplot no Base R
+
+```{r}
+boxplot(
+  custo_total ~ sustentavel,
+  data = dados,
+  main = "Custo Total por Classificação de Sustentabilidade",
+  xlab = "Práticas sustentáveis",
+  ylab = "Custo total (R$)",
+  las = 1
+)
+```
+
+### Custo médio com `ggplot2`
+
+```{r}
+custo_sustentavel <- dados |>
+  group_by(sustentavel) |>
+  summarise(
+    custo_medio = mean(custo_total),
+    .groups = "drop"
+  )
+
+ggplot(
+  custo_sustentavel,
+  aes(x = sustentavel, y = custo_medio)
+) +
+  geom_col() +
+  labs(
+    title = "Custo Médio por Classificação de Sustentabilidade",
+    x = "Sustentável",
+    y = "Custo médio (R$)"
+  ) +
+  theme_classic()
+```
+
+O boxplot permite observar a dispersão e a sobreposição dos custos entre os dois grupos, enquanto o gráfico de barras resume a diferença entre as médias. A leitura conjunta é mais informativa do que utilizar apenas a média, pois obras com diferentes características podem apresentar custos muito distintos dentro de cada grupo.
+
+Portanto, os gráficos permitem verificar se existe diferença descritiva entre os grupos na base analisada, mas não permitem atribuir a diferença exclusivamente à adoção de práticas sustentáveis.
+
+## Questão 27 — Relação entre falhas e satisfação
+
+Para investigar visualmente a relação entre o número de falhas registradas e a satisfação do cliente, foi utilizado um gráfico de dispersão com uma linha de tendência linear.
+
+```{r}
+ggplot(
+  dados,
+  aes(
+    x = indice_falhas,
+    y = satisfacao
+  )
+) +
+  geom_jitter(
+    width = 0.15,
+    height = 0.15,
+    alpha = 0.65
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE
+  ) +
+  labs(
+    title = "Relação entre Índice de Falhas e Satisfação",
+    x = "Índice de falhas",
+    y = "Satisfação"
+  ) +
+  theme_classic()
+```
+
+A linha de tendência auxilia na identificação da direção geral da associação entre as variáveis. A interpretação deve considerar também a dispersão dos pontos, pois uma tendência visual não significa, por si só, uma relação forte entre falhas e satisfação.
+
+Para quantificar de forma descritiva a associação linear, foi calculado o coeficiente de correlação:
+
+```{r}
+cor(dados$indice_falhas, dados$satisfacao)
+```
+
+Assim, o valor obtido deve ser interpretado em conjunto com o gráfico. Uma correlação próxima de zero indica pouca associação linear, enquanto valores positivos ou negativos de maior magnitude indicam maior associação linear entre as variáveis.
+
+## Questão 28 — Painel gráfico para o engenheiro
+
+Para sintetizar os principais aspectos da base, foram escolhidos três gráficos complementares:
+
+1. **Perfil das obras por tipo e região**, representado por barras;
+2. **Distribuição do custo e do prazo**, representada por boxplots;
+3. **Consumo de cimento × resistência**, representado por dispersão.
+
+### Perfil das obras por tipo e região
+
+```{r}
+ggplot(
+  dados,
+  aes(x = tipo_obra, fill = regiao)
+) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Perfil das Obras por Tipo e Região",
+    x = "Tipo de obra",
+    y = "Número de obras",
+    fill = "Região"
+  ) +
+  theme_classic()
+```
+
+### Distribuição de custo e prazo
+
+```{r}
+par(mfrow = c(1, 2))
+
+boxplot(
+  dados$custo_total,
+  main = "Distribuição do Custo",
+  ylab = "Custo total (R$)"
+)
+
+boxplot(
+  dados$prazo_meses,
+  main = "Distribuição do Prazo",
+  ylab = "Prazo (meses)"
+)
+
+par(mfrow = c(1, 1))
+```
+
+### Consumo de cimento × resistência
+
+```{r}
+ggplot(
+  dados,
+  aes(
+    x = consumo_cimento,
+    y = resistencia_mpa
+  )
+) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE
+  ) +
+  labs(
+    title = "Consumo de Cimento × Resistência à Compressão",
+    x = "Consumo de cimento (kg/m³)",
+    y = "Resistência (MPa)"
+  ) +
+  theme_classic()
+```
+
+O conjunto foi organizado dessa forma porque cada gráfico responde a uma pergunta diferente. O primeiro apresenta a composição das obras; o segundo resume dois indicadores de planejamento; e o terceiro investiga uma possível relação entre uma característica do concreto e sua resistência.
+
+A utilização de três gráficos complementares evita concentrar muitas variáveis em uma única figura. Dessa forma, cada representação mantém uma finalidade específica e pode ser interpretada individualmente.
+
+# 🏗️ Desafio final — Integração dos sistemas gráficos
+
+Para integrar os conhecimentos desenvolvidos ao longo da atividade, foi organizado um fluxo resumido contendo inspeção dos dados, uma visualização em Base R, uma visualização em `ggplot2`, um gráfico interativo com `plotly`, um gráfico de síntese com `highcharter` e um mapa com `leaflet`.
+
+```{r}
+# 1. Inspeção
+dim(dados)
+str(dados)
+summary(dados)
+
+# 2. Base R
+plot(
+  dados$area_construida,
+  dados$custo_total,
+  main = "Área Construída × Custo Total",
+  xlab = "Área construída (m²)",
+  ylab = "Custo total (R$)",
+  pch = 19
+)
+
+# 3. ggplot2
+grafico_final <- ggplot(
+  dados,
+  aes(
+    x = area_construida,
+    y = custo_total,
+    color = tipo_obra
+  )
+) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relação entre Área Construída e Custo Total",
+    x = "Área construída (m²)",
+    y = "Custo total (R$)",
+    color = "Tipo de obra"
+  ) +
+  theme_classic()
+
+grafico_final
+
+# 4. plotly
+ggplotly(grafico_final)
+
+# 5. highcharter
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_title(text = "Custo Médio por Tipo de Obra") |>
+  hc_xAxis(categories = custo_por_tipo$tipo_obra) |>
+  hc_add_series(
+    name = "Custo médio",
+    data = custo_por_tipo$custo_medio
+  )
+
+# 6. leaflet
+leaflet(capitais) |>
+  addTiles() |>
+  addMarkers(
+    ~lng,
+    ~lat,
+    popup = ~paste0(
+      regiao,
+      ": ",
+      n,
+      " obras"
+    )
+  )
+```
+
+O desafio final reúne os cinco sistemas gráficos em um mesmo fluxo de trabalho. A inspeção inicial garante que a base seja conhecida antes da visualização; o Base R fornece uma representação direta; o ggplot2 permite construir uma visualização em camadas; o plotly acrescenta interatividade; o highcharter apresenta uma síntese dos custos médios; e o leaflet incorpora a dimensão espacial.
+
+A integração evidencia que os sistemas não são necessariamente concorrentes. Cada um apresenta recursos que podem ser utilizados de acordo com o objetivo da análise e com a forma de comunicação desejada.
 
 # 🧠 Considerações finais
 
-A principal diferença entre utilizar **Base R** e as ferramentas da família **tidyverse** para o processamento de dados está na forma de organizar e executar as operações. O Base R possui funções capazes de realizar as mesmas tarefas, porém o `tidyverse` oferece uma abordagem mais integrada e estruturada, permitindo encadear diferentes operações de forma mais clara e próxima da sequência lógica do processo de análise.
+A principal diferença observada entre o **Base R** e o **ggplot2** está na forma de construção das visualizações. No Base R, cada função gráfica apresenta uma estrutura mais direta e específica para determinado tipo de gráfico, como `plot()`, `hist()`, `boxplot()` e `barplot()`. No ggplot2, a visualização é construída por meio da combinação entre dados, mapeamentos estéticos, geometrias e outras camadas, permitindo maior controle sobre a composição final.
 
-No desenvolvimento desta atividade, funções como `filter()`, `mutate()`, `group_by()`, `summarise()`, `across()` e `case_when()` permitiram realizar etapas de **inspeção, limpeza, transformação e análise** de maneira organizada. Além disso, funções do `stringr` e do `ggplot2` facilitaram, respectivamente, o tratamento das informações textuais e a construção das visualizações.
+A escolha do sistema gráfico e da geometria é uma decisão técnica porque diferentes representações destacam diferentes características dos dados. Um gráfico de dispersão, por exemplo, é adequado para investigar relações entre duas variáveis quantitativas, enquanto um boxplot permite comparar distribuições entre grupos. Da mesma forma, um mapa é mais adequado quando a localização constitui parte importante da informação analisada.
 
-Assim, embora o **Base R e o tidyverse possam solucionar problemas semelhantes**, o tidyverse apresenta vantagens na organização do código, principalmente quando são necessárias várias etapas de transformação dos dados. Essa característica torna o processamento mais **legível, sistemático e fácil de reproduzir**, o que é importante quando o script precisa ser compreendido e utilizado por outro profissional.
+Entre as visualizações produzidas, o gráfico de **área construída × custo total com facetas por tipo de obra** reúne diferentes informações em uma única representação. A relação positiva entre área e custo pode ser observada diretamente, enquanto as facetas permitem comparar os tipos de empreendimento e o tamanho dos pontos acrescenta a variável satisfação à leitura. O gráfico, portanto, permite uma exploração simultânea de diferentes características da base sem substituir a análise individual de cada variável.
 
-No contexto da Engenharia Civil, essa organização é especialmente relevante, pois os dados utilizados em análises de controle tecnológico podem apresentar erros de digitação, valores ausentes e diferentes formas de preenchimento. Antes de aplicar métodos estatísticos, é necessário garantir que os dados estejam adequadamente estruturados e tratados.
+De maneira geral, os resultados mostram a utilidade da visualização gráfica para explorar a base de obras. A relação entre área e custo aparece de forma consistente nas diferentes regiões, enquanto as diferenças entre tipos de obra, distribuição dos custos, frequência regional e indicadores de sustentabilidade podem ser observadas por representações específicas. Os recursos interativos de `plotly`, `highcharter` e `leaflet` ampliam essa análise ao permitir consultar informações adicionais diretamente nas visualizações.
 
-Dessa forma, o principal aprendizado desta atividade foi compreender que a escolha da ferramenta de processamento não está apenas relacionada à obtenção do resultado, mas também à **forma como o processo é estruturado e documentado**. O uso do tidyverse contribui para construir um fluxo de análise mais organizado, facilitando a transformação dos dados brutos em informações confiáveis para auxiliar a tomada de decisão na Engenharia Civil.
-
-
+Assim, o principal aprendizado desta atividade foi compreender que a visualização de dados não consiste apenas em escolher um gráfico visualmente atrativo. É necessário relacionar **variáveis, objetivo da análise, geometria, escala e forma de interação** para produzir uma representação que seja tecnicamente adequada e facilite a interpretação das informações de Engenharia Civil.
 
 
 # 📖 Referências
