@@ -485,11 +485,9 @@ ggplot(dados, aes(x = tipo_obra, fill = sustentavel)) +
   theme_classic()
 ```
 
-A partir dos dados, observa-se que a adoção de práticas sustentáveis ocorre com maior frequência, em termos absolutos, nas obras Residenciais, com 50 obras sustentáveis, seguidas pelas Comerciais, com 39.
+A partir dos dados, observa-se que a adoção de práticas sustentáveis ocorre com maior frequência, em termos absolutos, nas obras Residenciais, com 50 obras sustentáveis, seguidas pelas Comerciais, com 39. Nas obras Industriais, foram identificadas 21 obras sustentáveis, enquanto as obras de Infraestrutura apresentam a menor frequência absoluta, com 13 obras.
 
-Nas obras Industriais, foram identificadas 21 obras sustentáveis, enquanto as obras de Infraestrutura apresentam a menor frequência absoluta, com 13 obras.
-
-Portanto, em termos de quantidade de obras, a adoção de práticas sustentáveis é mais frequente nas obras Residenciais e menos frequente nas obras de Infraestrutura. Essa comparação considera valores absolutos; para comparar a proporção de obras sustentáveis dentro de cada tipo de obra, seria necessário analisar os percentuais.
+Entretanto, a comparação dos valores absolutos não considera que cada tipo de obra possui uma quantidade total diferente de observações. Ao considerar a proporção de obras sustentáveis em relação ao total de obras de cada classe, observa-se que as obras Comerciais apresentam a maior proporção de adoção de práticas sustentáveis entre os tipos de obra analisados.
 
 
 ## Questão 14 — Facetas
@@ -624,7 +622,7 @@ ggplotly(grafico_area_custo, tooltip = "text")
 
 A versão interativa mantém a relação observada no gráfico estático, mas permite consultar informações específicas de cada obra sem sobrecarregar a representação com rótulos. O recurso é particularmente útil quando existe grande quantidade de observações e o objetivo é explorar individualmente os pontos.
 
-## Questão 17 — Gráfico interativo com `plot_ly()`
+## Questão 17 — Gráfico interativo direto com `plot_ly()`
 
 Para utilizar o `plot_ly()` diretamente, foi construído um gráfico de linhas e marcadores relacionando as obras à área construída, após a ordenação dos registros pelo tamanho da obra.
 
@@ -652,13 +650,19 @@ plot_ly(
   )
 ```
 
-A utilização de linhas e marcadores permite observar a variação da área ao longo das obras ordenadas. Os marcadores preservam a identificação individual das observações, enquanto a linha facilita a percepção da amplitude e das mudanças entre os registros.
+O gráfico permite observar a variação da área construída entre as obras, mantendo a identificação individual de cada registro por meio dos marcadores e das informações exibidas ao passar o cursor sobre os pontos.
 
-## Questão 18 — Custo médio por tipo de obra com `highcharter()`
+O uso do `plot_ly()` diretamente é mais vantajoso quando a visualização é planejada desde o início para ser interativa e quando é necessário controlar de forma mais específica elementos como `hoverinfo`, `text`, `mode`, séries e configurações de interação. Já o `ggplotly()` é especialmente conveniente quando o gráfico já foi construído com `ggplot2` e se deseja acrescentar interatividade sem reconstruí-lo.
 
-Para comparar os custos médios entre os tipos de obra, os dados foram agrupados por `tipo_obra` e a média de `custo_total` foi calculada.
+Portanto, a principal vantagem do `plot_ly()` direto está no maior controle sobre a construção da visualização interativa, enquanto o `ggplotly()` oferece uma forma mais prática de transformar gráficos já elaborados no `ggplot2`.
+
+
+## Questão 18 — Colunas: custo médio por tipo de obra
+
+Para comparar o custo médio entre os diferentes tipos de obra, os dados foram agrupados por `tipo_obra` e foi calculada a média da variável `custo_total`. Em seguida, os resultados foram representados em um gráfico de colunas utilizando o `highcharter`.
 
 ```{r}
+# Custo médio por tipo de obra
 custo_tipo <- dados |>
   group_by(tipo_obra) |>
   summarise(
@@ -666,28 +670,34 @@ custo_tipo <- dados |>
     .groups = "drop"
   )
 
-highchart() |>
-  hc_chart(type = "column") |>
+# Gráfico de colunas
+hchart(
+  custo_tipo,
+  "column",
+  hcaes(x = tipo_obra, y = custo_medio)
+) |>
   hc_title(text = "Custo Médio por Tipo de Obra") |>
   hc_xAxis(
-    categories = custo_tipo$tipo_obra,
     title = list(text = "Tipo de obra")
   ) |>
   hc_yAxis(
     title = list(text = "Custo médio (R$)")
-  ) |>
-  hc_add_series(
-    name = "Custo médio",
-    data = custo_tipo$custo_medio
   ) |>
   hc_tooltip(
     pointFormat = "<b>R$ {point.y:,.2f}</b>"
   )
 ```
 
-O gráfico permite comparar diretamente o custo médio dos quatro tipos de obra. Como a análise utiliza médias, a interpretação deve ser feita em conjunto com a dispersão apresentada nos boxplots anteriores, evitando que um único valor médio seja utilizado para representar toda a distribuição.
+Ao comparar os resultados com o boxplot apresentado na Questão 8, observa-se que o comportamento dos tipos de obra pode ser analisado de forma complementar. No boxplot, a categoria **Infraestrutura apresentou a maior mediana de custo**, de aproximadamente R$ 3,87 milhões, seguida pelas obras **Comerciais**, com R$ 2,88 milhões, **Residenciais**, com R$ 2,48 milhões, e **Industriais**, com R$ 2,14 milhões.
 
-## Questão 19 — Prazo médio por região
+A comparação com o gráfico de custo médio permite verificar se essa mesma ordem também é observada quando se considera a média dos valores. Apesar de média e mediana serem medidas diferentes, a proximidade entre os rankings indica que os resultados são consistentes quanto aos tipos de obra que apresentam os maiores custos. Entretanto, a análise não deve considerar apenas os valores centrais, pois o boxplot também evidencia diferenças na dispersão dos dados.
+
+Nesse aspecto, a **Infraestrutura apresenta a maior amplitude dos custos**, com valores aproximadamente entre R$ 795 mil e R$ 6,53 milhões. Essa maior variabilidade pode influenciar o custo médio e fazer com que ele se diferencie da mediana. Assim, enquanto o gráfico de colunas permite comparar diretamente os **custos médios** entre os tipos de obra, o boxplot fornece informações adicionais sobre a **distribuição, mediana e dispersão** dos custos. Dessa forma, os dois gráficos se complementam na interpretação dos custos das diferentes categorias.
+
+
+
+
+## Questão 19 — Linhas: prazo médio por região
 
 A mesma lógica foi utilizada para analisar o prazo médio das obras em cada região.
 
@@ -700,7 +710,7 @@ prazo_regiao <- dados |>
   )
 
 highchart() |>
-  hc_chart(type = "column") |>
+  hc_chart(type = "line") |>
   hc_title(text = "Prazo Médio das Obras por Região") |>
   hc_xAxis(
     categories = prazo_regiao$regiao,
@@ -719,9 +729,13 @@ highchart() |>
   )
 ```
 
-A visualização permite comparar os prazos médios entre as regiões representadas na base. As diferenças observadas devem ser interpretadas como características do conjunto de obras analisado, pois o número de registros não é igual entre todas as regiões.
+A visualização permite comparar os prazos médios entre as regiões representadas na base. A existência de diferenças entre as médias pode indicar que determinadas regiões possuem obras com prazos médios mais elevados, mas essa observação, isoladamente, não permite afirmar que exista um efeito regional.
 
-## Questão 20 — Participação dos tipos de obra
+Fatores como logística, disponibilidade de materiais, condições de acesso ao local da obra, características dos empreendimentos e condições climáticas podem contribuir para diferenças nos prazos. No entanto, para avaliar essas possíveis relações seria necessário possuir informações adicionais e realizar análises específicas. Portanto, o gráfico permite identificar diferenças descritivas, mas não determinar suas causas.
+
+
+
+## Questão 20 — Pizza: participação por tipo de obra
 
 Para representar a composição da base segundo o tipo de empreendimento, foi construído um gráfico de setores utilizando `highcharter`.
 
@@ -751,19 +765,24 @@ highchart() |>
   )
 ```
 
-O gráfico apresenta a participação de cada tipo de obra na base. Como se trata de contagens, a leitura representa a composição da amostra e não a participação desses tipos no conjunto de obras existentes no Brasil.
+O gráfico de pizza permite visualizar a participação de cada tipo de obra no total da base, sendo adequado quando o objetivo principal é mostrar a composição de um conjunto.
+
+Entretanto, para comparar com precisão a quantidade de obras entre as categorias, um gráfico de barras tende a facilitar a leitura, pois permite comparar diretamente os comprimentos das barras. Assim, o gráfico de pizza é útil para representar a ideia de participação no total, enquanto o gráfico de barras é mais adequado quando o objetivo é comparar os valores entre as categorias.
+
+Neste caso, a escolha depende do objetivo da análise: para enfatizar a composição da base, a pizza é adequada; para comparar as frequências dos tipos de obra, as barras oferecem uma leitura mais direta.
+
 
 ## Questão 21 — Personalização do `highcharter`
 
-Para demonstrar recursos de personalização, o gráfico de custo médio foi complementado com título, subtítulo, legenda e informações de tooltip.
+Para demonstrar recursos de personalização do `highcharter`, o gráfico de custo médio foi complementado com título, tooltip personalizado, zoom e possibilidade de exportação.
 
 ```{r}
 highchart() |>
-  hc_chart(type = "column") |>
-  hc_title(text = "Custo Médio por Tipo de Obra") |>
-  hc_subtitle(
-    text = "Valores calculados a partir das 300 obras analisadas"
+  hc_chart(
+    type = "column",
+    zoomType = "x"
   ) |>
+  hc_title(text = "Custo Médio por Tipo de Obra") |>
   hc_xAxis(
     categories = custo_tipo$tipo_obra,
     title = list(text = "Tipo de obra")
@@ -782,11 +801,15 @@ highchart() |>
   hc_exporting(enabled = TRUE)
 ```
 
-A personalização melhora a comunicação do gráfico porque reduz elementos desnecessários e mantém as informações principais disponíveis durante a interação. Nesse caso, o tooltip permite consultar o valor exato sem precisar inserir rótulos em todas as colunas.
+O `hc_tooltip()` facilita a consulta dos valores exatos sem sobrecarregar visualmente o gráfico com rótulos. O recurso de zoom pode ser útil em gráficos com muitas categorias ou observações, enquanto a exportação facilita o aproveitamento da visualização em relatórios e apresentações.
 
-## Questão 22 — Mapa interativo com `leaflet`
+Para uma apresentação executiva, o **tooltip personalizado** é particularmente útil, pois mantém o gráfico visualmente limpo e, ao mesmo tempo, permite consultar os valores exatos durante a apresentação. O recurso de exportação também é relevante quando os gráficos precisam ser incorporados posteriormente a relatórios ou outros materiais.
 
-Para iniciar a análise espacial, foi criado um mapa-base utilizando o `leaflet`. Como a base fornecida contém a variável `regiao`, mas não apresenta coordenadas individuais das obras, a representação espacial das questões seguintes utiliza coordenadas aproximadas das capitais de cada região.
+
+
+## Questão 22 — Mapa base
+
+Para iniciar a análise espacial, foi criado um mapa-base utilizando `leaflet`, com `addTiles()` e `setView()` para centralizar a visualização no território brasileiro.
 
 ```{r}
 leaflet() |>
@@ -798,16 +821,21 @@ leaflet() |>
   )
 ```
 
-O mapa fornece a base cartográfica sobre a qual serão adicionadas as informações regionais. A ausência de coordenadas individuais impede a localização exata das obras, por isso os marcadores seguintes representam pontos de referência aproximados.
+Foi utilizado o `addTiles()` por ser uma opção simples e adequada para fornecer o mapa-base necessário à visualização dos dados. Como o objetivo desta questão é apenas criar a base cartográfica, não foi necessário utilizar um provedor com imagens de satélite ou outras características específicas.
+
+A escolha do provedor de tiles deve considerar o objetivo do mapa. Para uma visualização geral de localização, um mapa convencional como o utilizado é suficiente. Em situações nas quais características físicas ou imagens do território sejam importantes, um provedor de imagens de satélite poderia ser mais adequado.
+
+
 
 ## Questão 23 — Marcadores por região
 
-Foram definidas coordenadas aproximadas das capitais das cinco regiões brasileiras e associados a elas os números de obras existentes na base.
+Para representar espacialmente a distribuição das obras entre as cinco regiões brasileiras, foram utilizadas coordenadas aproximadas das capitais como pontos de referência. A quantidade de obras de cada região foi obtida a partir da mesma contagem realizada na Questão 9, utilizando `table()`.
 
 ```{r}
-contagem_regiao <- dados |>
-  count(regiao)
+# Contagem de obras por região
+obras_regiao <- table(dados$regiao)
 
+# Data frame com as capitais e suas coordenadas
 capitais <- data.frame(
   regiao = c(
     "Norte",
@@ -833,13 +861,18 @@ capitais <- data.frame(
   lng = c(
     -60.0217,
     -38.5014,
-    -47.8825,
+    -47.8822,
     -46.6333,
     -49.2719
   )
-) |>
-  left_join(contagem_regiao, by = "regiao")
+)
 
+# Adiciona a quantidade de obras de cada região
+capitais$n_obras <- as.numeric(obras_regiao[
+  match(capitais$regiao, names(obras_regiao))
+])
+
+# Mapa com marcadores
 leaflet(capitais) |>
   addTiles() |>
   addMarkers(
@@ -848,21 +881,30 @@ leaflet(capitais) |>
     popup = ~paste0(
       "<b>Região:</b> ", regiao,
       "<br><b>Capital de referência:</b> ", cidade,
-      "<br><b>Número de obras:</b> ", n
+      "<br><b>Número de obras:</b> ", n_obras
     )
   )
 ```
 
-Os marcadores permitem visualizar a distribuição regional das obras e consultar a quantidade de registros de cada região por meio dos popups. Como as coordenadas são aproximadas e estão associadas às capitais, o mapa não representa a localização real de cada empreendimento.
+A distribuição apresentada no mapa é coerente com o resultado observado no barplot da Questão 9, pois os dois gráficos utilizam a mesma quantidade de obras por região. O **Sudeste concentra a maior quantidade, com 101 obras**, seguido pelo **Nordeste, com 78**, e pelo **Sul, com 69**. O **Centro-Oeste possui 34 obras**, enquanto o **Norte apresenta 18**.
 
-## Questão 24 — Destaque da região com maior número de obras
+Dessa forma, o mapa permite visualizar espacialmente a concentração das obras, destacando a maior presença nas regiões Sudeste, Nordeste e Sul. Enquanto o barplot facilita a comparação direta entre as quantidades, o mapa acrescenta uma representação geográfica dos resultados.
 
-Para destacar a região com maior quantidade de registros, foi utilizada a função `which.max()` sobre a tabela de contagens. O círculo é desenhado sobre a capital utilizada como referência espacial.
+É importante destacar que os marcadores foram posicionados nas **capitais das regiões como pontos de referência**, e não nas localizações reais das obras. Portanto, o mapa representa a distribuição regional da base, mas não a localização exata de cada empreendimento. Para uma análise geográfica mais precisa, seriam necessárias as coordenadas individuais das obras.
+
+
+
+
+## Questão 24 — Destaque com círculos
+
+Para destacar no mapa a região com maior quantidade de obras, foi utilizado `addCircles()`. A região com maior número de obras foi identificada a partir da coluna `n_obras`, criada na Questão 23.
 
 ```{r}
-indice_maior <- which.max(capitais$n)
+# Identifica a região com maior número de obras
+indice_maior <- which.max(capitais$n_obras)
 regiao_maior <- capitais[indice_maior, ]
 
+# Mapa com destaque para a região com maior número de obras
 leaflet(capitais) |>
   addTiles() |>
   addMarkers(
@@ -870,7 +912,8 @@ leaflet(capitais) |>
     ~lat,
     popup = ~paste0(
       "<b>Região:</b> ", regiao,
-      "<br><b>Número de obras:</b> ", n
+      "<br><b>Capital de referência:</b> ", cidade,
+      "<br><b>Número de obras:</b> ", n_obras
     )
   ) |>
   addCircles(
@@ -884,17 +927,20 @@ leaflet(capitais) |>
     popup = paste0(
       "<b>Região com maior número de obras:</b> ",
       regiao_maior$regiao,
-      "<br><b>Obras:</b> ",
-      regiao_maior$n
+      "<br><b>Número de obras:</b> ",
+      regiao_maior$n_obras
     )
   )
 ```
 
-O círculo permite destacar visualmente a região que possui a maior frequência de obras na base. Essa informação é coerente com a análise de frequências realizada anteriormente, mas a representação espacial facilita a comunicação do resultado.
+O círculo destaca a região que apresenta a maior quantidade de obras na base de dados. Conforme observado na Questão 9, essa região é o **Sudeste, com 101 obras**. Como os pontos utilizados no mapa representam as capitais como referências regionais, o círculo não indica a localização exata das obras, mas serve para evidenciar espacialmente a região com maior concentração na amostra.
+
+Caso fossem disponibilizadas as coordenadas exatas de cada obra, seria possível utilizar o mapa para representar outras características do banco de dados, como **custo total, área construída, prazo, tipo de obra, índice de falhas e classificação de sustentabilidade**. Essas informações poderiam ser representadas por diferentes tamanhos, cores ou símbolos dos marcadores, permitindo uma análise espacial mais detalhada.
+
 
 ## Questão 25 — Comparação entre tipos de obra
 
-Para verificar descritivamente a afirmação de que as obras de infraestrutura apresentam custo médio superior às demais, foi calculada a média do custo total para cada tipo de obra e, em seguida, construída uma representação gráfica.
+Para comparar os custos entre os diferentes tipos de obra, foi calculado o custo médio para cada categoria. Os resultados foram organizados em ordem decrescente e representados em um gráfico de barras, facilitando a comparação entre os grupos.
 
 ```{r}
 custo_por_tipo <- dados |>
@@ -911,11 +957,13 @@ ggplot(
   custo_por_tipo,
   aes(
     x = reorder(tipo_obra, custo_medio),
-    y = custo_medio
+    y = custo_medio,
+    fill = tipo_obra
   )
 ) +
-  geom_col() +
+  geom_col(show.legend = FALSE) +
   coord_flip() +
+  scale_fill_brewer(palette = "Set2") +
   labs(
     title = "Custo Médio por Tipo de Obra",
     x = "Tipo de obra",
@@ -924,13 +972,17 @@ ggplot(
   theme_classic()
 ```
 
-A tabela e o gráfico permitem comparar diretamente as médias de custo dos quatro tipos de obra. A conclusão sobre a afirmação apresentada no enunciado deve ser feita observando a posição da categoria **Infraestrutura** na tabela de médias. Essa análise é exclusivamente descritiva e não considera testes de hipótese ou diferenças estatisticamente significativas.
+Os resultados confirmam a afirmação do engenheiro: **as obras de Infraestrutura apresentam o maior custo médio entre os tipos de obra analisados**. A média observada para essa categoria é de aproximadamente **R$ 3,87 milhões**, enquanto os demais tipos apresentam valores médios inferiores.
+
+Dessa forma, considerando os dados analisados, a afirmação de que as obras de Infraestrutura possuem custo médio superior às demais é confirmada. Essa conclusão é descritiva e se refere especificamente à base de dados utilizada no estudo.
+
+
 
 ## Questão 26 — Sustentabilidade e custo
 
-A relação entre sustentabilidade e custo foi analisada por meio de dois gráficos, permitindo observar tanto a distribuição dos valores quanto a comparação das médias.
+Para verificar a relação entre a classificação de sustentabilidade e o custo das obras, foram utilizados dois gráficos complementares. O boxplot permite analisar a distribuição dos custos em cada grupo, enquanto o gráfico de barras facilita a comparação direta entre os custos médios.
 
-### Boxplot no Base R
+### Boxplot na Base R
 
 ```{r}
 boxplot(
@@ -939,7 +991,8 @@ boxplot(
   main = "Custo Total por Classificação de Sustentabilidade",
   xlab = "Práticas sustentáveis",
   ylab = "Custo total (R$)",
-  las = 1
+  las = 1,
+  col = c("#F4B183", "#70AD47")
 )
 ```
 
@@ -955,9 +1008,19 @@ custo_sustentavel <- dados |>
 
 ggplot(
   custo_sustentavel,
-  aes(x = sustentavel, y = custo_medio)
+  aes(
+    x = sustentavel,
+    y = custo_medio,
+    fill = sustentavel
+  )
 ) +
-  geom_col() +
+  geom_col(show.legend = FALSE) +
+  scale_fill_manual(
+    values = c(
+      "Não" = "#F4B183",
+      "Sim" = "#70AD47"
+    )
+  ) +
   labs(
     title = "Custo Médio por Classificação de Sustentabilidade",
     x = "Sustentável",
@@ -966,13 +1029,16 @@ ggplot(
   theme_classic()
 ```
 
-O boxplot permite observar a dispersão e a sobreposição dos custos entre os dois grupos, enquanto o gráfico de barras resume a diferença entre as médias. A leitura conjunta é mais informativa do que utilizar apenas a média, pois obras com diferentes características podem apresentar custos muito distintos dentro de cada grupo.
+Os resultados mostram uma diferença entre os dois grupos. Essa diferença fica mais evidente no gráfico de barras, no qual é possível observar diretamente que **as obras classificadas como sustentáveis apresentam custo médio superior ao das obras não sustentáveis**. O boxplot complementa essa análise ao mostrar a distribuição dos custos, permitindo observar a mediana, a dispersão e a presença de possíveis valores extremos em cada grupo.
 
-Portanto, os gráficos permitem verificar se existe diferença descritiva entre os grupos na base analisada, mas não permitem atribuir a diferença exclusivamente à adoção de práticas sustentáveis.
+Dessa forma, **na base de dados analisada, as obras sustentáveis apresentam maior custo médio**, indicando uma diferença descritiva entre os dois grupos. Entretanto, esse resultado não permite afirmar que a sustentabilidade seja a causa direta do aumento do custo, pois outras características das obras também podem contribuir para essa diferença.
+
+
+
 
 ## Questão 27 — Relação entre falhas e satisfação
 
-Para investigar visualmente a relação entre o número de falhas registradas e a satisfação do cliente, foi utilizado um gráfico de dispersão com uma linha de tendência linear.
+Para investigar a relação entre `indice_falhas` e `satisfacao`, foi utilizado um gráfico de dispersão com uma linha de tendência linear.
 
 ```{r}
 ggplot(
@@ -999,23 +1065,29 @@ ggplot(
   theme_classic()
 ```
 
-A linha de tendência auxilia na identificação da direção geral da associação entre as variáveis. A interpretação deve considerar também a dispersão dos pontos, pois uma tendência visual não significa, por si só, uma relação forte entre falhas e satisfação.
+Foi escolhida a geometria de dispersão porque as duas variáveis são quantitativas e o objetivo é verificar visualmente a existência de uma associação entre elas. O uso de `geom_jitter()` reduz a sobreposição entre os pontos quando diferentes obras apresentam valores iguais ou muito próximos.
 
-Para quantificar de forma descritiva a associação linear, foi calculado o coeficiente de correlação:
+A linha de tendência apresenta **inclinação negativa**, indicando que, na base analisada, **à medida que o índice de falhas aumenta, o nível de satisfação tende a diminuir**. Portanto, os dados apresentam uma associação inversa entre essas duas variáveis: obras com maior índice de falhas tendem a estar relacionadas a menores níveis de satisfação.
+
+Para complementar essa análise, foi calculado o coeficiente de correlação:
 
 ```{r}
 cor(dados$indice_falhas, dados$satisfacao)
 ```
 
-Assim, o valor obtido deve ser interpretado em conjunto com o gráfico. Uma correlação próxima de zero indica pouca associação linear, enquanto valores positivos ou negativos de maior magnitude indicam maior associação linear entre as variáveis.
+O coeficiente de correlação permite quantificar essa relação e verificar sua intensidade. Dessa forma, considerando a tendência observada no gráfico e o valor da correlação, **os resultados indicam uma relação negativa entre o índice de falhas e a satisfação**, reforçando que o aumento das falhas está associado à redução da satisfação nas obras analisadas. Essa associação, entretanto, não permite estabelecer uma relação de causa e efeito.
 
-## Questão 28 — Painel gráfico para o engenheiro
 
-Para sintetizar os principais aspectos da base, foram escolhidos três gráficos complementares:
 
-1. **Perfil das obras por tipo e região**, representado por barras;
-2. **Distribuição do custo e do prazo**, representada por boxplots;
-3. **Consumo de cimento × resistência**, representado por dispersão.
+
+
+## Questão 28 — Resumo gráfico para o engenheiro
+
+Para construir um painel gráfico voltado ao acompanhamento das obras, foram selecionadas três visualizações, cada uma com uma finalidade específica:
+
+1. **Perfil das obras por tipo e região**, para caracterizar a composição da base;
+2. **Distribuição de custo e prazo**, para apresentar indicadores de planejamento e desempenho;
+3. **Consumo de cimento × resistência**, para investigar uma possível relação entre uma variável de controle tecnológico e a resistência do concreto.
 
 ### Perfil das obras por tipo e região
 
@@ -1077,82 +1149,190 @@ ggplot(
   theme_classic()
 ```
 
-O conjunto foi organizado dessa forma porque cada gráfico responde a uma pergunta diferente. O primeiro apresenta a composição das obras; o segundo resume dois indicadores de planejamento; e o terceiro investiga uma possível relação entre uma característica do concreto e sua resistência.
+A ordem dos gráficos foi definida partindo de uma visão geral para análises mais específicas. Primeiro, o perfil das obras permite entender quais tipos e regiões estão representados na base. Em seguida, a distribuição de custo e prazo apresenta dois indicadores importantes para o acompanhamento dos empreendimentos. Por fim, a relação entre consumo de cimento e resistência aborda uma questão diretamente relacionada ao controle tecnológico.
 
-A utilização de três gráficos complementares evita concentrar muitas variáveis em uma única figura. Dessa forma, cada representação mantém uma finalidade específica e pode ser interpretada individualmente.
+Essa organização facilita a leitura do painel porque apresenta inicialmente **o que está sendo analisado**, depois **como as obras se comportam em termos de custo e prazo** e, por último, **uma relação técnica específica entre variáveis do concreto**.
 
-# 🏗️ Desafio final — Integração dos sistemas gráficos
 
-Para integrar os conhecimentos desenvolvidos ao longo da atividade, foi organizado um fluxo resumido contendo inspeção dos dados, uma visualização em Base R, uma visualização em `ggplot2`, um gráfico interativo com `plotly`, um gráfico de síntese com `highcharter` e um mapa com `leaflet`.
 
-```{r}
-# 1. Inspeção
-dim(dados)
-str(dados)
-summary(dados)
+## Desafio final — Integração dos sistemas gráficos
 
-# 2. Base R
-plot(
-  dados$area_construida,
-  dados$custo_total,
-  main = "Área Construída × Custo Total",
-  xlab = "Área construída (m²)",
-  ylab = "Custo total (R$)",
-  pch = 19
+Nesta etapa, foi realizada a integração dos diferentes recursos gráficos utilizados ao longo do relatório, com o objetivo de analisar os dados de forma conjunta. Foram considerados o custo médio por tipo de obra, a distribuição das obras entre as regiões, a localização geográfica dos dados e a relação entre o índice de falhas e a satisfação.
+
+Inicialmente, foi calculado o custo médio para cada tipo de obra e apresentado em um gráfico interativo. Em seguida, foi analisada a quantidade de obras por região, permitindo identificar como as 300 obras da amostra estão distribuídas. Para complementar essa análise, as regiões foram representadas em um mapa por meio de cidades de referência, associando a localização à quantidade de obras registrada em cada região.
+
+Também foi identificada a região com maior número de obras na amostra e realizada sua representação no mapa. Por fim, foi utilizada uma nova visualização interativa para comparar os custos médios e um gráfico de dispersão para analisar a relação entre o índice de falhas e a satisfação.
+
+```r
+# ============================================================
+# DESAFIO FINAL — Integração dos sistemas gráficos
+# ============================================================
+
+# 1. Custo médio por tipo de obra ----------------------------
+
+custo_por_tipo <- dados |>
+  group_by(tipo_obra) |>
+  summarise(
+    custo_medio = mean(custo_total),
+    .groups = "drop"
+  )
+
+hchart(
+  custo_por_tipo,
+  "column",
+  hcaes(x = tipo_obra, y = custo_medio)
+) |>
+  hc_title(text = "Custo Médio por Tipo de Obra") |>
+  hc_xAxis(title = list(text = "Tipo de obra")) |>
+  hc_yAxis(title = list(text = "Custo médio (R$)")) |>
+  hc_tooltip(
+    pointFormat = "<b>R$ {point.y:,.2f}</b>"
+  )
+
+
+# 2. Distribuição das obras por região -----------------------
+
+obras_regiao <- table(dados$regiao)
+
+barplot(
+  obras_regiao,
+  main = "Quantidade de Obras por Região",
+  xlab = "Região",
+  ylab = "Número de obras",
+  las = 2
 )
 
-# 3. ggplot2
-grafico_final <- ggplot(
-  dados,
-  aes(
-    x = area_construida,
-    y = custo_total,
-    color = tipo_obra
+
+# 3. Localização das regiões em um mapa ----------------------
+
+capitais <- data.frame(
+  regiao = c(
+    "Norte",
+    "Nordeste",
+    "Centro-Oeste",
+    "Sudeste",
+    "Sul"
+  ),
+  cidade = c(
+    "Manaus",
+    "Recife",
+    "Brasília",
+    "São Paulo",
+    "Curitiba"
+  ),
+  lat = c(
+    -3.1190,
+    -8.0476,
+    -15.7939,
+    -23.5505,
+    -25.4284
+  ),
+  lng = c(
+    -60.0217,
+    -34.8770,
+    -47.8822,
+    -46.6333,
+    -49.2733
   )
-) +
-  geom_point(alpha = 0.7) +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    title = "Relação entre Área Construída e Custo Total",
-    x = "Área construída (m²)",
-    y = "Custo total (R$)",
-    color = "Tipo de obra"
-  ) +
-  theme_classic()
+)
 
-grafico_final
+capitais$n_obras <- as.numeric(
+  obras_regiao[
+    match(capitais$regiao, names(obras_regiao))
+  ]
+)
 
-# 4. plotly
-ggplotly(grafico_final)
-
-# 5. highcharter
-highchart() |>
-  hc_chart(type = "column") |>
-  hc_title(text = "Custo Médio por Tipo de Obra") |>
-  hc_xAxis(categories = custo_por_tipo$tipo_obra) |>
-  hc_add_series(
-    name = "Custo médio",
-    data = custo_por_tipo$custo_medio
-  )
-
-# 6. leaflet
 leaflet(capitais) |>
   addTiles() |>
   addMarkers(
     ~lng,
     ~lat,
     popup = ~paste0(
+      cidade,
+      "<br>",
       regiao,
       ": ",
-      n,
+      n_obras,
       " obras"
     )
   )
+
+
+# 4. Região com maior número de obras ------------------------
+
+regiao_maior <- data.frame(
+  regiao = names(which.max(obras_regiao)),
+  n_obras = max(obras_regiao)
+)
+
+regiao_maior
+
+leaflet() |>
+  addTiles() |>
+  setView(
+    lng = -47.8822,
+    lat = -15.7939,
+    zoom = 4
+  ) |>
+  addCircles(
+    lng = -47.8822,
+    lat = -15.7939,
+    radius = 300000,
+    color = "red",
+    fillColor = "red",
+    fillOpacity = 0.15,
+    popup = paste0(
+      regiao_maior$regiao,
+      ": ",
+      regiao_maior$n_obras,
+      " obras"
+    )
+  )
+
+
+# 5. Comparação do custo médio por tipo de obra --------------
+
+hchart(
+  custo_por_tipo,
+  "column",
+  hcaes(x = tipo_obra, y = custo_medio)
+) |>
+  hc_title(text = "Comparação do Custo Médio por Tipo de Obra") |>
+  hc_xAxis(title = list(text = "Tipo de obra")) |>
+  hc_yAxis(title = list(text = "Custo médio (R$)")) |>
+  hc_tooltip(
+    pointFormat = "<b>R$ {point.y:,.2f}</b>"
+  )
+
+
+# 6. Relação entre falhas e satisfação -----------------------
+
+plot_ly(
+  dados,
+  x = ~indice_falhas,
+  y = ~satisfacao,
+  type = "scatter",
+  mode = "markers",
+  text = ~paste(
+    "Falhas:", indice_falhas,
+    "<br>Satisfação:", satisfacao
+  ),
+  hoverinfo = "text"
+) |>
+  layout(
+    title = "Relação entre Índice de Falhas e Satisfação",
+    xaxis = list(title = "Índice de falhas"),
+    yaxis = list(title = "Satisfação")
+  )
 ```
 
-O desafio final reúne os cinco sistemas gráficos em um mesmo fluxo de trabalho. A inspeção inicial garante que a base seja conhecida antes da visualização; o Base R fornece uma representação direta; o ggplot2 permite construir uma visualização em camadas; o plotly acrescenta interatividade; o highcharter apresenta uma síntese dos custos médios; e o leaflet incorpora a dimensão espacial.
+A partir das visualizações obtidas, é possível observar diferentes características do conjunto de dados. A comparação dos custos permite analisar as diferenças entre os tipos de obra, enquanto o gráfico de distribuição mostra que a quantidade de obras não é igual entre as regiões. Na amostra analisada, a região **Sudeste apresenta a maior quantidade de obras, com 101 registros**, seguida pelo Nordeste, Sul, Centro-Oeste e Norte.
 
-A integração evidencia que os sistemas não são necessariamente concorrentes. Cada um apresenta recursos que podem ser utilizados de acordo com o objetivo da análise e com a forma de comunicação desejada.
+A representação no mapa complementa essa informação ao associar cada região a uma localização geográfica, enquanto a identificação da região com maior frequência permite destacar visualmente onde está concentrada a maior quantidade de registros da amostra.
+
+Por fim, o gráfico de dispersão evidencia uma **tendência negativa entre o índice de falhas e a satisfação**, indicando que, conforme aumenta o número de falhas, a satisfação tende a diminuir. Dessa forma, a integração dos gráficos permite relacionar diferentes aspectos das obras e facilita a identificação de padrões que poderiam não ser tão evidentes quando cada variável é analisada isoladamente.
+
+
 
 # 🧠 Considerações finais
 
