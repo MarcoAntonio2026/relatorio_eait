@@ -106,21 +106,23 @@ Esses parâmetros são utilizados para fins de análise probabilística. Em apli
 
 A distribuição Normal é uma distribuição contínua, simétrica em torno de sua média, utilizada para representar variáveis que apresentam concentração de valores próximos a um valor central. Neste trabalho, ela é empregada para modelar a resistência à compressão do concreto.
 
-Se \(X\sim N(\mu,\sigma^2)\), a esperança é \(E(X)=\mu\) e a variância é \(Var(X)=\sigma^2\). A média representa o centro da distribuição, enquanto o desvio padrão indica a dispersão dos valores. No R, as funções `dnorm()`, `pnorm()`, `qnorm()` e `rnorm()` permitem calcular densidades, probabilidades acumuladas, quantis e simulações, respectivamente [@montgomery2018; @rcoreteam].
+Se $X\sim N(\mu,\sigma^2)$, a esperança é $E(X)=\mu$ e a variância é $Var(X)=\sigma^2$. Neste relatório, foram adotados $\mu=35$ MPa e $\sigma=4$ MPa. Assim, a média da resistência modelada é 35 MPa e a variância é $4^2=16$ MPa². A média representa o centro da distribuição, enquanto o desvio padrão de 4 MPa indica a dispersão dos valores. No R, as funções `dnorm()`, `pnorm()`, `qnorm()` e `rnorm()` permitem calcular densidades, probabilidades acumuladas, quantis e simulações, respectivamente [@montgomery2018; @rcoreteam].
 
 ## Distribuição Binomial
 
 A distribuição Binomial representa o número de ocorrências de determinado evento em uma quantidade fixa de ensaios independentes, com probabilidade constante. Neste estudo, o evento de interesse é a ocorrência de defeitos em estacas pré-moldadas.
 
-Para \(X\sim Binomial(n,p)\), a esperança e a variância são dadas por:
+Para $X\sim Binomial(n,p)$, a esperança e a variância são dadas por:
 
-\[
+
+$$
 E(X)=np
-\]
+$$
 
-\[
+
+$$
 Var(X)=np(1-p)
-\]
+$$
 
 As funções `dbinom()`, `pbinom()` e `rbinom()` são utilizadas para calcular probabilidades pontuais, probabilidades acumuladas e gerar simulações [@bussab2017; @montgomery2018].
 
@@ -128,11 +130,12 @@ As funções `dbinom()`, `pbinom()` e `rbinom()` são utilizadas para calcular p
 
 A distribuição de Poisson é utilizada para modelar a quantidade de ocorrências em um intervalo de tempo, comprimento ou área, considerando uma taxa média constante. Neste relatório, ela representa o número de fissuras encontradas por quilômetro de túnel.
 
-Para \(X\sim Poisson(\lambda)\), a esperança e a variância são iguais ao parâmetro da distribuição:
+Para $X\sim Poisson(\lambda)$, a esperança e a variância são iguais ao parâmetro da distribuição. Neste relatório, para 1 km, $\lambda=2,5$ fissuras/km:
 
-\[
+
+$$
 E(X)=Var(X)=\lambda
-\]
+$$
 
 Quando o comprimento analisado é ampliado, o parâmetro deve ser ajustado proporcionalmente à extensão considerada. No R, as funções `dpois()`, `ppois()` e `rpois()` permitem calcular probabilidades e realizar simulações [@bussab2017; @montgomery2018].
 
@@ -140,15 +143,17 @@ Quando o comprimento analisado é ampliado, o parâmetro deve ser ajustado propo
 
 A distribuição Exponencial é contínua e pode representar o tempo até a ocorrência de determinado evento, como a falha de um equipamento. Neste estudo, ela é utilizada para modelar o tempo até a falha de uma betoneira.
 
-Para uma distribuição Exponencial com taxa \(\lambda\), a esperança e a variância são:
+Para uma distribuição Exponencial com taxa $\lambda$, a esperança e a variância são. Como a média adotada para a betoneira é 200 h, a taxa utilizada é $\lambda=1/200=0,005$ h$^{-1}$:
 
-\[
+
+$$
 E(X)=\frac{1}{\lambda}
-\]
+$$
 
-\[
+
+$$
 Var(X)=\frac{1}{\lambda^2}
-\]
+$$
 
 Uma propriedade importante é a falta de memória, segundo a qual a probabilidade de o equipamento operar por um período adicional não depende do tempo já transcorrido, sob as hipóteses do modelo. No R, são utilizadas as funções `dexp()`, `pexp()`, `qexp()` e `rexp()` [@montgomery2018; @rcoreteam].
 
@@ -156,28 +161,31 @@ Uma propriedade importante é a falta de memória, segundo a qual a probabilidad
 
 A distribuição Weibull é contínua e flexível, sendo aplicada em estudos de confiabilidade e na representação de variáveis positivas. Neste trabalho, ela é utilizada para modelar a capacidade de suporte do solo, conforme os parâmetros fornecidos no exemplo.
 
-A distribuição é definida pelos parâmetros de forma \(k\) e escala \(\lambda\). Sua função de risco pode ser expressa por:
+A distribuição é definida pelos parâmetros de forma $k$ e escala $\lambda$. Neste relatório, foram adotados $k=2$ e $\lambda=150$ kPa. Sua função de risco pode ser expressa por:
 
-\[
+
+$$
 h(x)=\frac{k}{\lambda}
 \left(\frac{x}{\lambda}\right)^{k-1}
-\]
+$$
 
-Quando \(k>1\), a função de risco é crescente; quando \(k=1\), é constante; e quando \(k<1\), é decrescente. No R, `pweibull()` e `qweibull()` são utilizadas para calcular probabilidades acumuladas e quantis [@montgomery2018; @rcoreteam].
+Quando $k>1$, a função de risco é crescente; quando $k=1$, é constante; e quando $k<1$, é decrescente. No R, `pweibull()` e `qweibull()` são utilizadas para calcular probabilidades acumuladas e quantis [@montgomery2018; @rcoreteam].
 
 ## Distribuição Gama
 
-A distribuição Gama é contínua e pode representar variáveis positivas e assimétricas, como a precipitação diária. Neste estudo, ela é parametrizada pela forma \(\alpha\) e pela taxa \(\beta\).
+A distribuição Gama é contínua e pode representar variáveis positivas e assimétricas, como a precipitação diária. Neste estudo, ela é parametrizada pela forma $\alpha$ e pela taxa $\beta$, com $\alpha=3$ e $\beta=0,5$.
 
 Nessa parametrização, a esperança e a variância são:
 
-\[
-E(X)=\frac{\alpha}{\beta}
-\]
 
-\[
+$$
+E(X)=\frac{\alpha}{\beta}
+$$
+
+
+$$
 Var(X)=\frac{\alpha}{\beta^2}
-\]
+$$
 
 No R, as funções `pgamma()`, `qgamma()` e `rgamma()` permitem calcular probabilidades acumuladas, quantis e gerar valores aleatórios. O parâmetro utilizado é a taxa (`rate`), e não a escala (`scale`) [@bussab2017; @rcoreteam].
 
@@ -191,7 +199,7 @@ Com o aumento do número de simulações, espera-se que a frequência relativa s
 
 ## Parte 1 – Controle de qualidade do concreto: distribuição Normal
 
-A resistência à compressão do concreto foi modelada por uma distribuição Normal com média \(\mu=35\) MPa e desvio padrão \(\sigma=4\) MPa. A partir desses parâmetros, foram calculadas as probabilidades solicitadas, o percentil 5 e a probabilidade associada à média de dez amostras independentes.
+A resistência à compressão do concreto foi modelada por uma distribuição Normal com média $\mu=35$ MPa e desvio padrão $\sigma=4$ MPa. A partir desses parâmetros, foram calculadas as probabilidades solicitadas, o percentil 5 e a probabilidade associada à média de dez amostras independentes.
 
 ```{r}
 # Parâmetros da distribuição Normal
@@ -212,7 +220,7 @@ prob_menor_30 <- pnorm(
 prob_menor_30
 ```
 
-Resultou em uma probabilidade de 0,1056498, equivalente a aproximadamente 10,56%. Isso indica que, segundo o modelo de distribuição adotado, existe uma probabilidade de cerca de 10,6% de que a resistência do concreto seja inferior a 30 MPa.
+Considerando a distribuição Normal com média de 35 MPa e desvio padrão de 4 MPa, a probabilidade calculada foi de 0,1056498, ou aproximadamente **10,56%**. Portanto, para os parâmetros adotados, cerca de 10,6% dos valores de resistência modelados ficam abaixo de 30 MPa.
 
 ### b) Probabilidade de resistência entre 32 e 38 MPa
 
@@ -231,7 +239,7 @@ prob_32_38 <- pnorm(
 prob_32_38
 ```
 
-O cálculo resultou em uma probabilidade de 0,5467453, equivalente a aproximadamente 54,67%. Isso indica que, segundo o modelo de distribuição normal adotado, existe uma probabilidade de cerca de 54,7% de que a resistência do concreto esteja entre 32 e 38 MPa.
+Com média de 35 MPa e desvio padrão de 4 MPa, a probabilidade de a resistência estar entre 32 e 38 MPa foi de 0,5467453, ou **54,67%**. O intervalo considerado está entre 3 MPa abaixo e 3 MPa acima da média e concentra pouco mais da metade dos valores previstos pelo modelo.
 
 ### c) Percentil 5 da resistência
 
@@ -246,7 +254,7 @@ percentil_5 <- qnorm(
 percentil_5
 ```
 
-O percentil 5 corresponde ao valor abaixo do qual se encontram aproximadamente 5% das observações modeladas. Esse indicador caracteriza a cauda inferior da distribuição, mas não deve ser confundido automaticamente com a resistência característica do concreto definida pelas normas técnicas.
+O percentil 5 corresponde ao valor abaixo do qual se encontram aproximadamente 5% dos valores modelados. Para a distribuição Normal com média de 35 MPa e desvio padrão de 4 MPa, esse valor foi calculado em **28,42 MPa**. Assim, aproximadamente 5% dos valores de resistência seriam inferiores a 28,42 MPa. Esse indicador caracteriza a cauda inferior da distribuição e não deve ser confundido automaticamente com a resistência característica definida pelas normas técnicas.
 
 
 
@@ -259,7 +267,7 @@ percentil_5 <- qnorm(
 )
 ```
 
-O cálculo resultou em um valor de 28,42059 MPa, equivalente a aproximadamente 28,42 MPa. Isso indica que, segundo o modelo de distribuição normal adotado, existe uma probabilidade de 5% de que a resistência do concreto seja inferior a 28,42 MPa.
+O resultado obtido foi **28,42 MPa**, confirmando o valor correspondente ao percentil de 5% para os parâmetros μ = 35 MPa e σ = 4 MPa. Portanto, 5% dos valores previstos pelo modelo ficam abaixo desse nível.
 
 
 ### d) Probabilidade de a média de dez amostras ser inferior a 33 MPa
@@ -281,9 +289,7 @@ prob_media_menor_33 <- pnorm(
 prob_media_menor_33
 ```
 
-A média amostral apresenta erro padrão inferior ao desvio padrão de uma observação individual. Por esse motivo, a distribuição da média de dez amostras é mais concentrada em torno da média populacional. 
-
-O cálculo resultou em uma probabilidade de 0,05692315, equivalente a aproximadamente 5,69%. Isso indica que, segundo o modelo de distribuição normal adotado, existe uma probabilidade de cerca de 5,7% de que a média de dez amostras de resistência seja inferior a 33 MPa.
+Para 10 amostras independentes, o erro padrão da média é 4/√10, aproximadamente **1,265 MPa**, menor que o desvio padrão de 4 MPa de uma observação individual. Por isso, a média amostral apresenta menor dispersão em torno dos 35 MPa. A probabilidade de a média ser inferior a 33 MPa foi de 0,05692315, ou **5,69%**.
 
 ### e) Simulação de 1.000 valores e comparação com a densidade teórica
 
@@ -354,11 +360,11 @@ knitr::kable(
 )
 ```
 
-O histograma permite observar a distribuição dos valores gerados, enquanto a curva teórica apresenta o comportamento esperado para os parâmetros adotados. Espera-se uma forma aproximadamente simétrica, com maior concentração de valores próximos de 35 MPa. Pequenas diferenças entre a distribuição empírica e a teórica são esperadas devido à aleatoriedade da simulação.
+Na simulação de 1.000 resistências com μ = 35 MPa e σ = 4 MPa, a média simulada foi de **35,0645 MPa**, o desvio padrão foi de **3,9668 MPa** e a proporção abaixo de 30 MPa foi de **10,60%**. Esses valores ficaram próximos dos valores teóricos de 35 MPa, 4 MPa e 10,56%, respectivamente. O histograma apresenta, portanto, comportamento compatível com a distribuição Normal adotada.
 
 ## Parte 2 – Qualidade de estacas pré-moldadas: distribuição Binomial
 
-Considera-se um lote de 15 estacas pré-moldadas, com probabilidade de defeito de 8% por unidade. A variável aleatória \(X\) representa a quantidade de estacas defeituosas no lote, assumindo-se independência entre as ocorrências e probabilidade constante.
+Considera-se um lote de 15 estacas pré-moldadas, com probabilidade de defeito de 8% por unidade. A variável aleatória $X$ representa a quantidade de estacas defeituosas no lote, assumindo-se independência entre as ocorrências e probabilidade constante.
 
 ```{r}
 # Parâmetros da distribuição Binomial
@@ -379,7 +385,7 @@ prob_zero_defeitos <- dbinom(
 prob_zero_defeitos
 ```
 
-O resultado corresponde à probabilidade de um lote de 15 estacas não apresentar defeitos. Essa informação pode contribuir para o planejamento do controle de qualidade e para a avaliação da frequência esperada de lotes sem ocorrências.
+Para um lote de **15 estacas**, com probabilidade de defeito de **8% por estaca**, a probabilidade de nenhuma estaca apresentar defeito foi de 0,2862974, ou **28,63%**. Portanto, considerando as hipóteses do modelo Binomial, aproximadamente 29 em cada 100 lotes semelhantes tenderiam a não apresentar nenhuma estaca defeituosa.
 
 ### b) Probabilidade de no máximo duas estacas defeituosas
 
@@ -394,7 +400,7 @@ prob_ate_2_defeitos <- pbinom(
 prob_ate_2_defeitos
 ```
 
-A probabilidade acumulada considera os lotes com zero, uma ou duas estacas defeituosas. O resultado permite avaliar a possibilidade de ocorrência de uma quantidade reduzida de defeitos, mas não estabelece, por si só, o critério de aceitação do lote.
+Com n = 15 estacas e p = 0,08, a probabilidade de ocorrerem **no máximo duas estacas defeituosas** foi de 0,8870349, ou **88,70%**. Isso significa que, segundo o modelo, a maior parte dos lotes deverá apresentar zero, uma ou duas estacas com defeito. Esse resultado descreve a ocorrência esperada e não define, por si só, o critério de aceitação do lote.
 
 ### c) Probabilidade de quatro ou mais estacas defeituosas
 
@@ -409,7 +415,7 @@ prob_4_ou_mais <- 1 - pbinom(
 prob_4_ou_mais
 ```
 
-O resultado representa a probabilidade de um lote apresentar pelo menos quatro estacas defeituosas. Essa situação pode exigir atenção adicional no controle de qualidade, especialmente quanto à inspeção dos elementos, à rastreabilidade e à verificação dos procedimentos de fabricação.
+A probabilidade de um lote de 15 estacas apresentar **quatro ou mais defeituosas** foi de 0,02731357, ou **2,73%**. Embora seja um evento pouco frequente para p = 0,08, sua ocorrência representa uma quantidade de defeitos significativamente superior à média esperada de 1,2 estaca por lote.
 
 ### d) Esperança e variância
 
@@ -435,7 +441,7 @@ knitr::kable(
 )
 ```
 
-A esperança representa a quantidade média de estacas defeituosas esperada por lote quando muitos lotes semelhantes são considerados. Esse valor não precisa ser inteiro e não significa que todos os lotes apresentarão a mesma quantidade de defeitos. A variância representa a dispersão do número de ocorrências em torno da esperança.
+Com n = 15 e p = 0,08, a esperança é **E(X) = np = 1,20 estaca por lote** e a variância é **Var(X) = np(1-p) = 1,104 estacas²**. A esperança de 1,20 não significa que um lote terá 1,20 estaca defeituosa; ela representa a média esperada quando muitos lotes com os mesmos parâmetros são considerados. A variância indica a dispersão do número de defeitos em torno dessa média.
 
 ### e) Simulação de 500 lotes
 
@@ -509,11 +515,11 @@ barplot(
 )
 ```
 
-A comparação permite verificar se as frequências observadas nos 500 lotes se aproximam das probabilidades previstas pela distribuição Binomial. Diferenças são esperadas em razão da variabilidade amostral. Como cada lote corresponde a uma observação, a frequência relativa depende do conjunto específico de números aleatórios gerados.
+Na simulação de **500 lotes**, com 15 estacas por lote e probabilidade de defeito de 8%, a frequência de lotes sem defeitos foi **29,2%**, próxima da probabilidade teórica de **28,63%**. Para um defeito, os valores foram **37,4%** na simulação e aproximadamente **37,34%** no modelo. Para dois defeitos, foram **21,8%** e **22,73%**, respectivamente. As diferenças são compatíveis com a variabilidade amostral.
 
 ## Parte 3 – Fissuras em túnel: distribuição de Poisson
 
-O número de fissuras foi modelado por uma distribuição de Poisson com média de \(\lambda=2{,}5\) fissuras por quilômetro. Para dois quilômetros, considera-se \(\lambda=5\), mantendo a hipótese de taxa média constante por unidade de comprimento.
+O número de fissuras foi modelado por uma distribuição de Poisson com média de $\lambda=2{,}5$ fissuras por quilômetro. Para dois quilômetros, considera-se $\lambda=5$, mantendo a hipótese de taxa média constante por unidade de comprimento.
 
 ```{r}
 # Parâmetro por quilômetro
@@ -532,7 +538,7 @@ prob_zero_fissuras <- dpois(
 prob_zero_fissuras
 ```
 
-O resultado representa a probabilidade teórica de um trecho de um quilômetro não apresentar fissuras. Essa estimativa pode contribuir para a análise preliminar de ocorrências, mas sua validade depende da adequação da taxa média adotada às características do túnel.
+Com taxa média de **2,5 fissuras/km**, a probabilidade de um trecho de **1 km** não apresentar nenhuma fissura foi de 0,082085, ou **8,21%**. Portanto, para esse parâmetro, a ausência de fissuras em um quilômetro é um evento relativamente pouco frequente no modelo adotado.
 
 ### b) Probabilidade de três ou mais fissuras em 1 km
 
@@ -546,7 +552,7 @@ prob_3_ou_mais_fissuras <- 1 - ppois(
 prob_3_ou_mais_fissuras
 ```
 
-A probabilidade calculada representa a chance de encontrar pelo menos três fissuras por quilômetro. Na prática, a contagem de ocorrências deve ser complementada pela avaliação da abertura, da extensão, da localização e da evolução das fissuras.
+Para λ = 2,5 fissuras/km, a probabilidade de encontrar **três ou mais fissuras em 1 km** foi de 0,4561869, ou **45,62%**. Esse valor indica que o evento não é raro dentro do modelo adotado. Na avaliação real de um túnel, a contagem deve ser complementada pela abertura, extensão, localização e evolução das fissuras.
 
 ### c) Probabilidade de entre uma e quatro fissuras em 1 km
 
@@ -563,7 +569,7 @@ prob_1_a_4_fissuras <- ppois(
 prob_1_a_4_fissuras
 ```
 
-O resultado considera a ocorrência de uma, duas, três ou quatro fissuras. Essa faixa de contagem representa uma possibilidade do modelo, não uma classificação direta da segurança ou da gravidade do trecho analisado.
+A probabilidade de ocorrerem **entre 1 e 4 fissuras em 1 km** foi de 0,809093, ou **80,91%**, considerando λ = 2,5 fissuras/km. Assim, essa faixa concentra a maior parte dos resultados previstos pelo modelo. A quantidade de fissuras, porém, não representa sozinha a gravidade ou a segurança do trecho.
 
 ### d) Probabilidade de exatamente cinco fissuras em 2 km
 
@@ -580,7 +586,7 @@ prob_5_fissuras_2km <- dpois(
 prob_5_fissuras_2km
 ```
 
-O parâmetro de Poisson foi ajustado proporcionalmente ao comprimento analisado. O resultado representa a probabilidade de exatamente cinco fissuras em dois quilômetros, considerando a taxa média adotada e as hipóteses do modelo.
+Para **2 km**, o parâmetro foi ajustado de λ = 2,5 para **λ = 5 fissuras**. Com esse valor, a probabilidade de ocorrerem exatamente **5 fissuras** foi de 0,1754674, ou **17,55%**. O resultado é coerente com a média de 5 ocorrências esperada para dois quilômetros quando a taxa de 2,5 fissuras/km é mantida constante.
 
 ### e) Esperança e variância
 
@@ -598,11 +604,11 @@ knitr::kable(
 )
 ```
 
-A esperança e a variância são iguais a 2,5 para um quilômetro. Essa igualdade é uma propriedade da distribuição de Poisson. Caso os registros reais apresentem dispersão muito superior à média, pode ser necessário avaliar a adequação do modelo ou separar os trechos conforme suas características geológicas e construtivas.
+Para 1 km e λ = 2,5, a esperança é **E(X) = 2,5 fissuras** e a variância é **Var(X) = 2,5 fissuras²**. A igualdade entre esperança e variância é uma propriedade da distribuição de Poisson. Assim, o modelo considera uma média de 2,5 ocorrências por quilômetro e uma dispersão compatível com esse mesmo parâmetro.
 
 ## Parte 4 – Confiabilidade de equipamentos: distribuição Exponencial
 
-O tempo até a falha da betoneira foi modelado por uma distribuição Exponencial com média de 200 horas. A taxa de falha utilizada é \(\lambda=1/200\) por hora, considerando-se uma taxa constante ao longo do tempo.
+O tempo até a falha da betoneira foi modelado por uma distribuição Exponencial com média de 200 horas. A taxa de falha utilizada é $\lambda=1/200$ por hora, considerando-se uma taxa constante ao longo do tempo.
 
 ```{r}
 # Parâmetros da distribuição Exponencial
@@ -623,7 +629,7 @@ prob_mais_250 <- pexp(
 prob_mais_250
 ```
 
-O resultado representa a probabilidade de a betoneira operar por mais de 250 horas, segundo o modelo adotado. Essa informação pode apoiar o planejamento da manutenção e a disponibilidade de equipamentos, mas deve ser avaliada em conjunto com o histórico real de operação.
+Com média de **200 h**, a taxa da distribuição Exponencial é λ = 1/200 = 0,005 h⁻¹. Nesse modelo, a probabilidade de a betoneira operar por mais de **250 h** foi de 0,2865048, ou **28,65%**.
 
 ### b) Probabilidade de falhar antes de 100 horas
 
@@ -637,7 +643,7 @@ prob_menos_100 <- pexp(
 prob_menos_100
 ```
 
-A probabilidade representa a chance de a falha ocorrer antes de 100 horas de funcionamento. A estimativa pode auxiliar na compreensão da confiabilidade teórica do equipamento, sem substituir as informações do fabricante e os registros de manutenção.
+Com a mesma taxa λ = 0,005 h⁻¹, a probabilidade de a betoneira falhar **antes de 100 h** foi de 0,3934693, ou **39,35%**.
 
 ### c) Tempo mediano até a falha
 
@@ -651,7 +657,7 @@ mediana_betoneira <- qexp(
 mediana_betoneira
 ```
 
-A mediana corresponde ao tempo até o qual 50% dos valores da distribuição se encontram. Diferentemente da média, ela divide a distribuição em duas partes com igual probabilidade, não representando um prazo garantido de funcionamento.
+Para a distribuição Exponencial com média de 200 h, a mediana calculada foi de **138,63 h**. Isso significa que 50% dos tempos de falha modelados são inferiores a esse valor e 50% são superiores. A mediana é menor que a média porque a distribuição Exponencial é assimétrica e possui cauda à direita.
 
 ### d) Probabilidade de durar pelo menos mais 100 horas após já ter operado 150 horas
 
@@ -692,7 +698,7 @@ knitr::kable(
 )
 ```
 
-Pela propriedade da falta de memória, as duas probabilidades devem apresentar o mesmo resultado, desconsiderando diferenças numéricas de arredondamento. Essa propriedade decorre da hipótese de taxa de falha constante. Equipamentos sujeitos a desgaste progressivo podem não apresentar esse comportamento na prática.
+Com λ = 1/200 h⁻¹, a probabilidade de durar pelo menos mais 100 h após já ter operado 150 h, isto é, P(X > 250 | X > 150), foi de **60,65%**. Esse valor é igual a P(X > 100), também **60,65%**, confirmando numericamente a propriedade de falta de memória da distribuição Exponencial. Essa conclusão depende da hipótese de taxa de falha constante.
 
 ### e) Simulação de 1.000 tempos de falha
 
@@ -756,11 +762,11 @@ knitr::kable(
 )
 ```
 
-O histograma deve apresentar maior concentração de tempos menores e uma cauda à direita, característica da distribuição Exponencial. A curva teórica facilita a comparação com os valores simulados. Diferenças entre as estatísticas amostrais e as medidas teóricas são esperadas devido à aleatoriedade da amostra.
+Na simulação de **1.000 tempos de falha**, utilizando média teórica de 200 h, a média simulada foi de **205,996 h**, a mediana foi de **146,233 h** e o desvio padrão foi de **200,881 h**. Os resultados ficaram próximos do comportamento esperado para uma distribuição Exponencial: maior concentração de tempos menores e uma cauda à direita.
 
 ## Parte 5 – Capacidade de suporte do solo: distribuição Weibull
 
-A capacidade de suporte do solo foi representada por uma distribuição Weibull com parâmetro de forma \(k=2\) e escala \(\lambda=150\) kPa. O modelo permite estimar probabilidades e quantis de uma variável positiva, mas não caracteriza automaticamente as propriedades de um terreno real.
+A capacidade de suporte do solo foi representada por uma distribuição Weibull com parâmetro de forma $k=2$ e escala $\lambda=150$ kPa. O modelo permite estimar probabilidades e quantis de uma variável positiva, mas não caracteriza automaticamente as propriedades de um terreno real.
 
 ```{r}
 # Parâmetros da distribuição Weibull
@@ -781,7 +787,7 @@ prob_solo_menor_100 <- pweibull(
 prob_solo_menor_100
 ```
 
-O resultado representa a probabilidade teórica de a capacidade de suporte ser inferior a 100 kPa. Em um projeto real, essa informação deve ser confrontada com as solicitações de projeto e os parâmetros obtidos na investigação geotécnica, respeitando os critérios técnicos e normativos aplicáveis.
+Com distribuição Weibull de forma **k = 2** e escala **λ = 150 kPa**, a probabilidade de a capacidade de suporte ser inferior a **100 kPa** foi de 0,3588196, ou **35,88%**. Portanto, mais de um terço dos valores previstos pelo modelo fica abaixo desse limite.
 
 ### b) Probabilidade de capacidade entre 120 e 200 kPa
 
@@ -800,7 +806,7 @@ prob_solo_120_200 <- pweibull(
 prob_solo_120_200
 ```
 
-A probabilidade corresponde à parcela teórica dos valores situada entre 120 e 200 kPa. Sua interpretação depende da adequação dos parâmetros da Weibull aos dados que representam o solo analisado.
+Para k = 2 e escala de 150 kPa, a probabilidade de a capacidade de suporte ficar entre **120 e 200 kPa** foi de 0,3582791, ou **35,83%**. Esse intervalo representa uma parcela relevante da distribuição, mas sua utilização em projeto depende da representatividade dos parâmetros adotados para o solo real.
 
 ### c) Percentil 90
 
@@ -815,7 +821,7 @@ percentil_90_solo <- qweibull(
 percentil_90_solo
 ```
 
-O percentil 90 é o valor abaixo do qual se encontram aproximadamente 90% das observações modeladas. Esse indicador caracteriza a parte superior da distribuição, mas não deve ser utilizado isoladamente como parâmetro de dimensionamento geotécnico.
+Para a Weibull com k = 2 e escala de 150 kPa, o percentil 90 foi de **227,61 kPa**. Isso significa que aproximadamente 90% dos valores modelados são inferiores a 227,61 kPa e cerca de 10% são superiores. O valor caracteriza a distribuição adotada, mas não deve ser utilizado isoladamente como parâmetro de dimensionamento geotécnico.
 
 ### d) Média e desvio padrão
 
@@ -854,7 +860,7 @@ knitr::kable(
 )
 ```
 
-A média representa o valor esperado da capacidade de suporte no modelo, enquanto o desvio padrão indica a dispersão dos valores. A variância expressa essa dispersão em unidades quadráticas. Essas medidas ajudam a caracterizar a distribuição, mas não substituem sondagens, ensaios e avaliação geotécnica.
+Com k = 2 e escala de 150 kPa, a média teórica da capacidade de suporte foi de **132,93 kPa**, a variância de **4.828,54 kPa²** e o desvio padrão de **69,49 kPa**. O desvio padrão indica a dispersão dos valores em torno da média de 132,93 kPa. Esses valores descrevem o comportamento do modelo e não substituem sondagens, ensaios e avaliação geotécnica.
 
 ### e) Função de risco (*hazard*)
 
@@ -880,11 +886,11 @@ plot(
 grid()
 ```
 
-Como o parâmetro de forma é \(k=2\), a função de risco é crescente. Esse comportamento é uma propriedade matemática da distribuição adotada. Entretanto, a capacidade de suporte do solo não corresponde diretamente a um tempo até falha; por isso, a função não deve ser interpretada como probabilidade direta de ruptura de uma fundação. Para essa finalidade, seria necessário um modelo geotécnico específico, com dados e critérios apropriados.
+Como o parâmetro de forma adotado é **k = 2 > 1**, a função de risco da Weibull é crescente. Portanto, o valor de h(x) aumenta à medida que x cresce, conforme a expressão utilizada no relatório. Esse comportamento é uma propriedade matemática do modelo e não deve ser interpretado como uma probabilidade direta de ruptura de uma fundação, pois a capacidade de suporte não representa diretamente um tempo até falha.
 
 ## Parte 6 – Precipitação diária: distribuição Gama
 
-A precipitação diária foi modelada por uma distribuição Gama com forma \(\alpha=3\) e taxa \(\beta=0{,}5\). Na parametrização utilizada pelo R, o argumento `rate` representa a taxa, de modo que a média teórica é de 6 mm e a variância é de 12 mm².
+A precipitação diária foi modelada por uma distribuição Gama com forma $\alpha=3$ e taxa $\beta=0{,}5$. Na parametrização utilizada pelo R, o argumento `rate` representa a taxa, de modo que a média teórica é de 6 mm e a variância é de 12 mm².
 
 ```{r}
 # Parâmetros da distribuição Gama
@@ -906,7 +912,7 @@ prob_chuva_maior_10 <- pgamma(
 prob_chuva_maior_10
 ```
 
-O resultado estima a probabilidade de um dia apresentar precipitação superior a 10 mm, considerando o modelo adotado. Para aplicações operacionais em uma PCH, seria necessário verificar se os parâmetros representam adequadamente a região e o período analisado.
+Com distribuição Gama de forma **α = 3** e taxa **β = 0,5**, a probabilidade de a precipitação diária superar **10 mm** foi de 0,1246520, ou **12,47%**. Portanto, segundo o modelo, aproximadamente 12 em cada 100 dias teriam precipitação acima desse limite.
 
 ### b) Probabilidade de precipitação entre 5 e 15 mm
 
@@ -925,7 +931,7 @@ prob_chuva_5_15 <- pgamma(
 prob_chuva_5_15
 ```
 
-A probabilidade representa a proporção teórica de dias com precipitação entre 5 e 15 mm. Esse resultado pode contribuir para análises preliminares de planejamento, desde que complementado por dados meteorológicos locais e pela avaliação da sazonalidade.
+Para α = 3 e β = 0,5, a probabilidade de a precipitação diária ficar entre **5 e 15 mm** foi de 0,5235564, ou **52,36%**. Assim, essa faixa concentra pouco mais da metade dos valores previstos pelo modelo.
 
 ### c) Percentil 95 da precipitação
 
@@ -940,7 +946,7 @@ percentil_95_chuva <- qgamma(
 percentil_95_chuva
 ```
 
-O percentil 95 corresponde ao valor abaixo do qual se encontram aproximadamente 95% das precipitações representadas pelo modelo. Trata-se de um indicador de valores elevados, mas não de uma chuva de projeto para dimensionamento hidráulico, que exige análise de dados locais, duração e período de retorno.
+Com forma α = 3 e taxa β = 0,5, o percentil 95 da precipitação foi de **12,59 mm**. Portanto, aproximadamente 95% dos valores previstos pelo modelo ficam abaixo de 12,59 mm e 5% ficam acima. Esse valor é apenas um quantil do modelo adotado e não deve ser tratado como chuva de projeto.
 
 ### d) Esperança e variância
 
@@ -969,7 +975,7 @@ knitr::kable(
 )
 ```
 
-A esperança representa a precipitação média teórica, enquanto a variância descreve a dispersão dos valores em torno dessa média. Como a variância é expressa em milímetros quadrados, ela não deve ser interpretada diretamente como uma quantidade de chuva.
+Para α = 3 e β = 0,5, a esperança é **E(X) = α/β = 6 mm** e a variância é **Var(X) = α/β² = 12 mm²**. Assim, o modelo considera uma precipitação diária média de 6 mm. A variância quantifica a dispersão e, por estar em mm², não representa diretamente uma quantidade de chuva.
 
 ### e) Simulação de 365 dias de precipitação
 
@@ -1038,7 +1044,7 @@ knitr::kable(
 )
 ```
 
-A distribuição Gama apresenta assimetria à direita e assume valores não negativos. O histograma permite observar esse comportamento e compará-lo com a curva teórica. As estatísticas simuladas podem apresentar diferenças em relação às medidas teóricas devido ao número limitado de observações. Além disso, o modelo adotado não representa explicitamente dias sem chuva, sazonalidade ou dependência entre dias consecutivos.
+Na simulação de **365 dias**, usando α = 3 e β = 0,5, a média simulada foi de **5,6817 mm**, a variância foi de **9,6437 mm²** e o percentil 95 foi de **11,5533 mm**. Os valores ficaram próximos dos valores teóricos de 6 mm, 12 mm² e 12,5916 mm, respectivamente. O histograma evidencia a assimetria à direita característica da Gama. As diferenças são esperadas devido ao tamanho finito da simulação e ao caráter aleatório dos valores gerados.
 
 ## Parte 7 – Análise integrada com simulação de Monte Carlo
 
@@ -1122,9 +1128,9 @@ knitr::kable(
 )
 ```
 
-A estimativa de Monte Carlo é obtida pela frequência relativa de resistências simuladas abaixo de 30 MPa. Já o valor teórico é calculado diretamente pela função de distribuição acumulada da Normal. A diferença entre os resultados decorre da variabilidade da simulação.
+Nas **10.000 simulações** da resistência do concreto, utilizando μ = 35 MPa e σ = 4 MPa, a estimativa de Monte Carlo para P(X < 30) foi de **10,60%**. O valor teórico obtido pela Normal foi de **10,56498%**, resultando em uma diferença de aproximadamente **0,035 ponto percentual**. A proximidade entre os resultados indica que, para esse número de simulações, a estimativa empírica reproduziu adequadamente a probabilidade teórica.
 
-No contexto da engenharia civil, esse procedimento permite estimar probabilidades de ocorrência e avaliar cenários de interesse. Em problemas mais complexos, a simulação pode ser aplicada a modelos com várias variáveis aleatórias e relações entre diferentes etapas do empreendimento. Entretanto, a qualidade das estimativas depende da adequação das distribuições, da escolha dos parâmetros e da representatividade dos dados utilizados.
+No contexto deste relatório, a simulação de Monte Carlo mostrou que a probabilidade teórica de resistência inferior a 30 MPa, definida pelos parâmetros de 35 MPa de média e 4 MPa de desvio padrão, pode ser reproduzida numericamente com boa aproximação. Em problemas de engenharia mais complexos, a mesma abordagem pode ser ampliada para várias variáveis, mas os resultados continuarão dependendo da adequação das distribuições e da representatividade dos parâmetros adotados.
 
 ## Síntese dos resultados
 
@@ -1219,9 +1225,9 @@ knitr::kable(
 )
 ```
 
-A síntese evidencia que cada distribuição permite avaliar um tipo específico de fenômeno. A Normal representa a variabilidade de uma propriedade contínua; a Binomial e a Poisson descrevem contagens; a Exponencial modela tempos até falha; e as distribuições Weibull e Gama representam variáveis positivas com diferentes comportamentos de dispersão e assimetria.
+A síntese dos resultados mostra como os parâmetros adotados definem o comportamento de cada fenômeno. A Normal, com μ = 35 MPa e σ = 4 MPa, representa a resistência do concreto; a Binomial, com n = 15 e p = 0,08, representa os defeitos em estacas; a Poisson, com 2,5 fissuras/km, representa ocorrências em túneis; a Exponencial, com média de 200 h, representa o tempo até a falha da betoneira; a Weibull, com k = 2 e escala de 150 kPa, representa a capacidade de suporte do solo; e a Gama, com α = 3 e β = 0,5, representa a precipitação diária.
 
-A comparação entre os resultados teóricos e simulados permite verificar se os valores gerados apresentam comportamento compatível com os modelos adotados. As diferenças observadas são esperadas em simulações finitas e reforçam a importância de interpretar os resultados considerando a variabilidade amostral.
+As comparações entre resultados teóricos e simulados apresentaram comportamento compatível com os parâmetros adotados. No concreto, por exemplo, a proporção simulada abaixo de 30 MPa foi de 10,60%, muito próxima dos 10,56% teóricos. Nas demais simulações, as diferenças também decorrem do tamanho finito das amostras e da variabilidade aleatória, reforçando que resultados simulados são aproximações dos valores teóricos.
 
 # 🧠 Considerações finais
 
