@@ -117,12 +117,12 @@ Para $X\sim Binomial(n,p)$, a esperança e a variância são dadas por:
 
 $$
 E(X)=np
-$$
+$$ {#eq-nome}
 
 
 $$
 Var(X)=np(1-p)
-$$
+$$ {#eq-nome}
 
 As funções `dbinom()`, `pbinom()` e `rbinom()` são utilizadas para calcular probabilidades pontuais, probabilidades acumuladas e gerar simulações [@bussab2017; @montgomery2018].
 
@@ -135,7 +135,7 @@ Para $X\sim Poisson(\lambda)$, a esperança e a variância são iguais ao parâm
 
 $$
 E(X)=Var(X)=\lambda
-$$
+$$ {#eq-nome}
 
 Quando o comprimento analisado é ampliado, o parâmetro deve ser ajustado proporcionalmente à extensão considerada. No R, as funções `dpois()`, `ppois()` e `rpois()` permitem calcular probabilidades e realizar simulações [@bussab2017; @montgomery2018].
 
@@ -148,12 +148,12 @@ Para uma distribuição Exponencial com taxa $\lambda$, a esperança e a variân
 
 $$
 E(X)=\frac{1}{\lambda}
-$$
+$$ {#eq-nome}
 
 
 $$
 Var(X)=\frac{1}{\lambda^2}
-$$
+$$ {#eq-nome}
 
 Uma propriedade importante é a falta de memória, segundo a qual a probabilidade de o equipamento operar por um período adicional não depende do tempo já transcorrido, sob as hipóteses do modelo. No R, são utilizadas as funções `dexp()`, `pexp()`, `qexp()` e `rexp()` [@montgomery2018; @rcoreteam].
 
@@ -167,7 +167,7 @@ A distribuição é definida pelos parâmetros de forma $k$ e escala $\lambda$. 
 $$
 h(x)=\frac{k}{\lambda}
 \left(\frac{x}{\lambda}\right)^{k-1}
-$$
+$$ {#eq-nome}
 
 Quando $k>1$, a função de risco é crescente; quando $k=1$, é constante; e quando $k<1$, é decrescente. No R, `pweibull()` e `qweibull()` são utilizadas para calcular probabilidades acumuladas e quantis [@montgomery2018; @rcoreteam].
 
@@ -180,12 +180,12 @@ Nessa parametrização, a esperança e a variância são:
 
 $$
 E(X)=\frac{\alpha}{\beta}
-$$
+$$ {#eq-nome}
 
 
 $$
 Var(X)=\frac{\alpha}{\beta^2}
-$$
+$$ {#eq-nome}
 
 No R, as funções `pgamma()`, `qgamma()` e `rgamma()` permitem calcular probabilidades acumuladas, quantis e gerar valores aleatórios. O parâmetro utilizado é a taxa (`rate`), e não a escala (`scale`) [@bussab2017; @rcoreteam].
 

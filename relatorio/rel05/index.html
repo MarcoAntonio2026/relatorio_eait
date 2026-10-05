@@ -240,7 +240,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">05/10/2026, 14:03</p>
+      <p class="date">05/10/2026, 14:33</p>
     </div>
   </div>
   
@@ -387,55 +387,55 @@ Tabela&nbsp;1: Parâmetros adotados nas distribuições de probabilidade
 <h2 data-number="4.2" class="anchored" data-anchor-id="distribuição-binomial"><span class="header-section-number">4.2</span> Distribuição Binomial</h2>
 <p>A distribuição Binomial representa o número de ocorrências de determinado evento em uma quantidade fixa de ensaios independentes, com probabilidade constante. Neste estudo, o evento de interesse é a ocorrência de defeitos em estacas pré-moldadas.</p>
 <p>Para <span class="math inline">\(X\sim Binomial(n,p)\)</span>, a esperança e a variância são dadas por:</p>
-<p><span class="math display">\[
+<p><span id="eq-nome"><span class="math display">\[
 E(X)=np
-\]</span></p>
-<p><span class="math display">\[
+\tag{1}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[
 Var(X)=np(1-p)
-\]</span></p>
+\tag{2}\]</span></span></p>
 <p>As funções <code>dbinom()</code>, <code>pbinom()</code> e <code>rbinom()</code> são utilizadas para calcular probabilidades pontuais, probabilidades acumuladas e gerar simulações <span class="citation" data-cites="bussab2017 montgomery2018">(<a href="#ref-bussab2017" role="doc-biblioref">Bussab e Morettin, 2017</a>; <a href="#ref-montgomery2018" role="doc-biblioref">Montgomery e Runger, 2018</a>)</span>.</p>
 </section>
 <section id="distribuição-de-poisson" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="distribuição-de-poisson"><span class="header-section-number">4.3</span> Distribuição de Poisson</h2>
 <p>A distribuição de Poisson é utilizada para modelar a quantidade de ocorrências em um intervalo de tempo, comprimento ou área, considerando uma taxa média constante. Neste relatório, ela representa o número de fissuras encontradas por quilômetro de túnel.</p>
 <p>Para <span class="math inline">\(X\sim Poisson(\lambda)\)</span>, a esperança e a variância são iguais ao parâmetro da distribuição. Neste relatório, para 1 km, <span class="math inline">\(\lambda=2,5\)</span> fissuras/km:</p>
-<p><span class="math display">\[
+<p><span id="eq-nome"><span class="math display">\[
 E(X)=Var(X)=\lambda
-\]</span></p>
+\tag{3}\]</span></span></p>
 <p>Quando o comprimento analisado é ampliado, o parâmetro deve ser ajustado proporcionalmente à extensão considerada. No R, as funções <code>dpois()</code>, <code>ppois()</code> e <code>rpois()</code> permitem calcular probabilidades e realizar simulações <span class="citation" data-cites="bussab2017 montgomery2018">(<a href="#ref-bussab2017" role="doc-biblioref">Bussab e Morettin, 2017</a>; <a href="#ref-montgomery2018" role="doc-biblioref">Montgomery e Runger, 2018</a>)</span>.</p>
 </section>
 <section id="distribuição-exponencial" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="distribuição-exponencial"><span class="header-section-number">4.4</span> Distribuição Exponencial</h2>
 <p>A distribuição Exponencial é contínua e pode representar o tempo até a ocorrência de determinado evento, como a falha de um equipamento. Neste estudo, ela é utilizada para modelar o tempo até a falha de uma betoneira.</p>
 <p>Para uma distribuição Exponencial com taxa <span class="math inline">\(\lambda\)</span>, a esperança e a variância são. Como a média adotada para a betoneira é 200 h, a taxa utilizada é <span class="math inline">\(\lambda=1/200=0,005\)</span> h<span class="math inline">\(^{-1}\)</span>:</p>
-<p><span class="math display">\[
+<p><span id="eq-nome"><span class="math display">\[
 E(X)=\frac{1}{\lambda}
-\]</span></p>
-<p><span class="math display">\[
+\tag{4}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[
 Var(X)=\frac{1}{\lambda^2}
-\]</span></p>
+\tag{5}\]</span></span></p>
 <p>Uma propriedade importante é a falta de memória, segundo a qual a probabilidade de o equipamento operar por um período adicional não depende do tempo já transcorrido, sob as hipóteses do modelo. No R, são utilizadas as funções <code>dexp()</code>, <code>pexp()</code>, <code>qexp()</code> e <code>rexp()</code> <span class="citation" data-cites="montgomery2018 rcoreteam">(<a href="#ref-montgomery2018" role="doc-biblioref">Montgomery e Runger, 2018</a>; <a href="#ref-rcoreteam" role="doc-biblioref">R Core Team, 2025</a>)</span>.</p>
 </section>
 <section id="distribuição-weibull" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="distribuição-weibull"><span class="header-section-number">4.5</span> Distribuição Weibull</h2>
 <p>A distribuição Weibull é contínua e flexível, sendo aplicada em estudos de confiabilidade e na representação de variáveis positivas. Neste trabalho, ela é utilizada para modelar a capacidade de suporte do solo, conforme os parâmetros fornecidos no exemplo.</p>
 <p>A distribuição é definida pelos parâmetros de forma <span class="math inline">\(k\)</span> e escala <span class="math inline">\(\lambda\)</span>. Neste relatório, foram adotados <span class="math inline">\(k=2\)</span> e <span class="math inline">\(\lambda=150\)</span> kPa. Sua função de risco pode ser expressa por:</p>
-<p><span class="math display">\[
+<p><span id="eq-nome"><span class="math display">\[
 h(x)=\frac{k}{\lambda}
 \left(\frac{x}{\lambda}\right)^{k-1}
-\]</span></p>
+\tag{6}\]</span></span></p>
 <p>Quando <span class="math inline">\(k&gt;1\)</span>, a função de risco é crescente; quando <span class="math inline">\(k=1\)</span>, é constante; e quando <span class="math inline">\(k&lt;1\)</span>, é decrescente. No R, <code>pweibull()</code> e <code>qweibull()</code> são utilizadas para calcular probabilidades acumuladas e quantis <span class="citation" data-cites="montgomery2018 rcoreteam">(<a href="#ref-montgomery2018" role="doc-biblioref">Montgomery e Runger, 2018</a>; <a href="#ref-rcoreteam" role="doc-biblioref">R Core Team, 2025</a>)</span>.</p>
 </section>
 <section id="distribuição-gama" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="distribuição-gama"><span class="header-section-number">4.6</span> Distribuição Gama</h2>
 <p>A distribuição Gama é contínua e pode representar variáveis positivas e assimétricas, como a precipitação diária. Neste estudo, ela é parametrizada pela forma <span class="math inline">\(\alpha\)</span> e pela taxa <span class="math inline">\(\beta\)</span>, com <span class="math inline">\(\alpha=3\)</span> e <span class="math inline">\(\beta=0,5\)</span>.</p>
 <p>Nessa parametrização, a esperança e a variância são:</p>
-<p><span class="math display">\[
+<p><span id="eq-nome"><span class="math display">\[
 E(X)=\frac{\alpha}{\beta}
-\]</span></p>
-<p><span class="math display">\[
+\tag{7}\]</span></span></p>
+<p><span id="eq-nome"><span class="math display">\[
 Var(X)=\frac{\alpha}{\beta^2}
-\]</span></p>
+\tag{8}\]</span></span></p>
 <p>No R, as funções <code>pgamma()</code>, <code>qgamma()</code> e <code>rgamma()</code> permitem calcular probabilidades acumuladas, quantis e gerar valores aleatórios. O parâmetro utilizado é a taxa (<code>rate</code>), e não a escala (<code>scale</code>) <span class="citation" data-cites="bussab2017 rcoreteam">(<a href="#ref-bussab2017" role="doc-biblioref">Bussab e Morettin, 2017</a>; <a href="#ref-rcoreteam" role="doc-biblioref">R Core Team, 2025</a>)</span>.</p>
 </section>
 <section id="simulação-de-monte-carlo" class="level2" data-number="4.7">
@@ -2711,12 +2711,12 @@ R CORE TEAM. <strong><a href="https://www.R-project.org/">R: A Language and Envi
 <span id="cb66-119"><a href="#cb66-119" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-120"><a href="#cb66-120" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-121"><a href="#cb66-121" aria-hidden="true" tabindex="-1"></a>E(X)=np</span>
-<span id="cb66-122"><a href="#cb66-122" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-122"><a href="#cb66-122" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-123"><a href="#cb66-123" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-124"><a href="#cb66-124" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-125"><a href="#cb66-125" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-126"><a href="#cb66-126" aria-hidden="true" tabindex="-1"></a>Var(X)=np(1-p)</span>
-<span id="cb66-127"><a href="#cb66-127" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-127"><a href="#cb66-127" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-128"><a href="#cb66-128" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-129"><a href="#cb66-129" aria-hidden="true" tabindex="-1"></a>As funções <span class="in">`dbinom()`</span>, <span class="in">`pbinom()`</span> e <span class="in">`rbinom()`</span> são utilizadas para calcular probabilidades pontuais, probabilidades acumuladas e gerar simulações <span class="co">[</span><span class="ot">@bussab2017; @montgomery2018</span><span class="co">]</span>.</span>
 <span id="cb66-130"><a href="#cb66-130" aria-hidden="true" tabindex="-1"></a></span>
@@ -2729,7 +2729,7 @@ R CORE TEAM. <strong><a href="https://www.R-project.org/">R: A Language and Envi
 <span id="cb66-137"><a href="#cb66-137" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-138"><a href="#cb66-138" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-139"><a href="#cb66-139" aria-hidden="true" tabindex="-1"></a>E(X)=Var(X)=\lambda</span>
-<span id="cb66-140"><a href="#cb66-140" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-140"><a href="#cb66-140" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-141"><a href="#cb66-141" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-142"><a href="#cb66-142" aria-hidden="true" tabindex="-1"></a>Quando o comprimento analisado é ampliado, o parâmetro deve ser ajustado proporcionalmente à extensão considerada. No R, as funções <span class="in">`dpois()`</span>, <span class="in">`ppois()`</span> e <span class="in">`rpois()`</span> permitem calcular probabilidades e realizar simulações <span class="co">[</span><span class="ot">@bussab2017; @montgomery2018</span><span class="co">]</span>.</span>
 <span id="cb66-143"><a href="#cb66-143" aria-hidden="true" tabindex="-1"></a></span>
@@ -2742,12 +2742,12 @@ R CORE TEAM. <strong><a href="https://www.R-project.org/">R: A Language and Envi
 <span id="cb66-150"><a href="#cb66-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-151"><a href="#cb66-151" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-152"><a href="#cb66-152" aria-hidden="true" tabindex="-1"></a>E(X)=\frac{1}{\lambda}</span>
-<span id="cb66-153"><a href="#cb66-153" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-153"><a href="#cb66-153" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-154"><a href="#cb66-154" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-155"><a href="#cb66-155" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-156"><a href="#cb66-156" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-157"><a href="#cb66-157" aria-hidden="true" tabindex="-1"></a>Var(X)=\frac{1}{\lambda^2}</span>
-<span id="cb66-158"><a href="#cb66-158" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-158"><a href="#cb66-158" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-159"><a href="#cb66-159" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-160"><a href="#cb66-160" aria-hidden="true" tabindex="-1"></a>Uma propriedade importante é a falta de memória, segundo a qual a probabilidade de o equipamento operar por um período adicional não depende do tempo já transcorrido, sob as hipóteses do modelo. No R, são utilizadas as funções <span class="in">`dexp()`</span>, <span class="in">`pexp()`</span>, <span class="in">`qexp()`</span> e <span class="in">`rexp()`</span> <span class="co">[</span><span class="ot">@montgomery2018; @rcoreteam</span><span class="co">]</span>.</span>
 <span id="cb66-161"><a href="#cb66-161" aria-hidden="true" tabindex="-1"></a></span>
@@ -2761,7 +2761,7 @@ R CORE TEAM. <strong><a href="https://www.R-project.org/">R: A Language and Envi
 <span id="cb66-169"><a href="#cb66-169" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-170"><a href="#cb66-170" aria-hidden="true" tabindex="-1"></a>h(x)=\frac{k}{\lambda}</span>
 <span id="cb66-171"><a href="#cb66-171" aria-hidden="true" tabindex="-1"></a>\left(\frac{x}{\lambda}\right)^{k-1}</span>
-<span id="cb66-172"><a href="#cb66-172" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-172"><a href="#cb66-172" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-173"><a href="#cb66-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-174"><a href="#cb66-174" aria-hidden="true" tabindex="-1"></a>Quando $k&gt;1$, a função de risco é crescente; quando $k=1$, é constante; e quando $k&lt;1$, é decrescente. No R, <span class="in">`pweibull()`</span> e <span class="in">`qweibull()`</span> são utilizadas para calcular probabilidades acumuladas e quantis <span class="co">[</span><span class="ot">@montgomery2018; @rcoreteam</span><span class="co">]</span>.</span>
 <span id="cb66-175"><a href="#cb66-175" aria-hidden="true" tabindex="-1"></a></span>
@@ -2774,12 +2774,12 @@ R CORE TEAM. <strong><a href="https://www.R-project.org/">R: A Language and Envi
 <span id="cb66-182"><a href="#cb66-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-183"><a href="#cb66-183" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-184"><a href="#cb66-184" aria-hidden="true" tabindex="-1"></a>E(X)=\frac{\alpha}{\beta}</span>
-<span id="cb66-185"><a href="#cb66-185" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-185"><a href="#cb66-185" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-186"><a href="#cb66-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-187"><a href="#cb66-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-188"><a href="#cb66-188" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb66-189"><a href="#cb66-189" aria-hidden="true" tabindex="-1"></a>Var(X)=\frac{\alpha}{\beta^2}</span>
-<span id="cb66-190"><a href="#cb66-190" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb66-190"><a href="#cb66-190" aria-hidden="true" tabindex="-1"></a>$$ {#eq-nome}</span>
 <span id="cb66-191"><a href="#cb66-191" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-192"><a href="#cb66-192" aria-hidden="true" tabindex="-1"></a>No R, as funções <span class="in">`pgamma()`</span>, <span class="in">`qgamma()`</span> e <span class="in">`rgamma()`</span> permitem calcular probabilidades acumuladas, quantis e gerar valores aleatórios. O parâmetro utilizado é a taxa (<span class="in">`rate`</span>), e não a escala (<span class="in">`scale`</span>) <span class="co">[</span><span class="ot">@bussab2017; @rcoreteam</span><span class="co">]</span>.</span>
 <span id="cb66-193"><a href="#cb66-193" aria-hidden="true" tabindex="-1"></a></span>
