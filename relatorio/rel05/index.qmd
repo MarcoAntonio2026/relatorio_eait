@@ -212,7 +212,7 @@ prob_menor_30 <- pnorm(
 prob_menor_30
 ```
 
-A probabilidade calculada representa a proporção teórica de amostras com resistência inferior a 30 MPa. Esse resultado pode auxiliar na avaliação da ocorrência de valores baixos de resistência, desde que o limite analisado seja compatível com os critérios de controle e aceitação adotados para o concreto.
+Resultou em uma probabilidade de 0,1056498, equivalente a aproximadamente 10,56%. Isso indica que, segundo o modelo de distribuição adotado, existe uma probabilidade de cerca de 10,6% de que a resistência do concreto seja inferior a 30 MPa.
 
 ### b) Probabilidade de resistência entre 32 e 38 MPa
 
@@ -231,7 +231,7 @@ prob_32_38 <- pnorm(
 prob_32_38
 ```
 
-O resultado representa a probabilidade teórica de uma amostra apresentar resistência entre 32 e 38 MPa. A análise permite avaliar a concentração dos resultados em uma faixa determinada, contribuindo para a compreensão da variabilidade esperada do concreto.
+O cálculo resultou em uma probabilidade de 0,5467453, equivalente a aproximadamente 54,67%. Isso indica que, segundo o modelo de distribuição normal adotado, existe uma probabilidade de cerca de 54,7% de que a resistência do concreto esteja entre 32 e 38 MPa.
 
 ### c) Percentil 5 da resistência
 
@@ -247,6 +247,20 @@ percentil_5
 ```
 
 O percentil 5 corresponde ao valor abaixo do qual se encontram aproximadamente 5% das observações modeladas. Esse indicador caracteriza a cauda inferior da distribuição, mas não deve ser confundido automaticamente com a resistência característica do concreto definida pelas normas técnicas.
+
+
+
+```{r}
+# Percentil 5
+percentil_5 <- qnorm(
+  0.05,
+  mean = media_concreto,
+  sd = dp_concreto
+)
+```
+
+O cálculo resultou em um valor de 28,42059 MPa, equivalente a aproximadamente 28,42 MPa. Isso indica que, segundo o modelo de distribuição normal adotado, existe uma probabilidade de 5% de que a resistência do concreto seja inferior a 28,42 MPa.
+
 
 ### d) Probabilidade de a média de dez amostras ser inferior a 33 MPa
 
@@ -267,7 +281,9 @@ prob_media_menor_33 <- pnorm(
 prob_media_menor_33
 ```
 
-A média amostral apresenta erro padrão inferior ao desvio padrão de uma observação individual. Por esse motivo, a distribuição da média de dez amostras é mais concentrada em torno da média populacional. A probabilidade calculada representa a chance de a média do conjunto ficar abaixo de 33 MPa, sob a hipótese de independência e de uma distribuição Normal para as observações.
+A média amostral apresenta erro padrão inferior ao desvio padrão de uma observação individual. Por esse motivo, a distribuição da média de dez amostras é mais concentrada em torno da média populacional. 
+
+O cálculo resultou em uma probabilidade de 0,05692315, equivalente a aproximadamente 5,69%. Isso indica que, segundo o modelo de distribuição normal adotado, existe uma probabilidade de cerca de 5,7% de que a média de dez amostras de resistência seja inferior a 33 MPa.
 
 ### e) Simulação de 1.000 valores e comparação com a densidade teórica
 
